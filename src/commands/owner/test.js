@@ -31,9 +31,7 @@ class TestCommand extends Command {
 
   async execute(context) {
     const message = await context.reply('Number to dial: **xxx-xxx**');
-    (async () => {
-      for (const reaction of this.dialerReactions) await message.react(reaction);
-    })();
+    for (const reaction of this.dialerReactions) await message.react(reaction);
 
     let number = 'xxx-xxx';
     const collector = message.createReactionCollector(
