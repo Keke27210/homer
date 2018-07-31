@@ -242,6 +242,7 @@
   "helpUtil.telephone.subscribe": "Subscribe to the telephone",
   "helpUtil.telephone.terminate": "Terminate your telephone subscription",
   "helpUtil.telephone.phonebook": "Set your phonebook's description (or \"off\" to not appear on it)",
+  "helpUtil.text": "Send a text message to someone",
   "helpUtil.timefor": "Get current time for a user",
   "helpUtil.timezone": "Set the server timezone",
   "helpUtil.timezone.search": "Search for timezones",
@@ -610,6 +611,13 @@
   "telephone.phonebook.alreadyDisabled": "You are already out of the phonebook.",
   "telephone.phonebook.disabled": "You will no longer appear on the phonebook.",
   "telephone.phonebook.enabled": "The message for your phonebook entry has been successfully updated!",
+  
+  "text.title": "📧 Text message by {{{ user }}} from **{{{ number }}}**:",
+  "text.footer": "You can answer to this message using {{{ command }}}.",
+  "text.noNumber": "You must provide the number to text.",
+  "text.noText": "You must provide the text to send.",
+  "text.textTooLong": "The text length must be fewer than 256 characters.",
+  "text.cannotSend": "Unable to send the text message to your correspondent.",
   
   "timefor.title": "🕐 Current time for {{{ name }}}: {{{ time }}}",
   "timefor.noSettings": "No settings found for {{{ name }}}. To set your timezone, run `{{{ command }}}` in **Direct Messages**.",
