@@ -63,16 +63,16 @@ class TestCommand extends Command {
       const index = number.indexOf('x');
       let replace;
 
-      if (name === '1⃣') replace = '1';
-      else if (name === '2⃣') replace = '2';
-      else if (name === '3⃣') replace = '3';
-      else if (name === '4⃣') replace = '4';
-      else if (name === '5⃣') replace = '5';
-      else if (name === '6⃣') replace = '6';
-      else if (name === '7⃣') replace = '7';
-      else if (name === '8⃣') replace = '8';
-      else if (name === '9⃣') replace = '9';
-      else if (name === '0⃣') replace = '0';
+      if (e.name === '1⃣') replace = '1';
+      else if (e.name === '2⃣') replace = '2';
+      else if (e.name === '3⃣') replace = '3';
+      else if (e.name === '4⃣') replace = '4';
+      else if (e.name === '5⃣') replace = '5';
+      else if (e.name === '6⃣') replace = '6';
+      else if (e.name === '7⃣') replace = '7';
+      else if (e.name === '8⃣') replace = '8';
+      else if (e.name === '9⃣') replace = '9';
+      else if (e.name === '0⃣') replace = '0';
 
       number = number.substring(0, index) + replace + number.substring(index + 1);
       message.edit('Number to dial: **' + number + '**');
