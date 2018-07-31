@@ -595,6 +595,7 @@
   "telephone.embed.number": "Number",
   "telephone.embed.phonebook": "Phonebook",
   "telephone.embed.subscriber": "Subscriber",
+  "telephone.embed.textable": "Textable",
   "telephone.embed.date": "Date",
   "telephone.noSubscription": "There is no subscription found for this channel! Subscribe using `{{{ command }}}`.",
   "telephone.setup.title": "📞 Subscription request for {{{ name }}}:",
@@ -611,6 +612,9 @@
   "telephone.phonebook.alreadyDisabled": "You are already out of the phonebook.",
   "telephone.phonebook.disabled": "You will no longer appear on the phonebook.",
   "telephone.phonebook.enabled": "The message for your phonebook entry has been successfully updated!",
+  "telephone.text.enabled": "You can now receive text messages from other people.",
+  "telephone.text.disabled": "You will no longer receive text messages from other people.",
+  "telephone.text.mustEnable": "You must enable receiving text messages to be able to send one.",
   
   "text.sent": "Text message successfully sent to **{{{ number }}}**!",
   "text.title": "📧 Text message by {{{ user }}} from **{{{ number }}}**:",

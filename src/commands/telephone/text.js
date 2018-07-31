@@ -15,6 +15,7 @@ class TextCommand extends Command {
     if (!subscription) {
       return context.replyWarning(context.__('telephone.noSubscription', { command: `${this.client.prefix}telephone subscribe` }));
     }
+    if (!subscription.textable) return context.replyWarning(context.__('telephone.text.mustEnable'));
 
     const number = context.args[0];
     const text = context.args.slice(1).join(' ');

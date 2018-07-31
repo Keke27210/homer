@@ -11,6 +11,7 @@ class TelephoneCommand extends Command {
         new TerminateSubcommand(client),
         new PhonebookSubcommand(client),
         new SwitchSubcommand(client),
+        new TextSubcommand(client),
       ],
       category: 'telephone',
       dm: true,
@@ -31,6 +32,7 @@ class TelephoneCommand extends Command {
       `${this.dot} ${context.__('telephone.embed.number')}: **${subscription.number}**`,
       `${this.dot} ${context.__('telephone.embed.subscriber')}: ${subscriber || `*${context.__('global.unknown')}*`}`,
       `${this.dot} ${context.__('telephone.embed.phonebook')}: ${subscription.phonebook ? `**${context.__('global.yes')}** (${subscription.phonebook})` : `**${context.__('global.no')}**`}`,
+      `${this.dot} ${context.__('telephone.embed.textable')}: **${subscription.textable ? context.__('global.yes') : context.__('global.no')}**`,
       `${this.dot} ${context.__('telephone.embed.date')}: **${context.formatDate(subscription.time)}**`,
     ].join('\n');
 
@@ -102,6 +104,7 @@ class SubscribeSubcommand extends Command {
               number,
               subscriber: context.message.author.id,
               phonebook: msg || false,
+              textable: true,
               blacklist: [],
               contacts: [],
               message: {
@@ -200,6 +203,7 @@ class PhonebookSubcommand extends Command {
     if (message.length > 64) return context.replyWarning(context.__('telephone.phonebook.messageTooLong'));
 
     const subscription = await this.client.database.getDocument('telephone', context.message.channel.id);
+    if (!subscription) return context.replyWarning(context.__('telephone.noSubscription', { command: `${this.client.prefix}telephone subscribe` }));
 
     if (message.toLowerCase() === 'off') {
       if (!subscription.phonebook) return context.replyWarning(context.__('telephone.phonebook.alreadyDisabled'));
@@ -230,6 +234,31 @@ class SwitchSubcommand extends Command {
     } else {
       await this.client.database.updateDocument('bot', 'settings', { telephone: true });
       context.replySuccess('The telephone service has been successfully **enabled**!');
+    }
+  }
+}
+
+class TextSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'text',
+      category: 'telephone',
+      userPermissions: ['MANAGE_GUILD'],
+      dm: true,
+    });
+  }
+
+  async execute(context) {
+    const subscription = await this.client.database.getDocument('telephone', context.message.channel.id);
+    if (!subscription) return context.replyWarning(context.__('telephone.noSubscription', { command: `${this.client.prefix}telephone subscribe` }));
+
+    const current = subscription.textable;
+    if (current) {
+      await this.client.database.updateDocument('telephone', context.message.channel.id, { textable: false });
+      context.replySuccess(context.__('telephone.text.disabled'));
+    } else {
+      await this.client.database.updateDocument('telephone', context.message.channel.id, { textable: true });
+      context.replySuccess(context.__('telephone.text.enabled'));
     }
   }
 }
