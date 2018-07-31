@@ -40,6 +40,7 @@ class TestCommand extends Command {
     );
 
     collector.on('collect', (reaction) => {
+      console.log('???');
       const e = reaction.emoji;
       if (e.identifier === this.client.constants.emotes.successID) {
         const ctx = context;
