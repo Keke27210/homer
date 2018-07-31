@@ -11,8 +11,13 @@ class TextCommand extends Command {
   }
 
   async execute(context) {
+    const subscription = await this.client.database.getDocument('telephone', context.message.channel.id);
+    if (!subscription) {
+      return context.replyWarning(context.__('telephone.noSubscription', { command: `${this.client.prefix}telephone subscribe` }));
+    }
+
     const number = context.args[0];
-    const text = context.message.cleanContent.split(/ +/g).slice(1).join(' ');
+    const text = context.args.slice(1).join(' ');
     if (!number) return context.replyError(context.__('text.noNumber'));
     if (!text) return context.replyError(context.__('text.noText'));
     if (text.length > 256) return context.replyWarning(context.__('text.textTooLong'));
@@ -28,15 +33,17 @@ class TextCommand extends Command {
       toSend.id,
       context.__('text.title', {
         user: `**${context.message.author.username}**#${context.message.author.discriminator}`,
-        number: toSend.number,
+        number: subscription.number,
       }),
       {
         embed: {
           description: text,
-          footer: { text: context.__('text.footer', { command: `${this.client.prefix}text ${number} <message>`}) },
+          footer: { text: context.__('text.footer', { command: `${this.client.prefix}text ${subscription.number} <message>`}) },
         },
       }
-    )
+    );
+
+    context.replySuccess(context.__('text.sent', { number }));
   }
 }
 

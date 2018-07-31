@@ -612,6 +612,7 @@
   "telephone.phonebook.disabled": "You will no longer appear on the phonebook.",
   "telephone.phonebook.enabled": "The message for your phonebook entry has been successfully updated!",
   
+  "text.sent": "Text message successfully sent to **{{{ number }}}**!",
   "text.title": "📧 Text message by {{{ user }}} from **{{{ number }}}**:",
   "text.footer": "You can answer to this message using {{{ command }}}.",
   "text.noNumber": "You must provide the number to text.",
