@@ -14,17 +14,17 @@ class TestCommand extends Command {
   get dialerReactions() {
     return [
       this.client.constants.emotes.successID, //dial
-      '0⃣', //zero
-      '1⃣', //one
-      '2⃣', //two
-      '3⃣', //three
-      '4⃣', //four
+      '0%E2%83%A3', //zero
+      '1%E2%83%A3', //one
+      '2%E2%83%A3', //two
+      '3%E2%83%A3', //three
+      '4%E2%83%A3', //four
       this.client.constants.emotes.warningID, //reset input
-      '5⃣', //five
-      '6⃣', //six
-      '7⃣', //seven
-      '8⃣', //eight
-      '9⃣', //nine
+      '5%E2%83%A3', //five
+      '6%E2%83%A3', //six
+      '7%E2%83%A3', //seven
+      '8%E2%83%A3', //eight
+      '9%E2%83%A3', //nine
       this.client.constants.emotes.errorID, //cancel
     ];
   }
@@ -35,7 +35,7 @@ class TestCommand extends Command {
 
     let number = 'xxx-xxx';
     const collector = message.createReactionCollector(
-      (user, reaction) => user.id === context.message.author.id && this.dialerReactions.includes(reaction.emoji.name),
+      (user, reaction) => user.id === context.message.author.id && this.dialerReactions.includes(reaction.emoji.identifier)),
       { time: 120000 },
     );
 
