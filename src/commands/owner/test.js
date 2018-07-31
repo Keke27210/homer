@@ -26,6 +26,7 @@ class TestCommand extends Command {
       '8%E2%83%A3', //eight
       '9%E2%83%A3', //nine
       this.client.constants.emotes.errorID, //cancel
+      '🛂', //support
     ];
   }
 
@@ -41,6 +42,8 @@ class TestCommand extends Command {
 
     collector.on('collect', (reaction) => {
       const e = reaction.emoji;
+      reaction.delete().catch(() => null);
+
       if (e.identifier === this.client.constants.emotes.successID) {
         const ctx = context;
         ctx.args = [number];
@@ -58,9 +61,13 @@ class TestCommand extends Command {
         collector.stop();
         context.message.delete().catch(() => null);
         return;
+      } else if (e.name === '🛂') {
+        number = 'SUPPORT';
+        message.edit('Number to dial: **' + number + '**')
       }
 
       const index = number.indexOf('x');
+      if (index === -1) return;
       let replace;
 
       if (e.name === '1⃣') replace = '1';
