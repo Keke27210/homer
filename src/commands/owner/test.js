@@ -13,19 +13,19 @@ class TestCommand extends Command {
 
   get dialerReactions() {
     return [
-      this.client.config.emotes.successID, //dial
+      this.client.constants.emotes.successID, //dial
       '0⃣', //zero
       '1⃣', //one
       '2⃣', //two
       '3⃣', //three
       '4⃣', //four
-      this.client.config.emotes.warningID, //reset input
+      this.client.constants.emotes.warningID, //reset input
       '5⃣', //five
       '6⃣', //six
       '7⃣', //seven
       '8⃣', //eight
       '9⃣', //nine
-      this.client.config.emotes.errorID, //cancel
+      this.client.constants.emotes.errorID, //cancel
     ];
   }
 
