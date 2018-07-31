@@ -623,6 +623,7 @@
   "text.noText": "You must provide the text to send.",
   "text.textTooLong": "The text length must be fewer than 256 characters.",
   "text.cannotSend": "Unable to send the text message to your correspondent.",
+  "text.cannotTextYourself": "You cannot text yourself.",
   
   "timefor.title": "🕐 Current time for {{{ name }}}: {{{ time }}}",
   "timefor.noSettings": "No settings found for {{{ name }}}. To set your timezone, run `{{{ command }}}` in **Direct Messages**.",
