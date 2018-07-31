@@ -35,12 +35,11 @@ class TestCommand extends Command {
 
     let number = 'xxx-xxx';
     const collector = message.createReactionCollector(
-      (user, reaction) => user.id === context.message.author.id && this.dialerReactions.includes(reaction.emoji.identifier),
+      (reaction, user) => user.id === context.message.author.id && this.dialerReactions.includes(reaction.emoji.identifier),
       { time: 120000 },
     );
 
     collector.on('collect', (reaction) => {
-      console.log('???');
       const e = reaction.emoji;
       if (e.identifier === this.client.constants.emotes.successID) {
         const ctx = context;
