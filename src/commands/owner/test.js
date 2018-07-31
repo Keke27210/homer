@@ -35,7 +35,7 @@ class TestCommand extends Command {
 
     let number = 'xxx-xxx';
     const collector = message.createReactionCollector(
-      (user, reaction) => user.id === context.message.author.id && this.dialerReactions.includes(reaction.emoji.identifier)),
+      (user, reaction) => user.id === context.message.author.id && this.dialerReactions.includes(reaction.emoji.identifier),
       { time: 120000 },
     );
 
