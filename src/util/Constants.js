@@ -39,16 +39,21 @@ exports.defaultUserSettings = id => ({
 exports.userAgent = () => `DiscordBot (https://github.com/iDroid27210/homer) Node.js/${process.version}`;
 
 exports.emotes = {
+  // Status
   success: '<:success:453889194016899074>',
   warning: '<:warn:453591316027408395>',
   error: '<:error:453889225356738560>',
   successID: 'success:453889194016899074',
   warningID: 'warn:453591316027408395',
   errorID: 'error:453889225356738560',
+  loading: '<a:loading:455113752984027163>',
+
+  // Misc
   dot: '◽',
   bot: '<:bot:420699407344730122>',
   homer: '<:homer:474150825929998337>',
-  loading: '<a:loading:455113752984027163>',
+
+  // Services
   dbans: '<:discordbans:420715963718041641>',
   verifiedServer: '<:verified:452764762699464724>',
 };
