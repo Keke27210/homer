@@ -32,7 +32,7 @@ class AboutCommand extends Command {
         : this.getDefaultAvatar(this.client.user.discriminator));
 
     context.reply(
-      context.__('about.title', { emote: this.client.constants.emotes.bot, name: `**${this.client.user.username}**` }),
+      context.__('about.title', { emote: this.client.constants.emotes.homer, name: `**${this.client.user.username}**` }),
       { embed },
     );
   }

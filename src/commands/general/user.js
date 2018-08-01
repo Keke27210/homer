@@ -86,7 +86,7 @@ class UserCommand extends Command {
 
     context.reply(
       context.__('user.title', {
-        emote: (user.bot ? this.client.constants.emotes.botUser : this.client.constants.emotes.humanUser),
+        emote: (user.bot ? this.client.constants.emotes.bot : '👤'),
         name: `**${user.username}**#${user.discriminator}`,
       }),
       { embed },

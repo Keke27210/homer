@@ -19,7 +19,7 @@ class ShardsCommand extends Command {
     const shardInformation = values.map((value, index) => `${this.dot} Shard ${index}: ${value ? `**${this.statusString[value.status] || 'UNKNOWN'}** / **${Math.floor(value.ping)}**ms / **${value.guilds}** servers / **${value.users}** users${index === this.client.shard.id ? ' (current)' : ''}` : '**INITIALIZING**'}`).join('\n');
 
     const embed = new RichEmbed().setDescription(shardInformation);
-    context.reply(`${this.client.constants.emotes.bot} Information about shards:`, { embed });
+    context.reply(`${this.client.constants.emotes.homer} Information about shards:`, { embed });
   }
 
   get statusString() {

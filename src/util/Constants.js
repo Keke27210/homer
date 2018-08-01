@@ -46,10 +46,8 @@ exports.emotes = {
   warningID: 'warn:453591316027408395',
   errorID: 'error:453889225356738560',
   dot: '◽',
-  humanUser: '👤',
-  botUser: '🤖',
-  botIcon: '<:bot:420699407344730122>',
-  bot: '<:ibot:420656561493377024>',
+  bot: '<:bot:420699407344730122>',
+  homer: '<:homer:474150825929998337>',
   loading: '<a:loading:455113752984027163>',
   dbans: '<:discordbans:420715963718041641>',
   verifiedServer: '<:verified:452764762699464724>',
@@ -102,50 +100,17 @@ exports.categoryEmotes = {
 };
 
 exports.profileFields = [
-  {
-    id: 'about',
-    name: 'About me',
-  },
-  {
-    id: 'email',
-    name: 'E-mail',
-  },
-  {
-    id: 'instagram',
-    name: 'Instagram',
-  },
-  {
-    id: 'minecraft',
-    name: 'Minecraft',
-  },
-  {
-    id: 'nnid',
-    name: 'Nintendo Network ID',
-  },
-  {
-    id: 'skype',
-    name: 'Skype',
-  },
-  {
-    id: 'snapchat',
-    name: 'Snapchat',
-  },
-  {
-    id: 'steam',
-    name: 'Steam',
-  },
-  {
-    id: 'twitch',
-    name: 'Twitch',
-  },
-  {
-    id: 'twitter',
-    name: 'Twitter',
-  },
-  {
-    id: 'youtube',
-    name: 'YouTube',
-  },
+  { id: 'about', name: 'About me' },
+  { id: 'email', name: 'E-mail' },
+  { id: 'instagram', name: 'Instagram' },
+  { id: 'minecraft', name: 'Minecraft' },
+  { id: 'nnid', name: 'Nintendo Network ID' },
+  { id: 'skype', name: 'Skype' },
+  { id: 'snapchat', name: 'Snapchat' },
+  { id: 'steam', name: 'Steam' },
+  { id: 'twitch', name: 'Twitch' },
+  { id: 'twitter', name: 'Twitter' },
+  { id: 'youtube', name: 'YouTube' },
 ];
 
 exports.deprecatedPermissions = [
