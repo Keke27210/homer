@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "big-integer": "^1.6.31",
-    "discord.js": "^11.3.2",
+    "discord.js": "github:iDroid27/discord.js#stable",
     "erlpack": "github:discordapp/erlpack",
     "google-translate-api": "^2.3.0",
     "libsodium-wrappers": "^0.7.3",
