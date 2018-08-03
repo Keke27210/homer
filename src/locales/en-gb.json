@@ -34,6 +34,7 @@
   "baninfo.embed.executor": "Executor",
   "baninfo.embed.reason": "Reason",
   "baninfo.embed.date": "Date",
+  "baninfo.noQuery": "You must provide a user to search for!",
 
   "call.callerBusy": "You are currently incall.",
   "call.noNumber": "You must provide a number to call.",
