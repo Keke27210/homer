@@ -86,7 +86,7 @@ class FinderUtil {
         u.username.toLowerCase() === username &&
         u.discriminator === discriminator);
 
-      if (foundUsers.size > 0) return foundUsers;
+      if (foundUsers.size > 0) return foundUsers.array();;
     } else if (mentionTest) {
       if (users.has(mentionTest[2])) return [users.get(mentionTest[2])];
     } else if (idTest) {
