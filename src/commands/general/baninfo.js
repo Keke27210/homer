@@ -31,7 +31,7 @@ class BaninfoCommand extends Command {
     const embed = new RichEmbed()
       .setDescription([
         `${this.dot} ${context.__('baninfo.embed.targetID')}: **${user.id}**`,
-        `${this.dot} ${context.__('baninfo.embed.executor')}: ${logEntry && logEntry.executor ? `**${logEntry.executor.username}**#${logEntry.executor.discriminator} (ID:${logEntry.executor.id})` : `*${context.__('global.unknwon')}*`}`,
+        `${this.dot} ${context.__('baninfo.embed.executor')}: ${logEntry && logEntry.executor ? `**${logEntry.executor.username}**#${logEntry.executor.discriminator} (ID:${logEntry.executor.id})` : `*${context.__('global.unknown')}*`}`,
         `${this.dot} ${context.__('baninfo.embed.reason')}: ${logEntry && logEntry.reason ? `**${logEntry.reason}**` : context.__('global.none')}`,
         `${this.dot} ${context.__('baninfo.embed.date')}: ${logEntry ? `**${context.formatDate(logEntry.createdTimestamp)}**` : context.__('global.none')}`,
       ].join('\n'))
