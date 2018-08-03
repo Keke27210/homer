@@ -313,6 +313,7 @@
   "permission.MANAGE_GUILD": "Manage Server",
   "permission.ADD_REACTIONS": "Add Reactions",
   "permission.VIEW_AUDIT_LOG": "View Audit Log",
+  "permission.PRIORITY_SPEAKER": "Priority Speaker",
   "permission.VIEW_CHANNEL": "View Channel",
   "permission.SEND_MESSAGES": "Send Messages",
   "permission.SEND_TTS_MESSAGES": "Send TTS Messages",
