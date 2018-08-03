@@ -29,6 +29,12 @@
 
   "avatar.title": "🖼 Avatar for {{{ name }}}:",
 
+  "baninfo.title": "🔨 Ban information for {{{ user }}}:",
+  "baninfo.embed.targetID": "Target ID",
+  "baninfo.embed.executor": "Executor",
+  "baninfo.embed.reason": "Reason",
+  "baninfo.embed.date": "Date",
+
   "call.callerBusy": "You are currently incall.",
   "call.noNumber": "You must provide a number to call.",
   "call.receiverBusy": "Your correspondent is busy.",
@@ -117,6 +123,8 @@
   "finderUtil.general.left": "and **{{{ count }}}** more...",
   "finderUtil.findMembers.zeroResult": "No-one found matching `{{{ search }}}`",
   "finderUtil.formatMembers.title": "**{{{ count }}}** members found:",
+  "finderUtil.findUsers.zeroResult": "No-one found matching `{{{ search }}}`",
+  "finderUtil.formatUsers.title": "**{{{ count }}}** users found:",
   "finderUtil.findRoles.zeroResult": "No roles found matching `{{{ search }}}`",
   "finderUtil.formatRoles.title": "**{{{ count }}}** roles found:",
   "finderUtil.findChannels.zeroResult": "No channels found matching `{{{ search }}}`",
@@ -161,6 +169,7 @@
   "helpUtil.about": "Information about the bot",
   "helpUtil.afk": "Sets you AFK",
   "helpUtil.avatar": "Get the avatar of a member",
+  "helpUtil.baninfo": "Get information about a ban entry",
   "helpUtil.call": "Call a number on the telephone",
   "helpUtil.channel": "Get information about a channel",
   "helpUtil.checkdbans": "Check the status on a user on the Discord Bans list (ran by DiscordList.net)",

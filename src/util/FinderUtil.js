@@ -73,6 +73,69 @@ class FinderUtil {
     return message.join('\n');
   }
 
+  findUsers(users, query) {
+    const userTagTest = tagExpression.exec(query); tagExpression.lastIndex = 0;
+    const mentionTest = mentionExpression.exec(query); mentionExpression.lastIndex = 0;
+    const idTest = idExpression.exec(query); idExpression.lastIndex = 0;
+
+    if (userTagTest) {
+      const username = userTagTest[1].toLowerCase();
+      const discriminator = userTagTest[2];
+
+      const foundUsers = users.filter(u =>
+        u.username.toLowerCase() === username &&
+        u.discriminator === discriminator);
+
+      if (foundMembers.size > 0) return foundUsers;
+    } else if (mentionTest) {
+      if (users.has(mentionTest[2])) return [users.get(mentionTest[2])];
+    } else if (idTest) {
+      if (users.has(idTest[1])) return [users.get(idTest[1])];
+    }
+
+    const exact = [];
+    const wrongCase = [];
+    const startsWith = [];
+    const includes = [];
+    const lowerQuery = query.toLowerCase();
+
+    users.forEach((user) => {
+      const username = user.username;
+
+      if (username === query) {
+        exact.push(user);
+      } else if (username.toLowerCase() === query && exact.length === 0) {
+        wrongCase.push(user);
+      } else if (username.toLowerCase().startsWith(lowerQuery) && wrongCase.length === 0) {
+        startsWith.push(user);
+      } else if (username.toLowerCase().includes(lowerQuery) && startsWith.length === 0) {
+        includes.push(user);
+      }
+    });
+
+    if (exact.length > 0) return exact;
+    if (wrongCase.length > 0) return wrongCase;
+    if (startsWith.length > 0) return startsWith;
+    return includes;
+  }
+
+  formatUsers(list, locale) {
+    const message = [
+      this.client.__(locale, 'finderUtil.formatUsers.title', { count: list.length }),
+    ];
+
+    for (let i = 0; (i < 6 && i < list.length); i += 1) {
+      const user = list[i];
+      message.push(`- **${user.username}**#${user.discriminator} (ID:${user.id})`);
+    }
+
+    if (list.length > 6) {
+      message.push(this.client.__(locale, 'finderUtil.general.left', { count: (list.length - 6) }));
+    }
+
+    return message.join('\n');
+  }
+
   findRolesOrChannels(list, query) {
     const idTest = idExpression.exec(query); idExpression.lastIndex = 0;
     const mentionTest = mentionExpression.exec(query); mentionExpression.lastIndex = 0;
