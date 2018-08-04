@@ -21,6 +21,7 @@
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.17",
     "node-opus": "^0.3.0",
+    "escape-string-regexp": "^1.0.5",
     "node-schedule": "^1.3.0",
     "playlist-parser": "github:nickdesaulniers/javascript-playlist-parser",
     "rethinkdbdash": "^2.3.31",
