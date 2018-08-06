@@ -53,7 +53,7 @@ class CancelSubcommand extends Command {
   }
 
   get reactions() {
-    return [this.client.constants.emotes.success, this.client.constants.emotes.error];
+    return [this.client.constants.emotes.successID, this.client.constants.emotes.errorID];
   }
 
   async execute(context) {
@@ -71,11 +71,11 @@ class CancelSubcommand extends Command {
     for (const e of this.reactions) await m.react(e);
 
     m.awaitReactions(
-      (reaction, user) => this.reactions.includes(reaction.emoji.name) && user.id === context.message.author.id,
+      (reaction, user) => this.reactions.includes(reaction.emoji.identifier) && user.id === context.message.author.id,
       { max: 1 },
     )
       .then(async (reactions) => {
-        const r = reactions.first().emoji.name;
+        const r = reactions.first().emoji.identifier;
         if (r === this.reactions[1]) return m.edit('The subscription has not been deleted');
         await this.client.database.deleteDocument('telephone', subscription.id);
         m.edit(`The subscription for **${number}** has been deleted!`);
