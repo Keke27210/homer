@@ -76,9 +76,14 @@ class CancelSubcommand extends Command {
     )
       .then(async (reactions) => {
         const r = reactions.first().emoji.identifier;
-        if (r === this.reactions[1]) return m.edit('The subscription has not been deleted');
-        await this.client.database.deleteDocument('telephone', subscription.id);
-        m.edit(`The subscription for **${number}** has been deleted!`);
+        if (r === this.reactions[1]) {
+          m.edit(`${this.client.constants.emotes.success} The subscription has not been deleted`);
+        } else {
+          await this.client.database.deleteDocument('telephone', subscription.id);
+          m.edit(`${this.client.constants.emotes.success} The subscription for **${number}** has been deleted!`);
+        }
+
+        m.clearReactions();
       });
   }
 }
