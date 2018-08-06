@@ -6,6 +6,7 @@ class ServicetelCommand extends Command {
     super(client, {
       name: 'servicetel',
       category: 'telephone',
+      children: [new CancelSubcommand(client)],
       hidden: true,
     });
   }
