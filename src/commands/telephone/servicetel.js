@@ -22,7 +22,7 @@ class ServicetelCommand extends Command {
     if (!subscription) return context.replyWarning(`No subscription found for number **${number}**.`);
 
     const subscriber = await this.client.fetchUser(subscription.subscriber);
-    const server = this.client.rest.makeRequest('get', `/guilds/${subscription.settings}`, true)
+    const server = await this.client.rest.makeRequest('get', `/guilds/${subscription.settings}`, true)
       .then(a => a.name)
       .catch(() => 'Direct Messages');
 
