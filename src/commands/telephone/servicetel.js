@@ -73,7 +73,7 @@ class CancelSubcommand extends Command {
       (reaction, user) => this.reactions.includes(reaction.emoji.name) && user.id === context.message.author.id,
       { max: 1 },
     )
-      .then((reactions) => {
+      .then(async (reactions) => {
         const r = reactions.first().emoji.name;
         if (r === this.reactions[1]) return m.edit('The subscription has not been deleted');
         await this.client.database.deleteDocument('telephone', subscription.id);
