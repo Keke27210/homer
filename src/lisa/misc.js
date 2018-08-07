@@ -51,10 +51,13 @@ module.exports = [
       }
 
       const image = params.find(p => p.startsWith('image:'));
-      if (image) embed.setImage(image.substring(6));
+      if (image) try { embed.setImage(image.substring(6)); } catch (e) {}
 
       const thumbnail = params.find(p => p.startsWith('thumb:'));
-      if (thumbnail) embed.setThumbnail(thumbnail.substring(6));
+      if (thumbnail) try { embed.setThumbnail(thumbnail.substring(6)); } catch (e) {}
+
+      const url = params.find(p => p.startsWith('url:'));
+      if (url) try { embed.setURL(url.substring(4)); } catch (e) {}
 
       const color = params.find(p => p.startsWith('color:'));
       if (color) embed.setColor(color.substring(6).toUpperCase());
