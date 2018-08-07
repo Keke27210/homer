@@ -81,20 +81,22 @@ class LisaManager extends Manager {
       }
     }
 
-    const embedEnd = output.indexOf('|||]|||');
-    const embedStart = embedEnd === -1 ? -1 : output.lastIndexOf('|||[|||', embedEnd);
+    if (!children) {
+      const embedEnd = output.indexOf('|||]|||');
+      const embedStart = embedEnd === -1 ? -1 : output.lastIndexOf('|||[|||', embedEnd);
 
-    if ((embedStart !== -1) && (embedEnd !== -1)) {
-      const content = output.substring((embedStart + 7), embedEnd);
-      const split = content.indexOf(':');
+      if ((embedStart !== -1) && (embedEnd !== -1)) {
+        const content = output.substring((embedStart + 7), embedEnd);
+        const split = content.indexOf(':');
 
-      if (split !== -1) {
-        const name = content.substring(0, split).toLowerCase();
-        const value = (name === this.client.config.secretEmbedMethod) ? this.defilterAll(content.substring(split + 1)) : undefined;
+        if (split !== -1) {
+          const name = content.substring(0, split).toLowerCase();
+          const value = (name === this.client.config.secretEmbedMethod) ? this.defilterAll(content.substring(split + 1)) : undefined;
 
-        try { env.embed = JSON.parse(value); }
-        catch (e) {}
-        output = output.substring(0, embedStart) + output.substring(embedEnd + 7);
+          try { env.embed = JSON.parse(value); }
+          catch (e) {}
+          output = output.substring(0, embedStart) + output.substring(embedEnd + 7);
+        }
       }
     }
 
