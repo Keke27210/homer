@@ -150,6 +150,9 @@ module.exports = [
     'typeof',
     null,
     (env, params) => {
+      try { params[0] = JSON.parse(params[0]); } catch (e) {}
+      if (!Number.isNaN(parseInt(params[0]))) params[0] = parseInt(params[0]);
+
       return typeof params[0];
     },
   ),
