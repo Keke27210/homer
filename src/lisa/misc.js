@@ -144,6 +144,15 @@ module.exports = [
         .join(params[2] || ', ');
     },
   ),
+
+  // typeof
+  new Method(
+    'typeof',
+    null,
+    (env, params) => {
+      return typeof params[0];
+    },
+  ),
 ];
 
 function uuid() {
