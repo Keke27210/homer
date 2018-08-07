@@ -54,7 +54,7 @@ sharder.on('message', async (shard, mail) => {
 
 // Must be done by the sharder
 setInterval(async () => {
-  const count = await sharder.fetchClientValues('this.guilds.size').then(a => a.reduce((prev, val) => prev + val, 0));
+  const count = await sharder.fetchClientValues('guilds.size').then(a => a.reduce((prev, val) => prev + val, 0));
 
   snekfetch
     .post(`https://discordbots.group/api/bot/${config.discord.id}`)
