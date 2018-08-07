@@ -53,7 +53,7 @@ sharder.on('message', async (shard, mail) => {
 });
 
 // Must be done by the sharder
-setInterval(async () => {
+/*setInterval(async () => {
   const count = await sharder.fetchClientValues('guilds.size').then(a => a.reduce((prev, val) => prev + val, 0));
 
   snekfetch
@@ -61,7 +61,7 @@ setInterval(async () => {
     .set('Authorization', config.api.discordbotsGroup)
     .set('Content-Type', 'application/json')
     .send({ count });
-}, 60000);
+}, 60000);*/
 
 async function editMessage(channel, message, content) {
   await snekfetch
