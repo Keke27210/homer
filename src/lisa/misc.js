@@ -129,6 +129,21 @@ module.exports = [
       return current;
     },
   ),
+
+  // map
+  new Method(
+    'map',
+    null,
+    (env, params) => {
+      let array = null;
+      try { array = JSON.parse(params[0]); }
+      catch (e) { return '<invalid array>'; }
+
+      return array
+        .map(item => params[1] ? params[1].replace(/{item}/g, item) : item)
+        .join(params[2] || ', ');
+    },
+  ),
 ];
 
 function uuid() {
