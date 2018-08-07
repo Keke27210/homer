@@ -52,6 +52,17 @@ sharder.on('message', async (shard, mail) => {
   }
 });
 
+// Must be done by the sharder
+setInterval(async () => {
+  const count = await sharder.fetchClientValues('this.guilds.size').then(a => a.reduce((prev, val) => prev + val, 0));
+
+  snekfetch
+    .post(`https://discordbots.group/api/bot/${config.discord.id}`)
+    .set('Authorization', config.api.discordbotsGroup)
+    .set('Content-Type', 'application/json')
+    .send({ count });
+}, 60000);
+
 async function editMessage(channel, message, content) {
   await snekfetch
     .patch(`https://discordapp.com/api/channels/${channel}/messages/${message}`)
