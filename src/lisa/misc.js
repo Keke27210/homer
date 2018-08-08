@@ -138,6 +138,7 @@ module.exports = [
     'map',
     null,
     (env, params) => {
+      console.log(params);
       let array = null;
       try { array = JSON.parse(params[0]); }
       catch (e) { return '<invalid array>'; }
