@@ -2,7 +2,7 @@
 const tagExpression = /(.{0,30})#(\d{4})/g;
 const mentionExpression = /<(@!?|@&|#)(\d{17,20})>/g;
 const idExpression = /(\d{17,20})/g;
-const emojiExpression = /<a?:.{0,100}:(\d{17,20})>/g;
+const emojiExpression = /<(a?):(.{0,100}):(\d{17,20})>/g;
 
 class FinderUtil {
   constructor(client) {
@@ -224,7 +224,14 @@ class FinderUtil {
 
     const emojiTest = emojiExpression.exec(query); emojiExpression.lastIndex = 0;
     if (emojiTest) {
-      return [list.find(e => e.id === emojiTest[1])];
+      const e = list.find(e => e.id === emojiTest[3]);
+      return e ? [e] : ({
+        id: emojiTest[3],
+        name: emojiTest[2],
+        animated: emojiTest[1] === '' ? false : true,
+        managed: null,
+        guild: null,
+      });
     }
 
     const exact = [];
