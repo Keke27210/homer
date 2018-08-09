@@ -18,7 +18,8 @@ class UpdateUtil {
     );
   }
 
-  updateBotList() {
+  async updateBotList() {
+    // Discord Bots
     snekfetch
       .post(`https://bots.discord.pw/api/bots/${this.client.user.id}/stats`)
       .set('Authorization', this.client.config.api.discordBotsPw)
@@ -30,6 +31,7 @@ class UpdateUtil {
       })
       .catch(() => null);
 
+    // Discordbots.org
     snekfetch
       .post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
       .set('Authorization', this.client.config.api.discordBotsOrg)
@@ -41,6 +43,7 @@ class UpdateUtil {
       })
       .catch(() => null);
 
+    // Listcord
     snekfetch
       .post(`https://listcord.com/api/bot/${this.client.user.id}/guilds`)
       .set('Authorization', this.client.config.api.listcord)
@@ -50,6 +53,23 @@ class UpdateUtil {
         guilds: this.client.guilds.size,
       })
       .catch(() => null);
+
+    // SHARD 0 ONLY - DiscordBots.group
+    if (this.client.shard.id === 0) {
+      const total = await this.client.shard.fetchClientValues('guilds.size')
+        .then(a => a.reduce((prev, val) => prev + val, 0))
+        .catch(() => null);
+      if (!total) return;
+
+      snekfetch
+        .post(`https://discordbots.group/api/bot/${this.client.user.id}`)
+        .set('Authorization', this.client.config.api.discordbotsGroup)
+        .set('Content-Type', 'application/json')
+        .send({
+          count: total,
+        })
+        .catch(() => null);
+    }
   }
 }
 
