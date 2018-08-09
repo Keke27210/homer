@@ -26,9 +26,18 @@ class EmoteCommand extends Command {
       return context.replyError(context.__('emote.noQuery'));
     }
 
+    let user = `*${context.__('global.unknown')}*`;
+    if (!emoji.managed && emoji.guild) {
+      const userReq = await this.client.rest.makeRequest(`/guilds/${emoji.guild.id}/emojis/${emoji.id}`)
+        .then(e => e.user)
+        .catch(() => null);
+      if (userReq) user = `**${userReq.username}**#${userReq.discriminator} (ID:${userReq.id})`;
+    }
+
     const emoteInformation = [
       `${this.dot} ${context.__('emote.embed.id')}: **${emoji.id}**`,
       `${this.dot} ${context.__('emote.embed.guild')}: ${emoji.guild ? `**${emoji.guild}**` : `*${context.__('global.unknown')}*`}`,
+      `${this.dot} ${context.__('emote.embed.author')}: ${user}`,
       `${this.dot} ${context.__('emote.embed.animated')}: **${emoji.animated ? context.__('global.yes') : context.__('global.no')}**`,
       `${this.dot} ${context.__('emote.embed.managed')}: **${emoji.managed ? context.__('global.yes') : context.__('global.no')}**`,
       `${this.dot} ${context.__('emote.embed.creation')}: **${context.formatDate(deconstruct(emoji.id).timestamp)}**`,

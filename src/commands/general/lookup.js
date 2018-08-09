@@ -141,7 +141,7 @@ class LookupCommand extends Command {
         ] : null;
 
         const inviteInformation = [
-          `${this.dot} ${context.__('lookup.invite.embed.server')}: ${invite.guild ? `**${invite.guild.name}** (ID:${invite.guild.id})` : context.__('global.none')}${invite.guild.features.includes('VERIFIED') ? ` ${this.client.constants.emotes.verifiedServer}` : ''}`,
+          `${this.dot} ${context.__('lookup.invite.embed.server')}: ${invite.guild ? `**${invite.guild.name}** (ID:${invite.guild.id})` : context.__('global.none')}${invite.guild.verified ? ` ${this.client.constants.emotes.verifiedServer}` : ''}`,
           `${this.dot} ${context.__('lookup.invite.embed.inviter')}: ${inviter}`,
           `${this.dot} ${context.__('lookup.invite.embed.channel')}: **${invite.channel.name ? `#${invite.channel.name}` : context.__('global.groupDm')}** (ID:${invite.channel.id})`,
           `${this.dot} ${context.__('lookup.invite.embed.members')}: ${members ? members.join(' - ') : `**${invite.approximate_member_count}**${invite.approximate_presence_count ? ` (${this.client.constants.status.online} **${invite.approximate_presence_count}**)` : ''}`}`,

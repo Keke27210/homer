@@ -14,7 +14,6 @@ class ServerCommand extends Command {
   async execute(context) {
     const guild = context.message.guild;
     const guildOwner = guild.owner ? guild.owner.user : await this.client.fetchUser(guild.ownerID);
-    const defaultMessageNotification = await this.client.rest.makeRequest('get', `/guilds/${context.message.guild.id}`, true).then(a => a.default_message_notifications);
 
     const channels = [
       `**${context.message.guild.channels.filter(c => c.type === 'text').size}** ${context.__('channel.type.text')}`,
@@ -24,14 +23,14 @@ class ServerCommand extends Command {
     const region = guild.region.startsWith('vip-') ? guild.region.substring(4) : guild.region;
 
     const serverInformation = [
-      `${this.dot} ${context.__('server.embed.id')}: **${guild.id}**${guild.features.includes('VERIFIED') ? ` ${this.client.constants.emotes.verifiedServer}` : ''}`,
+      `${this.dot} ${context.__('server.embed.id')}: **${guild.id}**${guild.verified ? ` ${this.client.constants.emotes.verifiedServer}` : ''}`,
       `${this.dot} ${context.__('server.embed.owner')}: **${guildOwner.username}**#${guildOwner.discriminator} (ID:${guild.ownerID})`,
       `${this.dot} ${context.__('server.embed.region')}: ${this.client.constants.regionFlags[region]} **${context.__(`server.region.${region}`)}${guild.region.startsWith('vip-') ? ' (VIP)' : ''}**`,
       `${this.dot} ${context.__('server.embed.channels')}: ${channels}`,
       `${this.dot} ${context.__('server.embed.members')}: **${guild.memberCount}**`,
       `${this.dot} ${context.__('server.embed.verificationLevel')}: **${context.__(`server.verificationLevel.${guild.verificationLevel}`)}**`,
       `${this.dot} ${context.__('server.embed.explicitContentFilter')}: **${context.__(`server.explicitContentFilter.${guild.explicitContentFilter}`)}**`,
-      `${this.dot} ${context.__('server.embed.defaultMessageNotifications')}: **${context.__(`server.defaultMessageNotifications.${defaultMessageNotification}`)}**`,
+      `${this.dot} ${context.__('server.embed.defaultMessageNotifications')}: **${context.__(`server.defaultMessageNotifications.${guild.messageNotifications}`)}**`,
       `${this.dot} ${context.__('server.embed.creation')}: **${context.formatDate(guild.createdTimestamp)}**`,
     ].join('\n');
 
