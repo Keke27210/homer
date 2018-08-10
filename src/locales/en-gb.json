@@ -103,6 +103,7 @@
   "emote.title": "Information about **{{{ name }}}**:",
   "emote.embed.id": "Discord ID",
   "emote.embed.guild": "Guild",
+  "emote.embed.author": "Author",
   "emote.embed.animated": "Animated",
   "emote.embed.managed": "Managed",
   "emote.embed.creation": "Creation date",

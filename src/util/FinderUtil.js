@@ -220,6 +220,7 @@ class FinderUtil {
       animated: e.animated,
       managed: e.managed,
       guild: e.guild ? e.guild.name : null,
+      guildID: e.guild ? e.guild.id : null,
     }));
 
     const emojiTest = emojiExpression.exec(query); emojiExpression.lastIndex = 0;
@@ -231,6 +232,7 @@ class FinderUtil {
         animated: emojiTest[1] === '' ? false : true,
         managed: null,
         guild: null,
+        guildID: null,
       }];
     }
 
