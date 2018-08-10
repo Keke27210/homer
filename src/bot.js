@@ -1,6 +1,7 @@
 // Modules
 const { DiscordAPIError } = require('discord.js');
 const mtz = require('moment-timezone');
+const escapeRegexChars = require('escape-string-regexp');
 const config = require('../config.json');
 const { scheduleJob } = require('node-schedule');
 const DiscordClient = require('./structures/DiscordClient');
@@ -65,8 +66,8 @@ process.on('SIGINT', async () => {
 // Misc
 String.prototype.replaceAll = function (search, replacement) {
   if (typeof search === 'string') {
-    return this.split(search).join(replacement);
-  }
+    return this.replace(new RegExp(escapeRegexChars(search), 'g'), replacement.toString());
+  } else throw new TypeError('Search must be a string');
 };
 
 String.prototype.hashCode = function () {
