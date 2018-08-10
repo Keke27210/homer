@@ -28,6 +28,7 @@ module.exports = [
       env.embed = parsed.embed;
       return parsed.content;
     },
+    ['|with:'],
   ),
 
   // embed
