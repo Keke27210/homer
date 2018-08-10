@@ -70,10 +70,11 @@ class LookupCommand extends Command {
         const { timestamp } = deconstruct(guildObject.id);
 
         const inviteCode = this.client.resolver.resolveInviteCode(guildObject.instant_invite) || null;
-        const metadata = await this.client.fetchInvite(guildObject.instant_invite)
+        const metadata = await this.client.rest.makeRequest('get', `/invites/${inviteCode}?with_counts=true`, true)
           .then(i => ({
-            icon: `https://cdn.discordapp.com/icons/${guildObject.id}/${i.guild.icon}`,
-            memberCount: i.memberCount,
+            icon: `https://cdn.discordapp.com/icons/${guildObject.id}/${i.guild.icon}.png`,
+            memberCount: i.approximate_member_count,
+            verified: i.guild.features.includes('VERIFIED'),
           }))
           .catch(() => ({}));
 
@@ -86,7 +87,7 @@ class LookupCommand extends Command {
         if (metadata.memberCount) members.push(`${this.client.constants.status.offline} **${metadata.memberCount - guildObject.members.length}**`);
 
         const guildInformation = [
-          `${this.dot} ${context.__('server.embed.id')}: **${guildObject.id}**`,
+          `${this.dot} ${context.__('server.embed.id')}: **${guildObject.id}**${metadata.verified ? `${this.client.constants.emotes.verifiedServer}` : ''}`,
           `${this.dot} ${context.__('server.embed.members')}: ${members.join(' - ')}`,
           `${this.dot} ${context.__('server.embed.channels')}: **${guildObject.channels.length}** ${context.__('channel.type.voice')}`,
           `${this.dot} ${context.__('server.embed.invite')}: ${inviteCode ? `**[${inviteCode}](https://discord.gg/${inviteCode})**` : context.__('global.none')}`,
