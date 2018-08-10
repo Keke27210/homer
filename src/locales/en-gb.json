@@ -110,6 +110,7 @@
   "emote.noQuery": "You must provide an emote to search",
 
   "format.title": "📆 Formats for {{{ name }}}:",
+  "format.embed.explanation": "This command allows you to customize the format of date and time shown in various commands such as `user`.\nYou can change these settings using `{{{ prefix }}}format date` and `{{{ prefix }}}format time`.\nCheck the documentation below to set the list of vars usable, don't touch if you're not sure.",
   "format.embed.date": "Date format",
   "format.embed.time": "Time format",
   "format.embed.example": "Example",
