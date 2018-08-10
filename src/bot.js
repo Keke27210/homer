@@ -1,7 +1,7 @@
 // Modules
 const { DiscordAPIError } = require('discord.js');
 const mtz = require('moment-timezone');
-const escapeRegexChars('escape-string-regexp');
+const escapeRegexChars = require('escape-string-regexp');
 const config = require('../config.json');
 const { scheduleJob } = require('node-schedule');
 const DiscordClient = require('./structures/DiscordClient');
