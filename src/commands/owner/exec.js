@@ -1,6 +1,7 @@
 const snekfetch = require('snekfetch');
 const { exec } = require('child_process');
 const Command = require('../../structures/Command');
+const { Attachment } = require('discord.js');
 
 class ExecCommand extends Command {
   constructor(client) {
@@ -32,9 +33,15 @@ class ExecCommand extends Command {
           .set('Content-Type', 'application/json')
           .send(message)
           .then(res => res.body)
-          .catch(() => ({}));
+          .catch(() => null);
 
-        context.replyWarning(`Output too long! Uploaded on Hastebin: <https://hastebin.com/${data.key}>`);
+        if (data) {
+          context.replyWarning(`Output too long! Uploaded on Hastebin: <https://hastebin.com/${data.key}>`);
+        } else {
+          context.replyWarning('Output too long! Upload log file.', {
+            files: [new Attachment(Buffer.from(message), 'output.txt')],
+          });
+        }
       }
     });
   }
