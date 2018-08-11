@@ -29,7 +29,7 @@ class Menu {
       const thisPage = [];
       for (let j = 0; j < this.options.entriesPerPage; j += 1) {
         const d = data[j];
-        if (d) thisPage.push(`${d} ! e n d !s`);
+        if (d) thisPage.push(d);
       }
       this.pages.push(thisPage.join('\n'));
       data = data.slice(this.options.entriesPerPage);
