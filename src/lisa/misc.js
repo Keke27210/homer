@@ -122,7 +122,7 @@ module.exports = [
 
       let current = json;
       for (let i = 0; i < path.length; i += 1) {
-        try { current = current[path[i]] || 'undefined'; }
+        try { current = typeof current[path[i]] === 'number' ? current[path[i]] : (current[path[i]] || 'undefined'); }
         catch (e) { return 'undefined'; }
       }
 
