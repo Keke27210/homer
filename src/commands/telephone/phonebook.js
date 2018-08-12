@@ -31,7 +31,7 @@ class PhonebookCommand extends Command {
 
     const menu = new Menu(
       context,
-      numbers.map(e => `${this.dot} **${e.number}**: ${e.phonebook}`),
+      numbers.map(e => `${this.dot} ${e.number}: ${e.phonebook}`),
     );
 
     menu.send(context.__('phonebook.title'));
