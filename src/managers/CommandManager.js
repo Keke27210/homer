@@ -21,7 +21,7 @@ class CommandManager extends Manager {
         delete require.cache[require.resolve(`../commands/${category}/${commandFile}`)];
 
         for (let i = 0; i < thing.parent.children.length; i += 1) {
-          if (thing.parent.children[i] === mod) {
+          if (thing.parent.children[i] === thing) {
             thing.parent.children.splice(i, 1);
             break;
           }
