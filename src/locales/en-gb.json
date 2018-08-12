@@ -575,6 +575,7 @@
   "tag.noName": "You must provide the name of a tag",
   "tag.notFound": "No tag found matching \"{{{ name }}}\"",
   "tag.unknownTag": "No tag found matching \"{{{ name }}}\"",
+  "tag.nsfwAlert": "You can't run a NSFW-marked tag in a non-NSFW channel.",
   "tag.create.noName": "You must provide a name for the tag to create",
   "tag.create.noContent": "You must provide a content for the tag to create",
   "tag.create.alreadyExist": "The tag \"{{{ name }}}\" already exists",

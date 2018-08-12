@@ -33,6 +33,10 @@ class TagCommand extends Command {
     const tag = await this.client.database.getDocument('tags', name.toLowerCase());
     if (!tag) return context.replyWarning(context.__('tag.unknownTag', { name }));
 
+    if (tag.content.toLowerCase().includes('{nsfw}')) {
+      return context.replyWarning(context.__('tag.nsfwAlert'));
+    }
+
     const parsed = await this.client.lisa.parseString(context, tag.content, 'tag', args);
     context.reply(parsed.content || '', { embed: parsed.embed });
   }
