@@ -33,9 +33,7 @@ class TagCommand extends Command {
     const tag = await this.client.database.getDocument('tags', name.toLowerCase());
     if (!tag) return context.replyWarning(context.__('tag.unknownTag', { name }));
 
-    if (context.message.channel.type === 'text' &&
-      !context.message.channel.nsfw &&
-      tag.content.toLowerCase().includes('{nsfw}')) {
+    if (!context.message.channel.nsfw && tag.content.toLowerCase().includes('{nsfw}')) {
       return context.replyWarning(context.__('tag.nsfwAlert'));
     }
 
