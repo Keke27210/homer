@@ -165,7 +165,7 @@ module.exports = [
   // just replace with blank
   new Method(
     'nsfw',
-    '',
+    () => '',
     null,
   ),
 ];
