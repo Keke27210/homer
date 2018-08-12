@@ -25,7 +25,15 @@ class LisaManager extends Manager {
     for (const file of files) {
       const methodFile = require(`../lisa/${file}`);
       if (!sandbox) methodFile.forEach(method => this.methods.push(method));
+      const thing = require.cache[require.resolve(`../lisa/${file}`)];
       delete require.cache[require.resolve(`../lisa/${file}`)];
+
+      for (let i = 0; i < thing.parent.children.length; i += 1) {
+        if (thing.parent.children[i] === mod) {
+          thing.parent.children.splice(i, 1);
+          break;
+        }
+      }
     }
   }
 

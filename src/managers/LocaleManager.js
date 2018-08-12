@@ -22,7 +22,15 @@ class LocaleManager extends Manager {
     for (const file of files) {
       const localeFile = require(`${this.directory}/${file}`);
       if (!sandbox) this.locales[localeFile['lang.code']] = localeFile;
+      const thing = require.cache[require.resolve(`${this.directory}/${file}`)];
       delete require.cache[require.resolve(`${this.directory}/${file}`)];
+
+      for (let i = 0; i < thing.parent.children.length; i += 1) {
+        if (thing.parent.children[i] === mod) {
+          thing.parent.children.splice(i, 1);
+          break;
+        }
+      }
     }
   }
 
