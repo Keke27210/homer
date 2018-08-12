@@ -160,6 +160,14 @@ module.exports = [
       return typeof params[0];
     },
   ),
+
+  // nsfw
+  // just replace with blank
+  new Method(
+    'nsfw',
+    '',
+    null,
+  ),
 ];
 
 function uuid() {
