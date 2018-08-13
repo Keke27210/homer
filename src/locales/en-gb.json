@@ -55,6 +55,7 @@
   "channel.embed.topic": "Topic",
   "channel.type.text": "Text",
   "channel.type.voice": "Voice",
+  "channel.type.category": "Category",
 
   "checkdbans.title": "{{{ emote }}} Information about {{{ name }}}:",
   "checkdbans.embed.listed": "Listed",
