@@ -40,10 +40,9 @@ class CheckdbansCommand extends Command {
         ];
 
         if (banned) {
-          const link = this.getLink(obj.proof);
           banInformation.push(
             `${this.dot} ${context.__('checkdbans.embed.reason')}: **${obj.reason}**`,
-            `${this.dot} ${context.__('checkdbans.embed.proof')}: **[${context.__('global.image')}](${link})**`,
+            `${this.dot} **[${context.__('checkdbans.embed.proof')}](${obj.proof})**`,
           );
         }
 
@@ -68,11 +67,6 @@ class CheckdbansCommand extends Command {
   getDefaultAvatar(discriminator) {
     const defaultAvatarID = discriminator % 5;
     return `https://cdn.discordapp.com/embed/avatars/${defaultAvatarID}.png`;
-  }
-
-  getLink(string) {
-    const linkExpression = /<a href="(.*)">.*<\/a>/g.exec(string);
-    return linkExpression ? linkExpression[1] : 'UNAVAILABLE';
   }
 }
 
