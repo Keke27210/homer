@@ -29,35 +29,31 @@ class CheckdbansCommand extends Command {
 
     const message = await context.replyLoading(context.__('global.loading'));
     snekfetch
-      .post('https://bans.discordlist.net/api')
-      .set('Content-Type', 'application/x-www-form-urlencoded')
-      .send({
-        version: 3,
-        userid: user.id,
-        token: this.client.config.api.discordBans,
-      })
+      .post(`https://bans.discord.id/api/check.php?user_id=${user.id}`)
+      .set('Authorization', this.client.config.api.discordBans)
       .then((response) => {
-        const body = response.body.toString();
-        const object = (body === 'False' ? null : JSON.parse(body));
+        const obj = response.body;
+        let banned = obj.banned === '0' ? false : true;
 
         const banInformation = [
-          `${this.dot} ${context.__('checkdbans.embed.listed')}: **${body === 'False' ? context.__('global.no') : context.__('global.yes')}**`,
+          `${this.dot} ${context.__('checkdbans.embed.listed')}: **${banned ? context.__('global.no') : context.__('global.yes')}**`,
         ];
 
-        if (object) {
-          const link = this.getLink(object[4]);
+        if (banned) {
+          const link = this.getLink(obj.proof);
           banInformation.push(
-            `${this.dot} ${context.__('checkdbans.embed.reason')}: **${object[3]}**`,
+            `${this.dot} ${context.__('checkdbans.embed.reason')}: **${banned.reason}**`,
             `${this.dot} ${context.__('checkdbans.embed.proof')}: **[${context.__('global.image')}](${link})**`,
           );
         }
 
         const embed = new RichEmbed()
           .setDescription(banInformation.join('\n'))
-          .setColor(body === 'False' ? 0x00FF00 : 0xFF0000)
+          .setColor(banned ? 0xFF0000 : 0x00FF00)
           .setThumbnail(user.avatar
             ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}`
             : this.getDefaultAvatar(user.discriminator));
+        if (banned) embed.setFooter(`ID: ${banned.case_id}`);
 
         message.edit(
           context.__('checkdbans.title', { emote: this.client.constants.emotes.dbans, name: `**${user.username}**#${user.discriminator}` }),
