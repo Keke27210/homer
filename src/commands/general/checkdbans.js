@@ -42,7 +42,7 @@ class CheckdbansCommand extends Command {
         if (banned) {
           const link = this.getLink(obj.proof);
           banInformation.push(
-            `${this.dot} ${context.__('checkdbans.embed.reason')}: **${banned.reason}**`,
+            `${this.dot} ${context.__('checkdbans.embed.reason')}: **${obj.reason}**`,
             `${this.dot} ${context.__('checkdbans.embed.proof')}: **[${context.__('global.image')}](${link})**`,
           );
         }
@@ -53,7 +53,7 @@ class CheckdbansCommand extends Command {
           .setThumbnail(user.avatar
             ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}`
             : this.getDefaultAvatar(user.discriminator));
-        if (banned) embed.setFooter(`ID: ${banned.case_id}`);
+        if (banned) embed.setFooter(`ID: ${obj.case_id}`);
 
         message.edit(
           context.__('checkdbans.title', { emote: this.client.constants.emotes.dbans, name: `**${user.username}**#${user.discriminator}` }),
