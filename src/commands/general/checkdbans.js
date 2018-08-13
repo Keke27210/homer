@@ -36,7 +36,7 @@ class CheckdbansCommand extends Command {
         let banned = obj.banned === '0' ? false : true;
 
         const banInformation = [
-          `${this.dot} ${context.__('checkdbans.embed.listed')}: **${banned ? context.__('global.no') : context.__('global.yes')}**`,
+          `${this.dot} ${context.__('checkdbans.embed.listed')}: **${banned ? context.__('global.yes') : context.__('global.no')}**`,
         ];
 
         if (banned) {
