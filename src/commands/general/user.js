@@ -79,9 +79,7 @@ class UserCommand extends Command {
 
     const embed = new RichEmbed()
       .setDescription(userInformation)
-      .setThumbnail(user.avatar
-        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${user.avatar.startsWith('a_') ? 'gif' : 'png'}`
-        : this.getDefaultAvatar(user.discriminator))
+      .setThumbnail(user.displayAvatarURL)
       .setColor(member && member.displayHexColor !== '#000000' ? member.displayHexColor : undefined);
 
     context.reply(
@@ -91,11 +89,6 @@ class UserCommand extends Command {
       }),
       { embed },
     );
-  }
-
-  getDefaultAvatar(discriminator) {
-    const defaultAvatarID = discriminator % 5;
-    return `https://cdn.discordapp.com/embed/avatars/${defaultAvatarID}.png`;
   }
 }
 

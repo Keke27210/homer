@@ -55,9 +55,7 @@ class CheckdbansCommand extends Command {
         const embed = new RichEmbed()
           .setDescription(banInformation.join('\n'))
           .setColor(body === 'False' ? 0x00FF00 : 0xFF0000)
-          .setThumbnail(user.avatar
-            ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}`
-            : this.getDefaultAvatar(user.discriminator));
+          .setThumbnail(user.displayAvatarURL);
 
         message.edit(
           context.__('checkdbans.title', { emote: this.client.constants.emotes.dbans, name: `**${user.username}**#${user.discriminator}` }),
@@ -67,11 +65,6 @@ class CheckdbansCommand extends Command {
       .catch(() => {
         message.edit(`${this.client.constants.emotes.error} ${context.__('checkdbans.error')}`);
       });
-  }
-
-  getDefaultAvatar(discriminator) {
-    const defaultAvatarID = discriminator % 5;
-    return `https://cdn.discordapp.com/embed/avatars/${defaultAvatarID}.png`;
   }
 
   getLink(string) {

@@ -27,19 +27,12 @@ class AboutCommand extends Command {
 
     const embed = new RichEmbed()
       .setDescription(aboutInformation)
-      .setThumbnail(this.client.user.avatar
-        ? `https://cdn.discordapp.com/avatars/${this.client.user.id}/${this.client.user.avatar}`
-        : this.getDefaultAvatar(this.client.user.discriminator));
+      .setThumbnail(this.client.user.displayAvatarURL);
 
     context.reply(
       context.__('about.title', { emote: this.client.constants.emotes.homer, name: `**${this.client.user.username}**` }),
       { embed },
     );
-  }
-
-  getDefaultAvatar(discriminator) {
-    const defaultAvatarID = discriminator % 5;
-    return `https://cdn.discordapp.com/embed/avatars/${defaultAvatarID}.png`;
   }
 }
 

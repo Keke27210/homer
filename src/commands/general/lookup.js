@@ -41,9 +41,7 @@ class LookupCommand extends Command {
 
         embed
           .setDescription(userInformation)
-          .setThumbnail(user.avatar
-            ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${user.avatar.startsWith('a_') ? 'gif' : 'png'}`
-            : this.getDefaultAvatar(user.discriminator));
+          .setThumbnail(user.displayAvatarURL);
 
         message.edit(
           context.__('user.title', {
@@ -167,11 +165,6 @@ class LookupCommand extends Command {
     if (!done) {
       message.edit(`${this.client.constants.emotes.error} ${context.__('lookup.nothingFound', { search })}`);
     }
-  }
-
-  getDefaultAvatar(discriminator) {
-    const defaultAvatarID = discriminator % 5;
-    return `https://cdn.discordapp.com/embed/avatars/${defaultAvatarID}.png`;
   }
 }
 
