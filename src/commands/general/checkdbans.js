@@ -61,11 +61,6 @@ class CheckdbansCommand extends Command {
         message.edit(`${this.client.constants.emotes.error} ${context.__('checkdbans.error')}`);
       });
   }
-
-  getLink(string) {
-    const linkExpression = /<a href="(.*)">.*<\/a>/g.exec(string);
-    return linkExpression ? linkExpression[1] : 'UNAVAILABLE';
-  }
 }
 
 module.exports = CheckdbansCommand;
