@@ -80,7 +80,15 @@ class DiscordClient extends Client {
         this.events.push(event);
         this.on(event.name, (...args) => event.handle(...args));
       }
+      const thing = require.cache[require.resolve(`../events/${eventFile}`)];
       delete require.cache[require.resolve(`../events/${eventFile}`)];
+
+      for (let i = 0; i < thing.parent.children.length; i += 1) {
+        if (thing.parent.children[i] === thing) {
+          thing.parent.children.splice(i, 1);
+          break;
+        }
+      }
     }
   }
 

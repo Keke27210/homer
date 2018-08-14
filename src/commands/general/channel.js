@@ -27,7 +27,7 @@ class ChannelCommand extends Command {
     ];
 
     if (channel.type === 'voice') channelInformation.push(`${this.dot} ${context.__('channel.embed.bitrate')}: **${channel.bitrate}**Kbps`);
-    channelInformation.push(`${this.dot} ${context.__('channel.embed.users')}: **${channel.members.size}**${channel.type === 'voice' ? `/**${channel.userLimit === 0 ? '∞' : channel.userLimit}**` : ''}`);
+    if (channel.type !== 'category') channelInformation.push(`${this.dot} ${context.__('channel.embed.users')}: **${channel.members.size}**${channel.type === 'voice' ? `/**${channel.userLimit === 0 ? '∞' : channel.userLimit}**` : ''}`);
     channelInformation.push(`${this.dot} ${context.__('channel.embed.creation')}: **${context.formatDate(channel.createdTimestamp)}**`);
 
     const embed = new RichEmbed()

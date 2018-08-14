@@ -28,6 +28,7 @@ module.exports = [
       env.embed = parsed.embed;
       return parsed.content;
     },
+    ['|with:'],
   ),
 
   // embed
@@ -51,10 +52,13 @@ module.exports = [
       }
 
       const image = params.find(p => p.startsWith('image:'));
-      if (image) embed.setImage(image.substring(6));
+      if (image) try { embed.setImage(image.substring(6)); } catch (e) {}
 
       const thumbnail = params.find(p => p.startsWith('thumb:'));
-      if (thumbnail) embed.setThumbnail(thumbnail.substring(6));
+      if (thumbnail) try { embed.setThumbnail(thumbnail.substring(6)); } catch (e) {}
+
+      const url = params.find(p => p.startsWith('url:'));
+      if (url) try { embed.setURL(url.substring(4)); } catch (e) {}
 
       const color = params.find(p => p.startsWith('color:'));
       if (color) embed.setColor(color.substring(6).toUpperCase());
@@ -118,7 +122,7 @@ module.exports = [
 
       let current = json;
       for (let i = 0; i < path.length; i += 1) {
-        try { current = current[path[i]]; }
+        try { current = typeof current[path[i]] === 'number' ? current[path[i]] : (current[path[i]] || 'undefined'); }
         catch (e) { return 'undefined'; }
       }
 
@@ -128,6 +132,41 @@ module.exports = [
       else if (typeof current === 'function') return 'CANNOT_RETURN_FUNCTION';
       return current;
     },
+  ),
+
+  // map
+  new Method(
+    'map',
+    null,
+    (env, params) => {
+      let array = null;
+      try { array = JSON.parse(params[0]); }
+      catch (e) { return '<invalid array>'; }
+
+      return array
+        .map(item => params[1] ? params[1].replace(/{item}/g, item) : item)
+        .join(params[2] || ', ');
+    },
+  ),
+
+  // typeof
+  new Method(
+    'typeof',
+    null,
+    (env, params) => {
+      try { params[0] = JSON.parse(params[0]); } catch (e) {}
+      if (!Number.isNaN(parseInt(params[0]))) params[0] = parseInt(params[0]);
+
+      return typeof params[0];
+    },
+  ),
+
+  // nsfw
+  // just replace with blank
+  new Method(
+    'nsfw',
+    () => '',
+    null,
   ),
 ];
 

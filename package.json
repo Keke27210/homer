@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "big-integer": "^1.6.31",
-    "discord.js": "github:iDroid27/discord.js#stable",
+    "discord.js": "^11.4.0",
     "erlpack": "github:discordapp/erlpack",
     "escape-string-regexp": "^1.0.5",
     "google-translate-api": "^2.3.0",
@@ -26,7 +26,6 @@
     "playlist-parser": "github:nickdesaulniers/javascript-playlist-parser",
     "rethinkdbdash": "^2.3.31",
     "sodium": "^2.0.3",
-    "uws": "^10.148.1",
     "xregexp": "^4.2.0"
   },
   "devDependencies": {

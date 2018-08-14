@@ -14,6 +14,8 @@ class FormatCommand extends Command {
 
   async execute(context) {
     const formatInformation = [
+      `${context.__('format.embed.explanation', { prefix: this.client.prefix })}`,
+      '',
       `${this.dot} ${context.__('format.embed.date')}: **${context.settings.misc.dateFormat}**`,
       `${this.dot} ${context.__('format.embed.time')}: **${context.settings.misc.timeFormat}**`,
       '',

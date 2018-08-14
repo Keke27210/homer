@@ -127,7 +127,7 @@ class VolumeSubcommand extends Command {
     let volume = context.args[0];
     if (isNaN(parseInt(volume)) || volume < 0 || volume > 100) return context.replyError(context.__('radio.volume.invalidVolume'));
 
-    volume = (volume / 100).toFixed(1);
+    volume = (volume / 100).toFixed(2);
     context.settings.radio.volume = volume;
     await context.saveSettings();
 
