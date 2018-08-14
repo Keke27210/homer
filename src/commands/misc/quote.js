@@ -35,9 +35,7 @@ class QuoteCommand extends Command {
     channel.fetchMessage(messageID)
       .then((message) => {
         const embed = new RichEmbed()
-          .setAuthor(message.author.tag, message.author.avatar
-            ? `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.${message.author.avatar.startsWith('a_') ? 'gif' : 'png'}`
-            : this.getDefaultAvatar(message.author.discriminator))
+          .setAuthor(message.author.tag, message.author.displayAvatarURL)
           .setDescription(message.content)
           .setFooter(`${channel.type === 'text' ? `#${channel.name}` : context.__('global.dm')} - ${message.editedTimestamp ? context.__('quote.edited') : context.__('quote.created')}`)
           .setTimestamp(message.editedAt || message.createdAt);
@@ -50,11 +48,6 @@ class QuoteCommand extends Command {
           message: messageID,
         }));
       });
-  }
-
-  getDefaultAvatar(discriminator) {
-    const defaultAvatarID = discriminator % 5;
-    return `https://cdn.discordapp.com/embed/avatars/${defaultAvatarID}.png`;
   }
 }
 

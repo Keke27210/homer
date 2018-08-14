@@ -46,11 +46,6 @@ class ServerCommand extends Command {
       { embed },
     );
   }
-
-  getDefaultAvatar(discriminator) {
-    const defaultAvatarID = discriminator % 5;
-    return `https://cdn.discordapp.com/embed/avatars/${defaultAvatarID}.png`;
-  }
 }
 
 class StaffSubcommand extends Command {

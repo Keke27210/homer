@@ -35,19 +35,12 @@ class BaninfoCommand extends Command {
         `${this.dot} ${context.__('baninfo.embed.reason')}: ${logEntry && logEntry.reason ? `**${logEntry.reason}**` : context.__('global.none')}`,
         `${this.dot} ${context.__('baninfo.embed.date')}: ${logEntry ? `**${context.formatDate(logEntry.createdTimestamp)}**` : context.__('global.none')}`,
       ].join('\n'))
-      .setThumbnail(user.avatar
-        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${user.avatar.startsWith('a_') ? 'gif' : 'png'}`
-        : this.getDefaultAvatar(user.discriminator));
+      .setThumbnail(user.displayAvatarURL);
 
     context.reply(
       context.__('baninfo.title', { user: `**${user.username}**#${user.discriminator}` }),
       { embed },
     );
-  }
-
-  getDefaultAvatar(discriminator) {
-    const defaultAvatarID = discriminator % 5;
-    return `https://cdn.discordapp.com/embed/avatars/${defaultAvatarID}.png`;
   }
 }
 
