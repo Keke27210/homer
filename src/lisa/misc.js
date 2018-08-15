@@ -157,8 +157,10 @@ module.exports = [
             let current;
             try { current = JSON.parse(item); }
             catch (e) { current = item; }
-            for (let i = 0; i < prop[1].length; i += 1) {
-              const property = current[prop[1][i]];
+
+            const props = prop[1].split('.');
+            for (const prop of props) {
+              const property = prop;
               if (!property) {
                 current = 'undefined';
                 break;
