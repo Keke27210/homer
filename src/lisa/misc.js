@@ -1,8 +1,10 @@
 const Method = require('../structures/Method');
 const { RichEmbed } = require('discord.js');
 const snekfetch = require('snekfetch');
+const { inspect } = require('util');
 
 const domainExpression = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n\?\=]+)/im;
+const propertyExpression = /{item.(.*)}/g;
 
 module.exports = [
   // uid
@@ -145,20 +147,24 @@ module.exports = [
 
       return array
         .map((item) => {
-          if (!params[1]) return item;
+          if (!params[1]) return (typeof item === 'object') ? JSON.stringify(item) : item;
 
-          const property = /{item.?(.*)}/g.exec(params[1]);
-          if (!property) return params[1].replace(/{item}/g, typeof item === 'object' ? JSON.stringify(item) : item);
-          if (typeof property !== 'object') return JSON.stringify(item);
+          const propertyTest = params[1].match(propertyExpression);
+          if (!propertyTest || typeof item !== 'object') return params[1].replace(/{item}/g, typeof item === 'object' ? JSON.stringify(item) : item);
 
-          let current = item;
-          const properties = property[1].split('.');
-          for (let i = 0; i < properties.length; i += 1) {
-            if (current[i]) current = current[i];
-            else return 'undefined';
+          for (const tmpProp of propertyTest) {
+            const prop = domainExpression.exec(tmpProp); 
+            let current = item;
+            for (let i = 0; i < prop[1].length; i += 1) {
+              const property = prop[1][i];
+              if (!property) {
+                current = 'undefined';
+                break;
+              }
+              current = property;
+            }
+            params[1] = params[1].replace(tmpProp, typeof current === 'object' ? JSON.stringify(current) : current);
           }
-
-          return (typeof current === 'object') ? JSON.stringify(current) : current;
         })
         .join(params[2] || ', ');
     },
