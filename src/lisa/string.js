@@ -96,6 +96,17 @@ module.exports = [
     null,
     (env, params) => {
       if (!params[0] || !params[1]) return;
+
+      if (params[1] === 'binary') {
+        const input = params[0];
+        const output = [];
+        for (let i = 0; i < input.length; i += 1) {
+          const charCode = input.charCodeAt(i).toString(2);
+          output.push(charCode.substring(0, (8 - charCode.length)) + charCode);
+        }
+        return output.join(' ');
+      }
+
       return Buffer.from(params[0]).toString(params[1]);
     },
     ['|in:'],
@@ -107,6 +118,10 @@ module.exports = [
     null,
     (env, params) => {
       if (!params[0] || !params[1]) return;
+
+      if (params[1] === 'binary') {
+      }
+
       return Buffer.from(params[0], params[1]).toString();
     },
     ['|from:'],
