@@ -20,9 +20,9 @@ module.exports = [
     'length',
     null,
     (env, params) => {
-      const input = params.join('|');
+      let input = params.join('|');
       try { input = JSON.parse(input); }
-      catch (e) { return e.message; }
+      catch (e) {}
       return input.length.toString();
     },
   ),
