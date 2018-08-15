@@ -152,22 +152,17 @@ module.exports = [
           const propertyTest = params[1].match(propertyExpression);
           if (!propertyTest || typeof item !== 'object') return params[1].replace(/{item}/g, typeof item === 'object' ? JSON.stringify(item) : item);
 
-          for (const tmpProp of propertyTest) {
-            const prop = domainExpression.exec(tmpProp); 
+          for (let i = 0; i < propertyTest.length; i += 1) {
+            const expressionResult = propertyExpression.exec(propertyTest[i]);
+            if (!expressionResult) continue;
+
             let current;
             try { current = JSON.parse(item); }
             catch (e) { current = item; }
 
-            const props = prop[1].split('.');
-            for (const prop of props) {
-              const property = prop;
-              if (!property) {
-                current = 'undefined';
-                break;
-              }
-              current = property;
-            }
-            params[1] = params[1].replace(tmpProp, typeof current === 'object' ? JSON.stringify(current) : current);
+            const properties = expressionResult[1].split('.');
+            for (const property of properties) current = current[property] || 'undefined';
+            params[1] = params[1].replace(propertyTest[i], typeof current === 'object' ? JSON.stringify(current) : current);
           }
 
           return params[1].replace(/{item}/g, typeof item === 'object' ? JSON.stringify(item) : item);
