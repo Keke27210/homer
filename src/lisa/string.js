@@ -23,7 +23,7 @@ module.exports = [
       const input = params.join('|');
       try { input = JSON.parse(input); }
       catch (e) {}
-      return input.length;
+      return input.length.toString();
     },
   ),
 
