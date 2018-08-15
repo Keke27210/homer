@@ -120,6 +120,7 @@ module.exports = [
       if (!params[0] || !params[1]) return;
 
       if (params[1] === 'binary') {
+        return params[0].replace(/\s*[01]{8}\s*/g, bin => String.fromCharCode(parseInt(bin, 2)));
       }
 
       return Buffer.from(params[0], params[1]).toString();
