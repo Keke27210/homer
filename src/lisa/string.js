@@ -98,7 +98,8 @@ module.exports = [
       if (!params[0] || !params[1]) return;
 
       if (params[1] === 'binary') {
-        return params[0].replace(/[\s\S]/g, str => zeroPad(str.charCodeAt().toString(2)));
+        const output = params[0].replace(/[\s\S]/g, str => `${zeroPad(str.charCodeAt().toString(2))} `);
+        return output.endsWith(' ') ? output.substring(0, (output.length - 1)) : output;
       }
 
       return Buffer.from(params[0]).toString(params[1]);
