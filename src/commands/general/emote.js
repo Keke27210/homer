@@ -36,7 +36,7 @@ class EmoteCommand extends Command {
 
     const emoteInformation = [
       `${this.dot} ${context.__('emote.embed.id')}: **${emoji.id}**`,
-      `${this.dot} ${context.__('emote.embed.guild')}: ${emoji.guild ? `**${emoji.guild}**` : `*${context.__('global.unknown')}*`}`,
+      `${this.dot} ${context.__('emote.embed.guild')}: ${emoji.guild ? `**${emoji.guild}**` : context.__('global.unknown')}`,
       `${this.dot} ${context.__('emote.embed.author')}: ${user}`,
       `${this.dot} ${context.__('emote.embed.animated')}: **${emoji.animated ? context.__('global.yes') : context.__('global.no')}**`,
       `${this.dot} ${context.__('emote.embed.managed')}: **${emoji.managed ? context.__('global.yes') : context.__('global.no')}**`,
