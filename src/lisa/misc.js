@@ -143,6 +143,7 @@ module.exports = [
       try { array = JSON.parse(params[0]); }
       catch (e) { return '<invalid array>'; }
 
+      item = (typeof item === 'object') ? JSON.stringify(item) : item;
       return array
         .map(item => params[1] ? params[1].replace(/{item}/g, item) : item)
         .join(params[2] || ', ');
