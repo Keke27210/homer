@@ -31,7 +31,7 @@ class EmoteCommand extends Command {
       const userReq = await this.client.rest.makeRequest('get', `/guilds/${emoji.guildID}/emojis/${emoji.id}`, true)
         .then(e => e.user)
         .catch(() => null);
-      if (userReq) user = `**${userReq.username}**#${userReq.discriminator} (ID:${userReq.id})`;
+      if (userReq) user = `**${userReq.username}**#${userReq.discriminator}`;
     }
 
     const emoteInformation = [
