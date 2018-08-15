@@ -154,7 +154,9 @@ module.exports = [
 
           for (const tmpProp of propertyTest) {
             const prop = domainExpression.exec(tmpProp); 
-            let current = item;
+            let current;
+            try { current = JSON.parse(item); }
+            catch (e) { current = item; }
             for (let i = 0; i < prop[1].length; i += 1) {
               const property = current[prop[1][i]];
               if (!property) {
