@@ -139,6 +139,7 @@ module.exports = [
     'map',
     null,
     (env, params) => {
+      try {
       let array = null;
       try { array = JSON.parse(params[0]); }
       catch (e) { return '<invalid array>'; }
@@ -147,6 +148,7 @@ module.exports = [
       return array
         .map(item => params[1] ? params[1].replace(/{item}/g, item) : item)
         .join(params[2] || ', ');
+      } catch (e) { return e.message }
     },
   ),
 
