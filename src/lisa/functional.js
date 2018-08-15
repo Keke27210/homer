@@ -30,7 +30,7 @@ module.exports = [
           i1 = tmp;
         }
 
-        return (i1 + (Math.random() * (i2 - i1))).toString();
+        return Math.floor(i1 + (Math.random() * (i2 - i1))).toString();
       } catch (e) {
         return `${params[0]}|${params[1]}`;
       }
