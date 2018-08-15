@@ -165,6 +165,8 @@ module.exports = [
             }
             params[1] = params[1].replace(tmpProp, typeof current === 'object' ? JSON.stringify(current) : current);
           }
+
+          return params[1].replace(/{item}/g, typeof item === 'object' ? JSON.stringify(item) : item);
         })
         .join(params[2] || ', ');
     },
