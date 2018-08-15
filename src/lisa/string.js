@@ -22,7 +22,7 @@ module.exports = [
     (env, params) => {
       const input = params.join('|');
       try { input = JSON.parse(input); }
-      catch (e) {}
+      catch (e) { return e.message; }
       return input.length.toString();
     },
   ),
