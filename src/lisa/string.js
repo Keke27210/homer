@@ -19,7 +19,12 @@ module.exports = [
   new Method(
     'length',
     null,
-    (env, params) => params.join('|').length.toString(),
+    (env, params) => {
+      const input = params.join('|');
+      try { input = JSON.parse(input); }
+      catch (e) {}
+      return input.length;
+    },
   ),
 
   // url
