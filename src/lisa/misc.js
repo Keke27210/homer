@@ -145,8 +145,20 @@ module.exports = [
 
       return array
         .map((item) => {
-          item = (typeof item === 'object') ? JSON.stringify(item) : item;
-          return params[1] ? params[1].replace(/{item}/g, item) : item;
+          if (!params[1]) return item;
+
+          const property = /{item.?(.*)}/g.exec(params[1]);
+          if (!property) return params[1].replace(/{item}/g, typeof item === 'object' ? JSON.stringify(item) : item);
+          if (typeof property !== 'object') return JSON.stringify(item);
+
+          let current = item;
+          const properties = property[1].split('.');
+          for (let i = 0; i < properties.length; i += 1) {
+            if (current[i]) current = current[i];
+            else return 'undefined';
+          }
+
+          return (typeof current === 'object') ? JSON.stringify(current) : current;
         })
         .join(params[2] || ', ');
     },
