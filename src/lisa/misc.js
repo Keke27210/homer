@@ -156,7 +156,7 @@ module.exports = [
             const prop = domainExpression.exec(tmpProp); 
             let current = item;
             for (let i = 0; i < prop[1].length; i += 1) {
-              const property = prop[1][i];
+              const property = current[prop[1][i]];
               if (!property) {
                 current = 'undefined';
                 break;
