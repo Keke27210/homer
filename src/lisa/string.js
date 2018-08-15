@@ -98,13 +98,7 @@ module.exports = [
       if (!params[0] || !params[1]) return;
 
       if (params[1] === 'binary') {
-        const input = params[0];
-        const output = [];
-        for (let i = 0; i < input.length; i += 1) {
-          const charCode = input.charCodeAt(i).toString(2);
-          output.push(charCode.substring(0, (8 - charCode.length)) + charCode);
-        }
-        return output.join(' ');
+        return params[0].replace(/[\s\S]/g, str => zeroPad(str.charCodeAt().toString(2)));
       }
 
       return Buffer.from(params[0]).toString(params[1]);
@@ -180,3 +174,7 @@ module.exports = [
     },
   ),
 ];
+
+function zeroPad(num) {
+  return '00000000'.slice(String(num).length) + num;
+}
