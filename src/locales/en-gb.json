@@ -581,6 +581,7 @@
   "tag.create.noContent": "You must provide a content for the tag to create",
   "tag.create.alreadyExist": "The tag \"{{{ name }}}\" already exists",
   "tag.create.created": "Tag \"{{{ name }}}\" created successfully!",
+  "tag.create.containsMentions": "Tag name cannot contain role or user mentions.",
   "tag.edit.noName": "You must provide the name of the tag to edit",
   "tag.edit.noContent": "You must provide a new content for the tag to edit",
   "tag.edit.notFound": "No tag found matching \"{{{ name }}}\"",

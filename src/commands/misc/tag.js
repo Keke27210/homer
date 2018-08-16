@@ -57,6 +57,7 @@ class CreateSubcommand extends Command {
     const content = context.args.slice(1).join(' ');
     if (!name) return context.replyError(context.__('tag.create.noName'));
     if (!content) return context.replyError(context.__('tag.create.noContent'));
+    if (name.match(/<(@!?|@&)(\d{17,20})>/g)) return context.replyWarning(context.__('tag.create.containsMentions'));
 
     const existentTag = await this.client.database.getDocument('tags', name.toLowerCase());
     if (existentTag) return context.replyWarning(context.__('tag.create.alreadyExist', { name }));
