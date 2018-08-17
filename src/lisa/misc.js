@@ -159,7 +159,7 @@ module.exports = [
             const properties = property.split('.');
             let item2 = item;
             for (let i = 0; i < properties.length; i += 1) item2 = item[properties[i]];
-            str = str.replace(property, typeof item2 === 'object' ? JSON.stringify(item2) : String(item2));
+            str = str.replace(`{item.${property}}`, typeof item2 === 'object' ? JSON.stringify(item2) : String(item2));
           }
 
           return str.replace(/{item}/g, typeof item === 'object' ? JSON.stringify(item) : String(item));
