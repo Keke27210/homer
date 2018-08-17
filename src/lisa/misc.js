@@ -151,16 +151,14 @@ module.exports = [
 
           const propertyTest = str.match(propertyExpression);
           if (!propertyTest) return str.replace(/{item}/g, typeof item === 'object' ? JSON.stringify(item) : String(item));
-          console.log(`Matches: ${propertyTest.join(', ')}`);
+
           for (let i = 0; i < propertyTest.length; i += 1) {
             const property = propertyExpression.exec(propertyTest[i]);
             propertyExpression.lastIndex = 0;
 
             const properties = property[1].split('.');
-            console.log(`Property: ${property[0]} - Properties: ${properties.join(', ')}`);
             let item2 = item;
             for (let i = 0; i < properties.length; i += 1) item2 = item[properties[i]];
-            console.log(`Result: ${item2}`);
             str = str.replace(property[0], typeof item2 === 'object' ? JSON.stringify(item2) : String(item2));
           }
 
