@@ -4,7 +4,7 @@ const snekfetch = require('snekfetch');
 const { inspect } = require('util');
 
 const domainExpression = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n\?\=]+)/im;
-const propertyExpression = /{item.(.*)}/g;
+const propertyExpression = /{item\.(.{1,50})}/g;
 
 module.exports = [
   // uid
@@ -153,13 +153,13 @@ module.exports = [
           if (!propertyTest) return str.replace(/{item}/g, typeof item === 'object' ? JSON.stringify(item) : String(item));
 
           for (let i = 0; i < propertyTest.length; i += 1) {
-            const property = propertyExpression.exec(propertyTest[i])[1];
+            const property = propertyExpression.exec(propertyTest[i]);
             propertyExpression.lastIndex = 0;
 
-            const properties = property.split('.');
+            const properties = property[1].split('.');
             let item2 = item;
             for (let i = 0; i < properties.length; i += 1) item2 = item[properties[i]];
-            str = str.replace(`{item.${property}}`, typeof item2 === 'object' ? JSON.stringify(item2) : String(item2));
+            str = str.replace(property[0], typeof item2 === 'object' ? JSON.stringify(item2) : String(item2));
           }
 
           return str.replace(/{item}/g, typeof item === 'object' ? JSON.stringify(item) : String(item));
