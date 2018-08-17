@@ -147,25 +147,22 @@ module.exports = [
 
       return array
         .map((item) => {
-          if (!params[1]) return (typeof item === 'object') ? JSON.stringify(item) : item;
+          let str = params[1];
 
-          const propertyTest = params[1].match(propertyExpression);
-          if (!propertyTest || typeof item !== 'object') return params[1].replace(/{item}/g, typeof item === 'object' ? JSON.stringify(item) : item);
+          const propertyTest = str.match(propertyExpression);
+          if (!propertyTest) return str.replace(/{item}/g, typeof item === 'object' ? JSON.stringify(item) : String(item));
 
           for (let i = 0; i < propertyTest.length; i += 1) {
-            const expressionResult = propertyExpression.exec(propertyTest[i]);
-            if (!expressionResult) continue;
+            const property = propertyExpression.exec(propertyTest[i])[1];
+            propertyExpression.lastIndex = 0;
 
-            let current;
-            try { current = JSON.parse(item); }
-            catch (e) { current = item; }
-
-            const properties = expressionResult[1].split('.');
-            for (const property of properties) current = current[property] || 'undefined';
-            params[1] = params[1].replace(propertyTest[i], typeof current === 'object' ? JSON.stringify(current) : current);
+            const properties = property.split('.');
+            let item2 = item;
+            for (let i = 0; i < properties.length; i += 1) item2 = item[properties[i]];
+            str = str.replace(property, typeof item2 === 'object' ? JSON.stringify(item2) : String(item2));
           }
 
-          return params[1].replace(/{item}/g, typeof item === 'object' ? JSON.stringify(item) : item);
+          return str.replace(/{item}/g, typeof item === 'object' ? JSON.stringify(item) : String(item));
         })
         .join(params[2] || ', ');
     },
