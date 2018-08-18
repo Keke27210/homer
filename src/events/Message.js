@@ -1,6 +1,8 @@
 const Event = require('../structures/Event');
 const { RichEmbed } = require('discord.js');
 
+const linkExpression = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
+
 class MessageEvent extends Event {
   constructor(client) {
     super(client, 'message');
@@ -66,6 +68,10 @@ class MessageEvent extends Event {
           if (targetSettings.ignored && targetSettings.ignored.find(i => i.id === message.author.id)) return;
 
           const msg = [`📞 **${message.author.username}**#${message.author.discriminator}: ${message.cleanContent}`];
+
+          const linkTest = msg[0].match(linkExpression);
+          for (const link of (linkTest || [])) msg[0] = msg[0].replace(link, `<${link}>`);
+
           const toLanguage = (await this.client.database.getDocument('settings', targetSettings) || this.client.constants.defaultUserSettings(targetSettings)).misc.locale;
           if (message.attachments.size > 0) msg.push('', this.client.__(toLanguage, 'telephone.attachments'));
           message.attachments.forEach((attachment) => {
