@@ -160,8 +160,8 @@ module.exports = [
             let item2 = item;
             for (let i = 0; i < properties.length; i += 1) item2 = item[properties[i]];
             str = str
-              .replace(/{index}/g, i.toString())
-              .replace(property[0], typeof item2 === 'object' ? JSON.stringify(item2) : String(item2));
+              .replace(property[0], typeof item2 === 'object' ? JSON.stringify(item2) : String(item2))
+              .replace(/{index}/g, i.toString());
           }
 
           return str;
