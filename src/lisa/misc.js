@@ -4,7 +4,7 @@ const snekfetch = require('snekfetch');
 const { inspect } = require('util');
 
 const domainExpression = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n\?\=]+)/im;
-const propertyExpression = /(?:{item\.(.{1,20})})/g;
+const propertyExpression = /{item.(.*?)}/g;
 
 module.exports = [
   // uid
