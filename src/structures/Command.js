@@ -114,7 +114,7 @@ class Command {
     }
 
     // Check if the command can be ran
-    if (!this.isAllowed(context.message.channel) && this.category !== 'owner') {
+    if (this.category !== 'owner') {
       return context.replyError(context.__(
         'commandHandler.unauthorized',
         { command: this.name, category: this.category },
@@ -185,23 +185,6 @@ class Command {
         message: e.stack,
       });
     }
-  }
-
-  isAllowed(channel) {
-    if (!channel.topic) return true;
-    const topic = channel.topic.toLowerCase();
-
-    // Command overwrites
-    if (topic.includes(`{${this.name}}`)) return true;
-    if (topic.includes(`{-${this.name}}`)) return false;
-
-    // Category overwrites
-    if (topic.includes(`{${this.category}}`)) return true;
-    if (topic.includes(`{-${this.category}}`)) return false;
-
-    // All
-    if (topic.includes('{-all}')) return false;
-    return true;
   }
 }
 
