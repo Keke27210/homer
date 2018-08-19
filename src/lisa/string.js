@@ -34,6 +34,14 @@ module.exports = [
     (env, params) => encodeURIComponent(params.join('|')),
   ),
 
+  // includes
+  new Method(
+    'includes',
+    null,
+    (env, params) => params[1].includes(params[0]),
+    ['|in:'],
+  ),
+
   // replace
   new Method(
     'replace',

@@ -177,13 +177,23 @@ module.exports = [
     (env, params) => {
       const item = params.join('|');
       if (item === 'true' || item === 'false') return 'boolean';
-      if (!Number.isNaN(parseInt(item))) return 'number';
+      if (!Number.isNaN(Number(item))) return 'number';
       try {
         const temp = JSON.parse(item);
         return Array.isArray(temp) ? 'array' : 'object';
       } catch (e) {
         return 'string';
       }
+    },
+  ),
+
+  // isfloat
+  new Method(
+    'isfloat',
+    null,
+    (env, params) => {
+      if (Number.isNaN(Number(params[0]))) return 'NaN';
+      return params[0].includes('.') ? 'true' : 'false';
     },
   ),
 
