@@ -38,7 +38,7 @@ module.exports = [
   new Method(
     'includes',
     null,
-    (env, params) => params[1].includes(params[0]),
+    (env, params) => params[1].includes(params[0]) ? 'true' : 'false',
     ['|in:'],
   ),
 
