@@ -1,4 +1,5 @@
 const Command = require('../../structures/Command');
+const Menu = require('../../structures/Menu');
 const { RichEmbed } = require('discord.js');
 
 class ServerCommand extends Command {
@@ -93,6 +94,29 @@ class StaffSubcommand extends Command {
       'idle': 'b',
       'dnd': 'c',
     });
+  }
+}
+
+class EmotesSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'emotes',
+      aliases: ['emojis'],
+      category: 'general',
+    });
+  }
+
+  async execute(context) {
+    if (context.message.guild.emojis.size === 0) {
+      return context.replyWarning(context.__('server.emotes.noEmote', { name: context.message.guild.name }));
+    }
+
+    const menu = new Menu(
+      context,
+      context.message.guild.emojis.map(e => `${e.toString()} **${e.name}** (ID:${e.id})`),
+    );
+
+    menu.send(context.__('server.emotes.title', { name: context.message.guild.name }));
   }
 }
 
