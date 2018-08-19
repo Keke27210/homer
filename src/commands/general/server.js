@@ -116,7 +116,7 @@ class EmotesSubcommand extends Command {
       context.message.guild.emojis.map(e => `${e.toString()} **${e.name}** (ID:${e.id})`),
     );
 
-    menu.send(context.__('server.emotes.title', { name: context.message.guild.name }));
+    menu.send(`${this.client.constants.emotes.success} ${context.__('server.emotes.title', { name: context.message.guild.name })}`);
   }
 }
 
