@@ -175,10 +175,15 @@ module.exports = [
     'typeof',
     null,
     (env, params) => {
-      try { params[0] = JSON.parse(params[0]); } catch (e) {}
-      if (!Number.isNaN(parseInt(params[0]))) params[0] = parseInt(params[0]);
-
-      return typeof params[0];
+      const item = params.join('|');
+      if (item === 'true' || item === 'false') return 'boolean';
+      if (!Number.isNaN(parseInt(item))) return 'number';
+      try {
+        const temp = JSON.parse(item);
+        return Array.isArray(temp) ? 'array' : 'object';
+      } catch (e) {
+        return 'string';
+      }
     },
   ),
 
