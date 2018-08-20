@@ -1,16 +1,31 @@
 const rethinkdb = require('rethinkdbdash');
 const Manager = require('../structures/Manager');
 
+const tables = [
+  'afk',
+  'blacklist',
+  'bot',
+  'calls',
+  'commandStats',
+  'cooldown',
+  'donators',
+  'jobs',
+  'lastactive',
+  'names',
+  'profiles',
+  'radios',
+  'reports',
+  'settings',
+  'tags',
+  'telephone',
+  'vip',
+];
+
 class DatabaseManager extends Manager {
   constructor(client) {
     super(client);
     this.provider = rethinkdb(this.client.config.database);
     this.cache = {};
-    this.prepareCache();
-  }
-
-  async prepareCache() {
-    const tables = await this.provider.tableList();
     for (const table of tables) this.cache[table] = [];
   }
 
