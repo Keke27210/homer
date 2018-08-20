@@ -35,7 +35,7 @@ class DatabaseManager extends Manager {
 
     for (let i = 0; i < this.cache[table].length; i += 1) {
       const item = this.cache[table][i];
-      if (!item) return;
+      if (!item) continue;
 
       let valid = true;
       for (const [k, v] of properties) {
