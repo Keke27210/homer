@@ -35,7 +35,7 @@ class AddSubcommand extends Command {
   }
 
   async execute(context) {
-    const prefix = context.args[0];
+    const prefix = context.args.join(' ');
     if (!prefix) return context.replyError(context.__('prefix.add.noPrefix'));
     if (prefix.length > 32) return context.replyError(context.__('prefix.add.prefixTooLong'));
 
