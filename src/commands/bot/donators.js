@@ -13,7 +13,7 @@ class DonatorsCommand extends Command {
   }
 
   async execute(context) {
-    const donatorsTable = await this.client.database.getDocuments('donators');
+    const donatorsTable = await this.client.database.getDocuments('donators', true);
     const perks = await this.client.database.getDocument('bot', 'settings').then(s => s.perks || []);
     const donatorsList = [];
 

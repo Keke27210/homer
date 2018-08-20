@@ -52,9 +52,9 @@ class DatabaseManager extends Manager {
       .run();
   }
 
-  async getDocument(table, key) {
+  async getDocument(table, key, fetch = false) {
     const cache = this.cache[table].find(item => item ? item.id === key : false);
-    if (cache) return cache;
+    if (!fetch && cache) return cache;
 
     const data = await this.provider
       .table(table)
@@ -65,8 +65,8 @@ class DatabaseManager extends Manager {
     return data;
   }
 
-  async getDocuments(table) {
-    if (Object.keys(this.cache[table]).length > 0) return this.cache[table];
+  async getDocuments(table, fetch = false) {
+    if (!fetch && Object.keys(this.cache[table]).length > 0) return this.cache[table];
 
     const data = await this.provider
       .table(table)
