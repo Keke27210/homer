@@ -71,13 +71,15 @@ class ResetSubcommand extends Command {
       },
     )
       .then(async (reactions) => {
+        if (context.message.guild && context.message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) {
+          message.clearReactions();
+        }
+
         if (reactions.first().emoji.identifier === this.emotes[0]) {
           await this.client.database.deleteDocument('settings', context.message.guild ? context.message.guild.id : context.message.author.id);
           message.edit(`${this.client.constants.emotes.success} ${context.__('settings.reset.deleted')}`);
-          message.clearReactions();
         } else {
           message.edit(`${this.client.constants.emotes.success} ${context.__('settings.reset.cancelled')}`);
-          message.clearReactions();
         }
       });
   }

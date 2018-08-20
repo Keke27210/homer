@@ -83,7 +83,9 @@ class CancelSubcommand extends Command {
           m.edit(`${this.client.constants.emotes.success} The subscription for **${number}** has been deleted!`);
         }
 
-        m.clearReactions();
+        if (context.message.guild && context.message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) {
+          m.clearReactions();
+        }
       });
   }
 }

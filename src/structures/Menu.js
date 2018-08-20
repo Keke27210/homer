@@ -55,7 +55,11 @@ class Menu {
       );
 
       collector.on('collect', (reaction) => {
-        reaction.remove(this.context.message.author.id);
+        if (this.context.message.guild
+          && this.context.message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) {
+          reaction.remove(this.context.message.author.id);
+        }
+
         if (reaction.emoji.name === '⏹') {
           return collector.stop();
         }
@@ -78,7 +82,7 @@ class Menu {
 
       collector.on('end', () => {
         this.menuMessage.delete();
-        this.context.message.delete();
+        if (this.context.message.deletable) this.context.message.delete();
       });
     });
   }

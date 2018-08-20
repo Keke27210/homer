@@ -95,6 +95,10 @@ class SubscribeSubcommand extends Command {
       .then(async (reactions) => {
         const emoji = reactions.first().emoji.identifier;
 
+        if (context.message.guild && context.message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) {
+          message.clearReactions();
+        }
+
         if (emoji === this.client.constants.emotes.successID) {
           await this.client.database.insertDocument(
             'telephone',
@@ -119,10 +123,8 @@ class SubscribeSubcommand extends Command {
           );
 
           message.edit(`${this.client.constants.emotes.success} ${context.__('telephone.setup.done')}`);
-          message.clearReactions();
         } else {
           message.edit(`${this.client.constants.emotes.success} ${context.__('telephone.setup.cancelled')}`);
-          message.clearReactions();
         }
       });
   }
@@ -173,14 +175,15 @@ class TerminateSubcommand extends Command {
       .then(async (reactions) => {
         const emoji = reactions.first().emoji.identifier;
 
+        if (context.message.guild && context.message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) {
+          message.clearReactions();
+        }
+
         if (emoji === this.client.constants.emotes.successID) {
           await this.client.database.deleteDocument('telephone', context.message.channel.id);
-
           message.edit(`${this.client.constants.emotes.success} ${context.__('telephone.terminate.done')}`);
-          message.clearReactions();
         } else {
           message.edit(`${this.client.constants.emotes.success} ${context.__('telephone.terminate.cancelled')}`);
-          message.clearReactions();
         }
       });
   }
