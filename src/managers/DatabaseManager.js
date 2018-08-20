@@ -60,7 +60,7 @@ class DatabaseManager extends Manager {
   }
 
   insertDocument(table, data, options) {
-    const index = this.cache[table].findIndex(item => item.id === key);
+    const index = this.cache[table].findIndex(item => item.id === data.id);
     if (index !== -1) {
       for (const [k, v] of Object.entries(data)) {
         this.cache[table][index][k] = v;
