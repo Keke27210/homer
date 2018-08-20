@@ -51,7 +51,7 @@ class DatabaseManager extends Manager {
   }
 
   async getDocument(table, key) {
-    const cache = this.cache[table].find(item => item ? item.id === key : console.log(this.cache));
+    const cache = this.cache[table].find(item => item ? item.id === key : false);
     if (cache) return cache;
 
     const data = await this.provider
