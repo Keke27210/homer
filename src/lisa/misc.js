@@ -179,6 +179,18 @@ module.exports = [
     },
   ),
 
+  // split
+  new Method(
+    'split',
+    null,
+    (env, params) => {
+      const [text, split] = params;
+      if (!text) return 'NO_TEXT_PROVIDED';
+      return JSON.stringify(text.split(split));
+    },
+    ['|with:'],
+  ),
+
   // typeof
   new Method(
     'typeof',
