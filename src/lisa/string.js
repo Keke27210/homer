@@ -21,8 +21,10 @@ module.exports = [
     null,
     (env, params) => {
       let input = params.join('|');
-      try { input = JSON.parse(input); }
-      catch (e) {}
+      if (Number.isNaN(parseInt(input))) {
+        try { input = JSON.parse(input); }
+        catch (e) {}
+      }
       return input.length.toString();
     },
   ),
