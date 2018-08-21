@@ -100,14 +100,23 @@ module.exports = [
       const whitelist = await env.client.database.getDocument('bot', 'settings').then(s => s.domainWhitelist);
       if (!whitelist.includes(domainTest[1].toLowerCase())) return 'UNAUTHORIZED_DOMAIN';
 
-      const result = await snekfetch
-        .get(url)
-        .set('User-Agent', 'HomerBot using Lisa Tags')
-        .then(r => r.text)
-        .catch(r => `HTTP_ERROR_${r.status}`);
+      const request = snekfetch
+        [params[1] ? 'post' : 'get'](url)
+        .set('User-Agent', 'HomerBot using Lisa');
 
-      return result;
+      if (params[1]) {
+        let contentType = 'text/plain';
+        try { params[1] = JSON.parse(params[1]); contentType = 'application/json'; }
+        catch (e) {}
+
+        request
+          .set('Content-Type', contentType)
+          .send(params[1]);
+      }
+
+      return (await request.then(r => r.text).catch(r => `HTTP_ERROR_${r.status}`));
     },
+    ['|body:'],
   ),
 
   // json
