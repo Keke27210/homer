@@ -12,7 +12,7 @@ class CallsCommand extends Command {
   }
 
   async execute(context) {
-    const calls = await this.client.database.getDocuments('calls');
+    const calls = await this.client.database.getDocuments('calls', true);
     if (calls.length === 0) return context.replyWarning('There is no ongoing call at the moment.');
 
     const menu = new Menu(
