@@ -62,7 +62,7 @@ class CallCommand extends Command {
     );
 
     this.client.setTimeout(async () => {
-      const callObject = await this.client.database.getDocuments('calls')
+      const callObject = await this.client.database.getDocuments('calls', true)
         .then(calls => calls.find(c => c.sender.number === thisSubscription.number && c.receiver.number === toSubscription.number));
       if (!callObject || callObject.state !== 0) return;
 

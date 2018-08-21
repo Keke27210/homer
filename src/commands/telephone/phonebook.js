@@ -13,7 +13,7 @@ class PhonebookCommand extends Command {
 
   async execute(context) {
     const search = context.args.join(' ');
-    const numbers = await this.client.database.getDocuments('telephone').then((subscriptions) => {
+    const numbers = await this.client.database.getDocuments('telephone', true).then((subscriptions) => {
       const lines = search ? [] : [subscriptions.find(s => s.number === 'SUPPORT')];
       subscriptions = subscriptions
         .filter(l => l.phonebook && (l.number.includes(search || l.number) || l.phonebook.toLowerCase().includes(search.toLowerCase())))
