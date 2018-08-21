@@ -56,7 +56,7 @@ class Menu {
 
       collector.on('collect', (reaction) => {
         if (this.context.message.guild
-          && this.context.message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) {
+          && this.context.message.channel.permissionsFor(this.context.client.user).has('MANAGE_MESSAGES')) {
           reaction.remove(this.context.message.author.id);
         }
 
