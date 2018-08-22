@@ -82,7 +82,7 @@ class MessageEvent extends Event {
               .catch(() => null);
 
             if (result && result.status === 'success' && result.nudity.safe <= this.client.config.misc.nsfwThresold) {
-              continue;
+              return;
             }
 
             msg.push(`- **${attachment.filename}**: <${attachment.url}>`);
