@@ -70,10 +70,10 @@ class EmoteCommand extends Command {
         (reaction, user) => user.id === context.message.author.id && reaction.emoji.name === addEmote,
         { max: 1 },
       ).then(async () => {
-        await context.reply('oof')
         const newEmoji = await context.message.guild.createEmoji(
           this.getURL(emoji.id, emoji.animated),
           emoji.name,
+          [],
           `Via emote commande by ${context.message.author.tag}`,
         );
 
