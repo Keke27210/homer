@@ -66,7 +66,14 @@ class DatabaseManager extends Manager {
       .get(key)
       .run();
 
-    if (data) this.cache[table].push(data);
+    if (data) {
+      if (!this.cache[table].find(a => a.id === data.id)) this.cache[table].push(data);
+      else {
+        this.cache[table].splice(this.cache[table].findIndex(a => a.id === data.id), 1);
+        this.cache[table].push(data);
+      }
+    }
+
     return data;
   }
 
@@ -77,7 +84,7 @@ class DatabaseManager extends Manager {
       .table(table)
       .run();
 
-    this.cache[table] = data;
+    for (const d of data) if (!this.cache[table].find(a => a.id === d.id)) this.cache[table].push(d);
     return data;
   }
 
