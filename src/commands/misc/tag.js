@@ -227,7 +227,7 @@ class ListSubcommand extends Command {
       else if (foundMembers.length > 1) return context.replyWarning(this.client.finder.formatMembers(foundMembers, context.settings.misc.locale));
     }
 
-    const userTags = await this.client.database.findDocuments('tags', { author: user.id });
+    const userTags = await this.client.database.findDocuments('tags', { author: user.id }, true);
     if (userTags.length === 0) return context.replyWarning(context.__('tag.list.noTag', { name: `**${user.username}**#${user.discriminator}` }));
 
     const msgs = splitMessage([

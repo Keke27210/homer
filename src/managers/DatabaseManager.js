@@ -29,27 +29,32 @@ class DatabaseManager extends Manager {
     for (const table of tables) this.cache[table] = [];
   }
 
-  async findDocuments(table, predicate) {
-    const found = [];
-    const properties = Object.entries(predicate);
+  async findDocuments(table, predicate, fetch = false) {
+    if (!fetch) {
+      const found = [];
+      const properties = Object.entries(predicate);
 
-    for (let i = 0; i < this.cache[table].length; i += 1) {
-      const item = this.cache[table][i];
-      if (!item) continue;
+      for (let i = 0; i < this.cache[table].length; i += 1) {
+        const item = this.cache[table][i];
+        if (!item) continue;
 
-      let valid = true;
-      for (const [k, v] of properties) {
-        if (item[k] !== v) valid = false;
+        let valid = true;
+        for (const [k, v] of properties) {
+          if (item[k] !== v) valid = false;
+        }
+        if (valid) found.push(item);
       }
-      if (valid) found.push(item);
+
+      if (found.length > 0) return found;
     }
 
-    if (found.length > 0) return found;
-
-    return this.provider
+    const data = await this.provider
       .table(table)
       .filter(predicate)
       .run();
+
+    for (const d of data) this.cache[table].push(d);
+    return data;
   }
 
   async getDocument(table, key, fetch = false) {
