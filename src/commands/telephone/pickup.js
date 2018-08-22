@@ -10,7 +10,7 @@ class PickupCommand extends Command {
   }
 
   async execute(context) {
-    const callObject = await this.client.database.getDocuments('calls')
+    const callObject = await this.client.database.getDocuments('calls', true)
       .then(calls => calls.find(c => [c.sender.id, c.receiver.id].includes(context.message.channel.id)));
     if (!callObject) return context.replyError(context.__('telephone.noCall'));
     if (callObject.state === 1) return context.replyWarning(context.__('pickup.alreadyAnswered'));
