@@ -70,6 +70,7 @@ class EmoteCommand extends Command {
         (reaction, user) => user.id === context.message.author.id && reaction.emoji.name === addEmote,
         { max: 1 },
       ).then(async () => {
+        if (context.message.guild.emojis.size >= 40) return;
         const newEmoji = await context.message.guild.createEmoji(
           this.getURL(emoji.id, emoji.animated),
           emoji.name,
