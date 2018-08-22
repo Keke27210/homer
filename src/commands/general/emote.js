@@ -50,6 +50,7 @@ class EmoteCommand extends Command {
       .setThumbnail(this.getURL(emoji.id, emoji.animated));
 
     if (context.message.guild &&
+      context.message.guild.name !== emoji.guild &&
       context.message.member.permissions.has('MANAGE_EMOJIS') &&
       context.message.guild.me.permissions.has('MANAGE_EMOJIS')) {
       embed.setFooter(context.__('emote.embed.footer', { emote: addEmote }));
@@ -61,6 +62,7 @@ class EmoteCommand extends Command {
     );
 
     if (context.message.guild &&
+        context.message.guild.name !== emoji.guild &&
         context.message.member.permissions.has('MANAGE_EMOJIS') &&
         context.message.guild.me.permissions.has('MANAGE_EMOJIS')) {
       await message.react(addEmote);
@@ -68,6 +70,7 @@ class EmoteCommand extends Command {
         (reaction, user) => user.id === context.message.author.id && reaction.emoji.name === addEmote,
         { max: 1 },
       ).then(async () => {
+        await context.reply('oof')
         const newEmoji = await context.message.guild.createEmoji(
           this.getURL(emoji.id, emoji.animated),
           emoji.name,
