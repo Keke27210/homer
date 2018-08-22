@@ -1,6 +1,7 @@
 const Command = require('../../structures/Command');
 const { RichEmbed } = require('discord.js');
 const { deconstruct } = require('../../../node_modules/discord.js/src/util/Snowflake');
+const addEmote = '📥';
 
 class EmoteCommand extends Command {
   constructor(client) {
@@ -48,10 +49,37 @@ class EmoteCommand extends Command {
       .setDescription(emoteInformation)
       .setThumbnail(this.getURL(emoji.id, emoji.animated));
 
-    context.replySuccess(
+    if (context.message.guild &&
+      context.message.member.permissions.has('MANAGE_EMOJIS') &&
+      context.message.guild.me.permissions.has('MANAGE_EMOJIS')) {
+      embed.setFooter(context.__('emote.embed.footer', { emote: addEmote }));
+    }
+
+    const message = await context.replySuccess(
       context.__('emote.title', { name: emoji.name }),
       { embed },
     );
+
+    if (context.message.guild &&
+        context.message.member.permissions.has('MANAGE_EMOJIS') &&
+        context.message.guild.me.permissions.has('MANAGE_EMOJIS')) {
+      await message.react(addEmote);
+      message.awaitReactions(
+        (reaction, user) => user.id === context.message.author.id && reaction.emoji.name === addEmote,
+        { max: 1 },
+      ).then(async () => {
+        const newEmoji = await context.message.guild.createEmoji(
+          this.getURL(emoji.id, emoji.animated),
+          emoji.name,
+          `Via emote commande by ${context.message.author.tag}`,
+        );
+
+        context.replySuccess(context.__('emote.added', {
+          emote: `<${newEmoji.animated ? 'a' : ''}:${newEmoji.name}:${newEmoji.id}>`,
+          name: context.message.guild.name,
+        }));
+      });
+    }
   }
 }
 

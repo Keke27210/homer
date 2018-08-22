@@ -109,6 +109,8 @@
   "emote.embed.managed": "Managed",
   "emote.embed.creation": "Creation date",
   "emote.embed.url": "URL",
+  "emote.embed.footer": "Push {{{ emote }}} to add this emote to this server.",
+  "emote.added": "You have successfully added emote {{{ emote }}} to **{{{ name }}}**.",
   "emote.noQuery": "You must provide an emote to search",
 
   "format.title": "📆 Formats for {{{ name }}}:",
