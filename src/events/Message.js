@@ -1,5 +1,6 @@
 const Event = require('../structures/Event');
 const { RichEmbed } = require('discord.js');
+const snekfetch = require('snekfetch');
 
 const linkExpression = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
 
@@ -74,9 +75,19 @@ class MessageEvent extends Event {
 
           const toLanguage = (await this.client.database.getDocument('settings', targetSettings) || this.client.constants.defaultUserSettings(targetSettings)).misc.locale;
           if (message.attachments.size > 0) msg.push('', this.client.__(toLanguage, 'telephone.attachments'));
-          message.attachments.forEach((attachment) => {
+          
+          for (const attachment of message.attachments.array()) {
+            const result = await snekfetch.get(`https://api.sightengine.com/1.0/check.json?models=nudity&api_user=${this.client.config.api.sightUser}&api_key=${this.client.config.api.sightKey}&url=${attachment.url}`)
+              .then(r => r.body)
+              .catch(() => null);
+
+            if (result && result.status === 'success' && result.nudity.safe <= this.client.config.misc.nsfwThresold) {
+              message.channel.send(this.client.__(toLanguage, 'telephone.nsfwWarning'));
+              continue;
+            }
+
             msg.push(`- **${attachment.filename}**: <${attachment.url}>`);
-          });
+          }
 
           this.client.sendMessage(target, msg.join('\n'));
         });
