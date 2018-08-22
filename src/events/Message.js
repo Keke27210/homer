@@ -82,7 +82,6 @@ class MessageEvent extends Event {
               .catch(() => null);
 
             if (result && result.status === 'success' && result.nudity.safe <= this.client.config.misc.nsfwThresold) {
-              message.channel.send(`${this.client.constants.emotes.warning} ${this.client.__(toLanguage, 'telephone.nsfwWarning')}`);
               continue;
             }
 

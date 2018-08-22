@@ -637,7 +637,6 @@
   "telephone.text.enabled": "You can now receive text messages from other people.",
   "telephone.text.disabled": "You will no longer receive text messages from other people.",
   "telephone.text.mustEnable": "You must enable receiving text messages to be able to send one.",
-  "telephone.nsfwWarning": "Please do not send **NSFW content** via Homer telephone.",
   
   "text.sent": "Text message successfully sent to **{{{ number }}}**!",
   "text.title": "📧 Text message by {{{ user }}} from **{{{ number }}}**:",
