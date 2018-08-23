@@ -30,11 +30,12 @@ class ListSubcommand extends Command {
     super(client, {
       name: 'list',
       category: 'misc',
+      dm: true,
     });
   }
 
   async execute(context) {
-    const radios = await this.client.database.getDocuments('radios');
+    const radios = await this.client.database.getDocuments('radios', true);
     if (radios.length === 0) return context.replyWarning(context.__('radio.list.noRadio'));
 
     const menu = new Menu(
