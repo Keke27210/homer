@@ -158,7 +158,7 @@ class OwnerSubcommand extends Command {
     const existentTag = await this.client.database.getDocument('tags', name.toLowerCase());
     if (!existentTag) return context.replyWarning(context.__('tag.notFound', { name }));
 
-    const author = await this.client.fetchUser(existentTag.author).then(u => `**${u.username}**#${u.discriminator}`);
+    const author = await this.client.fetchUser(existentTag.author).then(u => `**${u.username}**#${u.discriminator} (ID:${u.id})`);
     context.replySuccess(context.__('tag.owner.owner', {
       author,
       name,
