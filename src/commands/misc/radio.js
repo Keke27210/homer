@@ -268,9 +268,9 @@ class InfoSubcommand extends Command {
 async function parseURL(url) {
   const extension = url.split('?')[0];
 
-  if (['m3u8', 'm3u'].some(e => extension.endsWith(e))) {
+  if (['pls', 'm3u'].some(e => extension.endsWith(e))) {
     const data = await snekfetch.get(url).then(r => r.text).catch(() => '');
-    return parser.M3U.parse(data)[0].file;
+    return parser[extension.toUpperCase()].parse(data)[0].file;
   }
 
   return url;
