@@ -13,7 +13,7 @@ class CallCommand extends Command {
 
   async execute(context) {
     const status = await this.client.database.getDocument('bot', 'settings').then(s => s.telephone);
-    const calls = await this.client.database.getDocuments('calls');
+    const calls = await this.client.database.getDocuments('calls', true);
 
     const thisSubscription = await this.client.database.getDocument('telephone', context.message.channel.id);
     if (!thisSubscription) return context.replyWarning(context.__('telephone.noSubscription', { command: `${this.client.prefix}telephone subscribe` }));
