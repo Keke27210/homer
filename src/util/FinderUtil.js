@@ -2,7 +2,7 @@
 const tagExpression = /(.{0,30})#(\d{4})/g;
 const mentionExpression = /<(@!?|@&|#)(\d{17,20})>/g;
 const idExpression = /(\d{17,20})/g;
-const emojiExpression = /<?(a?):?(.{0,100}):(\d{17,20})>?/g;
+const emojiExpression = /<(a?):(.{0,100}):(\d{17,20})>/g;
 
 class FinderUtil {
   constructor(client) {
