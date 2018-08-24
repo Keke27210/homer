@@ -49,10 +49,14 @@ class EmoteCommand extends Command {
       .setDescription(emoteInformation)
       .setThumbnail(this.getURL(emoji.id, emoji.animated));
 
-    if (context.message.guild &&
-      context.message.guild.name !== emoji.guild &&
-      context.message.member.permissions.has('MANAGE_EMOJIS') &&
-      context.message.guild.me.permissions.has('MANAGE_EMOJIS')) {
+    const addable = this.canAdd(
+      context.message.guild,
+      context.message.member,
+      (context.message.guild || {}).emojis,
+      emoji,
+    );
+
+    if (addable) {
       embed.setFooter(context.__('emote.embed.footer', { emote: addEmote }));
     }
 
@@ -61,16 +65,13 @@ class EmoteCommand extends Command {
       { embed },
     );
 
-    if (context.message.guild &&
-        context.message.guild.name !== emoji.guild &&
-        context.message.member.permissions.has('MANAGE_EMOJIS') &&
-        context.message.guild.me.permissions.has('MANAGE_EMOJIS')) {
+    if (addable) {
       await message.react(addEmote);
       message.awaitReactions(
         (reaction, user) => user.id === context.message.author.id && reaction.emoji.name === addEmote,
         { max: 1 },
       ).then(async () => {
-        if (context.message.guild.emojis.size >= 40) return;
+        if (context.message.guild.emojis.filter(e => e.animated === emoji.animated).size >= 50) return;
         const newEmoji = await context.message.guild.createEmoji(
           this.getURL(emoji.id, emoji.animated),
           emoji.name,
@@ -84,6 +85,14 @@ class EmoteCommand extends Command {
         }));
       });
     }
+  }
+
+  canAdd(guild, member, emojis, emoji, animated = false) {
+    if (!guild || guild.name === emoji.guild) return false;
+    if (!member.permissions.has('MANAGE_EMOJIS') || !guild.me.permissions.has('MANAGE_EMOJIS')) return false;
+    if (animated && emojis.filter(e => e.animated).size >= 50) return false;
+    if (!animated && emojis.filter(e => !e.animated).size >= 50) return false;
+    return true;
   }
 }
 
