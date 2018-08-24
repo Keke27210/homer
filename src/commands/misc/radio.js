@@ -83,7 +83,7 @@ class TuneSubcommand extends Command {
       broadcast,
       {
         volume: context.settings.radio.volume || 0.5,
-        bitrate: hq ? 64 : 48,
+        bitrate: hq ? 64000 : 48000,
       },
     );
 
@@ -106,7 +106,7 @@ class TuneSubcommand extends Command {
             broadcast,
             {
               volume: context.settings.radio.volume || 0.5,
-              bitrate: hq ? 64 : 48,
+              bitrate: hq ? 64000 : 48000,
             },
           );
         }
