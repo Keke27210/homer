@@ -70,6 +70,13 @@ class TuneSubcommand extends Command {
     let connection = this.client.voiceConnections.get(context.message.guild.id);
     if (!connection) connection = await channel.join();
 
+    const radio = (this.client.currentBroadcasts.find(b => b.guild === context.message.guild.id) || {}).radio;
+    const broad = this.client.voiceBroadcasts[radio];
+    if (broad && broad.dispatchers.length === 0) {
+      broad.destroy();
+      delete this.client.voiceBroadcasts[radio];
+    }
+
     const radio = await this.client.database.getDocument('radios', frequency) || ({
       name: '?',
       id: 0,
