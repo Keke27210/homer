@@ -71,11 +71,6 @@ class TuneSubcommand extends Command {
     if (!connection) connection = await channel.join();
 
     const currentBroad = (this.client.currentBroadcasts.find(b => b.guild === context.message.guild.id) || {}).radio;
-    const broad = this.client.voiceBroadcasts[currentBroad];
-    if (broad && broad.dispatchers.length === 0) {
-      broad.destroy();
-      delete this.client.voiceBroadcasts[radio];
-    }
 
     const radio = await this.client.database.getDocument('radios', frequency) || ({
       name: '?',
@@ -93,6 +88,12 @@ class TuneSubcommand extends Command {
         bitrate: hq ? 64000 : 48000,
       },
     );
+
+    const broad = this.client.voiceBroadcasts[currentBroad];
+    if (broad && broad.dispatchers.length === 0) {
+      broad.destroy();
+      delete this.client.voiceBroadcasts[radio];
+    }
 
     if (this.client.currentBroadcasts.find(b => b.guild === context.message.guild.id)) {
       this.client.currentBroadcasts.splice(this.client.currentBroadcasts.findIndex(b => b.guild === context.message.guild.id), 1);
