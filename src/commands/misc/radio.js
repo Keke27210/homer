@@ -83,7 +83,7 @@ class TuneSubcommand extends Command {
       broadcast,
       {
         volume: context.settings.radio.volume || 0.5,
-        bitrate: hq ? 64 : 48,
+        bitrate: hq ? 64000 : 48000,
       },
     );
 
@@ -106,7 +106,7 @@ class TuneSubcommand extends Command {
             broadcast,
             {
               volume: context.settings.radio.volume || 0.5,
-              bitrate: hq ? 64 : 48,
+              bitrate: hq ? 64000 : 48000,
             },
           );
         }
@@ -266,11 +266,12 @@ class InfoSubcommand extends Command {
 }
 
 async function parseURL(url) {
-  const extension = url.split('?')[0];
+  const path = url.split('?')[0];
+  const extension = ['pls', 'm3u'].find(e => path.toLowerCase().endsWith(e));
 
-  if (extension.endsWith('m3u')) {
+  if (extension) {
     const data = await snekfetch.get(url).then(r => r.text).catch(() => '');
-    return parser.M3U.parse(data)[0].file;
+    return parser[extension.toUpperCase()].parse(data)[0].file;
   }
 
   return url;
