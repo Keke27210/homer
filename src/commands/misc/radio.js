@@ -90,6 +90,7 @@ class TuneSubcommand extends Command {
     );
 
     const broad = this.client.voiceBroadcasts[currentBroad];
+    console.log(broad ? broad.dispatchers.length : 'oof');
     if (broad && broad.dispatchers.length === 0) {
       broad.destroy();
       delete this.client.voiceBroadcasts[radio];
