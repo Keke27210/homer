@@ -40,7 +40,7 @@ class TagCommand extends Command {
     context.message.channel.startTyping(1);
     const parsed = await this.client.lisa.parseString(context, tag.content, 'tag', args);
     context.reply(parsed.content || '', { embed: parsed.embed });
-    context.message.channel.stopTyping(true)
+    context.message.channel.stopTyping(true);
   }
 }
 
