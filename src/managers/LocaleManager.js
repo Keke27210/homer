@@ -56,7 +56,7 @@ class LocaleManager extends Manager {
     const templates = processKey.match(MUSTACHE_SYNTAX) || [];
     for (const template of templates) {
       const destructured = MUSTACHE_SYNTAX.exec(template);
-      processKey = processKey.replace(template, ((typeof args[destructured[1]] !== 'undefined' ? args[destructured[1]] : '?') || '?'));
+      processKey = processKey.replace(template, String(args[destructured[1]]) || '?');
       MUSTACHE_SYNTAX.lastIndex = 0;
     }
 
