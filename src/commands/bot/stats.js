@@ -24,7 +24,7 @@ class StatsCommand extends Command {
         return [serverCount, memoryUsage, shardsInfo.length];
       });
 
-    const currentCalls = await this.client.database.getDocuments('calls')
+    const currentCalls = await this.client.database.getDocuments('calls', true)
       .then(calls => calls.length);
 
     const statsInformation = [
