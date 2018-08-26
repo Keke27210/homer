@@ -23,7 +23,6 @@ class DiscordClient extends Client {
     this.constants = Constants;
     this.events = [];
     this.unavailable = [];
-    this.fetchDone = [];
     this.currentBroadcasts = [];
     this.voiceBroadcasts = [];
     this.ready = false;
