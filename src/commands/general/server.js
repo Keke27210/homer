@@ -25,13 +25,15 @@ class ServerCommand extends Command {
 
     let counts = {};
     let bots = 0;
-    guild.members.forEach((member) => {
-      if (member.user.bot) bots += 1;
-      if (!counts[member.user.presence.status]) counts[member.user.presence.status] = 0;
-      counts[member.user.presence.status] += 1;
-    });
+    if (!guild.large) {
+      guild.members.forEach((member) => {
+        if (member.user.bot) bots += 1;
+        if (!counts[member.user.presence.status]) counts[member.user.presence.status] = 0;
+        counts[member.user.presence.status] += 1;
+      });
+    }
 
-    const members = [
+    const members = guild.large ? `**${guild.memberCount}**` : [
       `${this.client.constants.status.online} **${counts.online || 0}**`,
       `${this.client.constants.status.idle} **${counts.idle || 0}**`,
       `${this.client.constants.status.dnd} **${counts.dnd || 0}**`,
