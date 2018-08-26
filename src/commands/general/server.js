@@ -27,25 +27,24 @@ class ServerCommand extends Command {
     let bots = 0;
     guild.members.forEach((member) => {
       if (member.user.bot) bots += 1;
-      if (!counts[guildObject.status]) counts[guildObject.status] = 0;
-      counts[guildObject.status] += 1;
+      if (!counts[member.user.presence.status]) counts[member.user.presence.status] = 0;
+      counts[member.user.presence.status] += 1;
     });
 
     const members = [
       `${this.client.constants.status.online} **${counts.online || 0}**`,
       `${this.client.constants.status.idle} **${counts.idle || 0}**`,
       `${this.client.constants.status.dnd} **${counts.dnd || 0}**`,
-    ];
-
-    if (metadata.memberCount) members.push(`${this.client.constants.status.offline} **${metadata.memberCount - guildObject.members.length}**`);
-    members.push(`${this.client.constants.emotes.bot} **${bots}**`);
+      `${this.client.constants.status.offline} **${counts.offline || 0}**`,
+      `${this.client.constants.emotes.bot} **${bots}**`,
+    ].join(' - ');
 
     const serverInformation = [
       `${this.dot} ${context.__('server.embed.id')}: **${guild.id}**${guild.verified ? ` ${this.client.constants.emotes.verifiedServer}` : ''}`,
       `${this.dot} ${context.__('server.embed.owner')}: **${guildOwner.username}**#${guildOwner.discriminator} (ID:${guild.ownerID})`,
       `${this.dot} ${context.__('server.embed.region')}: ${this.client.constants.regionFlags[region]} **${context.__(`server.region.${region}`)}${guild.region.startsWith('vip-') ? ' (VIP)' : ''}**`,
       `${this.dot} ${context.__('server.embed.channels')}: ${channels}`,
-      `${this.dot} ${context.__('server.embed.members')}: **${guild.memberCount}**`,
+      `${this.dot} ${context.__('server.embed.members')}: ${members}`,
       `${this.dot} ${context.__('server.embed.verificationLevel')}: **${context.__(`server.verificationLevel.${guild.verificationLevel}`)}**`,
       `${this.dot} ${context.__('server.embed.explicitContentFilter')}: **${context.__(`server.explicitContentFilter.${guild.explicitContentFilter}`)}**`,
       `${this.dot} ${context.__('server.embed.defaultMessageNotifications')}: **${context.__(`server.defaultMessageNotifications.${guild.defaultMessageNotifications}`)}**`,
