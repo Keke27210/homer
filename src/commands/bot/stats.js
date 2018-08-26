@@ -11,7 +11,7 @@ class StatsCommand extends Command {
   }
 
   async execute(context) {
-    const [serverCount, memoryUsage, shardCount] = await this.client.shard.broadcastEval('({ server: this.guilds.size, memory: process.memoryUsage().rss })')
+    const [serverCount, memoryUsage, shardCount] = await this.client.shard.broadcastEval('({ server: this.guilds.size, memory: process.memoryUsage().heapUsed })')
       .then((shardsInfo) => {
         const serverCount = shardsInfo
           .map(s => s.server)
