@@ -17,15 +17,7 @@ class CommandManager extends Manager {
       commandList.forEach((commandFile) => {
         const command = new (require(`../commands/${category}/${commandFile}`))(this.client);
         if (!sandbox) this.commands.push(command);
-        const thing = require.cache[require.resolve(`../commands/${category}/${commandFile}`)];
-        delete require.cache[require.resolve(`../commands/${category}/${commandFile}`)];
-
-        for (let i = 0; i < thing.parent.children.length; i += 1) {
-          if (thing.parent.children[i] === thing) {
-            thing.parent.children.splice(i, 1);
-            break;
-          }
-        }
+        this.client.clearCache(`../commands/${category}/${commandFile}`);
       });
     }
   }

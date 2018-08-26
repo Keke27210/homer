@@ -172,7 +172,7 @@ class StopSubcommand extends Command {
     const broad = this.client.voiceBroadcasts[radio];
     if (broad && broad.dispatchers.length === 0) {
       broad.destroy();
-      this.client.voiceBroadcasts[radio] = undefined;
+      delete this.client.voiceBroadcasts[radio];
     }
 
     context.replySuccess(context.__('radio.stop.done'));

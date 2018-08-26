@@ -80,15 +80,7 @@ class DiscordClient extends Client {
         this.events.push(event);
         this.on(event.name, (...args) => event.handle(...args));
       }
-      const thing = require.cache[require.resolve(`../events/${eventFile}`)];
-      delete require.cache[require.resolve(`../events/${eventFile}`)];
-
-      for (let i = 0; i < thing.parent.children.length; i += 1) {
-        if (thing.parent.children[i] === thing) {
-          thing.parent.children.splice(i, 1);
-          break;
-        }
-      }
+      this.clearCache(`../events/${eventFile}`);
     }
   }
 
@@ -98,6 +90,22 @@ class DiscordClient extends Client {
       this.events = [];
     }
     await this.loadEvents(sandbox);
+  }
+
+  clearCache(moduleId) {
+    const fullPath = require.resolve(moduleId);
+
+    if (require.cache[fullPath] && require.cache[fullPath].parent) {
+      let i = require.cache[filePath].parent.children.length;
+
+      while (i -= 1) {
+        if (require.cache[fullPath].parent.children[i].id === fullPath) {
+          require.cache[fullPath].parent.children.splice(i, 1);
+        }
+      }
+    }
+
+    delete require.cache[fullPath];
   }
 }
 
