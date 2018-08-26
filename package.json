@@ -26,6 +26,7 @@
     "playlist-parser": "github:nickdesaulniers/javascript-playlist-parser",
     "rethinkdbdash": "^2.3.31",
     "sodium": "^2.0.3",
+    "uws": "github:discordjs/uws",
     "xregexp": "^4.2.0"
   },
   "devDependencies": {
