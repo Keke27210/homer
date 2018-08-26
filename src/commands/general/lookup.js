@@ -78,10 +78,16 @@ class LookupCommand extends Command {
           }))
           .catch(() => ({}));
 
+        let counts = {};
+        for (let i = 0; i < guildObject.members.length; i += 1) {
+          if (!counts[guildObject.status]) counts[guildObject.status] = 0;
+          counts[guildObject.status] += 1;
+        }
+
         const members = [
-          `${this.client.constants.status.online} **${guildObject.members.filter(m => m.status === 'online').length}**`,
-          `${this.client.constants.status.idle} **${guildObject.members.filter(m => m.status === 'idle').length}**`,
-          `${this.client.constants.status.dnd} **${guildObject.members.filter(m => m.status === 'dnd').length}**`,
+          `${this.client.constants.status.online} **${counts.online || 0}**`,
+          `${this.client.constants.status.idle} **${counts.idle || 0}**`,
+          `${this.client.constants.status.dnd} **${counts.dnd || 0}**`,
         ];
 
         if (metadata.memberCount) members.push(`${this.client.constants.status.offline} **${metadata.memberCount - guildObject.members.length}**`);
