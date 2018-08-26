@@ -96,7 +96,7 @@ class DiscordClient extends Client {
     const fullPath = require.resolve(moduleId);
 
     if (require.cache[fullPath] && require.cache[fullPath].parent) {
-      let i = require.cache[filePath].parent.children.length;
+      let i = require.cache[fullPath].parent.children.length;
 
       while (i -= 1) {
         if (require.cache[fullPath].parent.children[i].id === fullPath) {
