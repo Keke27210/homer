@@ -7,8 +7,6 @@ class ReadyEvent extends Event {
   }
 
   async handle() {
-    this.client.ready = true;
-
     // Notifying sharder
     this.client.shard.send({
       type: 'log',
@@ -19,6 +17,8 @@ class ReadyEvent extends Event {
     this.client.sendMessage(this.client.config.logChannel, `\`[${mtz().format('HH:mm:ss')}]\` 📡 Shard ID **${this.client.shard.id}** is now **READY**.`);
     this.client.shardStatus = 'online';
 
+
+    for (const interval of this.client._intervals) this.client.clearInterval(interval);
     // Update game & bot list count
     this.client.update.updateGame();
     this.client.update.updateBotList();
@@ -28,6 +28,8 @@ class ReadyEvent extends Event {
       this.client.update.updateBotList();
     }, 30000);
     this.client.setInterval(() => this.client.other.updateShardStatus(), 1000);
+
+    this.client.ready = true;
   }
 }
 

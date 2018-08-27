@@ -52,8 +52,8 @@ sharder.on('message', async (shard, mail) => {
   }
 });
 
-async function editMessage(channel, message, content) {
-  await snekfetch
+function editMessage(channel, message, content) {
+  return snekfetch
     .patch(`https://discordapp.com/api/channels/${channel}/messages/${message}`)
     .set('Authorization', `Bot ${config.discord.token}`)
     .set('User-Agent', Constants.userAgent())

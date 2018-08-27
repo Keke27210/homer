@@ -1,7 +1,6 @@
 // Modules
 const { DiscordAPIError } = require('discord.js');
 const mtz = require('moment-timezone');
-const escapeRegexChars = require('escape-string-regexp');
 const config = require('../config.json');
 const { scheduleJob } = require('node-schedule');
 const DiscordClient = require('./structures/DiscordClient');
@@ -80,3 +79,7 @@ String.prototype.hashCode = function () {
   }
   return hash;
 };
+
+function escapeRegexChars(str) {
+  return str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+}
