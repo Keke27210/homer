@@ -13,4 +13,4 @@ class DebugEvent extends Event {
   }
 }
 
-module.exports = ErrorEvent;
+module.exports = DebugEvent;
