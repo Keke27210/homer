@@ -1,14 +1,14 @@
 const Event = require('../structures/Event');
 
-class ErrorEvent extends Event {
+class DebugEvent extends Event {
   constructor(client) {
-    super(client, 'error');
+    super(client, 'debug');
   }
 
-  handle(error) {
+  handle(debug) {
     this.client.shard.send({
       type: 'log',
-      message: error instanceof Error ? error.message : error,
+      message: `DEBUG: ${debug}`,
     });
   }
 }
