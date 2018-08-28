@@ -100,7 +100,7 @@ module.exports = [
       const whitelist = await env.client.database.getDocument('bot', 'settings').then(s => s.domainWhitelist);
       if (!whitelist.includes(domainTest[1].toLowerCase())) return 'UNAUTHORIZED_DOMAIN';
 
-      const request = (params[1] ? request.post(url) : request.get(url))
+      const req = (params[1] ? request.post(url) : request.get(url))
         .set('User-Agent', 'HomerBot / Lisa');
 
       if (params[1]) {
@@ -108,12 +108,12 @@ module.exports = [
         try { params[1] = JSON.parse(params[1]); contentType = 'application/json'; }
         catch (e) {}
 
-        request
+        req
           .set('Content-Type', contentType)
           .send(params[1]);
       }
 
-      return (await request.then(r => r.text).catch(r => `HTTP_ERROR_${r.status}`));
+      return (await req.then(r => r.text).catch(r => `HTTP_ERROR_${r.status}`));
     },
     ['|body:'],
   ),
