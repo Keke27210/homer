@@ -80,8 +80,9 @@ class LookupCommand extends Command {
 
         let counts = {};
         for (let i = 0; i < guildObject.members.length; i += 1) {
-          if (!counts[guildObject.status]) counts[guildObject.status] = 0;
-          counts[guildObject.status] += 1;
+          const status = guildObject.members[i];
+          if (!counts[status]) counts[status] = 0;
+          counts[status] += 1;
         }
 
         const members = [
