@@ -60,10 +60,8 @@ class LookupCommand extends Command {
 
     // Guild
     await this.client.rest.makeRequest('get', `/guilds/${search}/widget.json`, true)
-      .then(async (res) => {
+      .then(async (guildObject) => {
         done = true;
-
-        const guildObject = res.body;
         const { timestamp } = deconstruct(guildObject.id);
 
         const inviteCode = this.client.resolver.resolveInviteCode(guildObject.instant_invite) || null;
@@ -127,8 +125,7 @@ class LookupCommand extends Command {
           ? `**${invite.inviter.username}**#${invite.inviter.discriminator} (ID:${invite.inviter.id})`
           : context.__('global.none');
 
-        const guildObject = await snekfetch
-          .get(`https://discordapp.com/api/guilds/${invite.guild.id}/widget.json`)
+        const guildObject = await this.client.rest.makeRequest(`/guilds/${invite.guild.id}/widget.json`)
           .set({ 'User-Agent': this.client.constants.userAgent() })
           .then(res => ({
             online: res.body.members.filter(m => m.status === 'online').length,
