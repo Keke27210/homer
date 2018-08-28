@@ -32,7 +32,7 @@ class CheckdbansCommand extends Command {
       .post(`https://bans.discord.id/api/check.php?user_id=${user.id}`)
       .set('Authorization', this.client.config.api.discordBans)
       .then((response) => {
-        const obj = JSON.parse(response.text);
+        const obj = JSON.parse(response.text)[0];
         let banned = obj.banned === '0' ? false : true;
 
         const banInformation = [
