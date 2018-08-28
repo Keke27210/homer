@@ -100,9 +100,8 @@ module.exports = [
       const whitelist = await env.client.database.getDocument('bot', 'settings').then(s => s.domainWhitelist);
       if (!whitelist.includes(domainTest[1].toLowerCase())) return 'UNAUTHORIZED_DOMAIN';
 
-      const request = request
-        [params[1] ? 'post' : 'get'](url)
-        .set('User-Agent', 'HomerBot using Lisa');
+      const request = (params[1] ? request.post(url) : request.get(url))
+        .set('User-Agent', 'HomerBot / Lisa');
 
       if (params[1]) {
         let contentType = 'text/plain';
