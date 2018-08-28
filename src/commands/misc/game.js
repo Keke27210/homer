@@ -1,5 +1,5 @@
 const { RichEmbed } = require('discord.js');
-const snekfetch = require('snekfetch');
+const request = require('superagent');
 const mtz = require('moment-timezone');
 const Command = require('../../structures/Command');
 
@@ -24,7 +24,7 @@ class GameCommand extends Command {
     const message = await context.replyLoading(context.__('global.loading'));
 
     // Auto-complete search
-    const searchQuery = await snekfetch.get(`https://www.igdb.com/search_autocomplete_all?q=${encodeURIComponent(search)}`)
+    const searchQuery = await request.get(`https://www.igdb.com/search_autocomplete_all?q=${encodeURIComponent(search)}`)
       .then(res => res.body)
       .catch(() => null);
 
@@ -33,7 +33,7 @@ class GameCommand extends Command {
     }
 
     const query = `/games/${searchQuery.game_suggest[0].id}`;
-    const response = await snekfetch
+    const response = await request
       .get(`${this.baseURL}${query}`)
       .set('Accept', 'application/json')
       .set('user-key', this.client.config.api.igdb)
@@ -42,7 +42,7 @@ class GameCommand extends Command {
 
     const publishers = [];
     for (const publisher of response.publishers || []) {
-      const r = await snekfetch
+      const r = await request
         .get(`${this.baseURL}/companies/${publisher}`)
         .set('Accept', 'application/json')
         .set('user-key', this.client.config.api.igdb)
