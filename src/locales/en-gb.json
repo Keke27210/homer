@@ -378,6 +378,7 @@
   "pickup.sender": "📞 They picked up the phone. Say hello!",
   "pickup.receiver": "📞 You picked up the phone. Say hello!",
   "pickup.alreadyAnswered": "You already answered to the call.",
+  "pickup.senderCannotPickup": "You can't pickup the phone as caller!",
 
   "ping.ping": "🏓 Ping...",
   "ping.pong": "🏓 Pong! API: **{{{ api }}}**ms - Heartbeat: **{{{ heartbeat }}}**ms",
