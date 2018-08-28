@@ -1,7 +1,6 @@
 const Command = require('../../structures/Command');
 const { RichEmbed } = require('discord.js');
 const { deconstruct } = require('../../../node_modules/discord.js/src/util/Snowflake');
-const snekfetch = require('snekfetch');
 
 class LookupCommand extends Command {
   constructor(client) {
@@ -60,9 +59,7 @@ class LookupCommand extends Command {
     if (done) return;
 
     // Guild
-    await snekfetch
-      .get(`https://discordapp.com/api/guilds/${search}/widget.json`)
-      .set({ 'User-Agent': this.client.constants.userAgent() })
+    await this.client.rest.makeRequest(`/guilds/${search}/widget.json`)
       .then(async (res) => {
         done = true;
 
@@ -110,8 +107,8 @@ class LookupCommand extends Command {
           { embed },
         );
       })
-      .catch((res) => {
-        if (res.body && res.body.code === 50004) {
+      .catch((error) => {
+        if (error.code === 50004) {
           done = true;
           message.edit(`${this.client.constants.emotes.warning} ${context.__('lookup.disabledWidget', { search })}`);
         } else {
