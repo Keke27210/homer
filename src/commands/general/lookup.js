@@ -125,7 +125,7 @@ class LookupCommand extends Command {
           ? `**${invite.inviter.username}**#${invite.inviter.discriminator} (ID:${invite.inviter.id})`
           : context.__('global.none');
 
-        const guildObject = await this.client.rest.makeRequest(`/guilds/${invite.guild.id}/widget.json`)
+        const guildObject = await this.client.rest.makeRequest('get', `/guilds/${invite.guild.id}/widget.json`, true)
           .then(res => ({
             online: res.members.filter(m => m.status === 'online').length,
             idle: res.members.filter(m => m.status === 'idle').length,
