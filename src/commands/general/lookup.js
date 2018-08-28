@@ -59,7 +59,7 @@ class LookupCommand extends Command {
     if (done) return;
 
     // Guild
-    await this.client.rest.makeRequest(`/guilds/${search}/widget.json`)
+    await this.client.rest.makeRequest('get', `/guilds/${search}/widget.json`, true)
       .then(async (res) => {
         done = true;
 
