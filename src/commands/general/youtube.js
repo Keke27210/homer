@@ -1,4 +1,4 @@
-const snekfetch = require('snekfetch');
+const request = require('superagent');
 const Command = require('../../structures/Command');
 
 class YoutubeCommand extends Command {
@@ -16,7 +16,7 @@ class YoutubeCommand extends Command {
     if (!search) return context.replyError(context.__('youtube.noSearch'));
     if (search.length > 128) return context.replyWarning(context.__('youtube.searchTooLong'));
 
-    snekfetch
+    request
       .get(`https://www.googleapis.com/youtube/v3/search?key=${this.client.config.api.youtube}&part=snippet&maxResults=1&q=${search}`)
       .then((response) => {
         const parsed = response.body;
