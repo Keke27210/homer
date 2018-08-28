@@ -1,4 +1,4 @@
-const snekfetch = require('snekfetch');
+const request = require('superagent');
 const { exec } = require('child_process');
 const Command = require('../../structures/Command');
 const { Attachment } = require('discord.js');
@@ -28,7 +28,7 @@ class ExecCommand extends Command {
       if (message.length <= 1950) {
         context.reply(message, { code: true });
       } else {
-        const data = await snekfetch
+        const data = await request
           .post('https://hastebin.com/documents')
           .set('Content-Type', 'application/json')
           .send(message)
