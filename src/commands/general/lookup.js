@@ -126,14 +126,13 @@ class LookupCommand extends Command {
           : context.__('global.none');
 
         const guildObject = await this.client.rest.makeRequest(`/guilds/${invite.guild.id}/widget.json`)
-          .set({ 'User-Agent': this.client.constants.userAgent() })
           .then(res => ({
             online: res.members.filter(m => m.status === 'online').length,
             idle: res.members.filter(m => m.status === 'idle').length,
             dnd: res.members.filter(m => m.status === 'dnd').length,
             offline: invite.approximate_member_count - res.members.length,
           }))
-          .catch(r => r.body ? ({}) : undefined);
+          .catch(() => {});
 
         const members = guildObject.online ? [
           `${this.client.constants.status.online} **${guildObject.online}**`,
