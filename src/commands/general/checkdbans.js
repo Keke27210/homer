@@ -1,5 +1,5 @@
 const { RichEmbed } = require('discord.js');
-const snekfetch = require('snekfetch');
+const request = require('superagent');
 const Command = require('../../structures/Command');
 
 class CheckdbansCommand extends Command {
@@ -28,7 +28,7 @@ class CheckdbansCommand extends Command {
     if (!user) return context.replyWarning(context.__('checkdbans.notFound', { search }));
 
     const message = await context.replyLoading(context.__('global.loading'));
-    snekfetch
+    request
       .post(`https://bans.discord.id/api/check.php?user_id=${user.id}`)
       .set('Authorization', this.client.config.api.discordBans)
       .then((response) => {

@@ -1,4 +1,4 @@
-const snekfetch = require('snekfetch');
+const request = require('superagent');
 const { RichEmbed } = require('discord.js');
 const Command = require('../../structures/Command');
 
@@ -36,7 +36,7 @@ class GuildSubcommand extends Command {
     if (!guildID) return context.replyError('You must provide the ID of a guild to (un)blacklist.');
 
     const blacklistEntry = await this.client.database.getDocument('blacklist', guildID);
-    const guildEntry = await snekfetch
+    const guildEntry = await request
       .get(`https://discordapp.com/api/guilds/${guildID}/widget.json`)
       .set({ 'User-Agent': this.client.constants.userAgent() })
       .then(res => res.body)
@@ -75,7 +75,7 @@ class GuildStatusSubcommand extends Command {
     const guildID = context.args[0];
     if (!guildID) return context.replyError('You must provide the ID of a blacklisted guild.');
 
-    const guild = await snekfetch
+    const guild = await request
       .get(`https://discordapp.com/api/guilds/${guildID}/widget.json`)
       .set({ 'User-Agent': this.client.constants.userAgent() })
       .then(res => res.body)

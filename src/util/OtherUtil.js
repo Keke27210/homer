@@ -1,5 +1,5 @@
 const BigInt = require('big-integer');
-const snekfetch = require('snekfetch');
+const request = require('superagent');
 
 class OtherUtil {
   constructor(client) {
@@ -77,7 +77,7 @@ class OtherUtil {
     const text = context.args.join(' ');
     if (!text || !cleverbotState) return;
     context.message.channel.startTyping(1);
-    snekfetch
+    request
       .post('https://cleverbot.io/1.0/ask')
       .set({ 'Content-Type': 'application/json' })
       .send({

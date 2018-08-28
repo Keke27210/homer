@@ -1,4 +1,4 @@
-const snekfetch = require('snekfetch');
+const request = require('superagent');
 
 class UpdateUtil {
   constructor(client) {
@@ -20,7 +20,7 @@ class UpdateUtil {
 
   async updateBotList() {
     // Discord Bots
-    snekfetch
+    request
       .post(`https://bots.discord.pw/api/bots/${this.client.user.id}/stats`)
       .set('Authorization', this.client.config.api.discordBotsPw)
       .set('Content-Type', 'application/json')
@@ -32,7 +32,7 @@ class UpdateUtil {
       .catch(() => null);
 
     // Discordbots.org
-    snekfetch
+    request
       .post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
       .set('Authorization', this.client.config.api.discordBotsOrg)
       .set('Content-Type', 'application/json')
@@ -44,7 +44,7 @@ class UpdateUtil {
       .catch(() => null);
 
     // Listcord
-    snekfetch
+    request
       .post(`https://listcord.com/api/bot/${this.client.user.id}/guilds`)
       .set('Authorization', this.client.config.api.listcord)
       .set('Content-Type', 'application/json')
@@ -61,7 +61,7 @@ class UpdateUtil {
         .catch(() => null);
       if (!total) return;
 
-      snekfetch
+      request
         .post(`https://discordbots.group/api/bot/${this.client.user.id}`)
         .set('Authorization', this.client.config.api.discordbotsGroup)
         .set('Content-Type', 'application/json')

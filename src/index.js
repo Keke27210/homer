@@ -9,7 +9,7 @@ const Sharder = require('./structures/Sharder');
 const Constants = require('./util/Constants');
 const config = require('../config.json');
 const wait = require('util').promisify(setTimeout);
-const snekfetch = require('snekfetch');
+const request = require('superagent');
 
 // Initializing sharder
 const sharder = new Sharder(`${__dirname}/bot.js`, config);
@@ -53,7 +53,7 @@ sharder.on('message', async (shard, mail) => {
 });
 
 function editMessage(channel, message, content) {
-  return snekfetch
+  return request
     .patch(`https://discordapp.com/api/channels/${channel}/messages/${message}`)
     .set('Authorization', `Bot ${config.discord.token}`)
     .set('User-Agent', Constants.userAgent())

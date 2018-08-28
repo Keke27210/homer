@@ -1,4 +1,4 @@
-const snekfetch = require('snekfetch');
+const request = require('superagent');
 const Command = require('../../structures/Command');
 
 class GoogleCommand extends Command {
@@ -19,7 +19,7 @@ class GoogleCommand extends Command {
 
     const message = await context.replyLoading(context.__('global.loading'));
 
-    snekfetch
+    request
       .get(`https://www.googleapis.com/customsearch/v1?key=${this.client.config.api.googleKey}&cx=${this.client.config.api.googleCx}&lr=lang_${context.settings.misc.locale.split('-')[0]}&num=1&filter=1&safe=${context.message.channel.nsfw ? 'off' : 'high'}&fields=queries(request(totalResults)),items(link)&q=${query}`)
       .then((response) => {
         const body = response.body;

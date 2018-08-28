@@ -1,6 +1,6 @@
 const Event = require('../structures/Event');
 const { RichEmbed } = require('discord.js');
-const snekfetch = require('snekfetch');
+const request = require('superagent');
 
 const linkExpression = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
 
@@ -77,7 +77,7 @@ class MessageEvent extends Event {
           if (message.attachments.size > 0) msg.push('', this.client.__(toLanguage, 'telephone.attachments'));
           
           for (const attachment of message.attachments.array()) {
-            const result = await snekfetch.get(`https://api.sightengine.com/1.0/check.json?models=nudity&api_user=${this.client.config.api.sightUser}&api_secret=${this.client.config.api.sightKey}&url=${attachment.url}`)
+            const result = await request.get(`https://api.sightengine.com/1.0/check.json?models=nudity&api_user=${this.client.config.api.sightUser}&api_secret=${this.client.config.api.sightKey}&url=${attachment.url}`)
               .then(r => r.body)
               .catch(() => null);
 

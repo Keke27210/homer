@@ -1,5 +1,5 @@
 const { ShardingManager } = require('discord.js');
-const snekfetch = require('snekfetch');
+const request = require('superagent');
 
 class Sharder extends ShardingManager {
   constructor(file, config) {
@@ -15,7 +15,7 @@ class Sharder extends ShardingManager {
   }
 
   createBot() {
-    snekfetch
+    request
       .post('https://cleverbot.io/1.0/create')
       .set({ 'Content-Type': 'application/json' })
       .send({

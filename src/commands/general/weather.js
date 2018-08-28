@@ -1,5 +1,5 @@
 const { RichEmbed } = require('discord.js');
-const snekfetch = require('snekfetch');
+const request = require('superagent');
 const Command = require('../../structures/Command');
 
 class WeatherCommand extends Command {
@@ -19,7 +19,7 @@ class WeatherCommand extends Command {
 
     const message = await context.replyLoading(context.__('global.loading'));
 
-    const locationData = await snekfetch
+    const locationData = await request
       .get(`https://dev.virtualearth.net/REST/v1/Locations?query=${query}&maxResults=1&culture=${context.settings.misc.locale}&key=${this.client.config.api.bingGeocode}`)
       .then((res) => {
         const body = res.body;
@@ -38,7 +38,7 @@ class WeatherCommand extends Command {
       .catch(() => null);
     if (!locationData) return message.edit(`${this.client.constants.emotes.warning} ${context.__('weather.unknownLocation')}`);
 
-    const weatherData = await snekfetch
+    const weatherData = await request
       .get(`https://api.darksky.net/forecast/${this.client.config.api.darkSky}/${locationData.geometry}?exclude=minutely,hourly,daily,alerts,flags&lang=${context.settings.misc.locale.split('-')[0]}&units=si`)
       .then(res => res.body)
       .catch(() => null);
@@ -70,7 +70,7 @@ class WeatherCommand extends Command {
     );
 
     if (locationData.country === 'France' && locationData.postalcode) {
-      const alertData = await snekfetch.get('http://api.meteofrance.com/files/vigilance/vigilance.json')
+      const alertData = await request.get('http://api.meteofrance.com/files/vigilance/vigilance.json')
         .then(res => res.body);
 
       const meta = alertData.meta.find(m => m.zone === 'FR');
