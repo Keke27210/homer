@@ -1,5 +1,5 @@
 const { RichEmbed } = require('discord.js');
-const snekfetch = require('snekfetch');
+const request = require('superagent');
 const parser = require('playlist-parser');
 const Menu = require('../../structures/Menu');
 const Command = require('../../structures/Command');
@@ -247,7 +247,7 @@ class InfoSubcommand extends Command {
 
     let playing = `**${context.__('global.noInformation')}**`;
     if (meta.stationId) {
-      const request = await snekfetch.get(`https://api.radio.net/info/v2/search/nowplaying?apikey=${this.client.config.api.radio}&numberoftitles=1&station=${meta.stationId}`)
+      const request = await request.get(`https://api.radio.net/info/v2/search/nowplaying?apikey=${this.client.config.api.radio}&numberoftitles=1&station=${meta.stationId}`)
         .then(r => r.body)
         .catch(() => null);
 
@@ -278,7 +278,7 @@ async function parseURL(url) {
   const extension = ['pls', 'm3u'].find(e => path.toLowerCase().endsWith(e));
 
   if (extension) {
-    const data = await snekfetch.get(url).then(r => r.text).catch(() => '');
+    const data = await request.get(url).then(r => r.text).catch(() => '');
     return parser[extension.toUpperCase()].parse(data)[0].file;
   }
 
