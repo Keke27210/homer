@@ -44,7 +44,7 @@ class CommandManager extends Manager {
     context.args = context.args
       .join(' ')
       .slice(prefix.length)
-      .trimStart()
+      .trim()
       .split(' ');
 
     const cmdSearch = (context.args[0] || '').toLowerCase();
