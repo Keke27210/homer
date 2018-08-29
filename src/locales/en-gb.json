@@ -421,7 +421,7 @@
   "radio.hub": "📻 Welcome to the radio hub! Run `{{{ prefix }}}radio help` to have the list of subcommands.",
   "radio.noRadioChannel": "You must specify a radio channel using `{{{ prefix }}}radio channel`.",
   "radio.cannotJoinOrSpeak": "The bot cannot join or speak in **{{{ name }}}**.",
-  "radio.notInChannel": "You must be in the radio channel to run this command!",
+  "radio.notInChannel": "You must be in the radio channel (**{{{ name }}}**) to run this command!",
   "radio.list.noRadio": "There are no radios available for the moment.",
   "radio.list.title": "📻 Radios available on **{{{ name }}}**:",
   "radio.tune.noFrequency": "You must provide a frequency to tune in.",
