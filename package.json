@@ -11,7 +11,7 @@
   "license": "GPL-3.0-only",
   "dependencies": {
     "big-integer": "^1.6.31",
-    "discord.js": "^11.4.2",
+    "discord.js": "github:iDroid27/discord.js#stable",
     "google-translate-api": "^2.3.0",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.17",
