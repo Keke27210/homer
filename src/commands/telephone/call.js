@@ -19,7 +19,7 @@ class CallCommand extends Command {
     if (!thisSubscription) return context.replyWarning(context.__('telephone.noSubscription', { command: `${this.client.prefix}telephone subscribe` }));
 
     if (calls.find(c => c.sender.number === thisSubscription.number || c.receiver.number === thisSubscription.number)) {
-      return context.replyWarning(context.__('call.callerBusy'));
+      return context.reply(context.__('call.callerBusy', { number: c.sender.number === thisSubscription.number ? c.receiver.number : c.sender.number }));
     }
 
     const number = context.args[0];

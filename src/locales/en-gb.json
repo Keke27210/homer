@@ -36,7 +36,7 @@
   "baninfo.embed.date": "Date",
   "baninfo.noQuery": "You must provide a user to search for!",
 
-  "call.callerBusy": "You are currently incall.",
+  "call.callerBusy": "You are currently incall with **{{{ number }}}**.",
   "call.noNumber": "You must provide a number to call.",
   "call.receiverBusy": "Your correspondent is busy.",
   "call.cannotCallOwn": "You cannot call yourself.",

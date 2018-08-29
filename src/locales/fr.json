@@ -29,7 +29,7 @@
 
   "avatar.title": "🖼 Avatar de {{{ name }}}:",
 
-  "call.callerBusy": "Vous avez un appel en cours.",
+  "call.callerBusy": "Vous avez un appel en cours avec **{{{ number }}}**.",
   "call.noNumber": "Vous devez fournir un numéro à appeler.",
   "call.receiverBusy": "Votre correspondant est occupé.",
   "call.cannotCallOwn": "Vous ne pouvez pas appeler votre propre numéro.",
