@@ -54,7 +54,7 @@ class GameCommand extends Command {
 
     const developers = [];
     for (const developer of response.developers || []) {
-      const r = await snekfetch
+      const r = await request
         .get(`${this.baseURL}/companies/${developer}`)
         .set('Accept', 'application/json')
         .set('user-key', this.client.config.api.igdb)
@@ -66,7 +66,7 @@ class GameCommand extends Command {
 
     const platforms = [];
     for (const platform of response.platforms || []) {
-      const r = await snekfetch
+      const r = await request
         .get(`${this.baseURL}/platforms/${platform}`)
         .set('Accept', 'application/json')
         .set('user-key', this.client.config.api.igdb)
