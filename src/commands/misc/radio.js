@@ -62,7 +62,7 @@ class TuneSubcommand extends Command {
     const channel = context.message.guild.channels.get(context.settings.radio.channel);
     if (!channel) return context.replyWarning(context.__('radio.noRadioChannel', { prefix: this.client.prefix }));
     if (!channel.joinable || !channel.speakable) return context.replyError(context.__('radio.cannotJoinOrSpeak', { name: channel.name }));
-    if (!channel.members.has(context.message.author.id)) return context.replyWarning(context.__('radio.notInChannel'));
+    if (!channel.members.has(context.message.author.id)) return context.replyWarning(context.__('radio.notInChannel', { name: channel.name }));
 
     const frequency = context.args[0];
     if (!frequency) return context.replyError(context.__('radio.tune.noFrequency'));
@@ -133,6 +133,11 @@ class VolumeSubcommand extends Command {
   }
 
   async execute(context) {
+    const channel = context.message.guild.channels.get(context.settings.radio.channel);
+    if (!channel) return context.replyWarning(context.__('radio.noRadioChannel', { prefix: this.client.prefix }));
+    if (!channel.joinable || !channel.speakable) return context.replyError(context.__('radio.cannotJoinOrSpeak', { name: channel.name }));
+    if (!channel.members.has(context.message.author.id)) return context.replyWarning(context.__('radio.notInChannel', { name: channel.name }));
+
     let volume = context.args[0];
     if (isNaN(parseInt(volume)) || volume < 0 || volume > 100) return context.replyError(context.__('radio.volume.invalidVolume'));
 
@@ -160,7 +165,7 @@ class StopSubcommand extends Command {
     const channel = context.message.guild.channels.get(context.settings.radio.channel);
     if (!channel) return context.replyWarning(context.__('radio.noRadioChannel', { prefix: this.client.prefix }));
     if (!channel.joinable || !channel.speakable) return context.replyError(context.__('radio.cannotJoinOrSpeak', { name: channel.name }));
-    if (!channel.members.has(context.message.author.id)) return context.replyWarning(context.__('radio.notInChannel'));
+    if (!channel.members.has(context.message.author.id)) return context.replyWarning(context.__('radio.notInChannel', { name: channel.name }));
 
     const connection = this.client.voiceConnections.get(context.message.guild.id);
     if (!connection) return context.replyWarning(context.__('radio.stop.noActiveStream', { name: connection.channel.name }));
