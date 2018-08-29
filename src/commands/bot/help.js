@@ -21,7 +21,7 @@ class HelpCommand extends Command {
       const categoryMessage = [`${this.client.constants.categoryEmotes[category]} **${context.__(`help.category.${category}`)}**`];
 
       const commands = this.client.commands.commands
-        .filter(c => c.category === category)
+        .filter(c => c.category === category && !c.hidden)
         .sort((a, b) => a.name.localeCompare(b.name));
       commands.forEach((command) => {
         categoryMessage.push(`\`${this.client.prefix}${command.name}${command.usage ? ` ${command.usage}` : ''}\` - ${this.client.localization.hasKey(context.settings.misc.locale, `helpUtil.${command.name}`) ? context.__(`helpUtil.${command.name}`) : context.__('helpUtil.noDescription')}`);
