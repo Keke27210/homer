@@ -400,7 +400,7 @@
   "radio.hub": "📻 Bem-vindo ao hub de rádio! Use `{{{ prefix }}}radio help` para ver uma lista de subcomandos.",
   "radio.noRadioChannel": "Você deve especificar um canal de rádio usando `{{{ prefix }}}radio channel`.",
   "radio.cannotJoinOrSpeak": "O bot não pode entrar ou falar em **{{{ name }}}**.",
-  "radio.notInChannel": "Você deve estar no canal de rádio para executar esse comando!",
+  "radio.notInChannel": "Você deve estar no canal de rádio (**{{{ name }}}**) para executar esse comando!",
   "radio.list.noRadio": "Não há rádios disponíveis nesse momento.",
   "radio.list.title": "📻 Rádios disponíveis em **{{{ name }}}**:",
   "radio.tune.noFrequency": "Você deve fornecer uma frequência para sintonizar.",
