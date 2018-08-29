@@ -29,7 +29,7 @@
 
   "avatar.title": "🖼 Avatar de {{{ name }}}:",
 
-  "call.callerBusy": "Você já está numa ligação com **{{{ number }}}**.",
+  "call.callerBusy": "📞 Você já está numa ligação com **{{{ number }}}**.",
   "call.noNumber": "Você deve fornecer um número para ligar.",
   "call.receiverBusy": "Seu correspondente está ocupado.",
   "call.cannotCallOwn": "Você não pode ligar para si mesmo.",
