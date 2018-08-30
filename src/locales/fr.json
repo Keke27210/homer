@@ -344,7 +344,7 @@
   "profile.invalidName": "`{{{ name }}}` is not a valid field name! Use `{{{ command }}}` to get the list of available fields.",
   "profile.set.noName": "You must provide the name of a field to set.",
   "profile.set.noValue": "You must provide a content for the field to set.",
-  "profile.set.valueTooLong": "The content length must be fewer than 64 characters.",
+  "profile.set.valueTooLong": "The content length must be fewer than 128 characters.",
   "profile.set.tooMuchFields": "You can't have more than 20 fields on your profile!",
   "profile.set.updated": "Field `{{{ name }}}` updated successfully!",
   "profile.clear.noName": "You must provide the name of a field to clear.",

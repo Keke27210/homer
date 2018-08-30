@@ -66,7 +66,7 @@ class SetSubcommand extends Command {
     const value = context.args.slice(1).join(' ');
     if (!name) return context.replyError(context.__('profile.set.noName'));
     if (!value) return context.replyError(context.__('profile.set.noValue'));
-    if (value.length > 64) return context.replyWarning(context.__('profile.set.valueTooLong'));
+    if (value.length > 128) return context.replyWarning(context.__('profile.set.valueTooLong'));
     if (!this.client.constants.profileFields.find(f => f.id === name.toLowerCase())) {
       return context.replyWarning(context.__('profile.invalidName', { name: name.toLowerCase() }));
     }

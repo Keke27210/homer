@@ -382,7 +382,7 @@
   "profile.invalidName": "`{{{ name }}}` não é um campo válido! Use `{{{ command }}}` para ver uma lista de campos disponíveis.",
   "profile.set.noName": "Você deve fornecer o nome do campo para usar.",
   "profile.set.noValue": "Você deve fornecer conteúdo ao campo definido.",
-  "profile.set.valueTooLong": "O conteúdo deve ser menor que 48 caracteres.",
+  "profile.set.valueTooLong": "O conteúdo deve ser menor que 128 caracteres.",
   "profile.set.tooMuchFields": "Você não pode ter mais de 20 campos no seu perfil!",
   "profile.set.updated": "Campo `{{{ name }}}` atualizado com sucesso!",
   "profile.clear.noName": "Você deve fornecer o nome de um campo para remover.",
