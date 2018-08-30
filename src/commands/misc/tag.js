@@ -37,10 +37,9 @@ class TagCommand extends Command {
       return context.replyWarning(context.__('tag.nsfwAlert'));
     }
 
-    await context.message.channel.startTyping(1);
+    const m = await context.replyLoading(context.__('global.loading'));
     const parsed = await this.client.lisa.parseString(context, tag.content, 'tag', args);
-    context.reply(parsed.content || '', { embed: parsed.embed });
-    context.message.channel.stopTyping(true);
+    m.edit(parsed.content || '', { embed: parsed.embed });
   }
 }
 
@@ -310,10 +309,9 @@ class ExecSubcommand extends Command {
     const content = context.args.join(' ');
     if (!content) return context.replyError(context.__('tag.exec.noContent'));
 
-    await context.message.channel.startTyping(1);
+    const m = await context.replyLoading(context.__('global.loading'));
     const parsed = await this.client.lisa.parseString(context, content, 'tag');
-    context.reply(parsed.content || '', { embed: parsed.embed });
-    context.message.channel.stopTyping(true);
+    m.edit(parsed.content || '', { embed: parsed.embed });
   }
 }
 
