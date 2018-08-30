@@ -582,6 +582,7 @@
   "support.main": "🛂 Join the Homer support server to get assistance or be aware of the latest news about me: <{{{ invite }}}>.",
 
   "tag.noName": "You must provide the name of a tag",
+  "tag.execError": "An error occured during the execution of the tag!",
   "tag.notFound": "No tag found matching \"{{{ name }}}\"",
   "tag.unknownTag": "No tag found matching \"{{{ name }}}\"",
   "tag.nsfwAlert": "You can't run a NSFW-marked tag in a non-NSFW channel.",

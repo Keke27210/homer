@@ -38,6 +38,10 @@ class TagCommand extends Command {
     }
 
     const m = await context.replyLoading(context.__('global.loading'));
+    setTimeout(() => {
+      if (!m.editedTimestamp) m.edit(`${this.client.constants.emotes.warning} ${context.__('tag.execError')}`);
+    }, 10000);
+
     const parsed = await this.client.lisa.parseString(context, tag.content, 'tag', args);
     m.edit(parsed.content || '', { embed: parsed.embed });
   }
@@ -310,6 +314,10 @@ class ExecSubcommand extends Command {
     if (!content) return context.replyError(context.__('tag.exec.noContent'));
 
     const m = await context.replyLoading(context.__('global.loading'));
+    setTimeout(() => {
+      if (!m.editedTimestamp) m.edit(`${this.client.constants.emotes.warning} ${context.__('tag.execError')}`);
+    }, 10000);
+
     const parsed = await this.client.lisa.parseString(context, content, 'tag');
     m.edit(parsed.content || '', { embed: parsed.embed });
   }
