@@ -68,7 +68,7 @@ class SetSubcommand extends Command {
     if (!value) return context.replyError(context.__('profile.set.noValue'));
     if (value.length > 128) return context.replyWarning(context.__('profile.set.valueTooLong'));
     if (!this.client.constants.profileFields.find(f => f.id === name.toLowerCase())) {
-      return context.replyWarning(context.__('profile.invalidName', { name: name.toLowerCase() }));
+      return context.replyWarning(context.__('profile.invalidName', { command: `${this.client.prefix}profile fields` }));
     }
 
     const profile = await this.client.database.getDocument('profiles', context.message.author.id) || getProfile(context.message.author.id);
