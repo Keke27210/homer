@@ -37,12 +37,14 @@ class TagCommand extends Command {
       return context.replyWarning(context.__('tag.nsfwAlert'));
     }
 
+    let processed = false;
     const m = await context.replyLoading(context.__('global.loading'));
     setTimeout(() => {
-      if (!m.editedTimestamp) m.edit(`${this.client.constants.emotes.warning} ${context.__('tag.execError')}`);
+      if (!processed) m.edit(`${this.client.constants.emotes.warning} ${context.__('tag.execError')}`);
     }, 10000);
 
     const parsed = await this.client.lisa.parseString(context, tag.content, 'tag', args);
+    processed = true;
     m.edit(parsed.content || '', { embed: parsed.embed });
   }
 }
@@ -313,12 +315,14 @@ class ExecSubcommand extends Command {
     const content = context.args.join(' ');
     if (!content) return context.replyError(context.__('tag.exec.noContent'));
 
+    let processed = false;
     const m = await context.replyLoading(context.__('global.loading'));
     setTimeout(() => {
-      if (!m.editedTimestamp) m.edit(`${this.client.constants.emotes.warning} ${context.__('tag.execError')}`);
+      if (!processed) m.edit(`${this.client.constants.emotes.warning} ${context.__('tag.execError')}`);
     }, 10000);
 
     const parsed = await this.client.lisa.parseString(context, content, 'tag');
+    processed = true;
     m.edit(parsed.content || '', { embed: parsed.embed });
   }
 }
