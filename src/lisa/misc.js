@@ -113,7 +113,7 @@ module.exports = [
           .send(params[1]);
       }
 
-      return (await req.then(r => r.text).catch(r => `HTTP_ERROR_${r.status}`));
+      return (await req.then(r => r.text || `HTTP_RESPONSE_${r.status}`).catch(r => `HTTP_ERROR_${r.status}`));
     },
     ['|body:'],
   ),
@@ -137,9 +137,9 @@ module.exports = [
       }
 
       if (Array.isArray(current) || typeof current === 'object') return JSON.stringify(current);
-      else if (typeof current === 'number') return current.toString();
-      else if (typeof current === 'boolean') return (current ? 'true' : 'false');
-      else if (typeof current === 'function') return 'CANNOT_RETURN_FUNCTION';
+      if (typeof current === 'number') return current.toString();
+      if (typeof current === 'boolean') return (current ? 'true' : 'false');
+      if (typeof current === 'function') return 'CANNOT_RETURN_FUNCTION';
       return current;
     },
   ),
