@@ -4,7 +4,7 @@ class Event {
    * @param {string} name Name of the event (discord.js)
    */
   constructor(client, name) {
-    this.client = client;
+    Object.defineProperty(this, 'client', { value: client, enumerable: false });
     this.name = name;
   }
 }

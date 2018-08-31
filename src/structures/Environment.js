@@ -1,6 +1,6 @@
 class Environment {
   constructor(client, object, type, args, children) {
-    this.client = client;
+    Object.defineProperty(this, 'client', { value: client, enumerable: false });
     this.vars = [];
     this.guild = null;
     this.member = null;

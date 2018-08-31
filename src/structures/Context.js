@@ -2,8 +2,8 @@ const mtz = require('moment-timezone');
 
 class Context {
   constructor(client, message) {
-    this.client = client;
-    this.message = message;
+    Object.defineProperty(this, 'client', { value: client, enumerable: false });
+    Object.defineProperty(this, 'message', { value: message, enumerable: false });
     this.args = this.message.content.split(/ +/g);
     this.prefix = null;
     this.settings = message.guild

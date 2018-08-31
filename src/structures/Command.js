@@ -6,7 +6,7 @@ class Command {
    * @param {CommandOptions} commandOptions Options of the command
    */
   constructor(client, commandOptions) {
-    this.client = client;
+    Object.defineProperty(this, 'client', { value: client, enumerable: false });
     this.name = commandOptions.name;
     this.aliases = commandOptions.aliases || [];
     this.category = commandOptions.category || 'other';

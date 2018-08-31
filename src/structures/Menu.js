@@ -2,7 +2,7 @@ const { RichEmbed, Util } = require('discord.js');
 
 class Menu {
   constructor(context, data, options = {}) {
-    this.context = context;
+    Object.defineProperty(this, 'context', { value: context, enumerable: false });
     this.pages = [];
     this.options = Util.mergeDefault({
       entriesPerPage: 10,
