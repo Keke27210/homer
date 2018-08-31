@@ -53,29 +53,8 @@ class UserCommand extends Command {
     userInformation.push(
       `${this.dot} ${context.__('user.embed.lastactive')}: ${lastactive}`,
       `${this.dot} ${context.__('user.embed.creation')}: **${context.formatDate(user.createdTimestamp)}**`,
+      `${this.dot} ${context.__('user.embed.join')}: **${context.formatDate(member.joinedTimestamp)}**`,
     );
-
-    if (context.message.guild) {
-      const orderedMembers = context.message.guild.members
-        .sort((a, b) => a.joinedTimestamp - b.joinedTimestamp)
-        .keyArray();
-      let index = orderedMembers.findIndex(m => m === member.id) - 1;
-      if (index < 0) index = 0;
-
-      const joinOrder = [];
-      const m1 = this.client.users.get(orderedMembers[index]);
-      joinOrder.push(m1.id === member.id ? `**${m1.username}**` : m1.username);
-      for (let i = (index + 1); i < (index + 3); i += 1) {
-        if (i >= orderedMembers.length) break;
-        const m2 = this.client.users.get(orderedMembers[i]);
-        joinOrder.push(m2.id === member.id ? `**${m2.username}**` : m2.username);
-      }
-
-      userInformation.push(
-        `${this.dot} ${context.__('user.embed.join')}: **${context.formatDate(member.joinedTimestamp)}**`,
-        `${this.dot} ${context.__('user.embed.joinOrder')} (\`#${orderedMembers.findIndex(m => m === member.id) + 1}\`): ${joinOrder.join(' > ')}`,
-      );
-    }
 
     const embed = new RichEmbed()
       .setDescription(userInformation)
