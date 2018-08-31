@@ -43,6 +43,10 @@ scheduleJob({ second: 10 }, async () => {
     if ((guild.members.size - botCount) < 7 && botCount > 20 && (botCount / guild.members.size) > 0.65) {
       const settings = await this.client.database.getDocument('settings', guild.id);
       if (typeof settings !== 'undefined') return;
+
+      const subscriptions = await this.client.database.findDocuments('telephone', { settings: guild.id });
+      if (subscriptions.length > 0) return;
+
       guild.leave();
     }
   });
