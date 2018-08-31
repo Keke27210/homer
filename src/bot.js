@@ -84,9 +84,7 @@ process.on('SIGINT', async () => {
 
 // Misc
 String.prototype.replaceAll = function (search, replacement) {
-  if (typeof search === 'string') {
-    return this.replace(new RegExp(escapeRegexChars(search), 'g'), replacement.toString());
-  } else throw new TypeError('Search must be a string');
+  return this.split(search).join(replacement);
 };
 
 String.prototype.hashCode = function () {
@@ -99,7 +97,3 @@ String.prototype.hashCode = function () {
   }
   return hash;
 };
-
-function escapeRegexChars(str) {
-  return str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
-}
