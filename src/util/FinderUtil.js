@@ -6,7 +6,7 @@ const emojiExpression = /<(a?):(.{0,100}):(\d{17,20})>/g;
 
 class FinderUtil {
   constructor(client) {
-    this.client = client;
+    Object.defineProperty(this, 'client', { value: client, enumerable: false });
   }
 
   findMembers(members, query) {

@@ -1,6 +1,6 @@
 class Manager {
   constructor(client) {
-    this.client = client;
+    Object.defineProperty(this, 'client', { value: client, enumerable: false });
   }
 }
 

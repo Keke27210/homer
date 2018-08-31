@@ -2,7 +2,7 @@ const XRegExp = require('xregexp');
 
 class TimeUtil {
   constructor(client) {
-    this.client = client;
+    Object.defineProperty(this, 'client', { value: client, enumerable: false });
     this.default = this.client.localization.defaultLocale;
   }
 

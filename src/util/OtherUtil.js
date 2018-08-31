@@ -3,7 +3,7 @@ const request = require('superagent');
 
 class OtherUtil {
   constructor(client) {
-    this.client = client;
+    Object.defineProperty(this, 'client', { value: client, enumerable: false });
   }
 
   getShardID(id) {

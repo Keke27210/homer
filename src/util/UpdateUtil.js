@@ -2,7 +2,7 @@ const request = require('superagent');
 
 class UpdateUtil {
   constructor(client) {
-    this.client = client;
+    Object.defineProperty(this, 'client', { value: client, enumerable: false });
   }
 
   async updateGame() {

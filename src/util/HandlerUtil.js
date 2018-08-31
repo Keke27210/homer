@@ -2,7 +2,7 @@ const { RichEmbed } = require('discord.js');
 
 class HandlerUtil {
   constructor(client) {
-    this.client = client;
+    Object.defineProperty(this, 'client', { value: client, enumerable: false });
   }
 
   async remind(job) {
