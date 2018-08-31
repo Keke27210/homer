@@ -32,6 +32,22 @@ scheduleJob({ second: 10 }, async () => {
   }
 });
 
+// Guild clean handler
+/*scheduleJob({ hour: 12 }, () => {
+  if (!client.ready) return;
+
+  client.guilds.forEach(async (guild) => {
+    if (!guild.available) return;
+
+    const botCount = guild.members.filter(m => m.user.bot).size;
+    if ((guild.members.size - botCount) < 7 && botCount > 20 && (botCount / guild.members.size) > 0.65) {
+      const settings = await this.client.database.getDocument('settings', guild.id);
+      if (typeof settings !== 'undefined') return;
+      guild.leave();
+    }
+  });
+});*/
+
 // Error handling
 process.on('unhandledRejection', (err) => {
   if (err instanceof DiscordAPIError) return;
