@@ -527,6 +527,7 @@
   "server.embed.invite": "Invite",
   "server.embed.verificationLevel": "Verification level",
   "server.embed.explicitContentFilter": "Explicit content filter",
+  "server.embed.mfaRequired": "Required MFA",
   "server.embed.defaultMessageNotifications": "Default message notifications",
   "server.embed.creation": "Server creation date",
   "server.verificationLevel.0": "None",
