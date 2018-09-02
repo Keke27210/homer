@@ -77,7 +77,7 @@ class PollCommand extends Command {
         strict,
         messageID: msg.id,
         channelID: context.message.channel.id,
-        color: embed.hexColor || '#000000',
+        color: embed.hexColor || null,
       },
     );
   }
