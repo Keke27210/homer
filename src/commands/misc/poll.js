@@ -31,7 +31,7 @@ class PollCommand extends Command {
       } else if (option.name === 's') {
         strict = true;
       } else if (option.name === 'c') {
-        color = option.value;
+        if (typeof option.value === 'string') color = option.value.toUpperCase();
       } else if (option.name === 'e') {
         const customEmotes = option.value.split(/ +/g);
         if (customEmotes.length >= 2) {
