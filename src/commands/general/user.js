@@ -53,8 +53,11 @@ class UserCommand extends Command {
     userInformation.push(
       `${this.dot} ${context.__('user.embed.lastactive')}: ${lastactive}`,
       `${this.dot} ${context.__('user.embed.creation')}: **${context.formatDate(user.createdTimestamp)}**`,
-      `${this.dot} ${context.__('user.embed.join')}: **${context.formatDate(member.joinedTimestamp)}**`,
     );
+
+    if (context.message.guild) {
+      userInformation.push(`${this.dot} ${context.__('user.embed.join')}: **${context.formatDate(member.joinedTimestamp)}**`);
+    }
 
     const embed = new RichEmbed()
       .setDescription(userInformation)
