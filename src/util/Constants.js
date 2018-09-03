@@ -97,7 +97,7 @@ exports.regionFlags = {
 };
 
 exports.categoryEmotes = {
-  bot: '<:ibot:420656561493377024>',
+  bot: '<:homer:474150825929998337>',
   general: '🖥',
   misc: '🎮',
   settings: '🔧',
