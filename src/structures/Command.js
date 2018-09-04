@@ -136,7 +136,7 @@ class Command {
         ));
       }
 
-      const missingBotPermissions = context.message.guild.me.missingPermissions(this.missingBotPermissions)
+      const missingBotPermissions = context.message.guild.me.missingPermissions(this.botPermissions)
       if (missingBotPermissions.length > 0) {
         return context.replyError(context.__(
           'commandHandler.missingBotPermissions',
