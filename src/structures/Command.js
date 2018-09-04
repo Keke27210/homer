@@ -128,19 +128,19 @@ class Command {
 
     if (context.message.guild) {
       // Permissions
-      const missingUserPermissions = context.message.channel.permissionsFor(context.message.author);
-      if (missingUserPermissions && missingUserPermissions.missing(this.userPermissions) > 0) {
+      const missingUserPermissions = context.message.member.missingPermissions(this.userPermissions);
+      if (missingUserPermissions.length > 0) {
         return context.replyError(context.__(
           'commandHandler.missingUserPermissions',
-          { permissions: this.client.other.humanizePermissions(missingUserPermissions.missing(this.userPermissions), context.settings.misc.locale) },
+          { permissions: this.client.other.humanizePermissions(missingUserPermissions, context.settings.misc.locale) },
         ));
       }
 
-      const missingBotPermissions = context.message.channel.permissionsFor(this.client.user);
-      if (missingBotPermissions && missingBotPermissions.missing(this.botPermissions) > 0) {
+      const missingBotPermissions = context.message.guild.me.missingPermissions(this.missingBotPermissions)
+      if (missingBotPermissions.length > 0) {
         return context.replyError(context.__(
           'commandHandler.missingBotPermissions',
-          { permissions: this.client.other.humanizePermissions(missingBotPermissions.missing(this.botPermissions), context.settings.misc.locale) },
+          { permissions: this.client.other.humanizePermissions(missingBotPermissions, context.settings.misc.locale) },
         ));
       }
     }
