@@ -258,6 +258,7 @@
   "helpUtil.telephone.subscribe": "Subscribe to the telephone",
   "helpUtil.telephone.terminate": "Terminate your telephone subscription",
   "helpUtil.telephone.phonebook": "Set your phonebook's description (or \"off\" to not appear on it)",
+  "helpUtil.telephone.text": "Switch the text message option for the current subscription",
   "helpUtil.text": "Send a text message to someone",
   "helpUtil.timefor": "Get current time for a user",
   "helpUtil.timezone": "Set the server timezone",
