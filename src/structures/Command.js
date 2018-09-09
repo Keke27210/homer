@@ -129,7 +129,7 @@ class Command {
     if (context.message.guild) {
       // Permissions
       const missingUserPermissions = context.message.guild.fetchMember(context.message.author.id)
-        .then(m => m.missingPermissions(this.userPermissions));
+        .then(m => m.missingPermissions(this.userPermissions))
         .catch(() => ([]));
       if (missingUserPermissions.length > 0) {
         return context.replyError(context.__(
