@@ -81,7 +81,7 @@ class Menu {
       });
 
       collector.on('end', () => {
-        this.menuMessage.delete();
+        if (this.menuMessage && !this.menuMessage.deleted) this.menuMessage.delete();
         if (this.context.message.deletable) this.context.message.delete();
       });
     });
