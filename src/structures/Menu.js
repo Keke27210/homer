@@ -80,9 +80,9 @@ class Menu {
         if (tmpNum !== this.currentPage) this.refreshMenu();
       });
 
-      collector.on('end', () => {
-        if (this.menuMessage && !this.menuMessage.deleted) this.menuMessage.delete();
-        if (this.context.message.deletable) this.context.message.delete();
+      collector.on('end', async () => {
+        try { await this.menuMessage.delete(); } catch(e) {}
+        try { await this.context.message.delete(); } catch(e) {}
       });
     });
   }
