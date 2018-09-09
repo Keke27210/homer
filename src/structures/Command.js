@@ -128,7 +128,9 @@ class Command {
 
     if (context.message.guild) {
       // Permissions
-      const missingUserPermissions = context.message.member.missingPermissions(this.userPermissions);
+      const missingUserPermissions = context.message.guild.fetchMember(context.message.author.id)
+        .then(m => m.missingPermissions(this.userPermissions));
+        .catch(() => ([]));
       if (missingUserPermissions.length > 0) {
         return context.replyError(context.__(
           'commandHandler.missingUserPermissions',
@@ -136,7 +138,9 @@ class Command {
         ));
       }
 
-      const missingBotPermissions = context.message.guild.me.missingPermissions(this.botPermissions)
+      const missingBotPermissions = context.message.guild.fetchMember(this.client.user.id)
+        .then(m => m.missingPermissions(this.botPermissions))
+        .catch(() => ([]));
       if (missingBotPermissions.length > 0) {
         return context.replyError(context.__(
           'commandHandler.missingBotPermissions',
