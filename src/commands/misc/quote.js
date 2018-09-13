@@ -42,7 +42,8 @@ class QuoteCommand extends Command {
           .setFooter(`${channel.type === 'text' ? `#${channel.name}` : context.__('global.dm')} - ${message.editedTimestamp ? context.__('quote.edited') : context.__('quote.created')}`)
           .setTimestamp(message.editedAt || message.createdAt);
 
-        context.reply({ embed });
+        if(message.embeds.length == 0 ) context.reply({ embed });
+        else context.replyWarning(context.__('quote.hasEmbeds'));
       })
       .catch(() => {
         context.replyWarning(context.__('quote.notFound', {
