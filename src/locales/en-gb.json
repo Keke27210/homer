@@ -6,6 +6,7 @@
 
   "global.yes": "Yes",
   "global.no": "No",
+  "global.and": "and",
   "global.noReason": "No reason specified",
   "global.none": "None",
   "global.noInformation": "No information available",

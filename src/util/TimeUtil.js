@@ -44,9 +44,14 @@ class TimeUtil {
       string.push(`**${Math.floor(seconds)}**${this.client.__(locale, `timeUtil.timeSince.seconds.${short ? 'short' : 'long'}`)}`);
     }
 
-    return (string.length > 0)
-      ? (ago ? this.client.__(locale, 'timeUtil.timeSince.ago', { time: string.join(', ') }) : string.join(', '))
-      : this.client.__(locale, 'timeUtil.timeSince.noTime');
+    if (string.length > 0) {
+      let timeStr = string.join(', ');
+      const andIndex = timeStr.lastIndexOf(', ');
+      if (andIndex !== -1) timeStr = timeStr.substring(0, andIndex) + ` ${this.client.__(locale, 'global.and')} ` + timeStr.substring(andIndex + 1);
+      return (ago ? this.client.__(locale, 'timeUtil.timeSince.ago', { time: timeStr }) : timeStr);
+    }
+
+    return this.client.__(locale, 'timeUtil.timeSince.noTime');
   }
 
   parseDuration(string, locale = 'en-gb') {
