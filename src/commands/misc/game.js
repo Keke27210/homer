@@ -28,12 +28,21 @@ class GameCommand extends Command {
     if (presence.game.assets) {
       context.reply('Work in progress...');
     } else {
-      context.reply(context.__(`game.normalPlaying.${presence.game.type}`, {
+      let msg = context.__(`game.normalPlaying.${presence.game.type}`, {
         user: `**${user.username}**#${user.discriminator}`,
         game: presence.game.name,
         url: presence.game.url,
-        since: this.client.time.timeSince(new Date(presence.game.timestamps.start), context.settings.misc.locale),
-      }));
+      });
+
+      if (presence.game.timestamps.start) {
+        msg += context.__('game.normalPlaying.for', {
+          time: this.client.time.timeSince(new Date(presence.game.timestamps.start), context.settings.misc.locale),
+        });
+      } else {
+        msg += '.';
+      }
+
+      context.reply(msg);
     }
   }
 }
