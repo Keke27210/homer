@@ -139,10 +139,12 @@
   "finderUtil.formatEmojis.title": "**{{{ count }}}** emotes found:",
 
   "game.noActiveGame": "{{{ user }}} is not currently playing to a game.",
-  "game.normalPlaying.0": "🎮 {{{ user }}} has been playing to **{{{ game }}}** for {{{ since }}}.",
-  "game.normalPlaying.1": "🎮 {{{ user }}} has been streaming **{{{ game }}}** (<{{{ url }}}>) for {{{ since }}}.",
-  "game.normalPlaying.2": "🎮 {{{ user }}} has been listening to **{{{ game }}}** for {{{ since }}}.",
-  "game.normalPlaying.3": "🎮 {{{ user }}} has been watching **{{{ game }}}** for {{{ since }}}.",
+  "game.normalPlaying.withTime": "{{{ emote }}} {{{ user }}} has been {{{ action }}} {{{ game }}} for {{{ time }}}.",
+  "game.normalPlaying.withoutTime": "{{{ emote }}} {{{ user }}} is {{{ action }}} {{{ game }}}.",
+  "game.type.0": "playing to",
+  "game.type.1": "streaming",
+  "game.type.2": "listening to",
+  "game.type.3": "watching",
 
   "google.result": "{{{ mention }}}, here is your result: {{{ link }}}",
   "google.error.noResult": "No result found for the given query",
