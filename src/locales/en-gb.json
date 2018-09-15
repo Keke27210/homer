@@ -139,8 +139,8 @@
   "finderUtil.formatEmojis.title": "**{{{ count }}}** emotes found:",
 
   "game.noActiveGame": "{{{ user }}} is not currently playing to a game.",
-  "game.normalPlaying.withTime": "{{{ emote }}} {{{ user }}} has been {{{ action }}} {{{ game }}} for {{{ time }}}.",
-  "game.normalPlaying.withoutTime": "{{{ emote }}} {{{ user }}} is {{{ action }}} {{{ game }}}.",
+  "game.normalPlaying.true": "{{{ emote }}} {{{ user }}} has been {{{ action }}} {{{ game }}} for {{{ time }}}.",
+  "game.normalPlaying.false": "{{{ emote }}} {{{ user }}} is {{{ action }}} {{{ game }}}.",
   "game.type.0": "playing to",
   "game.type.1": "streaming",
   "game.type.2": "listening to",
