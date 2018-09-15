@@ -142,7 +142,7 @@
   "game.noActiveGame": "{{{ user }}} is doing nothing at the moment.",
   "game.normalPlaying.true": "{{{ emote }}} {{{ user }}} has been {{{ action }}} {{{ game }}} for {{{ time }}}.",
   "game.normalPlaying.false": "{{{ emote }}} {{{ user }}} is {{{ action }}} {{{ game }}}.",
-  "game.type.0": "playing to",
+  "game.type.0": "playing",
   "game.type.1": "streaming",
   "game.type.2": "listening to",
   "game.type.3": "watching",
