@@ -1,100 +1,40 @@
-const { RichEmbed } = require('discord.js');
-const request = require('superagent');
-const mtz = require('moment-timezone');
 const Command = require('../../structures/Command');
+const { RichEmbed } = require('discord.js');
 
 class GameCommand extends Command {
   constructor(client) {
     super(client, {
       name: 'game',
+      aliases: ['gameinfo'],
       category: 'misc',
       usage: '<game>',
       dm: true,
     });
   }
 
-  get baseURL() {
-    return 'https://api-endpoint.igdb.com';
-  }
-
   async execute(context) {
     const search = context.args.join(' ');
-    if (!search) return context.replyError(context.__('game.noSearch'));
-    if (search.length > 64) return context.replyWarning(context.__('game.searchTooLong'));
-    const message = await context.replyLoading(context.__('global.loading'));
-
-    // Auto-complete search
-    const searchQuery = await request.get(`https://www.igdb.com/search_autocomplete_all?q=${encodeURIComponent(search)}`)
-      .then(res => res.body)
-      .catch(() => null);
-
-    if (!searchQuery.game_suggest) {
-      return message.edit(`${this.client.constants.emotes.warning} ${context.__('game.noResult', { search })}`);
+    let user = context.message.author;
+    if (search && context.message.guild) {
+      const foundMembers = this.client.finder.findMembers(context.message.guild.members, search);
+      if (!foundMembers || foundMembers.length === 0) return context.replyError(context.__('finderUtil.findMembers.zeroResult', { search }));
+      if (foundMembers.length === 1) user = foundMembers[0].user;
+      else if (foundMembers.length > 1) return context.replyWarning(this.client.finder.formatMembers(foundMembers, context.settings.misc.locale));
     }
 
-    const query = `/games/${searchQuery.game_suggest[0].id}`;
-    const response = await request
-      .get(`${this.baseURL}${query}`)
-      .set('Accept', 'application/json')
-      .set('user-key', this.client.config.api.igdb)
-      .then(res => res.body[0])
-      .catch(() => null);
+    const presence = this.client.presences.get(user.id);
+    if (!presence || !presence.game) return context.replyWarning(context.__('game.noActiveGame', { user: `**${user.username}**#${user.discriminator}` }));
 
-    const publishers = [];
-    for (const publisher of response.publishers || []) {
-      const r = await request
-        .get(`${this.baseURL}/companies/${publisher}`)
-        .set('Accept', 'application/json')
-        .set('user-key', this.client.config.api.igdb)
-        .then(res => res.body[0])
-        .catch(() => ({ name: '?' }));
-
-      publishers.push(`**${r.name}**`);
+    if (presence.game.assets) {
+      context.reply('Work in progress...');
+    } else {
+      context.reply(context.__(`game.normalPlaying.${presence.game.type}`, {
+        user: `**${user.username}**#${user.discriminator}`,
+        game: presence.game.name,
+        url: presence.game.url,
+        since: this.client.time.timeSince(new Date(presence.game.timestamps.start), context.settings.misc.locale),
+      }));
     }
-
-    const developers = [];
-    for (const developer of response.developers || []) {
-      const r = await request
-        .get(`${this.baseURL}/companies/${developer}`)
-        .set('Accept', 'application/json')
-        .set('user-key', this.client.config.api.igdb)
-        .then(res => res.body[0])
-        .catch(() => ({ name: '?' }));
-
-      developers.push(`**${r.name}**`);
-    }
-
-    const platforms = [];
-    for (const platform of response.platforms || []) {
-      const r = await request
-        .get(`${this.baseURL}/platforms/${platform}`)
-        .set('Accept', 'application/json')
-        .set('user-key', this.client.config.api.igdb)
-        .then(res => res.body[0])
-        .catch(() => ({ name: '?' }));
-
-      platforms.push(`**${r.name}**`);
-    }
-
-    const release = mtz(response.first_release_date)
-      .tz(context.settings.misc.timezone)
-      .locale(context.settings.misc.locale)
-      .format(context.settings.misc.dateFormat);
-
-    const embed = new RichEmbed()
-      .setDescription([
-        `${this.dot} ${context.__('game.embed.publishers')}: ${publishers.join(', ') || context.__('global.none')}`,
-        `${this.dot} ${context.__('game.embed.developers')}: ${developers.join(', ') || context.__('global.none')}`,
-        `${this.dot} ${context.__('game.embed.platforms')}: ${platforms.join(', ') || context.__('global.none')}`,
-        `${this.dot} ${context.__('game.embed.release')}: **${release}**`,
-      ].join('\n'))
-      .addField(context.__('game.embed.description'), response.summary ? response.summary.substring(0, 1024) : context.__('game.embed.noDesc'))
-      .setThumbnail(response.cover ? `https:${response.cover.url}` : undefined);
-
-    message.edit(
-      context.__('game.title', { name: `**${response.name}**` }),
-      { embed },
-    );
   }
 }
 
