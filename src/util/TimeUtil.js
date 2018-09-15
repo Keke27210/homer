@@ -47,7 +47,7 @@ class TimeUtil {
     if (string.length > 0) {
       let timeStr = string.join(', ');
       const andIndex = timeStr.lastIndexOf(', ');
-      if (andIndex !== -1) timeStr = timeStr.substring(0, andIndex) + ` ${this.client.__(locale, 'global.and')} ` + timeStr.substring(andIndex);
+      if (andIndex !== -1) timeStr = timeStr.substring(0, andIndex) + ` ${this.client.__(locale, 'global.and')} ` + timeStr.substring(andIndex + 2);
       return (ago ? this.client.__(locale, 'timeUtil.timeSince.ago', { time: timeStr }) : timeStr);
     }
 
