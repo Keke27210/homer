@@ -146,10 +146,7 @@
   "game.type.1": "streaming",
   "game.type.2": "listening to",
   "game.type.3": "watching",
-  "game.embed.details": "Details",
-  "game.embed.state": "State",
-  "game.embed.party": "Party",
-  "game.embed.ends": "Ends in",
+  "game.embed.ends": "{{{ time }}} left",
 
   "google.result": "{{{ mention }}}, here is your result: {{{ link }}}",
   "google.error.noResult": "No result found for the given query",

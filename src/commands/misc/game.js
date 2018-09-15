@@ -32,10 +32,10 @@ class GameCommand extends Command {
     let embed;
     if (presence.game.assets) {
       const description = [];
-      if (presence.game.details) description.push(`${this.dot} ${context.__('game.embed.details')}: **${presence.game.details}**`);
-      if (presence.game.state) description.push(`${this.dot} ${context.__('game.embed.state')}: **${presence.game.state}**`);
-      if (presence.game.party) description.push(`${this.dot} ${context.__('game.embed.party')}: **${presence.game.party.id}**${presence.game.party.sizes ? ` (**${presence.game.party.sizes[0]}**/**${presence.game.party.sizes[1]}**)` : ''}`);
-      if (presence.game.timestamps && presence.game.timestamps.end) description.push(`${this.dot} ${context.__('game.embed.ends')}: ${this.client.time.timeSince(new Date(presence.game.timestamps.end).getTime(), context.settings.misc.locale)}`);
+      description.push(`**${presence.game.name}**`);
+      if (presence.game.details) description.push(presence.game.details);
+      if (presence.game.state) description.push(`${presence.game.state}${presence.game.party && presence.game.party.sizes ? ` (${presence.game.party.sizes[0]}/${presence.game.party.sizes[1]})` : ''}`);
+      if (presence.game.timestamps && presence.game.timestamps.end) description.push(context.__('game.embed.ends', { time: this.client.time.timeSince(new Date(presence.game.timestamps.end).getTime(), context.settings.misc.locale) }));
 
       embed = new RichEmbed()
         .setDescription(description.join('\n'))
