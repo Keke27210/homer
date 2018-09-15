@@ -148,7 +148,7 @@
   "game.embed.details": "Details",
   "game.embed.state": "State",
   "game.embed.party": "Party",
-  "game.embed.ends": "End time",
+  "game.embed.ends": "Ends in",
 
   "google.result": "{{{ mention }}}, here is your result: {{{ link }}}",
   "google.error.noResult": "No result found for the given query",
