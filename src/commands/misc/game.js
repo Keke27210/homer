@@ -12,6 +12,10 @@ class GameCommand extends Command {
     });
   }
 
+  get emotes() {
+    return ['🎮', this.client.constants.status.streaming, '🎵', '📺'];
+  }
+
   async execute(context) {
     const search = context.args.join(' ');
     let user = context.message.author;
