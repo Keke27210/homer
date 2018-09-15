@@ -12,36 +12,36 @@ class TimeUtil {
 
     const years = Math.floor(seconds / (60 * 60 * 24 * 365));
     if (years > 0) {
-      string.push(`**${years}**${this.client.__(locale, `timeUtil.timeSince.years.${short ? 'short' : 'long'}.${years > 1 ? 'p' : 's'}`)}`);
+      string.push(`**${years}**${this.client.__(locale, `timeUtil.timeSince.years.${short ? 'short' : `long.${years > 1 ? 'p' : 's'}`}`)}`);
       seconds %= (60 * 60 * 24 * 365);
     }
 
     const weeks = Math.floor(seconds / (60 * 60 * 24 * 7));
     if (weeks > 0) {
-      string.push(`**${weeks}**${this.client.__(locale, `timeUtil.timeSince.weeks.${short ? 'short' : 'long'}.${weeks > 1 ? 'p' : 's'}`)}`);
+      string.push(`**${weeks}**${this.client.__(locale, `timeUtil.timeSince.weeks.${short ? 'short' : `long.${weeks > 1 ? 'p' : 's'}`}`)}`);
       seconds %= (60 * 60 * 24 * 7);
     }
 
     const days = Math.floor(seconds / (60 * 60 * 24));
     if (days > 0) {
-      string.push(`**${days}**${this.client.__(locale, `timeUtil.timeSince.days.${short ? 'short' : 'long'}.${days > 1 ? 'p' : 's'}`)}`);
+      string.push(`**${days}**${this.client.__(locale, `timeUtil.timeSince.days.${short ? 'short' : `long.${days > 1 ? 'p' : 's'}`}`)}`);
       seconds %= (60 * 60 * 24);
     }
 
     const hours = Math.floor(seconds / (60 * 60));
     if (hours > 0) {
-      string.push(`**${hours}**${this.client.__(locale, `timeUtil.timeSince.hours.${short ? 'short' : 'long'}.${hours > 1 ? 'p' : 's'}`)}`);
+      string.push(`**${hours}**${this.client.__(locale, `timeUtil.timeSince.hours.${short ? 'short' : `long.${hours > 1 ? 'p' : 's'}`}`)}`);
       seconds %= (60 * 60);
     }
 
     const minutes = Math.floor(seconds / 60);
     if (minutes > 0) {
-      string.push(`**${minutes}**${this.client.__(locale, `timeUtil.timeSince.minutes.${short ? 'short' : 'long'}.${minutes > 1 ? 'p' : 's'}`)}`);
+      string.push(`**${minutes}**${this.client.__(locale, `timeUtil.timeSince.minutes.${short ? 'short' : `long.${minutes > 1 ? 'p' : 's'}`}`)}`);
       seconds %= 60;
     }
 
     if (Math.floor(seconds) > 0) {
-      string.push(`**${Math.floor(seconds)}**${this.client.__(locale, `timeUtil.timeSince.seconds.${short ? 'short' : 'long'}.${Math.floor(seconds) > 1 ? 'p' : 's'}`)}`);
+      string.push(`**${Math.floor(seconds)}**${this.client.__(locale, `timeUtil.timeSince.seconds.${short ? 'short' : `long.${Math.floor(seconds) > 1 ? 'p' : 's'}`}`)}`);
     }
 
     if (string.length > 0) {
