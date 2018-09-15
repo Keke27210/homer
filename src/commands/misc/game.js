@@ -29,17 +29,26 @@ class GameCommand extends Command {
     const presence = this.client.presences.get(user.id);
     if (!presence || !presence.game) return context.replyWarning(context.__('game.noActiveGame', { user: `**${user.username}**#${user.discriminator}` }));
 
+    let embed;
     if (presence.game.assets) {
-      context.reply('Work in progress...');
-    } else {
-      context.reply(context.__(`game.normalPlaying.${Boolean(presence.game.timestamps)}`, {
-        emote: this.emotes[presence.game.type],
-        user: `**${user.username}**#${user.discriminator}`,
-        action: context.__(`game.type.${presence.game.type}`),
-        game: presence.game.type === 1 ? `**${presence.game.name}** (<${presence.game.url}>)` : `**${presence.game.name}**`,
-        time: (presence.game.timestamps && presence.game.timestamps.start) ? this.client.time.timeSince(presence.game.timestamps.start, context.settings.misc.locale) : null,
-      }));
+      const description = [];
+      if (presence.game.details) description.push(`${this.dot} ${context.__('game.embed.details')}: **${presence.game.details}**`);
+      if (presence.game.state) description.push(`${this.dot} ${context.__('game.embed.state')}: **${presence.game.state}**`);
+      if (presence.game.party) description.push(`${this.dot} ${context.__('game.embed.party')}: **${presence.game.party.id}** (**${presence.game.party.sizes[0]}**/**${presence.game.party.sizes[1]}**)`);
+      if (presence.game.timestamps && presence.game.timestamps.end) description.push(`${this.dot} ${context.__('game.embed.ends')}: **${context.formatDate(new Date(presence.game.timestamps.end))}**`);
+
+      embed = new RichEmbed()
+        .setDescription(description.join('\n'))
+        .setThumbnail(presence.game.assets.largeImageURL || presence.game.assets.smallImageURL);
     }
+
+    context.reply(context.__(`game.normalPlaying.${Boolean(presence.game.timestamps)}`, {
+      emote: this.emotes[presence.game.type],
+      user: `**${user.username}**#${user.discriminator}`,
+      action: context.__(`game.type.${presence.game.type}`),
+      game: presence.game.type === 1 ? `**${presence.game.name}** (<${presence.game.url}>)` : `**${presence.game.name}**`,
+      time: (presence.game.timestamps && presence.game.timestamps.start) ? this.client.time.timeSince(presence.game.timestamps.start, context.settings.misc.locale) : null,
+    }), { embed });
   }
 }
 

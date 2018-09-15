@@ -138,13 +138,17 @@
   "finderUtil.findEmojis.zeroResult": "No emotes found matching `{{{ search }}}`",
   "finderUtil.formatEmojis.title": "**{{{ count }}}** emotes found:",
 
-  "game.noActiveGame": "{{{ user }}} is not currently playing to a game.",
+  "game.noActiveGame": "{{{ user }}} is doing nothing at the moment.",
   "game.normalPlaying.true": "{{{ emote }}} {{{ user }}} has been {{{ action }}} {{{ game }}} for {{{ time }}}.",
   "game.normalPlaying.false": "{{{ emote }}} {{{ user }}} is {{{ action }}} {{{ game }}}.",
   "game.type.0": "playing to",
   "game.type.1": "streaming",
   "game.type.2": "listening to",
   "game.type.3": "watching",
+  "game.embed.details": "Details",
+  "game.embed.state": "State",
+  "game.embed.party": "Party",
+  "game.embed.ends": "End time",
 
   "google.result": "{{{ mention }}}, here is your result: {{{ link }}}",
   "google.error.noResult": "No result found for the given query",
