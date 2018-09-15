@@ -35,7 +35,7 @@ class GameCommand extends Command {
       if (presence.game.details) description.push(`${this.dot} ${context.__('game.embed.details')}: **${presence.game.details}**`);
       if (presence.game.state) description.push(`${this.dot} ${context.__('game.embed.state')}: **${presence.game.state}**`);
       if (presence.game.party) description.push(`${this.dot} ${context.__('game.embed.party')}: **${presence.game.party.id}**${presence.game.party.sizes ? ` (**${presence.game.party.sizes[0]}**/**${presence.game.party.sizes[1]}**)` : ''}`);
-      if (presence.game.timestamps && presence.game.timestamps.end) description.push(`${this.dot} ${context.__('game.embed.ends')}: **${this.client.time.timeSince((new Date(presence.game.timestamps.end).getTime() - Date.now()), context.settings.misc.locale)}**`);
+      if (presence.game.timestamps && presence.game.timestamps.end) description.push(`${this.dot} ${context.__('game.embed.ends')}: **${this.client.time.timeSince(new Date(presence.game.timestamps.end).getTime(), context.settings.misc.locale)}**`);
 
       embed = new RichEmbed()
         .setDescription(description.join('\n'))
