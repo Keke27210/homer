@@ -214,8 +214,8 @@ class ListSubcommand extends Command {
   async execute(context) {
     const list = context.message.guild.roles
       .filter(r => r.id !== context.message.guild.id)
-      .sort((a, b) => a.position - b.position)
-      .map(r => `- **${r.name}** (ID:${r.id})`);
+      .sort((a, b) => b.position - a.position)
+      .map(r => `- <@&${r.id}> (ID:${r.id})`);
     if (list.size === 0) return context.replyWarning(context.__('role.list.noRoles', { name: context.message.guild.name }));
 
     const m = new Menu(
