@@ -7,7 +7,11 @@ class RoleCommand extends Command {
     super(client, {
       name: 'role',
       category: 'general',
-      children: [new MembersSubcommand(client), new GiveSubcommand(client), new TakeSubcommand(client)],
+      children: [
+        new MembersSubcommand(client),
+        new GiveSubcommand(client),
+        new TakeSubcommand(client),
+      ],
       usage: '<role>',
     });
   }
@@ -195,6 +199,29 @@ class MembersSubcommand extends Command {
     );
 
     menu.send(context.__('role.members.title', { role: role.name }));
+  }
+}
+
+class ListSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'list',
+      category: 'general',
+    });
+  }
+
+  async execute(context) {
+    const list = context.message.guild.roles
+      .filter(r => r.id !== context.message.guild.id)
+      .map(r => `- **${r.name}** (ID:${r.id})`);
+    if (list.size === 0) return context.replyWarning(context.__('role.list.noRoles', { name: context.message.guild.name }));
+
+    const m = new Menu(
+      context,
+      list,
+    );
+
+    menu.send(context.__('role.list.title', { name: context.message.guild.name }));
   }
 }
 

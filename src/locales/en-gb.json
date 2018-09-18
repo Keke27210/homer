@@ -229,6 +229,7 @@
   "helpUtil.role.members": "Get the list of all members having the specified role",
   "helpUtil.role.give": "Give someone a role",
   "helpUtil.role.take": "Take someone a role",
+  "helpUtil.role.list": "List all roles on a server",
   "helpUtil.roleme": "Access to roleme features",
   "helpUtil.roleme.list": "Get a list of all roleme available roles",
   "helpUtil.roleme.add": "Add a role to the roleme list",
@@ -501,6 +502,8 @@
   "role.take.doesntHave": "{{{ name }}} does not have the role **{{{ role }}}**.",
   "role.take.roleTaken": "You have taken the role **{{{ role }}}** from {{{ name }}}.",
   "role.take.missingParameters": "Correct syntax: `{{{ prefix }}}role take <role> from <user>`",
+  "role.list.title": "🎭 Roles on **{{{ name }}}**:",
+  "role.list.noRoles": "There is no role on **{{{ name }}}**.",
   
   "roleme.noQuery": "You must provide the name of a role to find",
   "roleme.unavailableRole": "The role **{{{ name }}}** is not available for roleme!",
