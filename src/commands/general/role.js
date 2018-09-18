@@ -8,6 +8,7 @@ class RoleCommand extends Command {
       name: 'role',
       category: 'general',
       children: [
+        new ListSubcommand(client),
         new MembersSubcommand(client),
         new GiveSubcommand(client),
         new TakeSubcommand(client),
@@ -213,6 +214,7 @@ class ListSubcommand extends Command {
   async execute(context) {
     const list = context.message.guild.roles
       .filter(r => r.id !== context.message.guild.id)
+      .sort((a, b) => a.position - b.position)
       .map(r => `- **${r.name}** (ID:${r.id})`);
     if (list.size === 0) return context.replyWarning(context.__('role.list.noRoles', { name: context.message.guild.name }));
 
