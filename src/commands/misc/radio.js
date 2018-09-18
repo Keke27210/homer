@@ -1,5 +1,5 @@
 const { RichEmbed } = require('discord.js');
-const request = require('superagent');
+const request = require('snekfetch');
 const parser = require('playlist-parser');
 const Menu = require('../../structures/Menu');
 const Command = require('../../structures/Command');
@@ -252,11 +252,11 @@ class InfoSubcommand extends Command {
 
     let playing = `**${context.__('global.noInformation')}**`;
     if (meta.stationId) {
-      const request = await request.get(`https://api.radio.net/info/v2/search/nowplaying?apikey=${this.client.config.api.radio}&numberoftitles=1&station=${meta.stationId}`)
+      const req = await request.get(`https://api.radio.net/info/v2/search/nowplaying?apikey=${this.client.config.api.radio}&numberoftitles=1&station=${meta.stationId}`)
         .then(r => r.body)
         .catch(() => null);
 
-      if (request && request[0]) {
+      if (req && req[0]) {
         playing = request[0].streamTitle.split(' - ').map(a => `**${a}**`).join(' - ');
       }
     }
