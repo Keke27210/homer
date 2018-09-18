@@ -223,7 +223,7 @@ class ListSubcommand extends Command {
       list,
     );
 
-    menu.send(context.__('role.list.title', { name: context.message.guild.name }));
+    m.send(context.__('role.list.title', { name: context.message.guild.name }));
   }
 }
 
