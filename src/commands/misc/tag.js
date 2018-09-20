@@ -402,16 +402,15 @@ class UnoverrideSubcommand extends Command {
 
   async execute(context) {
     const name = context.args[0];
-    const content = context.args.slice(1).join(' ');
     if (!name) return context.replyError(context.__('tag.unoverride.noTag'));
 
-    const index = context.settings.tagOverrides.findIndex(t => t.name === tagDocument.id);
+    const index = context.settings.tagOverrides.findIndex(t => t.name === name.toLowerCase());
     if (index === -1) return context.replyWarning(context.__('tag.unoverride.notFound', { name: name.toLowerCase() }));
 
     context.settings.tagOverrides.splice(index, 1);
     await context.saveSettings();
 
-    context.replySuccess(context.__('tag.unoverride.deleted', { name: tagDocument.id }));
+    context.replySuccess(context.__('tag.unoverride.deleted', { name: name.toLowerCase() }));
   }
 }
 
