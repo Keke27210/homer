@@ -128,7 +128,7 @@ class Command {
 
     if (context.message.guild) {
       // Permissions
-      const missingUserPermissions = context.message.guild.fetchMember(context.message.author.id)
+      const missingUserPermissions = await context.message.guild.fetchMember(context.message.author.id)
         .then(m => m.missingPermissions(this.userPermissions))
         .catch(() => ([]));
       if (missingUserPermissions.length > 0) {
@@ -138,7 +138,7 @@ class Command {
         ));
       }
 
-      const missingBotPermissions = context.message.guild.fetchMember(this.client.user.id)
+      const missingBotPermissions = await context.message.guild.fetchMember(this.client.user.id)
         .then(m => m.missingPermissions(this.botPermissions))
         .catch(() => ([]));
       if (missingBotPermissions.length > 0) {
