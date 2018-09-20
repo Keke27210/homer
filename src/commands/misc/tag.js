@@ -21,6 +21,7 @@ class TagCommand extends Command {
         new CommandsSubcommand(client),
         new ExecSubcommand(client),
         new OverrideSubcommand(client),
+        new UnoverrideSubcommand(client),
       ],
       dm: true,
     });
@@ -363,6 +364,7 @@ class OverrideSubcommand extends Command {
       category: 'misc',
       usage: '<tag name> [new content]',
       userPermissions: ['MANAGE_GUILD'],
+      dm: true,
     });
   }
 
@@ -384,6 +386,32 @@ class OverrideSubcommand extends Command {
 
     await context.saveSettings();
     context.replySuccess(context.__('tag.override.created', { name: tagDocument.id }));
+  }
+}
+
+class UnoverrideSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'unoverride',
+      category: 'misc',
+      usage: '<tag name>',
+      userPermissions: ['MANAGE_GUILD'],
+      dm: true,
+    });
+  }
+
+  async execute(context) {
+    const name = context.args[0];
+    const content = context.args.slice(1).join(' ');
+    if (!name) return context.replyError(context.__('tag.unoverride.noTag'));
+
+    const index = context.settings.tagOverrides.findIndex(t => t.name === tagDocument.id);
+    if (index === -1) return context.replyWarning(context.__('tag.unoverride.notFound', { name: name.toLowerCase() }));
+
+    context.settings.tagOverrides.splice(index, 1);
+    await context.saveSettings();
+
+    context.replySuccess(context.__('tag.unoverride.deleted', { name: tagDocument.id }));
   }
 }
 
