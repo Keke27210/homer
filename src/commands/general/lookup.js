@@ -165,6 +165,7 @@ class LookupCommand extends Command {
         );
       })
       .catch((e) => {
+        console.error(e)
         done = false;
       });
 
