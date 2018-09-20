@@ -619,6 +619,7 @@
   "tag.override.noTag": "You must provide the name of the tag to override.",
   "tag.override.notFound": "No tag found matching \"{{{ name }}}\".",
   "tag.override.created": "Successfully created override for \"{{{ name }}}\"!",
+  "tag.belongsServer": "to the server",
 
   "telephone.notAssigned": "The provided number is not assigned.",
   "telephone.refusedConnection": "The connection with your correspondent has been refused. You may have been **blacklisted** or the telephone service is currently **under maintenance**.",

@@ -32,7 +32,7 @@ class TagCommand extends Command {
     if (!name) return context.replyError(context.__('tag.noName'));
 
     const tag = context.settings.tagOverrides.find(t => t.name === name.toLowerCase()) || await this.client.database.getDocument('tags', name.toLowerCase());
-    if (!tag) return context.replyWarning(context.__('tag.unknownTag', { name }));
+    if (!tag || !tag.content) return context.replyWarning(context.__('tag.unknownTag', { name }));
 
     if (!context.message.channel.nsfw && tag.content.toLowerCase().includes('{nsfw}')) {
       return context.replyWarning(context.__('tag.nsfwAlert'));
@@ -374,6 +374,8 @@ class OverrideSubcommand extends Command {
     const tagDocument = await this.client.database.getDocument('tags', name.toLowerCase());
     if (!tagDocument) return context.replyWarning(context.__('tag.override.notFound', { name }));
 
+    const index = context.settings.tagOverrides.findIndex(t => t.name === tagDocument.id);
+    if (index !== -1) context.settings.tagOverrides.splice(index, 1);
     context.settings.tagOverrides.push({
       name: tagDocument.id,
       content: content || null,
