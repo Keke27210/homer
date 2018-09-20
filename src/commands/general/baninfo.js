@@ -8,6 +8,7 @@ class BaninfoCommand extends Command {
       category: 'general',
       usage: '<user>',
       userPermissions: ['BAN_MEMBERS'],
+      botPermissions: ['BAN_MEMBERS'],
     });
   }
 
