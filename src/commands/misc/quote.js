@@ -35,7 +35,7 @@ class QuoteCommand extends Command {
     channel.fetchMessage(messageID)
       .then(async (message) => {
         const memberColor = await context.message.guild.fetchMember(message.author.id)
-          .then(m => m.displayHexColor)
+          .then(m => m.displayHexColor === '#000000' ? null : m.displayHexColor)
           .catch(() => null);
 
         const embed = new RichEmbed()
@@ -44,8 +44,8 @@ class QuoteCommand extends Command {
             : this.getDefaultAvatar(message.author.discriminator))
           .setDescription(message.content)
           .setFooter(`${channel.type === 'text' ? `#${channel.name}` : context.__('global.dm')} - ${message.editedTimestamp ? context.__('quote.edited') : context.__('quote.created')}`)
-          .setTimestamp(message.editedAt || message.createdAt)
-          .setColor(memberColor);
+          .setTimestamp(message.editedAt || message.createdAt);
+        if (memberColor) embed.setColor(memberColor);
 
         context.reply({ embed });
       })
