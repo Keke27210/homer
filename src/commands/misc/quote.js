@@ -33,14 +33,19 @@ class QuoteCommand extends Command {
     }
 
     channel.fetchMessage(messageID)
-      .then((message) => {
+      .then(async (message) => {
+        const memberColor = await context.message.guild.fetchMember(message.author.id)
+          .then(m => m.displayHexColor)
+          .catch(() => null);
+
         const embed = new RichEmbed()
           .setAuthor(message.author.tag, message.author.avatar
             ? `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.${message.author.avatar.startsWith('a_') ? 'gif' : 'png'}`
             : this.getDefaultAvatar(message.author.discriminator))
           .setDescription(message.content)
           .setFooter(`${channel.type === 'text' ? `#${channel.name}` : context.__('global.dm')} - ${message.editedTimestamp ? context.__('quote.edited') : context.__('quote.created')}`)
-          .setTimestamp(message.editedAt || message.createdAt);
+          .setTimestamp(message.editedAt || message.createdAt)
+          .setColor(memberColor);
 
         context.reply({ embed });
       })
