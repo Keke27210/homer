@@ -13,7 +13,7 @@ class BaninfoCommand extends Command {
 
   async execute(context) {
     const bans = await context.message.guild.fetchBans();
-    const auditLogs = await context.message.guild.fetchAuditLogs();
+    const auditLogs = await context.message.guild.fetchAuditLogs({ type: 'MEMBER_BAN_ADD' }).then(a => a.entries);
 
     const search = context.args.join(' ');
     let user = null;
@@ -26,7 +26,7 @@ class BaninfoCommand extends Command {
       return context.replyError(context.__('baninfo.noQuery'));
     }
 
-    const logEntry = auditLogs.entries.find(e => e.action === 'MEMBER_BAN_ADD' && e.target.id === user.id);
+    const logEntry = auditLogs.find(a => a.target.id === user.id);
 
     const embed = new RichEmbed()
       .setDescription([
