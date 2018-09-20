@@ -49,12 +49,11 @@ class QuoteCommand extends Command {
 
         context.reply({ embed });
       })
-      .catch((e) => {
+      .catch(() => {
         context.replyWarning(context.__('quote.notFound', {
           channel: channel.type === 'text' ? `#${channel.name}` : context.__('global.dm'),
           message: messageID,
         }));
-      console.error(e)
       });
   }
 
