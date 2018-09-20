@@ -12,6 +12,7 @@ exports.defaultGuildSettings = id => ({
   prefixes: [],
   rolemeRoles: [],
   importedTags: [],
+  tagOverrides: [],
   radio: {
     channel: '0',
     volume: 0.5,
@@ -28,6 +29,7 @@ exports.defaultUserSettings = id => ({
   id,
   prefixes: [],
   importedTags: [],
+  tagOverrides: [],
   misc: {
     timezone: 'UTC',
     locale: 'en-gb',

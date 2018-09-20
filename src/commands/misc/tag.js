@@ -20,6 +20,7 @@ class TagCommand extends Command {
         new UnimportSubcommand(client),
         new CommandsSubcommand(client),
         new ExecSubcommand(client),
+        new OverrideSubcommand(client),
       ],
       dm: true,
     });
@@ -30,7 +31,7 @@ class TagCommand extends Command {
     const args = context.args.slice(1);
     if (!name) return context.replyError(context.__('tag.noName'));
 
-    const tag = await this.client.database.getDocument('tags', name.toLowerCase());
+    const tag = context.settings.tagOverrides.find(t => t.name === name.toLowerCase()) || await this.client.database.getDocument('tags', name.toLowerCase());
     if (!tag) return context.replyWarning(context.__('tag.unknownTag', { name }));
 
     if (!context.message.channel.nsfw && tag.content.toLowerCase().includes('{nsfw}')) {
@@ -162,10 +163,13 @@ class OwnerSubcommand extends Command {
     const name = context.args[0];
     if (!name) return context.replyError(context.__('tag.noName'));
 
-    const existentTag = await this.client.database.getDocument('tags', name.toLowerCase());
+    const existentTag = context.settings.tagOverrides.find(t => t.name === name.toLowerCase()) || await this.client.database.getDocument('tags', name.toLowerCase());
     if (!existentTag) return context.replyWarning(context.__('tag.notFound', { name }));
 
-    const author = await this.client.fetchUser(existentTag.author).then(u => `**${u.username}**#${u.discriminator} (ID:${u.id})`);
+    const author = existentTag.author ?
+      await this.client.fetchUser(existentTag.author).then(u => `**${u.username}**#${u.discriminator} (ID:${u.id})`) :
+      context.__('tag.belongsServer');
+
     context.replySuccess(context.__('tag.owner.owner', {
       author,
       name,
@@ -187,8 +191,8 @@ class RawSubcommand extends Command {
     const name = context.args[0];
     if (!name) return context.replyError(context.__('tag.noName'));
 
-    const existentTag = await this.client.database.getDocument('tags', name.toLowerCase());
-    if (!existentTag) return context.replyWarning(context.__('tag.notFound', { name }));
+    const existentTag = context.settings.tagOverrides.find(t => t.name === name.toLowerCase()) || await this.client.database.getDocument('tags', name.toLowerCase());
+    if (!existentTag || !existentTag.content) return context.replyWarning(context.__('tag.notFound', { name }));
 
     context.reply(existentTag.content);
   }
@@ -208,8 +212,8 @@ class RawtwoSubcommand extends Command {
     const name = context.args[0];
     if (!name) return context.replyError(context.__('tag.noName'));
 
-    const existentTag = await this.client.database.getDocument('tags', name.toLowerCase());
-    if (!existentTag) return context.replyWarning(context.__('tag.notFound', { name }));
+    const existentTag = context.settings.tagOverrides.find(t => t.name === name.toLowerCase()) || await this.client.database.getDocument('tags', name.toLowerCase());
+    if (!existentTag || !existentTag.content) return context.replyWarning(context.__('tag.notFound', { name }));
 
     context.reply(existentTag.content, { code: 'js' });
   }
@@ -349,6 +353,35 @@ class CommandsSubcommand extends Command {
 
     if (typeof message === 'string') return context.reply(message);
     for (const m of message) await context.reply(m);
+  }
+}
+
+class OverrideSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'override',
+      category: 'misc',
+      usage: '<tag name> [new content]',
+      userPermissions: ['MANAGE_GUILD'],
+    });
+  }
+
+  async execute(context) {
+    const name = context.args[0];
+    const content = context.args.slice(1).join(' ');
+    if (!name) return context.replyError(context.__('tag.override.noTag'));
+
+    const tagDocument = await this.client.database.getDocument('tags', name.toLowerCase());
+    if (!tagDocument) return context.replyWarning(context.__('tag.override.notFound', { name }));
+
+    context.settings.tagOverrides.push({
+      name: tagDocument.id,
+      content: content || null,
+      author: 'SERVER',
+    });
+
+    await context.saveSettings();
+    context.replySuccess(context.__('tag.override.created', { name: tagDocument.id }));
   }
 }
 

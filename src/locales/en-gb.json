@@ -253,6 +253,7 @@
   "helpUtil.tag.unimport": "Remove a tag from the custom commands",
   "helpUtil.tag.commands": "Get the list of tag commands (imported).",
   "helpUtil.tag.exec": "Run a tag without creating it (allows Lisa code)",
+  "helpUtil.tag.override": "Create overrides for tags",
   "helpUtil.telephone": "Manage your telephone subscription",
   "helpUtil.telephone.subscribe": "Subscribe to the telephone",
   "helpUtil.telephone.terminate": "Terminate your telephone subscription",
@@ -615,6 +616,9 @@
   "tag.exec.noContent": "You must provide a content to execute (allows Lisa code).",
   "tag.commands.title": "🏷 Tag commands for {{{ name }}}:",
   "tag.commands.noImportedTag": "No tag command found for {{{ name }}}.",
+  "tag.override.noTag": "You must provide the name of the tag to override.",
+  "tag.override.notFound": "No tag found matching \"{{{ name }}}\".",
+  "tag.override.created": "Successfully created override for \"{{{ name }}}\"!",
 
   "telephone.notAssigned": "The provided number is not assigned.",
   "telephone.refusedConnection": "The connection with your correspondent has been refused. You may have been **blacklisted** or the telephone service is currently **under maintenance**.",
