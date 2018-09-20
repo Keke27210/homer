@@ -135,7 +135,7 @@ class LookupCommand extends Command {
             }
             return count;
           })
-          .catch(() => {});
+          .catch(() => ({}));
 
         const members = guildObject.online ? [
           `${this.client.constants.status.online} **${guildObject.online}**`,
@@ -164,8 +164,7 @@ class LookupCommand extends Command {
           { embed },
         );
       })
-      .catch((e) => {
-        console.error(e)
+      .catch(() => {
         done = false;
       });
 
