@@ -18,24 +18,24 @@
   "global.page": "Seite {{{ num }}}",
 
   "about.title": "{{{ emote }}} Informationen über {{{ name }}}:",
-  "about.embed.text": "Hallo!\nI am a general purpose bot for all Discord communities.\nI provide you necessary tools to meet your needs, from utility to fun features you can fully enjoy me.\nYou can get below some useful information about me.",
+  "about.embed.text": "Hallo!\nIch bin ein Discord-Bot, der für jede Community gemacht wurde.\nIch gebe dir die erforderlichen Tools, um deinen Bedürfnissen nachzugehen. Von einem Tool bis zu lustigen Features kannst du mich voll genießen.\nDie nachfolgenden Links geben dir mehr Informationen über mich.",
   "about.embed.owners": "Besitzer",
   "about.embed.versions": "Versionen",
   "about.embed.links": "Links",
 
   "afk.gone": "💤 Du bist nun AFK, bis später!",
-  "afk.messageTooLong": "DIe Nachricht kann nicht länger als 256 Zeichen sein.",
+  "afk.messageTooLong": "Die Nachricht kann nicht länger als 256 Zeichen sein.",
   "afk.messageHandler": "Ein paar Nutzer sind AFK!",
   "afk.removeMessage": "👋 Willkommen zurück!",
 
   "avatar.title": "🖼 Avatar von {{{ name }}}:",
 
-  "baninfo.title": "🔨 Ban information for {{{ user }}}:",
-  "baninfo.embed.targetID": "Target ID",
-  "baninfo.embed.executor": "Executor",
-  "baninfo.embed.reason": "Reason",
-  "baninfo.embed.date": "Date",
-  "baninfo.noQuery": "You must provide a user to search for!",
+  "baninfo.title": "🔨 Bann-Informationen über {{{ user }}}:",
+  "baninfo.embed.targetID": "Nutzer-ID",
+  "baninfo.embed.executor": "Vollstrecker",
+  "baninfo.embed.reason": "Grund",
+  "baninfo.embed.date": "Datum",
+  "baninfo.noQuery": "Bitte gebe einen Nutzer an!",
 
   "call.callerBusy": "📞 You are currently incall with **{{{ number }}}**.",
   "call.noNumber": "You must provide a number to call.",
