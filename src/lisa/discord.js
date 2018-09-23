@@ -172,4 +172,18 @@ module.exports = [
       return env.guild.members.filter(m => m.user.presence.status === params[0].toLowerCase()).size.toString();
     },
   ),
+
+  // attachment
+  new Method(
+    'attachment',
+    null,
+    (env, params) => env.attachments[parseInt(params[0])] || '',
+  ),
+
+  // attachments
+  new Method(
+    'attachments',
+    env => JSON.stringify(env.attachments),
+    null,
+  ),
 ];

@@ -6,6 +6,7 @@ class Environment {
     this.member = null;
     this.user = null;
     this.channel = null;
+    this.attachments = [];
     this.args = args || [];
     this.children = children;
     this.settings = object.settings;
@@ -19,6 +20,7 @@ class Environment {
       this.member = object.message.member || null;
       this.user = object.message.author;
       this.channel = object.message.channel;
+      this.attachments = object.message.attachments.map(a => a.url);
     } else if (type === 'memberlog') {
       this.guild = object.guild;
       this.member = object;
@@ -30,6 +32,7 @@ class Environment {
       this.member = object.member;
       this.user = object.user;
       this.channel = object.channel;
+      this.attachments = object.attachments;
       this.children = true;
     }
   }
