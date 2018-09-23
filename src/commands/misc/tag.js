@@ -167,7 +167,7 @@ class OwnerSubcommand extends Command {
     const existentTag = context.settings.tagOverrides.find(t => t.name === name.toLowerCase()) || await this.client.database.getDocument('tags', name.toLowerCase());
     if (!existentTag) return context.replyWarning(context.__('tag.notFound', { name }));
 
-    const author = existentTag.author ?
+    const author = existentTag.author && existentTag.author !== 'SERVER' ?
       await this.client.fetchUser(existentTag.author).then(u => `**${u.username}**#${u.discriminator} (ID:${u.id})`) :
       context.__('tag.belongsServer');
 
