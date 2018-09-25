@@ -383,7 +383,7 @@
   "pickup.senderCannotPickup": "You can't pickup the phone as caller!",
 
   "ping.ping": "🏓 Ping...",
-  "ping.pong": "🏓 Pong! API: **{{{ api }}}**ms - Heartbeat: **{{{ heartbeat }}}**ms",
+  "ping.pong": "🏓 Pong! API: **{{{ api }}}**ms - Message roundtrip: **{{{ heartbeat }}}**ms",
 
   "poll.noTitle": "You must provide a title for the poll.",
   "poll.titleTooLong": "The title length must be fewer than 64 characters.",
