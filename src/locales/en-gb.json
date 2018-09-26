@@ -148,6 +148,7 @@
   "game.type.3": "watching",
   "game.embed.ends": "{{{ time }}} left",
 
+  "google.noSearch": "You must provide something to search on Google.",
   "google.result": "{{{ mention }}}, here is your result: {{{ link }}}",
   "google.error.noResult": "No result found for the given query",
   "google.error.unknown": "An unknown error occured",
