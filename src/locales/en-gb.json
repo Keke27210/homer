@@ -148,6 +148,7 @@
   "game.type.3": "watching",
   "game.embed.ends": "{{{ time }}} left",
 
+  "google.noSearch": "You must provide something to search on Google.",
   "google.result": "{{{ mention }}}, here is your result: {{{ link }}}",
   "google.error.noResult": "No result found for the given query",
   "google.error.unknown": "An unknown error occured",
@@ -383,7 +384,7 @@
   "pickup.senderCannotPickup": "You can't pickup the phone as caller!",
 
   "ping.ping": "🏓 Ping...",
-  "ping.pong": "🏓 Pong! API: **{{{ api }}}**ms - Heartbeat: **{{{ heartbeat }}}**ms",
+  "ping.pong": "🏓 Pong! API: **{{{ api }}}**ms - Message roundtrip: **{{{ heartbeat }}}**ms",
 
   "poll.noTitle": "You must provide a title for the poll.",
   "poll.titleTooLong": "The title length must be fewer than 64 characters.",

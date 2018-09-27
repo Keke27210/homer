@@ -80,7 +80,7 @@ class Menu {
         if (tmpNum !== this.currentPage) this.refreshMenu();
       });
 
-      collector.on('end', async () => {
+      collector.once('end', async () => {
         try { await this.menuMessage.delete(); } catch(e) {}
         try { await this.context.message.delete(); } catch(e) {}
       });
