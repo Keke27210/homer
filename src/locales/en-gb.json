@@ -687,7 +687,7 @@
   "timeUtil.timeSince.seconds.long.s": " second",
   "timeUtil.timeSince.seconds.long.p": " seconds",
   "timeUtil.timeSince.seconds.short": "s",
-  "timeUtil.timeSince.noTime": "No time ago",
+  "timeUtil.timeSince.noTime": "Just now",
 
   "timezone.noTimezone": "You must provide a timezone to set. Find timezones using `{{{ command }}}`.",
   "timezone.invalidTimezone": "The timezone `{{{ timezone }}}` is not recognized!",
