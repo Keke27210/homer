@@ -564,7 +564,7 @@
   "timeUtil.timeSince.minutes.short": "m",
   "timeUtil.timeSince.seconds.long": " secondes",
   "timeUtil.timeSince.seconds.short": "s",
-  "timeUtil.timeSince.noTime": "Il n'y a pas si longtemps",
+  "timeUtil.timeSince.noTime": "À l'instant",
 
   "timezone.noTimezone": "Vous devez fuseau horaire de zone à régler. Trouvez des fuseaux horaire avec `{{{ command }}}`.",
   "timezone.invalidTimezone": "Le fuseau horaire `{{{ timezone }}}` n'est pas reconnu !",
