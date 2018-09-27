@@ -416,6 +416,7 @@
   "quote.noMessageID": "You must provide a message ID to fetch!",
   "quote.created": "Created",
   "quote.edited": "Edited",
+  "quote.embedDesc": "Embed content",
   "quote.notFound": "No message found in **{{{ channel }}}** matching ID `{{{ message }}}`.",
   "quote.missingBotPermissions": "The bot does not have required permissions to fetch messages (View Channel and Read Message History).",
   "quote.missingUserPermissions": "You do not have required permissions to see this message (View Channel and Read Message History).",

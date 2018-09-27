@@ -47,6 +47,14 @@ class QuoteCommand extends Command {
           .setTimestamp(message.editedAt || message.createdAt);
         if (memberColor) embed.setColor(memberColor);
 
+        if (message.embeds[0] && message.embeds[0].description) {
+          let str = '';
+          if (message.embeds[0].title) str += `**${message.embeds[0].title}**\n\n`;
+          str += message.embeds[0].description;
+
+          embed.addField(context.__('quote.embedDesc'), str);
+        }
+
         context.reply({ embed });
       })
       .catch(() => {
