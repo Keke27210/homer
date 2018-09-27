@@ -55,7 +55,8 @@ class QuoteCommand extends Command {
           embed.addField(context.__('quote.embedDesc'), str);
         }
 
-        context.reply({ embed });
+        if(message.embeds.length == 0 ) context.reply({ embed });
+        else context.replyWarning(context.__('quote.hasEmbeds'));
       })
       .catch(() => {
         context.replyWarning(context.__('quote.notFound', {

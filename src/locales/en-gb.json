@@ -421,6 +421,7 @@
   "quote.notFound": "No message found in **{{{ channel }}}** matching ID `{{{ message }}}`.",
   "quote.missingBotPermissions": "The bot does not have required permissions to fetch messages (View Channel and Read Message History).",
   "quote.missingUserPermissions": "You do not have required permissions to see this message (View Channel and Read Message History).",
+  "quote.hasEmbeds": "You cant quote a message containing an embed.",
   
   "radio.hub": "📻 Welcome to the radio hub! Run `{{{ prefix }}}radio help` to have the list of subcommands.",
   "radio.noRadioChannel": "You must specify a radio channel using `{{{ prefix }}}radio channel`.",
