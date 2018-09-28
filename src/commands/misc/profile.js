@@ -7,6 +7,7 @@ class ProfileCommand extends Command {
     super(client, {
       name: 'profile',
       category: 'misc',
+      aliases: ['p'],
       children: [
         new SetSubcommand(client),
         new ClearSubcommand(client),
