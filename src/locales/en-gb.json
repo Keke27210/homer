@@ -52,6 +52,8 @@
   "channel.embed.position": "Position",
   "channel.embed.bitrate": "Bitrate",
   "channel.embed.users": "Users",
+  "channel.embed.slowdown": "Slowdown",
+  "channel.embed.slowdownUnit": "seconds per message",
   "channel.embed.creation": "Channel creation date",
   "channel.embed.topic": "Topic",
   "channel.type.text": "Text",
