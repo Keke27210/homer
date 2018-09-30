@@ -32,7 +32,7 @@ class ChannelCommand extends Command {
 
     if (channel.type === 'voice') channelInformation.push(`${this.dot} ${context.__('channel.embed.bitrate')}: **${channel.bitrate}**Kbps`);
     if (channel.type !== 'category') channelInformation.push(`${this.dot} ${context.__('channel.embed.users')}: **${channel.members.size}**${channel.type === 'voice' ? `/**${channel.userLimit === 0 ? '∞' : channel.userLimit}**` : ''}`);
-    if (channel.type === 'text') channelInformation.push(`${this.dot} ${context.__('channel.embed.slowdown'): ${slowdown === 0 ? context.__('global.none') : `**${slowdown}** ${context.__('channel.embed.slowdownUnit')}`}`);
+    if (channel.type === 'text') channelInformation.push(`${this.dot} ${context.__('channel.embed.slowdown')}: ${slowdown === 0 ? context.__('global.none') : `**${slowdown}** ${context.__('channel.embed.slowdownUnit')}`}`);
     channelInformation.push(`${this.dot} ${context.__('channel.embed.creation')}: **${context.formatDate(channel.createdTimestamp)}**`);
 
     const embed = new RichEmbed()
