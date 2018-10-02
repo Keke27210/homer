@@ -16,7 +16,7 @@ class PhonebookCommand extends Command {
     const numbers = await this.client.database.getDocuments('telephone', true).then((subscriptions) => {
       const lines = search ? [] : [subscriptions.find(s => s.number === 'SUPPORT')];
       subscriptions = subscriptions
-        .filter(l => l.phonebook && (l.number.includes(search || l.number) || l.phonebook.toLowerCase().includes(search.toLowerCase())))
+        .filter(l => l.phonebook && (l.number.includes(search.toUpperCase() || l.number) || l.phonebook.toLowerCase().includes(search.toLowerCase())))
         .sort((a, b) => parseInt(a.number.replace('-', '')) - parseInt(b.number.replace('-', '')));
 
       for (const subscription of subscriptions) {

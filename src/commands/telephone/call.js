@@ -23,7 +23,7 @@ class CallCommand extends Command {
       return context.reply(context.__('call.callerBusy', { number: c.sender.number === thisSubscription.number ? c.receiver.number : c.sender.number }));
     }
 
-    const number = context.args[0];
+    const number = context.args[0] ? context.args[0].toUpperCase() : null;
     if (!number) return context.replyError(context.__('call.noNumber'));
 
     if (thisSubscription.number === number) return context.replyWarning(context.__('call.cannotCallOwn'));

@@ -17,7 +17,7 @@ class TextCommand extends Command {
     }
     if (!subscription.textable) return context.replyWarning(context.__('telephone.text.mustEnable'));
 
-    const number = context.args[0];
+    const number = context.args[0] ? context.args[0].toUpperCase() : null;
     const text = context.args.slice(1).join(' ');
     if (!number) return context.replyError(context.__('text.noNumber'));
     if (number === subscription.number) return context.replyWarning(context.__('text.cannotTextYourself'));
