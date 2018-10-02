@@ -47,7 +47,7 @@ class TagCommand extends Command {
 
     const parsed = await this.client.lisa.parseString(context, tag.content, 'tag', args);
     processed = true;
-    m.edit(parsed.content || '', { embed: parsed.embed });
+    m.edit(parsed.content ? parsed.content.replace('@everyone', '!EVERYONE').replace('@here', '!HERE') : '', { embed: parsed.embed });
   }
 }
 
@@ -195,7 +195,7 @@ class RawSubcommand extends Command {
     const existentTag = context.settings.tagOverrides.find(t => t.name === name.toLowerCase()) || await this.client.database.getDocument('tags', name.toLowerCase());
     if (!existentTag || !existentTag.content) return context.replyWarning(context.__('tag.notFound', { name }));
 
-    context.reply(existentTag.content);
+    context.reply(existentTag.content.replace('@everyone', '!EVERYONE').replace('@here', '!HERE'));
   }
 }
 
@@ -328,7 +328,7 @@ class ExecSubcommand extends Command {
 
     const parsed = await this.client.lisa.parseString(context, content, 'tag');
     processed = true;
-    m.edit(parsed.content || '', { embed: parsed.embed });
+    m.edit(parsed.content ? parsed.content.replace('@everyone', '!EVERYONE').replace('@here', '!HERE') : '', { embed: parsed.embed });
   }
 }
 
