@@ -232,13 +232,9 @@ module.exports = [
     (env, params) => {
       if (env.reactions.length > 10) return;
 
-      if (emoteExpression.test(params[0])) {
-        const emoteInfo = emoteExpression.exec(params[0]); emoteExpression.lastIndex = 0;
-        if (emoteInfo) params[0] = `${emoteInfo[2]}:${emoteInfo[3]}`;
-      }
-
-      env.reactions.push(params[0]);
-      console.log(env.reactions)
+      const emote = params[0];
+      console.log(emoteExpression.test(emote));
+      console.log(emoteExpression.exec(emote));
       return '';
     },
   ),
