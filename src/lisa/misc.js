@@ -230,7 +230,9 @@ module.exports = [
     'react',
     null,
     (env, params) => {
-      if (params[0].test(emoteExpression)) {
+      if (env.reactions.length > 10) return;
+
+      if (emoteExpression.test(params[0])) {
         const emoteInfo = emoteExpression.exec(params[0]); emoteExpression.lastIndex = 0;
         params[0] = `${emoteInfo[1] === 'a' ? 'a:' : ''}${emoteInfo[2]}:${emoteInfo[3]}`;
       }
