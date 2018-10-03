@@ -27,6 +27,7 @@ module.exports = [
       if (!tag) return 'UNKNOWN_TAG';
 
       const parsed = await env.client.lisa.parseString(env, tag.content, 'childrenTag', args, true, env.embedCode);
+      console.log('EXEC: Embed code: ' + env.embedCode);
       env.embed = parsed.embed;
       return parsed.content;
     },
