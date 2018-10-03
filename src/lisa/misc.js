@@ -238,6 +238,7 @@ module.exports = [
       }
 
       env.reactions.push(params[0]);
+      console.log(env.reactions)
       return '';
     },
   ),
