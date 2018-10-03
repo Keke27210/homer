@@ -234,7 +234,7 @@ module.exports = [
 
       if (emoteExpression.test(params[0])) {
         const emoteInfo = emoteExpression.exec(params[0]); emoteExpression.lastIndex = 0;
-        if (emoteInfo) params[0] = `${emoteInfo[1] === 'a' ? 'a:' : ''}${emoteInfo[2]}:${emoteInfo[3]}`;
+        if (emoteInfo) params[0] = `${emoteInfo[2]}:${emoteInfo[3]}`;
       }
 
       env.reactions.push(params[0]);
