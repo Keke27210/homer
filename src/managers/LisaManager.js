@@ -91,7 +91,6 @@ class LisaManager extends Manager {
 
         if (split !== -1) {
           const name = content.substring(0, split).toLowerCase();
-          console.log(`"${name}" !== "${env.embed}"`)
           const value = (name === env.embedCode) ? this.defilterAll(content.substring(split + 1)) : undefined;
 
           try { env.embed = JSON.parse(value); }
