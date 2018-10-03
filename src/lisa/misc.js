@@ -84,6 +84,7 @@ module.exports = [
         try { embed.setTimestamp(new Date(parsed)); } catch (e) {}
       }
 
+      console.log('EMBED: Embed code: ' + `|||[|||${env.embedCode}:${JSON.stringify(embed)}|||]|||`)
       return `|||[|||${env.embedCode}:${JSON.stringify(embed)}|||]|||`;
     },
   ),
