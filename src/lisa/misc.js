@@ -83,6 +83,7 @@ module.exports = [
         try { embed.setTimestamp(new Date(parsed)); } catch (e) {}
       }
 
+      console.log(env.embedCode);
       return `|||[|||${env.embedCode}:${JSON.stringify(embed)}|||]|||`;
     },
   ),
@@ -226,7 +227,7 @@ module.exports = [
   ),
 
   // react
-  new Method(
+  /*new Method(
     'react',
     null,
     (env, params) => {
@@ -237,7 +238,7 @@ module.exports = [
       console.log(emoteExpression.exec(emote));
       return '';
     },
-  ),
+  ),*/
 ];
 
 function uuid() {
