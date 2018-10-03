@@ -1,7 +1,7 @@
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
 
 class Environment {
-  constructor(client, object, type, args, children) {
+  constructor(client, object, type, args, children, embedCode) {
     Object.defineProperty(this, 'client', { value: client, enumerable: false });
     this.vars = [];
     this.guild = null;
@@ -10,7 +10,7 @@ class Environment {
     this.channel = null;
     this.attachments = [];
     this.args = args || [];
-    this.embedCode = null;
+    this.embedCode = embedCode || null;
     this.reactions = [];
     this.children = children;
     this.settings = object.settings;

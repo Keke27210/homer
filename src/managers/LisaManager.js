@@ -34,8 +34,8 @@ class LisaManager extends Manager {
     await this.loadMethods(sandbox);
   }
 
-  async parseString(context, string, type, tagArgs = [], children = false) {
-    const env = new Environment(this.client, context, type, tagArgs, children);
+  async parseString(context, string, type, tagArgs = [], children = false, embedCode) {
+    const env = new Environment(this.client, context, type, tagArgs, children, embedCode);
 
     let output = this.filterEscapes(string);
     let lastOutput = null;
