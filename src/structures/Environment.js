@@ -1,4 +1,4 @@
-const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+const chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
 
 class Environment {
   constructor(client, object, type, args, children, embedCode) {

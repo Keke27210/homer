@@ -36,8 +36,6 @@ class LisaManager extends Manager {
 
   async parseString(context, string, type, tagArgs = [], children = false, embedCode) {
     const env = new Environment(this.client, context, type, tagArgs, children, embedCode);
-    if (!children) console.log('MAIN: Embed code: ' + env.embedCode);
-    if (children) console.log('CHILD: Embed code: ' + env.embedCode);
 
     let output = this.filterEscapes(string);
     let lastOutput = null;
@@ -93,7 +91,7 @@ class LisaManager extends Manager {
 
         if (split !== -1) {
           const name = content.substring(0, split).toLowerCase();
-          console.log(name === env.embedCode)
+          console.log(`"${name}" !== "${env.embed}"`)
           const value = (name === env.embedCode) ? this.defilterAll(content.substring(split + 1)) : undefined;
 
           try { env.embed = JSON.parse(value); }
