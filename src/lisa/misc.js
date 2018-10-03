@@ -1,10 +1,10 @@
 const Method = require('../structures/Method');
 const { RichEmbed } = require('discord.js');
 const request = require('superagent');
-const { inspect } = require('util');
 
 const domainExpression = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n\?\=]+)/im;
 const propertyExpression = /{item.(.*?)}/g;
+const emoteExpression = /<(a?):(.{0,100}):(\d{17,20})>/g;
 
 module.exports = [
   // uid
@@ -83,7 +83,7 @@ module.exports = [
         try { embed.setTimestamp(new Date(parsed)); } catch (e) {}
       }
 
-      return `|||[|||${env.client.config.secretEmbedMethod}:${JSON.stringify(embed)}|||]|||`;
+      return `|||[|||${env.embedCode}:${JSON.stringify(embed)}|||]|||`;
     },
   ),
 
@@ -223,6 +223,21 @@ module.exports = [
     'nsfw',
     () => '',
     null,
+  ),
+
+  // react
+  new Method(
+    'react',
+    null,
+    (env, params) => {
+      if (params[0].test(emoteExpression)) {
+        const emoteInfo = emoteExpression.exec(params[0]); emoteExpression.lastIndex = 0;
+        params[0] = `${emoteInfo[1] === 'a' ? 'a:' : ''}${emoteInfo[2]}:${emoteInfo[3]}`;
+      }
+
+      env.reactions.push(params[0]);
+      return '';
+    },
   ),
 ];
 

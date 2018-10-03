@@ -91,7 +91,7 @@ class LisaManager extends Manager {
 
         if (split !== -1) {
           const name = content.substring(0, split).toLowerCase();
-          const value = (name === this.client.config.secretEmbedMethod) ? this.defilterAll(content.substring(split + 1)) : undefined;
+          const value = (name === env.embedCode) ? this.defilterAll(content.substring(split + 1)) : undefined;
 
           try { env.embed = JSON.parse(value); }
           catch (e) {}
@@ -106,6 +106,7 @@ class LisaManager extends Manager {
     return ({
       content: output || '​',
       embed: env.embed,
+      reactions: env.reactions,
     });
   }
 

@@ -1,3 +1,5 @@
+const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+
 class Environment {
   constructor(client, object, type, args, children) {
     Object.defineProperty(this, 'client', { value: client, enumerable: false });
@@ -8,6 +10,8 @@ class Environment {
     this.channel = null;
     this.attachments = [];
     this.args = args || [];
+    this.embedCode = null;
+    this.reactions = [];
     this.children = children;
     this.settings = object.settings;
 
@@ -21,6 +25,10 @@ class Environment {
       this.user = object.message.author;
       this.channel = object.message.channel;
       this.attachments = object.message.attachments.map(a => a.url);
+
+      let code = '';
+      for (let i = 0; i < 5; i += 1) code += chars[Math.floor(Math.random() * chars.length)];
+      this.embedCode = code;
     } else if (type === 'memberlog') {
       this.guild = object.guild;
       this.member = object;

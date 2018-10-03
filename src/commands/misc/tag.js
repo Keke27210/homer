@@ -48,6 +48,8 @@ class TagCommand extends Command {
     const parsed = await this.client.lisa.parseString(context, tag.content, 'tag', args);
     processed = true;
     m.edit(parsed.content ? parsed.content.replace('@everyone', '!EVERYONE').replace('@here', '!HERE') : '', { embed: parsed.embed });
+
+    for (const reaction of parsed.reactions) await m.react(reaction).catch(() => null);
   }
 }
 
