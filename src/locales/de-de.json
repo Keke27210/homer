@@ -66,12 +66,12 @@
   "checkdbans.error": "Ein unbekannter Fehler ist aufgetreten.",
 
   "choose.chosen": "🤔 Ich habe **{{{ chosen }}}** ausgewählt.",
-  "choose.insufficientChoices": "Du musst wenigstens **2** Auswahlen geben.",
+  "choose.insufficientChoices": "Du musst wenigstens **2** Dinge geben.",
 
-  "commandHandler.blacklist.title": "You have been blacklisted:",
-  "commandHandler.blacklist.reason": "Reason",
-  "commandHandler.blacklist.date": "Blacklist date",
-  "commandHandler.blacklist.footer": "If you think this is an error, contact the bot owner.",
+  "commandHandler.blacklist.title": "Du wurdest geblacklisted:",
+  "commandHandler.blacklist.reason": "Grund",
+  "commandHandler.blacklist.date": "Datum",
+  "commandHandler.blacklist.footer": "Wenn du denkst, dass dies ein Fehler war, kontaktiere den Owner.",
   "commandHandler.cooldown": "Please wait **{{{ time }}}** seconds before using commands again.",
   "commandHandler.error": "An error occurred during the execution of the command. Please try again later.",
   "commandHandler.missingUserPermissions": "You need the following permissions to run this command: {{{ permissions }}}.",
