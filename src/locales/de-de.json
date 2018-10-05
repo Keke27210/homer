@@ -71,7 +71,7 @@
   "commandHandler.blacklist.title": "Du wurdest geblacklisted:",
   "commandHandler.blacklist.reason": "Grund",
   "commandHandler.blacklist.date": "Datum",
-  "commandHandler.blacklist.footer": "Wenn du denkst, dass dies ein Fehler war, kontaktiere den Owner.",
+  "commandHandler.blacklist.footer": "Wenn du denkst, dass dies ein Fehler war, kontaktiere den Besitzer vom Bot.",
   "commandHandler.cooldown": "Please wait **{{{ time }}}** seconds before using commands again.",
   "commandHandler.error": "An error occurred during the execution of the command. Please try again later.",
   "commandHandler.missingUserPermissions": "You need the following permissions to run this command: {{{ permissions }}}.",
