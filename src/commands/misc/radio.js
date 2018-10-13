@@ -257,15 +257,16 @@ class InfoSubcommand extends Command {
         .catch(() => null);
 
       if (req && req[0]) {
-        playing = request[0].streamTitle.split(' - ').map(a => `**${a}**`).join(' - ');
+        playing = request[0].streamTitle;
       }
     }
 
     const infoDescription = [
-      `**[${meta.name}](${meta.website})**   -   ${playing}`,
-      `**${meta.language}** (**${meta.country}**)`,
-      `${meta.type.map(t => `**${context.__(`radio.types.${t}`)}**`).join(', ')}`,
-      `${getVolume(this.client.voiceConnections.get(context.message.guild.id).dispatcher.volume)}`,
+      `🎛 **[${meta.name}](${meta.website})** - ${meta.id} MHz`,
+      `🎵 ${playing}`,
+      `🚩 **${meta.language}** (**${meta.country}**)`,
+      `🔖 ${meta.type.map(t => `**${context.__(`radio.types.${t}`)}**`).join(', ')}`,
+      `🔈 ${getVolume(this.client.voiceConnections.get(context.message.guild.id).dispatcher.volume)}`,
     ].join('\n');
 
     const embed = new RichEmbed()
@@ -291,7 +292,7 @@ async function parseURL(url) {
 function getVolume(volume) {
   let str = '──────────';
   str[Math.round(volume * 10)] = '○';
-  return `🔈 ${str}`;
+  return str;
 }
 
 module.exports = RadioCommand;
