@@ -28,7 +28,7 @@ class DonatorsCommand extends Command {
       ))
       .addField(
         context.__('donators.donatorsList'),
-        donatorsList.join('\n') || context.__('global.none'),
+        donatorsList.sort((a, b) => a > b).join('\n') || context.__('global.none'),
       )
 
     context.reply(
