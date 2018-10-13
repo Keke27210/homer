@@ -250,7 +250,7 @@ class InfoSubcommand extends Command {
       since = this.client.time.timeSince(Date.now() - this.client.voiceConnections.get(context.message.guild.id).dispatcher.totalStreamTime);
     }
 
-    let playing = `**${context.__('global.noInformation')}**`;
+    let playing = context.__('global.noInformation');
     if (meta.stationId) {
       const req = await request.get(`https://api.radio.net/info/v2/search/nowplaying?apikey=${this.client.config.api.radio}&numberoftitles=1&station=${meta.stationId}`)
         .then(r => r.body)
@@ -291,8 +291,8 @@ async function parseURL(url) {
 
 function getVolume(volume) {
   let str = '──────────';
-  str[Math.round(volume * 10)] = '○';
-  return str;
+  const index = Math.round(volume * 10);
+  return str.substring(0, index - 1) + '○' + str.substring(index);
 }
 
 module.exports = RadioCommand;
