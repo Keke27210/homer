@@ -14,17 +14,11 @@ class DonatorsCommand extends Command {
 
   async execute(context) {
     const donatorsTable = await this.client.database.getDocuments('donators', true);
-    const perks = await this.client.database.getDocument('bot', 'settings').then(s => s.perks || []);
     const donatorsList = [];
 
     for (const donator of donatorsTable) {
-      const user = await this.client.fetchUser(donator.id)
-        .catch(() => ({
-          tag: context.__('global.unknown'),
-          id: context.__('global.unknown'),
-        }));
-
-      donatorsList.push(`**${user.username}**#${user.discriminator}: ${donator.amount}`);
+      const user = await this.client.fetchUser(donator.id);
+      donatorsList.push(`**${user.username}**#${user.discriminator}`);
     }
 
     const embed = new RichEmbed()
@@ -35,13 +29,7 @@ class DonatorsCommand extends Command {
       .addField(
         context.__('donators.donatorsList'),
         donatorsList.join('\n') || context.__('global.none'),
-        true,
       )
-      .addField(
-        context.__('donators.perksTitle'),
-        perks.map(perk => `**€${perk.amount}**: ${perk.text}`).join('\n') || context.__('global.none'),
-        true,
-      );
 
     context.reply(
       context.__('donators.main', { name: this.client.user.username }),

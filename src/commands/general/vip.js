@@ -12,7 +12,7 @@ class VipCommand extends Command {
   }
 
   async execute(context) {
-    const list = await this.client.database.getDocuments('vip');
+    const list = await this.client.database.getDocuments('vip', true);
 
     const users = [];
     for (let i = 0; i < list.length; i += 1) {
