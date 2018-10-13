@@ -263,10 +263,10 @@ class InfoSubcommand extends Command {
 
     const infoDescription = [
       `🎛 **[${meta.name}](${meta.website})** - ${meta.id} MHz`,
-      `🎵 ${playing}`,
+      `🎵 **${playing}**`,
       `🚩 ${meta.language} (${meta.country})`,
-      `🔖 ${meta.type.map(t => context.__(`radio.types.${t}`)).join(', ')}`,
-      `🔈 ${getVolume(this.client.voiceConnections.get(context.message.guild.id).dispatcher.volume)}`,
+      `🔖 **${meta.type.map(t => context.__(`radio.types.${t}`)).join(', ')}**`,
+      `🔈 **${getVolume(this.client.voiceConnections.get(context.message.guild.id).dispatcher.volume)}**`,
     ].join('\n');
 
     const embed = new RichEmbed()
