@@ -25,13 +25,17 @@ class ReadyEvent extends Event {
     if (!this.client.firstStart) {
       this.client.setInterval(() => {
         if (!this.client.ready) return;
-        this.client.update.updateGame();
         this.client.update.updateBotList();
       }, 30000);
 
       this.client.setInterval(() => {
         if (!this.client.ready) return;
-        this.client.other.updateShardStatus()
+        this.client.update.updateGame();
+      }, 5000);
+
+      this.client.setInterval(() => {
+        if (!this.client.ready) return;
+        this.client.other.updateShardStatus();
       }, 1000);
     }
 

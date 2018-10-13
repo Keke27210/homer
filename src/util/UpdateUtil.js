@@ -1,4 +1,5 @@
 const request = require('superagent');
+let radio = false;
 
 class UpdateUtil {
   constructor(client) {
@@ -6,16 +7,24 @@ class UpdateUtil {
   }
 
   async updateGame() {
-    const game = await this.client.database.getDocument('bot', 'settings')
-      .then(settings => settings.customGame) || 'Type {prefix}help! On {servers} servers on shard {shard}.';
+    if (radio) {
+      radio = false;
+      const radios = await this.client.database.getDocuments('radios', true).then(radios => radios.map(r => `${r.name} (${r.id})`));
+      return this.client.user.setActivity(`${radios[Math.floor(Math.random() * radios.length)]} on Homer Tuner 📻`, { type: 'LISTENING' });
+    } else {
+      radio = true;
+      const game = await this.client.database.getDocument('bot', 'settings')
+        .then(settings => settings.customGame) || 'Type {prefix}help! On {servers} servers on shard {shard}.';
 
-    return this.client.user.setActivity(game
-        .replace(/{prefix}/g, this.client.prefix)
-        .replace(/{servers}/g, this.client.guilds.size)
-        .replace(/{users}/g, this.client.users.size)
-        .replace(/{shard}/g, this.client.shard.id)
-        .replace(/{shards}/g, this.client.config.sharder.totalShards)
-    );
+      return this.client.user.setActivity(game
+          .replace(/{prefix}/g, this.client.prefix)
+          .replace(/{servers}/g, this.client.guilds.size)
+          .replace(/{users}/g, this.client.users.size)
+          .replace(/{shard}/g, this.client.shard.id)
+          .replace(/{shards}/g, this.client.config.sharder.totalShards),
+        { type: 'PLAYING' },
+      );
+    }
   }
 
   async updateBotList() {
