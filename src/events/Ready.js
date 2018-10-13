@@ -31,7 +31,7 @@ class ReadyEvent extends Event {
       this.client.setInterval(() => {
         if (!this.client.ready) return;
         this.client.update.updateGame();
-      }, 5000);
+      }, 10000);
 
       this.client.setInterval(() => {
         if (!this.client.ready) return;
