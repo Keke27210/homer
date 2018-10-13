@@ -262,12 +262,10 @@ class InfoSubcommand extends Command {
     }
 
     const infoDescription = [
-      `${this.dot} ${context.__('radio.info.embed.name')}: **[${meta.name}](${meta.website})**`,
-      `${this.dot} ${context.__('radio.info.embed.language')}: **${meta.language}**`,
-      `${this.dot} ${context.__('radio.info.embed.country')}: **${meta.country}**`,
-      `${this.dot} ${context.__('radio.info.embed.playing')}: ${playing}`,
-      `${this.dot} ${context.__('radio.info.embed.topics')}: ${meta.type.map(t => `**${context.__(`radio.types.${t}`)}**`).join(', ')}`,
-      `${this.dot} ${context.__('radio.info.embed.since')}: ${since}`,
+      `**[${meta.name}](${meta.website})**   -   ${playing}`,
+      `**${meta.language}** (**${meta.country}**)`,
+      `${meta.type.map(t => `**${context.__(`radio.types.${t}`)}**`).join(', ')}`,
+      `${getVolume(this.client.voiceConnections.get(context.message.guild.id).dispatcher.volume)}`,
     ].join('\n');
 
     const embed = new RichEmbed()
@@ -288,6 +286,12 @@ async function parseURL(url) {
   }
 
   return url;
+}
+
+function getVolume(volume) {
+  let str = '──────────';
+  str[Math.round(volume * 10)] = '○';
+  return `🔈 ${str}`;
 }
 
 module.exports = RadioCommand;
