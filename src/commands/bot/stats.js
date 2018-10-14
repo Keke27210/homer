@@ -35,12 +35,12 @@ class StatsCommand extends Command {
       `${this.dot} ${context.__('stats.embed.servers')}: **${serverCount}**`,
       `${this.dot} ${context.__('stats.embed.uptime')}: ${this.client.time.timeSince(this.client.readyTimestamp, context.settings.misc.locale, true)}`,
       `${this.dot} ${context.__('stats.embed.memory')}: **${Math.floor(memoryUsage / 1024 / 1024)}**MB`,
-      `${this.dot} ${context.__('stats.embed.commands')}: ${context.__('stats.embed.commandsValue', {
-        count: commandsRan,
-        date: context.formatDate(1527804000), // June 1st 2018 00:00:00 UTC
-      })}`,
       `${this.dot} ${context.__('stats.embed.currentCalls')}: **${currentCalls}**`,
       `${this.dot} ${context.__('stats.embed.currentBroadcasts')}: **${broadcastCount}**`,
+      `${this.dot} ${context.__('stats.embed.commands')}: ${context.__('stats.embed.commandsValue', {
+        count: commandsRan,
+        date: context.formatDate(1527811200000), // June 1st 2018 00:00:00 UTC
+      })}`,
     ];
 
     const embed = new RichEmbed()
