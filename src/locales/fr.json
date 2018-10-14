@@ -569,7 +569,10 @@
     "stats.embed.servers": "Serveurs",
     "stats.embed.uptime": "Uptime",
     "stats.embed.memory": "Utilisation RAM",
+    "stats.embed.commands": "Commands exécutées",
+    "stats.embed.commandsValue": "**{{{ count }}}** depuis le **{{{ date }}}**",
     "stats.embed.currentCalls": "Appels en cours",
+    "stats.embed.currentBroadcasts": "Diffusions en cours",
   
     "support.main": "🛂 Rejoignez le serveur d'assistance pour obtenir de l'aide et être au courant des dernières nouveautés: <{{{ invite }}}>.",
   

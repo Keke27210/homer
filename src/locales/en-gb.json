@@ -586,7 +586,10 @@
   "stats.embed.servers": "Servers",
   "stats.embed.uptime": "Uptime",
   "stats.embed.memory": "Memory usage",
+  "stats.embed.commands": "Commands ran",
+  "stats.embed.commandsValue": "**{{{ count }}}** since **{{{ date }}}**",
   "stats.embed.currentCalls": "Ongoing calls",
+  "stats.embed.currentBroadcasts": "Current broadcasts",
 
   "support.main": "🛂 Join the Homer support server to get assistance or be aware of the latest news about me: <{{{ invite }}}>.",
 
