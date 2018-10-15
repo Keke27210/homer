@@ -5,7 +5,7 @@ class LanguageCommand extends Command {
   constructor(client) {
     super(client, {
       name: 'language',
-      aliases: ['locale'],
+      aliases: ['locale', 'lang'],
       usage: '<language code>',
       category: 'settings',
       children: [new ListSubcommand(client)],
