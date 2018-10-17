@@ -1,5 +1,6 @@
 const Command = require('../../structures/Command');
 const { RichEmbed } = require('discord.js');
+const moment = require('moment-timezone');
 
 class StatsCommand extends Command {
   constructor(client) {
@@ -39,7 +40,9 @@ class StatsCommand extends Command {
       `${this.dot} ${context.__('stats.embed.currentBroadcasts')}: **${broadcastCount}**`,
       `${this.dot} ${context.__('stats.embed.commands')}: ${context.__('stats.embed.commandsValue', {
         count: commandsRan,
-        date: context.formatDate(1527811200000), // June 1st 2018 00:00:00 UTC
+        date: moment(1527811200000) // June 1st 2018 00:00:00 UTC
+          .locale(context.settings.misc.locale)
+          .format(context.settings.misc.dateFormat),
       })}`,
     ];
 
