@@ -67,7 +67,7 @@ class WeatherCommand extends Command {
       const uv = Math.floor(item.uvIndex);
       if (i >= 3) titles.push(moment(item.time * 1000)
         .locale(context.settings.misc.locale)
-        .tz(context.settings.misc.timezone)
+        .tz(weatherData.timezone)
         .format(context.__('weather.dayFormat')));
 
       pages.push([
@@ -79,8 +79,8 @@ class WeatherCommand extends Command {
         `${this.dot} ${context.__('weather.embed.wind')}: **${context.__(`weather.wind.${this.getDirection(item.windBearing)}`)}** - **${Math.floor(item.windSpeed)}**${context.__('weather.units.kph')} (**${Math.floor(item.windSpeed / 1.609)}**${context.__('weather.units.mph')})`,
         `${this.dot} ${context.__('weather.embed.uv')}: **${uv}** (**${context.__(`weather.uv.${this.getUvLevel(uv)}`)}**)`,
         `${this.dot} ${context.__('weather.embed.humidity')}: **${Math.floor(item.humidity) * 100}**%`,
-        `${this.dot} ${context.__('weather.embed.sunrise')}: **${moment(item.sunriseTime * 1000).tz(item.timezone).format('HH:mm')}**`,
-        `${this.dot} ${context.__('weather.embed.sunset')}: **${moment(item.sunsetTime * 1000).tz(item.timezone).format('HH:mm')}**`,
+        `${this.dot} ${context.__('weather.embed.sunrise')}: **${moment(item.sunriseTime * 1000).tz(weatherData.timezone).format('HH:mm')}**`,
+        `${this.dot} ${context.__('weather.embed.sunset')}: **${moment(item.sunsetTime * 1000).tz(weatherData.timezone).format('HH:mm')}**`,
       ].join('\n'));
 
       thumbnails.push(`https://${this.client.config.server.domain}/assets/weather/${item.icon}.png`);
