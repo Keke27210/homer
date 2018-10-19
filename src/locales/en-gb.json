@@ -775,6 +775,8 @@
   "weather.currently": "Currently",
   "weather.today": "Today",
   "weather.tomorrow": "Tomorrow",
+  "weather.sunrise": "Sunrise",
+  "weather.sunset": "Sunset",
   "weather.dayFormat": "dddd MMMM Do",
 
   "welcome.messageSet": "The welcome message has been set!",

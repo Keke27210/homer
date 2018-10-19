@@ -73,8 +73,8 @@ class WeatherCommand extends Command {
       pages.push([
         `${this.dot} ${context.__('weather.embed.weather')}: **${item.summary}**`,
         `${this.dot} ${context.__('weather.embed.temperature')}: ${context.__('weather.embed.temperatures', {
-          min: item.temperatureMin, max: item.temperatureMax,
-          minF: ((item.temperatureMin * 1.8) + 32), maxF: ((item.temperatureMax * 1.8) + 32),
+          min: Math.floor(item.temperatureMin), max: Math.floor(item.temperatureMax),
+          minF: Math.floor((item.temperatureMin * 1.8) + 32), maxF: Math.floor((item.temperatureMax * 1.8) + 32),
         })}`,
         `${this.dot} ${context.__('weather.embed.wind')}: **${context.__(`weather.wind.${this.getDirection(item.windBearing)}`)}** - **${Math.floor(item.windSpeed)}**${context.__('weather.units.kph')} (**${Math.floor(item.windSpeed / 1.609)}**${context.__('weather.units.mph')})`,
         `${this.dot} ${context.__('weather.embed.uv')}: **${uv}** (**${context.__(`weather.uv.${this.getUvLevel(uv)}`)}**)`,
