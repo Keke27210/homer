@@ -1,6 +1,8 @@
 const { RichEmbed } = require('discord.js');
 const request = require('superagent');
 const Command = require('../../structures/Command');
+const Menu = require('../../structures/Menu');
+const moment = require('moment-timezone');
 
 class WeatherCommand extends Command {
   constructor(client) {
@@ -39,13 +41,14 @@ class WeatherCommand extends Command {
     if (!locationData) return message.edit(`${this.client.constants.emotes.warning} ${context.__('weather.unknownLocation')}`);
 
     const weatherData = await request
-      .get(`https://api.darksky.net/forecast/${this.client.config.api.darkSky}/${locationData.geometry}?exclude=minutely,hourly,daily,alerts,flags&lang=${context.settings.misc.locale.split('-')[0]}&units=si`)
+      .get(`https://api.darksky.net/forecast/${this.client.config.api.darkSky}/${locationData.geometry}?exclude=minutely,hourly,alerts,flags&lang=${context.settings.misc.locale.split('-')[0]}&units=si`)
       .then(res => res.body)
       .catch(() => null);
     if (!weatherData) return context.replyWarning(context.__('weather.unknownError'));
 
     const uvIndex = Math.floor(weatherData.currently.uvIndex);
-    const weatherInformation = [
+
+    const currently = [
       `${this.dot} ${context.__('weather.embed.weather')}: **${weatherData.currently.summary}**`,
       `${this.dot} ${context.__('weather.embed.temperature')}: **${Math.floor(weatherData.currently.temperature)}**°C (**${Math.floor((weatherData.currently.temperature * 1.8) + 32)}**°F)`,
       `${this.dot} ${context.__('weather.embed.feelsLike')}: **${Math.floor(weatherData.currently.apparentTemperature)}**°C (**${Math.floor((weatherData.currently.apparentTemperature * 1.8) + 32)}**°F)`,
@@ -55,20 +58,45 @@ class WeatherCommand extends Command {
       `${this.dot} ${context.__('weather.embed.nebulosity')}: **${Math.floor(weatherData.currently.cloudCover * 100)}**%`,
     ].join('\n');
 
-    const embed = new RichEmbed()
-      .setDescription(weatherInformation)
-      .setFooter(`${context.__('weather.embed.footer.location')} Bing™ Maps • ${context.__('weather.embed.footer.weather')} DarkSky™`, 'https://darksky.net/images/darkskylogo.png')
-      .setThumbnail(`https://${this.client.config.server.domain}/assets/weather/${weatherData.currently.icon}.png`);
+    const pages = [currently];
+    const titles = [context.__('weather.today'), context.__('weather.tomorrow')];
+    const thumbnails = [`https://${this.client.config.server.domain}/assets/weather/${weatherData.currently.icon}.png`];
+
+    for (let i = 1; i < weatherData.daily.data.length; i += 1) {
+      const item = weatherData.daily.data[i];
+      const uv = Math.floor(item.uvIndex);
+      if (i >= 3) titles.push(moment(item.time).locale(context.settings.misc.locale).tz(context.settings.misc.timezone).format(context.settings.misc.dateFormat));
+
+      pages.push([
+        `${this.dot} ${context.__('weather.embed.weather')}: **${item.summary}**`,
+        `${this.dot} ${context.__('weather.embed.temperature')}: ${context.__('weather.embed.forecast.temperaturesText', {
+          min: item.temperatureMin, max: item.temperatureMax,
+          minF: ((item.temperatureMin * 1.8) + 32), maxF: ((item.temperatureMax * 1.8) + 32),
+        })}`,
+        `${this.dot} ${context.__('weather.embed.wind')}: **${context.__(`weather.wind.${this.getDirection(item.windBearing)}`)}** - **${Math.floor(item.windSpeed)}**${context.__('weather.units.kph')} (**${Math.floor(item.windSpeed / 1.609)}**${context.__('weather.units.mph')})`,
+        `${this.dot} ${context.__('weather.embed.uv')}: **${uv}** (**${context.__(`weather.uv.${this.getUvLevel(uv)}`)}**)`,
+        `${this.dot} ${context.__('weather.embed.humidity')}: **${Math.floor(item.humidity) * 100}**%`,
+        `${this.dot} ${context.__('weather.embed.sunrise')}: **${moment(item.sunriseTime).locale(context.settings.misc.locale).tz(context.settings.misc.timezone).format('HH:mm')}**`,
+        `${this.dot} ${context.__('weather.embed.sunset')}: **${moment(item.sunsetTime).locale(context.settings.misc.locale).tz(context.settings.misc.timezone).format('HH:mm')}**`,
+      ].join('\n'));
+
+      thumbnails.push(`https://${this.client.config.server.domain}/assets/weather/${item.icon}.png`);
+    }
+
+    const menu = new Menu(context, pages, {
+      titles,
+      thumbnails,
+      footer: `${context.__('weather.embed.footer.location')} Bing™ Maps • ${context.__('weather.embed.footer.weather')} DarkSky™`,
+      entriesPerPage: 1,
+    });
 
     const region = [locationData.region, locationData.country]
       .filter(a => a)
       .join(', ');
 
-    message.edit(
-      context.__('weather.title', { location: `**${locationData.city || context.__('global.unknown')}**${region ? ` (${region})` : ''}` }),
-      { embed },
-    );
+    menu.send(context.__('weather.title', { location: `**${locationData.city || context.__('global.unknown')}**${region ? ` (${region})` : ''}` }));
 
+    // Météo-France weather alerts (only for Metropolitain France territory)
     if (locationData.country === 'France' && locationData.postalcode) {
       const alertData = await request.get('http://api.meteofrance.com/files/vigilance/vigilance.json')
         .then(res => res.body);

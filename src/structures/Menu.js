@@ -3,7 +3,10 @@ const { RichEmbed, Util } = require('discord.js');
 class Menu {
   constructor(context, data, options = {}) {
     Object.defineProperty(this, 'context', { value: context, enumerable: false });
+    this.titles = options.titles || [];
     this.pages = [];
+    this.thumbnails = options.thumbnails || [];
+    this.footer = options.footer;
     this.options = Util.mergeDefault({
       entriesPerPage: 10,
     }, options);
@@ -89,9 +92,10 @@ class Menu {
 
   refreshMenu() {
     const embed = new RichEmbed()
-      .setTitle(this.context.__('global.page', { num: (this.currentPage + 1) }))
+      .setTitle(this.titles[this.currentPage] || this.context.__('global.page', { num: (this.currentPage + 1) }))
       .setDescription(this.pages[this.currentPage])
-      .setFooter(this.context.__('global.page', { num: `${this.currentPage + 1}/${this.pages.length}` }));
+      .setFooter(this.footer || this.context.__('global.page', { num: `${this.currentPage + 1}/${this.pages.length}` }))
+      .setThumbnail(this.thumbnails[this.currentPage]);
 
     this.menuMessage.edit(this.menuMessage.content, { embed }).then((m) => {
       this.menuMessage = m;
