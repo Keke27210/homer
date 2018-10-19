@@ -97,6 +97,7 @@ class WeatherCommand extends Command {
       .filter(a => a)
       .join(', ');
 
+    message.delete();
     menu.send(context.__('weather.title', { location: `**${locationData.city || context.__('global.unknown')}**${region ? ` (${region})` : ''}` }));
 
     // Météo-France weather alerts (only for Metropolitain France territory)
