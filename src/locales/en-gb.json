@@ -771,6 +771,11 @@
   "weather.wind.13": "WNW",
   "weather.wind.14": "NW",
   "weather.wind.15": "NNW",
+  "weather.embed.temperatures": "from **{{{ min }}}**°C (**{{{ minF }}}**°F) to **{{{ max }}}**°C (**{{{ maxF }}}**°F)",
+  "weather.currently": "Currently",
+  "weather.today": "Today",
+  "weather.tomorrow": "Tomorrow",
+  "weather.dayFormat": "dddd MMMM Do",
 
   "welcome.messageSet": "The welcome message has been set!",
   "welcome.noMessage": "You must provide a message to set.",

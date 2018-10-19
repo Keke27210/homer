@@ -41,9 +41,10 @@ class Menu {
 
   send(content, options = {}) {
     const embed = new RichEmbed()
-      .setTitle(this.context.__('global.page', { num: (this.currentPage + 1) }))
+      .setTitle(this.titles[this.currentPage] || this.context.__('global.page', { num: (this.currentPage + 1) }))
       .setDescription(this.pages[this.currentPage])
-      .setFooter(this.context.__('global.page', { num: `${this.currentPage + 1}/${this.pages.length}` }));
+      .setFooter(this.footer || this.context.__('global.page', { num: `${this.currentPage + 1}/${this.pages.length}` }))
+      .setThumbnail(this.thumbnails[this.currentPage]);
 
     options.embed = embed;
     return this.context.message.channel.send(content, options).then(async (m) => {

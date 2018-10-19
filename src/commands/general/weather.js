@@ -59,17 +59,20 @@ class WeatherCommand extends Command {
     ].join('\n');
 
     const pages = [currently];
-    const titles = [context.__('weather.today'), context.__('weather.tomorrow')];
+    const titles = [context.__('weather.currently'), context.__('weather.today'), context.__('weather.tomorrow')];
     const thumbnails = [`https://${this.client.config.server.domain}/assets/weather/${weatherData.currently.icon}.png`];
 
     for (let i = 1; i < weatherData.daily.data.length; i += 1) {
       const item = weatherData.daily.data[i];
       const uv = Math.floor(item.uvIndex);
-      if (i >= 3) titles.push(moment(item.time).locale(context.settings.misc.locale).tz(context.settings.misc.timezone).format(context.settings.misc.dateFormat));
+      if (i >= 3) titles.push(moment(item.time * 1000)
+        .locale(context.settings.misc.locale)
+        .tz(context.settings.misc.timezone)
+        .format(context.__('weather.dayFormat')));
 
       pages.push([
         `${this.dot} ${context.__('weather.embed.weather')}: **${item.summary}**`,
-        `${this.dot} ${context.__('weather.embed.temperature')}: ${context.__('weather.embed.forecast.temperaturesText', {
+        `${this.dot} ${context.__('weather.embed.temperature')}: ${context.__('weather.embed.temperatures', {
           min: item.temperatureMin, max: item.temperatureMax,
           minF: ((item.temperatureMin * 1.8) + 32), maxF: ((item.temperatureMax * 1.8) + 32),
         })}`,
