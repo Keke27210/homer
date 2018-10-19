@@ -741,6 +741,8 @@
   "weather.embed.uv": "UV Index",
   "weather.embed.humidity": "Humidity",
   "weather.embed.nebulosity": "Nebulosity",
+  "weather.embed.sunrise": "Sunrise",
+  "weather.embed.sunset": "Sunset",
   "weather.units.kph": "kph",
   "weather.units.mph": "mph",
   "weather.embed.footer.location": "Geocoding by",
@@ -775,8 +777,6 @@
   "weather.currently": "Currently",
   "weather.today": "Today",
   "weather.tomorrow": "Tomorrow",
-  "weather.sunrise": "Sunrise",
-  "weather.sunset": "Sunset",
   "weather.dayFormat": "dddd MMMM Do",
 
   "welcome.messageSet": "The welcome message has been set!",
