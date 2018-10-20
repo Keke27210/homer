@@ -70,6 +70,11 @@ class WeatherCommand extends Command {
         .tz(context.settings.misc.timezone)
         .format(context.__('weather.dayFormat')));
 
+      // Moon phase
+      // 0: new moon | 0 > x > 0.25: waxing crescent | 0.25: first quarter | 0.25 > x > 0.5: waxing gibbous
+      // 0.5: full moon | 0.5 > x > 0.75: waning gibbous | 0.75: last quarter | 0.75 > x: waning crescent
+      const moon = this.getMoon(item.moonPhase);
+
       pages.push([
         `${this.dot} ${context.__('weather.embed.weather')}: **${item.summary}**`,
         `${this.dot} ${context.__('weather.embed.temperature')}: ${context.__('weather.embed.temperatures', {
@@ -79,8 +84,8 @@ class WeatherCommand extends Command {
         `${this.dot} ${context.__('weather.embed.wind')}: **${context.__(`weather.wind.${this.getDirection(item.windBearing)}`)}** - **${Math.floor(item.windSpeed)}**${context.__('weather.units.kph')} (**${Math.floor(item.windSpeed / 1.609)}**${context.__('weather.units.mph')})`,
         `${this.dot} ${context.__('weather.embed.uv')}: **${uv}** (**${context.__(`weather.uv.${this.getUvLevel(uv)}`)}**)`,
         `${this.dot} ${context.__('weather.embed.humidity')}: **${Math.floor(item.humidity) * 100}**%`,
-        `${this.dot} ${context.__('weather.embed.sunrise')}: **${moment(item.sunriseTime * 1000).locale(context.settings.misc.locale).tz(context.settings.misc.timezone).format('HH:mm')}**`,
-        `${this.dot} ${context.__('weather.embed.sunset')}: **${moment(item.sunsetTime * 1000).locale(context.settings.misc.locale).tz(context.settings.misc.timezone).format('HH:mm')}**`,
+        `${this.dot} ${context.__('weather.embed.sunrise')}: **${moment(item.sunriseTime * 1000).locale(context.settings.misc.locale).tz(context.settings.misc.timezone).format('HH:mm')}** - ${context.__('weather.embed.sunset')}: **${moment(item.sunsetTime * 1000).locale(context.settings.misc.locale).tz(context.settings.misc.timezone).format('HH:mm')}**`,
+        `${this.dot} ${context.__('weather.embed.moon')}: ${moon[0]} **${context.__(`weather.moon.${moon[1]}`)}**`,
       ].join('\n'));
 
       thumbnails.push(`https://${this.client.config.server.domain}/assets/weather/${item.icon}.png`);
@@ -146,6 +151,17 @@ class WeatherCommand extends Command {
     if (index >= 8 && index <= 10) return 'veryHigh';
     if (index >= 11) return 'extreme';
     return 'na';
+  }
+
+  getMoon(index) {
+    if (index === 0) return ['🌑', 'new'];
+    else if (index > 0 && index < 0.25) return ['🌒', 'waxingCrescent'];
+    else if (index === 0.25) return ['🌓', 'firstQuarter'];
+    else if (index > 0.25 && index < 0.5) return ['🌔', 'waxingGibbous'];
+    else if (index === 0.5) return ['🌕', 'full'];
+    else if (index > 0.5 && index < 0.75) return ['🌖', 'waningGibbous'];
+    else if (index === 0.75) return ['🌗', 'lastQuarter'];
+    return ['🌘', 'waningCrescent'];
   }
 
   get franceDepartments() {
