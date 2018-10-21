@@ -72,8 +72,8 @@ class WeatherCommand extends Command {
 
       // Moon phase
       // Moon phase
-      // 0: new moon | 0 > x > 0.25: waxing crescent | 0.25: first quarter | 0.25 > x > 0.5: waxing gibbous
-      // 0.5: full moon | 0.5 > x > 0.75: waning gibbous | 0.75: last quarter | 0.75 > x: waning crescent
+      // 0.95 > x > 0.05: new moon | 0.05 > x > 0.25: waxing crescent | 0.20 > x 0.30: first quarter | 0.30 > x > 0.45: waxing gibbous
+      // 0.45 > x > 0.55: full moon | 0.55 > x > 0.70: waning gibbous | 0.70 > x > 0.80: last quarter | 0.75 > x > 0.95: waning crescent
       const moon = this.getMoon(item.moonPhase);
 
       pages.push([
@@ -155,13 +155,13 @@ class WeatherCommand extends Command {
   }
 
   getMoon(index) {
-    if (index === 0) return ['🌑', 'new'];
-    else if (index > 0 && index < 0.25) return ['🌒', 'waxingCrescent'];
-    else if (index === 0.25) return ['🌓', 'firstQuarter'];
-    else if (index > 0.25 && index < 0.5) return ['🌔', 'waxingGibbous'];
-    else if (index === 0.5) return ['🌕', 'full'];
-    else if (index > 0.5 && index < 0.75) return ['🌖', 'waningGibbous'];
-    else if (index === 0.75) return ['🌗', 'lastQuarter'];
+    if (index > 0.95 && index < 0.05) return ['🌑', 'new'];
+    else if (index > 0.05 && index < 0.20) return ['🌒', 'waxingCrescent'];
+    else if (index > 0.20 && index < 0.30) return ['🌓', 'firstQuarter'];
+    else if (index > 0.30 && index < 0.45) return ['🌔', 'waxingGibbous'];
+    else if (index > 0.45 && index < 0.55) return ['🌕', 'full'];
+    else if (index > 0.55 && index < 0.70) return ['🌖', 'waningGibbous'];
+    else if (index > 0.70 && index < 0.80) return ['🌗', 'lastQuarter'];
     return ['🌘', 'waningCrescent'];
   }
 
