@@ -56,12 +56,14 @@ class DiscordClient extends Client {
   }
 
   sendMessage(channel, content, { tts, nonce, embed } = {}, files = null) {
+    content = content.replace(/@(everyone|here)/g, '@\u200b$1');
     return this.rest.makeRequest('post', DjsConstants.Endpoints.Channel(channel).messages, true, {
       content, tts, nonce, embed,
     }, files);
   }
 
   updateMessage(channel, message, content, embed) {
+    content = content.replace(/@(everyone|here)/g, '@\u200b$1');
     return this.rest.makeRequest('patch', DjsConstants.Endpoints.Message({ id: message, channel }), true, {
       content, embed,
     });
