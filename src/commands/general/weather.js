@@ -84,7 +84,7 @@ class WeatherCommand extends Command {
         })}`,
         `${this.dot} ${context.__('weather.embed.wind')}: **${context.__(`weather.wind.${this.getDirection(item.windBearing)}`)}** - **${Math.floor(item.windSpeed)}**${context.__('weather.units.kph')} (**${Math.floor(item.windSpeed / 1.609)}**${context.__('weather.units.mph')})`,
         `${this.dot} ${context.__('weather.embed.uv')}: **${uv}** (**${context.__(`weather.uv.${this.getUvLevel(uv)}`)}**)`,
-        `${this.dot} ${context.__('weather.embed.humidity')}: **${Math.floor(item.humidity) * 100}**%`,
+        `${this.dot} ${context.__('weather.embed.humidity')}: **${Math.floor(item.humidity * 100)}**%`,
         `${this.dot} ${context.__('weather.embed.sunrise')}: **${moment(item.sunriseTime * 1000).locale(context.settings.misc.locale).tz(context.settings.misc.timezone).format('HH:mm')}** - ${context.__('weather.embed.sunset')}: **${moment(item.sunsetTime * 1000).locale(context.settings.misc.locale).tz(context.settings.misc.timezone).format('HH:mm')}**`,
         `${this.dot} ${context.__('weather.embed.moon')}: ${moon[0]} **${context.__(`weather.moon.${moon[1]}`)}**`,
       ].join('\n'));
