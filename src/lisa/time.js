@@ -20,7 +20,7 @@ module.exports = [
     'time',
     null,
     (env, params) => {
-      const time = isNaN(parseInt(params[0])) ? params[0] : parseInt(params[0]);
+      const time = isNaN(Number(params[0])) ? params[0] : Number(params[0]);
       const format = params.slice(1).join('|') || `${env.settings.misc.dateFormat} ${env.settings.misc.timeFormat}`;
 
       return mtz(time)
