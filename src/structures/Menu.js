@@ -84,9 +84,13 @@ class Menu {
         if (tmpNum !== this.currentPage) this.refreshMenu();
       });
 
-      collector.once('end', async () => {
-        try { await this.menuMessage.delete(); } catch(e) {}
-        try { await this.context.message.delete(); } catch(e) {}
+      collector.once('end', async (reason) => {
+        if (reason === 'time') {
+          try { this.menuMessage.clearReactions(); } catch (e) {}
+        } else {
+          try { await this.menuMessage.delete(); } catch(e) {}
+          try { await this.context.message.delete(); } catch(e) {}
+        }
       });
     });
   }
