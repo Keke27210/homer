@@ -102,7 +102,7 @@ class Menu {
       .setFooter(this.footer || this.context.__('global.page', { num: `${this.currentPage + 1}/${this.pages.length}` }))
       .setThumbnail(this.thumbnails[this.currentPage]);
 
-    this.menuMessage.edit(this.menuMessage.content, { embed })
+    this.menuMessage.edit(this.menuMessage.content, { embed: this.embed })
       .then((m) => { this.menuMessage = m; });
   }
 }
