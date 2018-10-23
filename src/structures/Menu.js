@@ -82,7 +82,7 @@ class Menu {
         if (tmpNum !== this.currentPage) this.refreshMenu();
       });
 
-      collector.once('end', (reason) => {
+      collector.once('end', (collection, reason) => {
         if (reason === 'push') {
           this.menuMessage.delete();
           this.context.message.delete().catch(() => null);
