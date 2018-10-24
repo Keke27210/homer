@@ -67,7 +67,7 @@ class WeatherCommand extends Command {
     for (let i = 0; i < weatherData.daily.data.length; i += 1) {
       const item = weatherData.daily.data[i];
       const uv = Math.floor(item.uvIndex);
-      if (i >= 3) titles.push(moment.tz((item.time * 1000), weatherData.timezone)
+      if (i >= 2) titles.push(moment.tz((item.time * 1000), weatherData.timezone)
         .locale(context.settings.misc.locale)
         .tz(weatherData.timezone)
         .format(context.__('weather.dayFormat')));
