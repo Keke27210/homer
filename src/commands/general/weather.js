@@ -52,6 +52,7 @@ class WeatherCommand extends Command {
       `${this.dot} ${context.__('weather.embed.weather')}: **${weatherData.currently.summary}**`,
       `${this.dot} ${context.__('weather.embed.temperature')}: **${Math.floor(weatherData.currently.temperature)}**°C (**${Math.floor((weatherData.currently.temperature * 1.8) + 32)}**°F)`,
       `${this.dot} ${context.__('weather.embed.feelsLike')}: **${Math.floor(weatherData.currently.apparentTemperature)}**°C (**${Math.floor((weatherData.currently.apparentTemperature * 1.8) + 32)}**°F)`,
+      //`${this.dot} ${context.__('weather.embed.precip')}: `,
       `${this.dot} ${context.__('weather.embed.wind')}: **${context.__(`weather.wind.${this.getDirection(weatherData.currently.windBearing)}`)}** - **${Math.floor(weatherData.currently.windSpeed)}**${context.__('weather.units.kph')} (**${Math.floor(weatherData.currently.windSpeed / 1.609)}**${context.__('weather.units.mph')})`,
       `${this.dot} ${context.__('weather.embed.uv')}: **${uvIndex}** (**${context.__(`weather.uv.${this.getUvLevel(uvIndex)}`)}**)`,
       `${this.dot} ${context.__('weather.embed.pressure')}: **${Math.floor(weatherData.currently.pressure)}**hPa`,
@@ -63,10 +64,10 @@ class WeatherCommand extends Command {
     const titles = [context.__('weather.currently'), context.__('weather.today'), context.__('weather.tomorrow')];
     const thumbnails = [`https://${this.client.config.server.domain}/assets/weather/${weatherData.currently.icon}.png`];
 
-    for (let i = 1; i < weatherData.daily.data.length; i += 1) {
+    for (let i = 0; i < weatherData.daily.data.length; i += 1) {
       const item = weatherData.daily.data[i];
       const uv = Math.floor(item.uvIndex);
-      if (i >= 3) titles.push(moment(item.time * 1000)
+      if (i >= 3) titles.push(moment.tz((item.time * 1000), weatherData.timezone)
         .locale(context.settings.misc.locale)
         .tz(weatherData.timezone)
         .format(context.__('weather.dayFormat')));
@@ -87,7 +88,7 @@ class WeatherCommand extends Command {
         `${this.dot} ${context.__('weather.embed.uv')}: **${uv}** (**${context.__(`weather.uv.${this.getUvLevel(uv)}`)}**)`,
         `${this.dot} ${context.__('weather.embed.humidity')}: **${Math.floor(item.humidity * 100)}**%`,
         `${this.dot} ${context.__('weather.embed.pressure')}: **${Math.floor(item.pressure)}**hPa`,
-        `${this.dot} ${context.__('weather.embed.sunrise')}: **${moment(item.sunriseTime * 1000).locale(context.settings.misc.locale).tz(context.settings.misc.timezone).format('HH:mm')}** - ${context.__('weather.embed.sunset')}: **${moment(item.sunsetTime * 1000).locale(context.settings.misc.locale).tz(context.settings.misc.timezone).format('HH:mm')}**`,
+        `${this.dot} ${context.__('weather.embed.sunrise')}: **${moment(item.sunriseTime * 1000).tz(weatherData.timezone).format('HH:mm')}** - ${context.__('weather.embed.sunset')}: **${moment(item.sunsetTime * 1000).locale(context.settings.misc.locale).tz(weatherData.timezone).format('HH:mm')}**`,
         `${this.dot} ${context.__('weather.embed.moon')}: ${moon[0]} **${context.__(`weather.moon.${moon[1]}`)}**`,
       ].join('\n'));
 
