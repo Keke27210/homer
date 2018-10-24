@@ -739,6 +739,7 @@
   "weather.embed.feelsLike": "Feels like",
   "weather.embed.wind": "Wind",
   "weather.embed.uv": "UV Index",
+  "weather.embed.pressure": "Pressure",
   "weather.embed.humidity": "Humidity",
   "weather.embed.nebulosity": "Nebulosity",
   "weather.embed.sunrise": "Sunrise",

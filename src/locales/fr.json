@@ -721,6 +721,7 @@
     "weather.embed.feelsLike": "Ressenti",
     "weather.embed.wind": "Vent",
     "weather.embed.uv": "Index UV",
+    "weather.embed.pressure": "Pression",
     "weather.embed.humidity": "Humidité",
     "weather.embed.nebulosity": "Nébulosité",
     "weather.embed.sunrise": "Lever du soleil",
