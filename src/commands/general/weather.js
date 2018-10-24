@@ -84,6 +84,7 @@ class WeatherCommand extends Command {
           min: Math.floor(item.temperatureMin), max: Math.floor(item.temperatureMax),
           minF: Math.floor((item.temperatureMin * 1.8) + 32), maxF: Math.floor((item.temperatureMax * 1.8) + 32),
         })}`,
+        `${this.dot} ${context.__('weather.embed.precip')}: ${weatherData.currently.precipAccumulation < 0.5 ? `**${context.__('global.none')}**` : `**${context.__(`weather.precip.${weatherData.currently.precipType}`)}** - **${Math.floor(weatherData.currently.precipAccumulation * 100) / 1000}**mm (**${Math.floor((weatherData.currently.precipAccumulation / 25.4) * 100) / 1000}**in)`}`,
         `${this.dot} ${context.__('weather.embed.wind')}: **${context.__(`weather.wind.${this.getDirection(item.windBearing)}`)}** - **${Math.floor(item.windSpeed)}**${context.__('weather.units.kph')} (**${Math.floor(item.windSpeed / 1.609)}**${context.__('weather.units.mph')})`,
         `${this.dot} ${context.__('weather.embed.uv')}: **${uv}** (**${context.__(`weather.uv.${this.getUvLevel(uv)}`)}**)`,
         `${this.dot} ${context.__('weather.embed.humidity')}: **${Math.floor(item.humidity * 100)}**%`,
