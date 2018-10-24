@@ -16,13 +16,8 @@ class MessageEvent extends Event {
     // Set last active
     this.client.database.insertDocument(
       'lastactive',
-      {
-        id: message.author.id,
-        time: Date.now(),
-      },
-      {
-        conflict: 'update',
-      },
+      { id: message.author.id, time: Date.now() },
+      { conflict: 'update' },
     );
 
     // Remove AFK

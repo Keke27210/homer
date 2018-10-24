@@ -41,6 +41,7 @@ class CommandManager extends Manager {
       }
     });
     if (!prefix) return;
+
     context.args = context.args
       .join(' ')
       .slice(prefix.length)
@@ -57,8 +58,6 @@ class CommandManager extends Manager {
       const tagCommand = this.getCommand('tag');
       if (!tagCommand) return;
       tagCommand.run(context);
-    } else if (context.prefix === `<@${context.guild && context.guild.me.nickname ? '!' : ''}${this.client.user.id}>`) {
-      this.client.other.handleCleverbot(context);
     }
   }
 

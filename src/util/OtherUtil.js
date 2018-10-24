@@ -72,36 +72,6 @@ class OtherUtil {
     return b2;
   }
 
-  async handleCleverbot(context) {
-    const cleverbotState = await this.client.database.getDocument('bot', 'settings').then(s => s.cleverbot);
-    const text = context.args.join(' ');
-    if (!text || !cleverbotState) return;
-    context.message.channel.startTyping(1);
-    request
-      .post('https://cleverbot.io/1.0/ask')
-      .set({ 'Content-Type': 'application/json' })
-      .send({
-        user: this.client.config.api.cleverbotUser,
-        key: this.client.config.api.cleverbotKey,
-        text,
-        nick: this.client.user.id,
-      })
-      .then((res) => {
-        context.reply(res.body.response);
-        context.message.channel.stopTyping();
-
-        this.client.database.insertDocument('commandStats', {
-          author: context.message.author.id,
-          guild: context.message.guild ? context.message.guild.id : 'dm',
-          command: 'cleverbot',
-          question: text,
-          answer: res.body.response,
-          time: Date.now(),
-        });
-      })
-      .catch((res) => { context.replyError(`ERROR: \`${res.body ? res.body.status : 'UNKNOWN'}\``); context.message.channel.stopTyping(true); });
-  }
-
   get status() {
     return ({
       online: `${this.client.constants.status.online} Online`,
