@@ -171,13 +171,15 @@ class StopSubcommand extends Command {
     if (!connection) return context.replyWarning(context.__('radio.stop.noActiveStream', { name: connection.channel.name }));
     await channel.leave();
 
-    let radio = this.client.currentBroadcasts.find(b => b.guild === context.message.guild.id).radio;
+    let currentBroadcast = this.client.currentBroadcasts.find(b => b.guild === context.message.guild.id);
     this.client.currentBroadcasts.splice(this.client.currentBroadcasts.findIndex(b => b.guild === context.message.guild.id), 1);
 
-    const broad = this.client.voiceBroadcasts[radio];
-    if (broad && broad.dispatchers.length === 0) {
-      broad.destroy();
-      delete this.client.voiceBroadcasts[radio];
+    if (currentBroadcast) {
+      const broad = this.client.voiceBroadcasts[currentBroadcast.radio];
+      if (broad && broad.dispatchers.length === 0) {
+        broad.destroy();
+        delete this.client.voiceBroadcasts[currentBroadcast.radio];
+      }
     }
 
     context.replySuccess(context.__('radio.stop.done'));
