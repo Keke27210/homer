@@ -64,7 +64,7 @@ class WeatherCommand extends Command {
 
     const pages = [currently];
     const titles = [context.__('weather.currently'), context.__('weather.today'), context.__('weather.tomorrow')];
-    const thumbnails = [`https://${this.client.config.server.domain}/assets/weather/${weatherData.currently.icon}.png`];
+    const thumbnails = [`${this.client.constants.CDN}/assets/weather/${weatherData.currently.icon}.png`];
 
     for (let i = 0; i < weatherData.daily.data.length; i += 1) {
       const item = weatherData.daily.data[i];
@@ -94,7 +94,7 @@ class WeatherCommand extends Command {
         `${this.dot} ${context.__('weather.embed.moon')}: ${moon[0]} **${context.__(`weather.moon.${moon[1]}`)}**`,
       ].join('\n'));
 
-      thumbnails.push(`https://${this.client.config.server.domain}/assets/weather/${item.icon}.png`);
+      thumbnails.push(`${this.client.constants.CDN}/assets/weather/${item.icon}.png`);
     }
 
     const menu = new Menu(context, pages, {

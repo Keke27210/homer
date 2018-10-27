@@ -80,7 +80,7 @@ class TuneSubcommand extends Command {
     const hq = (this.client.config.owners.includes(context.message.author.id) || await this.client.database.getDocument('donators', context.message.author.id));
     const message = await context.message.channel.send(context.__('radio.tune.tuning', { name: radio.name }));
 
-    const broadcast = await this.client.other.getRadio(radio.url ? radio.id : 'NOPRG', radio.url ? (await parseURL(radio.url)) : `https://${this.client.config.server.domain}/assets/radios/NO_PROGRAMME.mp3`);
+    const broadcast = await this.client.other.getRadio(radio.url ? radio.id : 'NOPRG', radio.url ? (await parseURL(radio.url)) : `${this.client.constants.CDN}/assets/radios/NO_PROGRAMME.mp3`);
     const dispatcher = await connection.playBroadcast(
       broadcast,
       {
@@ -109,7 +109,7 @@ class TuneSubcommand extends Command {
 
       setTimeout(async () => {
         if (!connection.dispatcher) {
-          const broadcast = await this.client.other.getRadio('NOPRG', 'file:///var/www/homer_cdn/assets/radios/NO_PROGRAMME.mp3');
+          const broadcast = await this.client.other.getRadio('NOPRG', `${this.client.constants.CDN}/assets/radios/NO_PROGRAMME.mp3`);
           connection.playBroadcast(
             broadcast,
             {
@@ -274,7 +274,7 @@ class InfoSubcommand extends Command {
 
     const embed = new RichEmbed()
       .setDescription(infoDescription)
-      .setThumbnail(`https://${this.client.config.server.domain}/assets/radios/${meta.logo}.png?nocache=${Date.now()}`);
+      .setThumbnail(`${this.client.constants.CDN}/assets/radios/${meta.logo}.png?nocache=${Date.now()}`);
 
     context.reply(context.__('radio.info.title'), { embed });
   }

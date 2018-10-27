@@ -40,6 +40,8 @@ exports.defaultUserSettings = id => ({
 
 exports.userAgent = () => `DiscordBot (https://github.com/iDroid27210/homer) Node.js/${process.version}`;
 
+exports.CDN = `https://raw.githubusercontent.com/iDroid27/homer_cdn/master`;
+
 exports.emotes = {
   // Status
   success: '<:success:453889194016899074>',
@@ -61,9 +63,9 @@ exports.emotes = {
 };
 
 exports.vigilance = {
-  2: '<:mf_1:505777125513756694>',
-  3: '<:mf_2:505777214105583649>',
-  4: '<:mf_3:505777243545665566>',
+  2: '<:vigilance_jaune:505777125513756694>',
+  3: '<:vigilance_orange:505777214105583649>',
+  4: '<:vigilance_rouge:505777243545665566>',
 };
 
 exports.badges = {
