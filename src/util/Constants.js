@@ -60,6 +60,12 @@ exports.emotes = {
   verifiedServer: '<:verified:452764762699464724>',
 };
 
+exports.vigilance = {
+  1: '<:mf_1:505777125513756694>',
+  2: '<:mf_2:505777214105583649>',
+  3: '<:mf_3:505777243545665566>',
+};
+
 exports.badges = {
   owner: '<:owner:471599105957953537>',
   donator: '<:donator:471599103126536202>',

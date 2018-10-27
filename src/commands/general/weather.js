@@ -46,8 +46,9 @@ class WeatherCommand extends Command {
       .catch(() => null);
     if (!weatherData) return context.replyWarning(context.__('weather.unknownError'));
 
-    const uvIndex = Math.floor(weatherData.currently.uvIndex);
+    const vigilance = (locationData.country === 'France' && locationData.postalcode) ? await this.getVigilance(locationData) : '';
 
+    const uvIndex = Math.floor(weatherData.currently.uvIndex);
     const currently = [
       `${this.dot} ${context.__('weather.embed.weather')}: **${weatherData.currently.summary}**`,
       `${this.dot} ${context.__('weather.embed.temperature')}: **${Math.floor(weatherData.currently.temperature)}**°C (**${Math.floor((weatherData.currently.temperature * 1.8) + 32)}**°F)`,
@@ -58,6 +59,7 @@ class WeatherCommand extends Command {
       `${this.dot} ${context.__('weather.embed.pressure')}: **${Math.floor(weatherData.currently.pressure)}**hPa`,
       `${this.dot} ${context.__('weather.embed.humidity')}: **${Math.floor(weatherData.currently.humidity * 100)}**%`,
       `${this.dot} ${context.__('weather.embed.nebulosity')}: **${Math.floor(weatherData.currently.cloudCover * 100)}**%`,
+      vigilance,
     ].join('\n');
 
     const pages = [currently];
@@ -109,7 +111,7 @@ class WeatherCommand extends Command {
     message.delete();
     menu.send(context.__('weather.title', { location: `**${locationData.city || context.__('global.unknown')}**${region ? ` (${region})` : ''}` }));
 
-    // Météo-France weather alerts (only for Metropolitain France territory)
+    /*// Météo-France weather alerts (only for Metropolitain France territory)
     if (locationData.country === 'France' && locationData.postalcode) {
       const alertData = await request.get('http://api.meteofrance.com/files/vigilance/vigilance.json')
         .then(res => res.body);
@@ -140,7 +142,7 @@ class WeatherCommand extends Command {
         .setColor(embedColors[dept.level]);
 
       context.reply({ embed: alertEmbed });
-    }
+    }*/
   }
 
   getDirection(angle) {
@@ -166,6 +168,23 @@ class WeatherCommand extends Command {
     else if (index > 0.55 && index <= 0.70) return ['🌖', 'waningGibbous'];
     else if (index > 0.70 && index <= 0.80) return ['🌗', 'lastQuarter'];
     return ['🌘', 'waningCrescent'];
+  }
+
+  async getVigilance(locationData) {
+    const alertData = await request.get('http://api.meteofrance.com/files/vigilance/vigilance.json')
+      .then(res => res.body);
+
+    const meta = alertData.meta.find(m => m.zone === 'FR');
+    const dept = alertData.data
+      .find(d => locationData.postalcode === d.department);
+    if (!dept || dept.level < 2) return;
+
+    const alerts = dept.risk
+      .map((level, index) => (level >= 2 ? meta.riskNames[index] : null))
+      .filter(a => a)
+      .join(' - ');
+
+    return `${this.client.constants.vigilance[dept.level]} [Département **${locationData.department || ctx.__('global.unknown')}**](http://vigilance.meteofrance.com): ${alerts}`;
   }
 
   get franceDepartments() {
