@@ -184,7 +184,7 @@ class WeatherCommand extends Command {
       .filter(a => a)
       .join(' - ');
 
-    return `${this.client.constants.vigilance[dept.level]} [Vigilance **${locationData.department || ctx.__('global.unknown')}**](http://vigilance.meteofrance.com): ${alerts}`;
+    return `${this.client.constants.vigilance[dept.level]} [Vigilance](http://vigilance.meteofrance.com) [**${locationData.department || ctx.__('global.unknown')}**](http://vigilance.meteofrance.com/Bulletin.html?a=dept${dept.department}&b=): ${alerts}`;
   }
 
   get franceDepartments() {
