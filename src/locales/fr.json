@@ -418,6 +418,7 @@
     "radio.noRadioChannel": "Vous devez spécifier un salon de diffusion radio avec `{{{ prefix }}}radio channel`.",
     "radio.cannotJoinOrSpeak": "Le bot ne peut se connecter ou parler dans **{{{ name }}}**.",
     "radio.notInChannel": "Vous devez être dans le salon de diffusion radio (**{{{ name }}}**) pour utiliser cette commande !",
+    "radio.botNotInChannel": "Je ne suis pas dans le salon de diffusion radio.",
     "radio.list.noRadio": "Il n'y a aucune radio disponible pour le moment.",
     "radio.list.title": "📻 Radios disponibles sur **{{{ name }}}**:",
     "radio.tune.noFrequency": "Vous devez fournir une fréquence à écouter.",
