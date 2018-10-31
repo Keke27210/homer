@@ -70,8 +70,7 @@ class TuneSubcommand extends Command {
     let connection = this.client.voiceConnections.get(context.message.guild.id);
     if (!connection) connection = await channel.join();
 
-    const currentBroad = (this.client.currentBroadcasts.find(b => b.guild === context.message.guild.id) || {}).radio;
-
+    const currentBroad = this.client.currentBroadcasts[context.message.guild.id];
     const radio = await this.client.database.getDocument('radios', frequency) || ({
       name: '?',
       id: 0,
@@ -95,14 +94,8 @@ class TuneSubcommand extends Command {
       delete this.client.voiceBroadcasts[currentBroad];
     }
 
-    if (this.client.currentBroadcasts.find(b => b.guild === context.message.guild.id)) {
-      this.client.currentBroadcasts.splice(this.client.currentBroadcasts.findIndex(b => b.guild === context.message.guild.id), 1);
-    }
-
-    this.client.currentBroadcasts.push({
-      guild: context.message.guild.id,
-      radio: radio.id,
-    });
+    delete this.client.currentBroadcasts[context.message.guild.id];
+    this.client.currentBroadcasts[context.message.guild.id] = radio.id;
 
     dispatcher.once('speaking', () => {
       message.edit(context.__('radio.tune.playing', { name: radio.name }));
@@ -171,9 +164,7 @@ class StopSubcommand extends Command {
     if (!connection) return context.replyWarning(context.__('radio.stop.noActiveStream', { name: connection.channel.name }));
     await channel.leave();
 
-    let currentBroadcast = this.client.currentBroadcasts.find(b => b.guild === context.message.guild.id);
-    this.client.currentBroadcasts.splice(this.client.currentBroadcasts.findIndex(b => b.guild === context.message.guild.id), 1);
-
+    delete this.client.currentBroadcasts[context.message.guild.id];
     /*const broad = this.client.voiceBroadcasts[currentBroadcast.radio];
     if (broad && broad.dispatchers.length === 0) {
       broad.destroy();
@@ -241,15 +232,10 @@ class InfoSubcommand extends Command {
   }
 
   async execute(context) {
-    const currentBroadcast = this.client.currentBroadcasts.find(b => b.guild === context.message.guild.id);
+    const currentBroadcast = this.client.currentBroadcasts[context.message.guild.id];
     if (!currentBroadcast) return context.replyWarning(context.__('radio.info.noActiveStream'));
     if (currentBroadcast.radio === 0) return context.replyWarning(context.__('radio.info.unavailableProgramme'));
-    const meta = await this.client.database.getDocument('radios', currentBroadcast.radio);
-
-    let since = `**${context.__('global.none')}**`;
-    if (this.client.voiceConnections.get(context.message.guild.id).dispatcher) {
-      since = this.client.time.timeSince(Date.now() - this.client.voiceConnections.get(context.message.guild.id).dispatcher.totalStreamTime);
-    }
+    const meta = await this.client.database.getDocument('radios', currentBroadcast);
 
     let playing = context.__('global.noInformation');
     if (meta.stationId) {
