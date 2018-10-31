@@ -32,26 +32,6 @@ scheduleJob({ second: 10 }, async () => {
   }
 });
 
-// Guild clean handler
-/*scheduleJob({ hour: 12 }, () => {
-  if (!client.ready) return;
-
-  client.guilds.forEach(async (guild) => {
-    if (!guild.available) return;
-
-    const botCount = guild.members.filter(m => m.user.bot).size;
-    if ((guild.members.size - botCount) < 7 && botCount > 20 && (botCount / guild.members.size) > 0.65) {
-      const settings = await this.client.database.getDocument('settings', guild.id);
-      if (typeof settings !== 'undefined') return;
-
-      const subscriptions = await this.client.database.findDocuments('telephone', { settings: guild.id });
-      if (subscriptions.length > 0) return;
-
-      guild.leave();
-    }
-  });
-});*/
-
 // Error handling
 process.on('unhandledRejection', (err) => {
   if (err instanceof DiscordAPIError) return;
@@ -67,19 +47,6 @@ process.on('unhandledRejection', (err) => {
       `\`\`\`js\n${err.stack}\`\`\``,
     ].join('\n'),
   );
-});
-
-// Shutdown
-process.on('SIGINT', async () => {
-  await client.sendMessage(client.config.logChannel, `\`[${mtz().format('HH:mm:ss')}]\` 📡 Shard ID **${client.shard.id}** is now **RESTARTING**.`);
-  client.shardStatus = 'offline';
-  await client.other.updateShardStatus();
-
-  client.removeAllListeners();
-  await client.destroy();
-  await client.database.provider.getPoolMaster().drain();
-
-  process.exit();
 });
 
 // Misc

@@ -6,10 +6,7 @@ class ErrorEvent extends Event {
   }
 
   handle(error) {
-    this.client.shard.send({
-      type: 'log',
-      message: error instanceof Error ? error.message : error,
-    });
+    console.error(error);
   }
 }
 

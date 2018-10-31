@@ -51,17 +51,6 @@ class OtherUtil {
     return `${id.substring(id.length - 3)}-${this.ran()}${this.ran()}${this.ran()}`;
   }
 
-  async updateShardStatus() {
-    if (this.client.shardStatus === this.client.oldShardStatus) return;
-
-    this.client.oldShardStatus = this.client.shardStatus;
-    await this.client.updateMessage(
-      this.client.config.statusChannel,
-      this.client.config.status[`shard_${this.client.shard.id}`],
-      `◻ Shard ${this.client.shard.id}: **${this.status[this.client.shardStatus]}** (**${this.client.unavailable.length}**/**${this.client.guilds.size}** unavailable guilds)`,
-    );
-  }
-
   async getRadio(id, url) {
     const b1 = this.client.voiceBroadcasts[id];
     if (b1) return b1;
@@ -70,15 +59,6 @@ class OtherUtil {
     await b2.playStream(url, { bitrate: 64 });
     this.client.voiceBroadcasts[id] = b2;
     return b2;
-  }
-
-  get status() {
-    return ({
-      online: `${this.client.constants.status.online} Online`,
-      reconnecting: `${this.client.constants.status.idle} Reconnecting`,
-      maintenance: `${this.client.constants.status.dnd} Maintenance`,
-      offline: `${this.client.constants.status.offline} Offline`,
-    });
   }
 }
 

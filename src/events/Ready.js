@@ -13,14 +13,9 @@ class ReadyEvent extends Event {
       message: `This shard is READY - ${this.client.guilds.size} servers - ${this.client.users.size} users`,
     });
 
-    // Sending message in logChannel
-    this.client.sendMessage(this.client.config.logChannel, `\`[${mtz().format('HH:mm:ss')}]\` 📡 Shard ID **${this.client.shard.id}** is now **READY**.`);
-    this.client.shardStatus = 'online';
-
     // Update game & bot list count
     this.client.update.updateGame();
     this.client.update.updateBotList();
-    this.client.other.updateShardStatus();
 
     if (!this.client.firstStart) {
       this.client.setInterval(() => {
@@ -32,11 +27,6 @@ class ReadyEvent extends Event {
         if (!this.client.ready) return;
         this.client.update.updateGame();
       }, 10000);
-
-      this.client.setInterval(() => {
-        if (!this.client.ready) return;
-        this.client.other.updateShardStatus();
-      }, 1000);
     }
 
     this.client.firstStart = true;

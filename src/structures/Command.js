@@ -150,9 +150,9 @@ class Command {
     }
 
     // Check cooldown
-    const cooldownObject = await this.client.database.getDocument('cooldown', context.message.author.id);
-    if (cooldownObject) {
-      const difference = ((Date.now() - cooldownObject.time) / 1000).toFixed(2);
+    const cooldownTime = this.client.cooldown[context.message.author.id];
+    if (cooldownTime) {
+      const difference = ((Date.now() - cooldownTime) / 1000).toFixed(2);
       return context.replyWarning(context.__(
         'commandHandler.cooldown',
         { time: difference },
@@ -161,8 +161,8 @@ class Command {
 
     // Insert stats and cooldown
     if (!this.client.config.owners.includes(context.message.author.id)) {
-      this.client.database.insertDocument('cooldown', { id: context.message.author.id, time: Date.now() });
-      this.client.setTimeout(() => this.client.database.deleteDocument('cooldown', context.message.author.id), 2500);
+      this.client.cooldown[context.message.author.id] = Date.now();
+      this.client.setTimeout(() => { delete this.client.cooldown[context.message.author.id]; }, 2500);
       this.client.database.insertDocument('commandStats', {
         author: context.message.author.id,
         guild: context.message.guild ? context.message.guild.id : 'dm',

@@ -21,14 +21,11 @@ class DiscordClient extends Client {
     super(config.client);
     this.config = config;
     this.constants = Constants;
+    this.cooldown = {};
     this.events = [];
-    this.unavailable = [];
     this.currentBroadcasts = [];
     this.voiceBroadcasts = [];
     this.ready = false;
-    this.reconnectTimes = 0;
-    this.shardStatus = 'offline';
-    this.oldShardStatus = null;
     this.maintenance = false;
 
     this.commands = new CommandManager(this);
