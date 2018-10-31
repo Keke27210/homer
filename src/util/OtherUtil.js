@@ -56,8 +56,18 @@ class OtherUtil {
     if (b1) return b1;
 
     const b2 = this.client.createVoiceBroadcast();
+    b2.radio = id;
+
     await b2.playStream(url, { bitrate: 64 });
     this.client.voiceBroadcasts[id] = b2;
+
+    b2.on('unsubscribe', () => {
+      if (b2.dispatchers.length === 0) {
+        b2.destroy();
+        delete this.client.voiceBroadcasts[id];
+      }
+    });
+
     return b2;
   }
 }

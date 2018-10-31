@@ -174,13 +174,11 @@ class StopSubcommand extends Command {
     let currentBroadcast = this.client.currentBroadcasts.find(b => b.guild === context.message.guild.id);
     this.client.currentBroadcasts.splice(this.client.currentBroadcasts.findIndex(b => b.guild === context.message.guild.id), 1);
 
-    if (currentBroadcast) {
-      const broad = this.client.voiceBroadcasts[currentBroadcast.radio];
-      if (broad && broad.dispatchers.length === 0) {
-        broad.destroy();
-        delete this.client.voiceBroadcasts[currentBroadcast.radio];
-      }
-    }
+    /*const broad = this.client.voiceBroadcasts[currentBroadcast.radio];
+    if (broad && broad.dispatchers.length === 0) {
+      broad.destroy();
+      delete this.client.voiceBroadcasts[currentBroadcast.radio];
+    }*/
 
     context.replySuccess(context.__('radio.stop.done'));
   }
