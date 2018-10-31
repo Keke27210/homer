@@ -129,7 +129,6 @@ class VolumeSubcommand extends Command {
     const channel = context.message.guild.channels.get(context.settings.radio.channel);
     if (!channel) return context.replyWarning(context.__('radio.noRadioChannel', { prefix: this.client.prefix }));
     if (!channel.joinable || !channel.speakable) return context.replyError(context.__('radio.cannotJoinOrSpeak', { name: channel.name }));
-    if (!channel.members.has(this.client.user.id)) return context.replyWarning(context.__('radio.botNotInChannel'));
     if (!channel.members.has(context.message.author.id)) return context.replyWarning(context.__('radio.notInChannel', { name: channel.name }));
 
     let volume = context.args[0];
@@ -159,6 +158,7 @@ class StopSubcommand extends Command {
     const channel = context.message.guild.channels.get(context.settings.radio.channel);
     if (!channel) return context.replyWarning(context.__('radio.noRadioChannel', { prefix: this.client.prefix }));
     if (!channel.joinable || !channel.speakable) return context.replyError(context.__('radio.cannotJoinOrSpeak', { name: channel.name }));
+    if (!channel.members.has(this.client.user.id)) return context.replyWarning(context.__('radio.botNotInChannel'));
     if (!channel.members.has(context.message.author.id)) return context.replyWarning(context.__('radio.notInChannel', { name: channel.name }));
 
     const connection = this.client.voiceConnections.get(context.message.guild.id);
