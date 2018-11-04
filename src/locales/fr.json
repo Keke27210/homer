@@ -614,7 +614,7 @@
     "tag.unoverride.noTag": "You must provide the name of the tag to unoverride.",
     "tag.unoverride.notFound": "No tag override found for \"{{{ name }}}\".",
     "tag.unoverride.deleted": "Deleted tag override for \"{{{ name }}}\"!",
-    "tag.belongsServer": "to the server",
+    "tag.belongsServer": "au serveur",
   
     "telephone.notAssigned": "Le numéro fourni n'est pas assigné.",
     "telephone.refusedConnection": "La connexion à votre correspondant a été refusée. Vous avez peut-être été **blacklisté** ou le service téléphonique est **en maintenance**.",

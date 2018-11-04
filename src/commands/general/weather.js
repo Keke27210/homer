@@ -160,7 +160,7 @@ class WeatherCommand extends Command {
   }
 
   getMoon(index) {
-    if (index > 0.95 && index <= 0.05) return ['🌑', 'new'];
+    if (index > 0.90 && index <= 0.10) return ['🌑', 'new'];
     else if (index > 0.05 && index <= 0.20) return ['🌒', 'waxingCrescent'];
     else if (index > 0.20 && index <= 0.30) return ['🌓', 'firstQuarter'];
     else if (index > 0.30 && index <= 0.45) return ['🌔', 'waxingGibbous'];
