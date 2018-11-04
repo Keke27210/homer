@@ -38,6 +38,12 @@ module.exports = [
     'embed',
     null,
     (env, params) => {
+      const json = params.join('|');
+      try {
+        JSON.parse(json);
+        return `|||[|||${env.embedCode}:${json}|||]|||`;
+      } catch (e) {}
+
       const embed = new RichEmbed();
 
       const title = params.find(p => p.startsWith('title:'));
