@@ -47,7 +47,7 @@ class GameCommand extends Command {
       user: `**${user.username}**#${user.discriminator}`,
       action: context.__(`game.type.${presence.game.type}`),
       game: presence.game.type === 1 ? `**${presence.game.name}** (<${presence.game.url}>)` : `**${presence.game.name}**`,
-      time: (presence.game.timestamps && presence.game.timestamps.start) ? this.client.time.timeSince(presence.game.timestamps.start, context.settings.misc.locale) : null,
+      time: (presence.game.timestamps && presence.game.timestamps.start) ? this.client.time.timeSince(presence.game.timestamps.start.getYear() === 70 ? (presence.game.timestamps.start * 100) : presence.game.timestamps.start, context.settings.misc.locale) : null,
     }), { embed });
   }
 }
