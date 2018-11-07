@@ -179,7 +179,7 @@ class WeatherCommand extends Command {
     if (!dept || dept.level < 2) return;
 
     const alerts = dept.risk
-      .map((level, index) => this.client.constants.vigilances[`${this.riskType[index]}_${this.riskLevel(level)}`])
+      .map((level, index) => this.client.constants.vigilances[`${this.riskType[index]}_${this.riskLevel[level]}`])
       .filter(a => a)
       .join(' - ');
 
