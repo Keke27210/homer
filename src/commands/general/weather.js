@@ -181,7 +181,7 @@ class WeatherCommand extends Command {
     const alerts = dept.risk
       .map((level, index) => this.client.constants.vigilances[`${this.riskType[index]}_${this.riskLevel[level - 1]}`])
       .filter(a => a)
-      .join(' - ');
+      .join('-');
 
     return `${this.client.constants.vigilances.meteofrance} [Vigilance](http://vigilance.meteofrance.com) **[${locationData.department || ctx.__('global.unknown')}](http://vigilance.meteofrance.com/Bulletin.html?a=dept${dept.department}&b=)**: ${alerts}`;
   }
