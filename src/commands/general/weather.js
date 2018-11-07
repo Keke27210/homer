@@ -183,7 +183,7 @@ class WeatherCommand extends Command {
       .filter(a => a)
       .join('-');
 
-    return `${this.client.constants.vigilances.meteofrance} [Vigilance](http://vigilance.meteofrance.com) **[${locationData.department || ctx.__('global.unknown')}](http://vigilance.meteofrance.com/Bulletin.html?a=dept${dept.department}&b=)**: ${alerts}`;
+    return `${this.client.constants.vigilances.meteofrance} [Vigilance](http://vigilance.meteofrance.com) **[${dept.department || ctx.__('global.unknown')}](http://vigilance.meteofrance.com/Bulletin.html?a=dept${dept.department}&b=)**: ${alerts}`;
   }
 
   get riskType() {
