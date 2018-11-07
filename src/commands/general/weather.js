@@ -177,12 +177,12 @@ class WeatherCommand extends Command {
     const dept = alertData.data
       .find(d => locationData.postalcode === d.department);
     if (!dept || dept.level < 2) return;
-
+    console.log('debug 1')
     const alerts = dept.risk
       .map((level, index) => this.client.constants.vigilances[`${this.riskType[index]}_${this.riskLevel[level]}`])
       .filter(a => a)
       .join(' - ');
-
+      console.log('debug 2')
     return `${this.client.constants.vigilances.meteofrance} [Vigilance](http://vigilance.meteofrance.com) [**${locationData.department || ctx.__('global.unknown')}**](http://vigilance.meteofrance.com/Bulletin.html?a=dept${dept.department}&b=): ${alerts}`;
   }
 
