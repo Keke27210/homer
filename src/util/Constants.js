@@ -62,12 +62,6 @@ exports.emotes = {
   verifiedServer: '<:verified:452764762699464724>',
 };
 
-exports.vigilance = {
-  2: '<:vigilance_jaune:505777125513756694>',
-  3: '<:vigilance_orange:505777214105583649>',
-  4: '<:vigilance_rouge:505777243545665566>',
-};
-
 exports.badges = {
   owner: '<:owner:471599105957953537>',
   donator: '<:donator:471599103126536202>',
@@ -104,6 +98,46 @@ exports.regionFlags = {
   singapore: ':flag_sg:',
   southafrica: ':flag_za:',
   sydney: ':flag_au:',
+};
+
+exports.vigilances = {
+  avalanche_rouge: '<:avalanche_rouge:509789648902684704>',
+  avalanche_orange: '<:avalanche_orange:509789649007411212>',
+  froid_rouge: '<:froid_rouge:509789649372446721>',
+  avalanche_jaune: '<:avalanche_jaune:509789649384898570>',
+  chaud_orange: '<:chaud_orange:509789649435361281>',
+  chaud_jaune: '<:chaud_jaune:509789649506664458>',
+  chaud_rouge: '<:chaud_rouge:509789649565122571>',
+  crue_orange: '<:crue_orange:509789649577836571>',
+  crue_rouge: '<:crue_rouge:509789649674436648>',
+  froid_orange: '<:froid_orange:509789649695408128>',
+  neige_rouge: '<:neige_rouge:509789649829625867>',
+  crue_jaune: '<:crue_jaune:509789649854791683>',
+  neige_orange: '<:neige_orange:509789649884151813>',
+  inondation_orange: '<:inondation_orange:509789649900797977>',
+  froid_jaune: '<:froid_jaune:509789649930027022>',
+  inondation_rouge: '<:inondation_rouge:509789649934483476>',
+  inondation_jaune: '<:inondation_jaune:509789650043535360>',
+  orage_orange: '<:orage_orange:509789650064375829>',
+  vague_orange: '<:vague_orange:509789650135678977>',
+  neige_jaune: '<:neige_jaune:509789650135678986>',
+  orage_rouge: '<:orage_rouge:509789650156781578>',
+  orage_jaune: '<:orage_jaune:509789650227822594>',
+  vent_orange: '<:vent_orange:509789650420760577>',
+  vague_rouge: '<:vague_rouge:509789650429411358>',
+  vague_jaune: '<:vague_jaune:509789650467029007>',
+  vent_rouge: '<:vent_rouge:509789650471223297>',
+  vent_jaune: '<:vent_jaune:509789650668224512>',
+  chaud_vert: '<:chaud_vert:509790409841573919>',
+  orage_vert: '<:orage_vert:509790410022060036>',
+  inondation_vert: '<:inondation_vert:509790410059546625>',
+  avalanche_vert: '<:avalanche_vert:509790410059808769>',
+  crue_vert: '<:crue_vert:509790410160472093>',
+  froid_vert: '<:froid_vert:509790410210803712>',
+  neige_vert: '<:neige_vert:509790410261004289>',
+  vent_vert: '<:vent_vert:509790410340696065>',
+  vague_vert: '<:vague_vert:509790410391027737>',
+  meteofrance: '<:meteofrance:509791330210414603>',
 };
 
 exports.categoryEmotes = {

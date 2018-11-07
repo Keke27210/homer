@@ -174,17 +174,24 @@ class WeatherCommand extends Command {
     const alertData = await request.get('http://api.meteofrance.com/files/vigilance/vigilance.json')
       .then(res => res.body);
 
-    const meta = alertData.meta.find(m => m.zone === 'FR');
     const dept = alertData.data
       .find(d => locationData.postalcode === d.department);
     if (!dept || dept.level < 2) return;
 
     const alerts = dept.risk
-      .map((level, index) => (level >= 2 ? meta.riskNames[index] : null))
+      .map((level, index) => this.client.constants.vigilances[`${this.riskType[index]}_${this.riskLevel(level)}`])
       .filter(a => a)
       .join(' - ');
 
-    return `${this.client.constants.vigilance[dept.level]} [Vigilance](http://vigilance.meteofrance.com) [**${locationData.department || ctx.__('global.unknown')}**](http://vigilance.meteofrance.com/Bulletin.html?a=dept${dept.department}&b=): ${alerts}`;
+    return `${this.client.constants.vigilances.meteofrance} [Vigilance](http://vigilance.meteofrance.com) [**${locationData.department || ctx.__('global.unknown')}**](http://vigilance.meteofrance.com/Bulletin.html?a=dept${dept.department}&b=): ${alerts}`;
+  }
+
+  get riskType() {
+    return ['vent', 'inondation', 'orage', 'crue', 'neige', 'chaud', 'froid', 'avalanche', 'vague'];
+  }
+
+  get riskLevel() {
+    return ['vert', 'jaune', 'orange', 'rouge'];
   }
 
   get franceDepartments() {
