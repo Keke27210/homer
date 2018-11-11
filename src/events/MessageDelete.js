@@ -40,6 +40,8 @@ class MessageDeleteEvent extends Event {
 
       message.mentions.members
         .forEach(async (u) => {
+          if (message.author.id === u.id) return;
+
           const settings = await this.client.database.getDocument('settings', u.id);
           if (!settings || !settings.misc.antighost) return;
 
