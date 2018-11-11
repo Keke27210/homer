@@ -27,6 +27,15 @@
     "afk.messageTooLong": "La longueur du message doit être inférieure à 256 caractères.",
     "afk.messageHandler": "Vous avez mentionné des utilisateurs absents !",
     "afk.removeMessage": "👋 De retour, je vous ai retiré votre absence !",
+
+    "antighost.alert": "👻 Vous avez été mentionné dans le message de {{{ name }}} qui a été supprimé:",
+    "antighost.main": "👻 Anti-ghost ping: exécutez `{{{ command }}}` pour plus d'informations.",
+    "antighost.enabled": "L'anti-ghost ping a été activé !",
+    "antighost.disabled": "L'anti-ghost ping a été désactivé !",
+    "antighost.enabledAlready": "L'anti-ghost ping est déjà activé.",
+    "antighost.disabledAlready": "L'anti-ghost ping est déjà désactivé.",
+    "antighost.info": "👻 L'anti-ghost ping repère les messages supprimés, si vous avez été mentionné dans un message supprimé dans l'heure suivant son envoi, Homer vous préviendra et vous fournira le contenu du message supprimé.\n◻ Si quelqu'un abuse du système pour spamer via le bot, désactivez la fonctionnalité et signalez la dite personne sur le serveur d'assistance.",
+    "antighost.dm": "Cette commande doit être exécutée en messages privés avec le bot.",
   
     "avatar.title": "🖼 Avatar de {{{ name }}}:",
   
@@ -166,6 +175,10 @@
     "helpUtil.noDescription": "Aucune description disponible",
     "helpUtil.about": "Informations sur le bot",
     "helpUtil.afk": "Signaler à ceux qui vous mentionnent que vous êtes absent(e)",
+    "helpUtil.antighost": "Gérer les paramètres de l'anti-ghost ping",
+    "helpUtil.antighost.enable": "Activer l'anti-ghost ping",
+    "helpUtil.antighost.disable": "Désactiver l'anti-ghost ping",
+    "helpUtil.antighost.info": "Informations sur l'anti-ghost ping",
     "helpUtil.avatar": "Obtenir l'avatar d'un membre",
     "helpUtil.baninfo": "Obtenir des infos sur le bannissement d'un utilisateur",
     "helpUtil.call": "Appeler un numéro avec le téléphone",

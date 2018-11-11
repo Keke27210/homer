@@ -31,6 +31,7 @@ exports.defaultUserSettings = id => ({
   importedTags: [],
   tagOverrides: [],
   misc: {
+    antighost: false,
     timezone: 'UTC',
     locale: 'en-gb',
     dateFormat: 'DD/MM/YYYY',

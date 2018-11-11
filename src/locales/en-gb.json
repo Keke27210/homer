@@ -28,6 +28,15 @@
   "afk.messageHandler": "Some people are AFK!",
   "afk.removeMessage": "👋 Welcome back!",
 
+  "antighost.alert": "👻 You were mentioned in {{{ name }}}'s message but it has been deleted:",
+  "antighost.main": "👻 Anti-ghost ping feature: run `{{{ command }}}` for more information.",
+  "antighost.enabled": "The anti-ghost ping feature has been enabled!",
+  "antighost.disabled": "The anti-ghost ping feature has been disabled!",
+  "antighost.enabledAlready": "The anti-ghost ping feature is already enabled.",
+  "antighost.disabledAlready": "The anti-ghost ping feature is already disabled.",
+  "antighost.info": "👻 The anti-ghost ping feature tracks for message deletions, if you were mentioned in a message that has been deleted within the hour it was sent, Homer will alert you about this so you will know why you have received a notification.\n◻ If someone abuses of the system to spam you, please disable the feature and report the concerned user on the assistance server.",
+  "antighost.dm": "This command must be ran in private messages with the bot.",
+
   "avatar.title": "🖼 Avatar for {{{ name }}}:",
 
   "baninfo.title": "🔨 Ban information for {{{ user }}}:",
@@ -175,6 +184,10 @@
   "helpUtil.noDescription": "No description given",
   "helpUtil.about": "Information about the bot",
   "helpUtil.afk": "Sets you AFK",
+  "helpUtil.antighost": "Manage settings about the anti-ghost ping feature",
+  "helpUtil.antighost.enable": "Enable the anti-ghost ping feature",
+  "helpUtil.antighost.disable": "Disable the anti-ghost ping feature",
+  "helpUtil.antighost.info": "Information about the anti-ghost ping feature",
   "helpUtil.avatar": "Get the avatar of a member",
   "helpUtil.baninfo": "Get information about a ban entry",
   "helpUtil.call": "Call a number on the telephone",
