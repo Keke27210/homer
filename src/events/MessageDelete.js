@@ -41,11 +41,10 @@ class MessageDeleteEvent extends Event {
       message.mentions.members
         .forEach(async (u) => {
           const settings = await this.client.database.getDocument('settings', u.id);
-          console.log(settings.antighost);
           if (!settings || !settings.antighost) return;
 
           u.send(
-            context.__('antighost.alert', { name: `**${message.author.username}**#${message.author.discriminator}`}),
+            this.client.__(settings.misc.locale, 'antighost.alert', { name: `**${message.author.username}**#${message.author.discriminator}`}),
             { embed },
           );
         });
