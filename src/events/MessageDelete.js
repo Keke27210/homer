@@ -1,4 +1,5 @@
 const Event = require('../structures/Event');
+const { RichEmbed } = require('discord.js');
 
 class MessageDeleteEvent extends Event {
   constructor(client) {
@@ -6,6 +7,7 @@ class MessageDeleteEvent extends Event {
   }
 
   async handle(message) {
+    // Phone
     if (message.author.id !== this.client.user.id) {
       this.client.database.getDocuments('calls')
         .then(async (calls) => {
@@ -24,6 +26,28 @@ class MessageDeleteEvent extends Event {
           if (!targetMessage) return;
 
           this.client.deleteMessage(target, targetMessage.id);
+        });
+    }
+
+    // Anti ghost-ping
+    if (message.guild && message.mentions.users.size > 0) {
+      const embed = new RichEmbed()
+        .setAuthor(message.author.username, message.author.avatarURL)
+        .setDescription(message.content)
+        .setColor(message.member.displayHexColor)
+        .setFooter(`#${message.channel.name} (${message.guild.name})`)
+        .setTimestamp(message.editedAt || message.createdAt);
+
+      message.mentions.users
+        .filter(u => message.guild.members.has(u.id))
+        .forEach(async (u) => {
+          const settings = await this.client.database.getDocument('settings', u.id);
+          if (!settings || !settings.antighost) return;
+
+          u.send(
+            context.__('antighost.alert', { name: `**${message.author.username}**#${message.author.discriminator}`}),
+            { embed },
+          );
         });
     }
   }
