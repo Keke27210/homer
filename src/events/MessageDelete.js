@@ -30,7 +30,7 @@ class MessageDeleteEvent extends Event {
     }
 
     // Anti ghost-ping
-    if (message.guild && message.mentions.users.size > 0) {
+    if (message.guild && message.mentions.members.size > 0) {
       const embed = new RichEmbed()
         .setAuthor(message.author.username, message.author.avatarURL)
         .setDescription(message.content)
@@ -38,10 +38,10 @@ class MessageDeleteEvent extends Event {
         .setFooter(`#${message.channel.name} (${message.guild.name})`)
         .setTimestamp(message.editedAt || message.createdAt);
 
-      message.mentions.users
-        .filter(u => message.guild.members.has(u.id))
+      message.mentions.members
         .forEach(async (u) => {
           const settings = await this.client.database.getDocument('settings', u.id);
+          console.log(settings.antighost);
           if (!settings || !settings.antighost) return;
 
           u.send(
