@@ -16,7 +16,7 @@ class AntighostCommand extends Command {
   }
 
   async execute(context) {
-    if (!context.message.guild) return context.replyWarning(context.__('antighost.dm'));
+    if (context.message.guild) return context.replyWarning(context.__('antighost.dm'));
     context.reply(context.__('antighost.main', { command: `${this.client.prefix}antighost info` }));
   }
 }
@@ -31,6 +31,7 @@ class EnableSubcommand extends Command {
   }
 
   async execute(context) {
+    if (context.message.guild) return context.replyWarning(context.__('antighost.dm'));
     if (context.settings.misc.antighost) return context.replyWarning(context.__('antighost.enabledAlready'));
     context.settings.misc.antighost = true;
     await context.saveSettings();
@@ -48,6 +49,7 @@ class DisableSubcommand extends Command {
   }
 
   async execute(context) {
+    if (context.message.guild) return context.replyWarning(context.__('antighost.dm'));
     if (!context.settings.misc.antighost) return context.replyWarning(context.__('antighost.disabledAlready'));
     context.settings.misc.antighost = false;
     await context.saveSettings();
@@ -66,6 +68,7 @@ class InfoSubcommand extends Command {
   }
 
   async execute(context) {
+    if (context.message.guild) return context.replyWarning(context.__('antighost.dm'));
     context.reply(context.__('antighost.info'));
   }
 }
