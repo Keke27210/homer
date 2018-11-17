@@ -114,7 +114,7 @@ class Command {
     }
 
     // Check if the command can be ran
-    if (!this.isAllowed(context.message.channel) && this.category !== 'owner') {
+    if (!this.client.config.owners.includes(context.message.author.id) && !this.isAllowed(context.message.channel) && this.category !== 'owner') {
       return context.replyError(context.__(
         'commandHandler.unauthorized',
         { command: this.name, category: this.category },
