@@ -6,6 +6,7 @@ class PhblacklistCommand extends Command {
     super(client, {
       name: 'phblacklist',
       category: 'telephone',
+      userPermissions: ['MANAGE_GUILD'],
       children: [new AddSubcommand(client), new RemoveSubcommand(client)],
       dm: true,
     });
@@ -33,6 +34,7 @@ class AddSubcommand extends Command {
       name: 'add',
       usage: '<number>',
       category: 'telephone',
+      userPermissions: ['MANAGE_GUILD'],
       dm: true,
     });
   }
@@ -70,6 +72,7 @@ class RemoveSubcommand extends Command {
       aliases: ['delete'],
       usage: '<number>',
       category: 'telephone',
+      userPermissions: ['MANAGE_GUILD'],
       dm: true,
     });
   }
