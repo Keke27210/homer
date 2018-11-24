@@ -662,6 +662,7 @@
   "telephone.setup.cancelled": "You have cancelled your subscription to the telephone.",
   "telephone.setup.subscriptionExist": "You already have an existing subscription, to terminate it please run `{{{ command }}}`.",
   "telephone.setup.confirmation": "To confirm your subscription, react with {{{ success }}}. Otherwise, react with {{{ error }}}.",
+  "telephone.setup.disabledSubscriptions": "You can't subscribe to Homer telephone for the moment. Please try again later.",
   "telephone.terminate.title": "📞 Termination request for {{{ name }}}:",
   "telephone.terminate.done": "You have terminated your subscription to the telephone.",
   "telephone.terminate.cancelled": "You have cancelled your termination to the telephone.",

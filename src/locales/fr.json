@@ -645,6 +645,7 @@
     "telephone.setup.cancelled": "Vous avez annulé votre demande d'abonnement au service téléphonique d'Homer.",
     "telephone.setup.subscriptionExist": "Vous avez déjà un abonnement actif, résilliez-le avec `{{{ command }}}`.",
     "telephone.setup.confirmation": "Pour confirmer la souscription, réagissez avec {{{ success }}}. Sinon, réagissez avec {{{ error }}}.",
+    "telephone.setup.disabledSubscriptions": "Vous ne pouvez pas vous abonner au téléphone d'Homer. Veuillez réessayer plus tard.",
     "telephone.terminate.title": "📞 Demande de résilliation pour {{{ name }}}:",
     "telephone.terminate.done": "Vous avez résillié votre abonnement du service téléphonique d'Homer.",
     "telephone.terminate.cancelled": "Vous avez annulé votre demande de résilliation.",

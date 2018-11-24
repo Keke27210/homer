@@ -63,6 +63,9 @@ class SubscribeSubcommand extends Command {
     const subscription = await this.client.database.getDocument('telephone', context.message.channel.id);
     if (subscription) return context.replyWarning(context.__('telephone.setup.subscriptionExist', { command: `${this.client.prefix}telephone terminate` }));
 
+    const state = await this.client.database.getDocument('bot', 'settings').then(s => s.subscriptions);
+    if (!state) return context.replyWarning(context.__('telephone.setup.disabledSubscriptions'));
+
     const msg = context.args.join(' ');
     if (msg && msg.length > 64) return context.replyWarning(context.__('telephone.phonebook.messageTooLong'));
 
