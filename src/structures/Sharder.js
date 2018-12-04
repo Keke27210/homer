@@ -1,5 +1,4 @@
 const { ShardingManager } = require('discord.js');
-const request = require('superagent');
 
 class Sharder extends ShardingManager {
   constructor(file, config) {
