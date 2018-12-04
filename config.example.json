@@ -1,8 +1,6 @@
 {
   "api": {
     "bingGeocode": "",
-    "cleverbotKey": "",
-    "cleverbotUser": "",
     "darkSky": "",
     "discordBans": "",
     "googleCx": "",
