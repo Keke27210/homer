@@ -27,6 +27,7 @@ class DiscordClient extends Client {
     this.voiceBroadcasts = {};
     this.ready = false;
     this.maintenance = false;
+    this.debug = this.config.discord.debug ? true : false;
 
     this.commands = new CommandManager(this);
     this.database = new DatabaseManager(this);
