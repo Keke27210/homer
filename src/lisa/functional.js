@@ -128,6 +128,41 @@ module.exports = [
     (env, params) => Math.atan(params[0]).toString(),
   ),
 
+  // natural logarithm
+  new Method(
+    'log',
+    null,
+    (env, params) => Math.log(params[0]).toString(),
+  ),
+
+  // base 10 logarithm
+  new Method(
+    'log10',
+    null,
+    (env, params) => Math.log10(params[0]).toString(),
+  ),
+
+  // base 2 logarithm
+  new Method(
+    'log2',
+    null,
+    (env, params) => Math.log2(params[0]).toString(),
+  ),
+
+  // Neper constant (used by natural logarithms)
+  new Method(
+    'e',
+    (env) => Math.E,
+    null,
+  ),
+
+  // exp
+  new Method(
+    'exp',
+    null,
+    (env, params) => Math.exp(params[0]).toString(),
+  ),
+
   // base
   new Method(
     'base',
