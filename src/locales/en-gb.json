@@ -448,6 +448,7 @@
   "radio.tune.noRadioFound": "No radio found on frequency `{{{ frequency }}}`.",
   "radio.tune.tuning": "📻 Tuning into **{{{ name }}}**...",
   "radio.tune.playing": "📻 You are listening to **{{{ name }}}**.",
+  "radio.tune.error": "📻 A streaming error has occured: `{{{ message }}}`.",
   "radio.volume.invalidVolume": "The volume must be greater (or equal) to 1 and fewer (or equal) to 100.",
   "radio.volume.set": "The volume has been set to `{{{ volume }}}`.",
   "radio.stop.noActiveStream": "There is no active stream.",
