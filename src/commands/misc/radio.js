@@ -97,6 +97,12 @@ class TuneSubcommand extends Command {
     delete this.client.currentBroadcasts[context.message.guild.id];
     this.client.currentBroadcasts[context.message.guild.id] = radio.id;
 
+    dispatcher.once('error', (message) => {
+      context.message.channel.send(context.__('radio.tune.error', { message }));
+      delete this.client.currentBroadcasts[context.message.guild.id];
+      if (channel.members.has(this.client.user.id)) channel.leave();
+    });
+
     dispatcher.once('speaking', () => {
       message.edit(context.__('radio.tune.playing', { name: radio.name }));
 
