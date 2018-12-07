@@ -152,7 +152,7 @@ module.exports = [
   // Neper constant (used by natural logarithms)
   new Method(
     'e',
-    (env) => Math.E,
+    (env) => Math.E.toString(),
     null,
   ),
 
