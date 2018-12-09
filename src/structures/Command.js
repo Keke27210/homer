@@ -114,11 +114,8 @@ class Command {
     }
 
     // Check if the command can be ran
-    if (!this.client.config.owners.includes(context.message.author.id) && !this.isAllowed(context.message.channel) && this.category !== 'owner') {
-      return context.replyError(context.__(
-        'commandHandler.unauthorized',
-        { command: this.name, category: this.category },
-      ));
+    if (!this.client.config.owners.includes(context.message.author.id) && !this.isAllowed(context.message.channel, parent.join(' ')) && this.category !== 'owner') {
+      return context.replyError(context.__('commandHandler.unauthorized'));
     }
 
     // Check if the command can be used in DMs
@@ -185,13 +182,13 @@ class Command {
     }
   }
 
-  isAllowed(channel) {
+  isAllowed(channel, cmd) {
     if (!channel.topic) return true;
     const topic = channel.topic.toLowerCase();
 
     // Command overwrites
-    if (topic.includes(`{${this.name}}`)) return true;
-    if (topic.includes(`{-${this.name}}`)) return false;
+    if (topic.includes(`{${cmd}}`)) return true;
+    if (topic.includes(`{-${cmd}}`)) return false;
 
     // Category overwrites
     if (topic.includes(`{${this.category}}`)) return true;
