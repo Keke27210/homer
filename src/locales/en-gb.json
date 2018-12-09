@@ -87,7 +87,7 @@
   "commandHandler.error": "An error occurred during the execution of the command. Please try again later.",
   "commandHandler.missingUserPermissions": "You need the following permissions to run this command: {{{ permissions }}}.",
   "commandHandler.missingBotPermissions": "The bot needs the following permissions to run this command: {{{ permissions }}}.",
-  "commandHandler.unauthorized": "You can't use this command in this channel. You may have put a command overwrite (`{-{{{ command }}}}`), a category overwrite (`{-{{{ category }}}}`) or a general overwrite (`{-all}`).",
+  "commandHandler.unauthorized": "You can't use this command in this channel.",
   "commandHandler.unavailableInDM": "You can't run this command in private messages.",
   "commandHandler.help.title": "📖 Help for `{{{ command }}}`:",
   "commandHandler.help.usage": "Usage: `{{{ usage }}}`",
