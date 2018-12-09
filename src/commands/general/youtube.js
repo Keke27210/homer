@@ -5,6 +5,7 @@ class YoutubeCommand extends Command {
   constructor(client) {
     super(client, {
       name: 'youtube',
+      aliases: ['yt'],
       category: 'general',
       usage: '<search>',
       dm: true,
