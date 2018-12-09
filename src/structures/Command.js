@@ -114,7 +114,7 @@ class Command {
     }
 
     // Check if the command can be ran
-    if (!this.client.config.owners.includes(context.message.author.id) && !this.isAllowed(context.message.channel, parent.join(' ')) && this.category !== 'owner') {
+    if (!this.client.config.owners.includes(context.message.author.id) && !this.isAllowed(context.message.channel, parent) && this.category !== 'owner') {
       return context.replyError(context.__('commandHandler.unauthorized'));
     }
 
@@ -182,13 +182,19 @@ class Command {
     }
   }
 
-  isAllowed(channel, cmd) {
+  isAllowed(channel, parent) {
     if (!channel.topic) return true;
     const topic = channel.topic.toLowerCase();
 
     // Command overwrites
     if (topic.includes(`{${cmd}}`)) return true;
     if (topic.includes(`{-${cmd}}`)) return false;
+
+    if (topic.includes(`{${parent.join(' ')}}`)) return true;
+    for (let i = 0; i < parent.length; i += 1) {
+      const name = parent.slice(0, i).join(' ');
+      if (topic.includes(`{-${name}}`)) return false;
+    }
 
     // Category overwrites
     if (topic.includes(`{${this.category}}`)) return true;
