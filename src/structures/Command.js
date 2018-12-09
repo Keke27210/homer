@@ -187,9 +187,6 @@ class Command {
     const topic = channel.topic.toLowerCase();
 
     // Command overwrites
-    if (topic.includes(`{${cmd}}`)) return true;
-    if (topic.includes(`{-${cmd}}`)) return false;
-
     if (topic.includes(`{${parent.join(' ')}}`)) return true;
     for (let i = 0; i < parent.length; i += 1) {
       const name = parent.slice(0, i).join(' ');
