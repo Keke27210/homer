@@ -189,7 +189,7 @@ class Command {
     // Command overwrites
     if (topic.includes(`{${parent.join(' ')}}`)) return true;
     for (let i = 0; i < parent.length; i += 1) {
-      const name = parent.slice(0, i).join(' ');
+      const name = parent.slice(0, (i + 1)).join(' ');
       if (topic.includes(`{-${name}}`)) return false;
     }
 
