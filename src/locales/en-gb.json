@@ -271,6 +271,7 @@
   "helpUtil.tag.exec": "Run a tag without creating it (allows Lisa code)",
   "helpUtil.tag.override": "Create tag overrides",
   "helpUtil.tag.unoverride": "Delete tag overrides",
+  "helpUtil.tag.search": "Search for tags",
   "helpUtil.telephone": "Manage your telephone subscription",
   "helpUtil.telephone.subscribe": "Subscribe to the telephone",
   "helpUtil.telephone.terminate": "Terminate your telephone subscription",
@@ -645,6 +646,9 @@
   "tag.unoverride.noTag": "You must provide the name of the tag to unoverride.",
   "tag.unoverride.notFound": "No tag override found for \"{{{ name }}}\".",
   "tag.unoverride.deleted": "Deleted tag override for \"{{{ name }}}\".",
+  "tag.search.invalidTerms": "You must provide a term to search with a length greater to 4 characters.",
+  "tag.search.results": "🔍 Tags found matching term `{{{ search }}}`:",
+  "tag.search.zeroResult": "No tag found matching term `{{{ search }}}`.",
   "tag.belongsServer": "the server",
 
   "telephone.notAssigned": "The provided number is not assigned.",

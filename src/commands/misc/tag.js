@@ -1,4 +1,5 @@
 const Command = require('../../structures/Command');
+const { Attachment } = require('discord.js');
 const { splitMessage } = require('discord.js').Util;
 
 class TagCommand extends Command {
@@ -22,6 +23,7 @@ class TagCommand extends Command {
         new ExecSubcommand(client),
         new OverrideSubcommand(client),
         new UnoverrideSubcommand(client),
+        new SearchSubcommand(client),
       ],
       dm: true,
     });
@@ -413,6 +415,41 @@ class UnoverrideSubcommand extends Command {
     await context.saveSettings();
 
     context.replySuccess(context.__('tag.unoverride.deleted', { name: name.toLowerCase() }));
+  }
+}
+
+class SearchSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'search',
+      aliases: ['find'],
+      category: 'misc',
+      usage: '<search terms>',
+      dm: true,
+    });
+  }
+
+  async execute(context) {
+    const search = context.args.join(' ');
+    if (!search || search.length <= 4) return context.replyError(context.__('tag.search.invalidTerms', { count: 4 }));
+
+    const foundTags = await this.client.database.getDocuments('tags', true)
+      .then(tags => tags.filter(t => t.name.toLowerCase().includes(search)));
+    if (foundTags.length === 0) return context.replyWarning(context.__('tag.search.zeroResult', { search }));
+
+    const msg = [
+      context.__('tag.search.results', { search }),
+      foundTags.map(t => t.name).join(' '),
+    ].join('\n');
+
+    if (msg.length >= 2000) {
+      context.reply(
+        context.__('tag.search.results', { search }),
+        { files: new Attachment(msg, 'found.txt') },
+      );
+    } else {
+      context.reply(msg);
+    }
   }
 }
 
