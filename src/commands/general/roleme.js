@@ -65,7 +65,7 @@ class ListSubcommand extends Command {
 
         return `${this.dot} ${role ? `**${role.name}**` : `*${context.__('global.unknown')}*`} (ID:${roleID})`;
       })
-      .join(', ');
+      .join('\n');
 
     const embed = new RichEmbed()
       .setDescription(roleList);
@@ -88,6 +88,8 @@ class AddSubcommand extends Command {
   }
 
   async execute(context) {
+    if (context.settings.rolemeRoles.length >= 10) return context.replyWarning(context.__('roleme.add.cannotAddMore'));
+
     const search = context.args.join(' ');
     let role = null;
     if (search) {

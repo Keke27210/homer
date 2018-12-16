@@ -535,6 +535,7 @@
   "roleme.list.title": "List of roles available on **{{{ name }}}**:",
   "roleme.add.done": "You have added the role **{{{ name }}}** to the roleme list",
   "roleme.add.alreadyIn": "The role **{{{ name }}}** is already on the roleme list!",
+  "roleme.add.cannotAddMore": "You can't add more than 10 roles in the roleme.",
   "roleme.remove.done": "You have removed the role **{{{ name }}}** from the roleme list",
   "roleme.remove.notFound": "The role **{{{ name }}}** is not on the roleme list!",
   
