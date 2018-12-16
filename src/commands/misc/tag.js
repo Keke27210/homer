@@ -439,7 +439,7 @@ class SearchSubcommand extends Command {
 
     const msg = [
       context.__('tag.search.results', { search }),
-      foundTags.map(t => t.name).join(' '),
+      foundTags.map(t => t.id).join(' '),
     ].join('\n');
 
     if (msg.length >= 2000) {
