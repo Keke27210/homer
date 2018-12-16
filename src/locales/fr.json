@@ -629,7 +629,7 @@
     "tag.unoverride.noTag": "You must provide the name of the tag to unoverride.",
     "tag.unoverride.notFound": "No tag override found for \"{{{ name }}}\".",
     "tag.unoverride.deleted": "Deleted tag override for \"{{{ name }}}\"!",
-    "tag.search.invalidTerms": "Vous devez fournir des termes de recherche avec une longueur supérieure à 4 caractères.",
+    "tag.search.invalidTerms": "Vous devez fournir des termes de recherche avec une longueur supérieure à {{{ count }}} caractères.",
     "tag.search.results": "🔍 Tags trouvés correspondant au terme `{{{ search }}}`:",
     "tag.search.zeroResult": "Aucun tag trouvé avec le terme `{{{ search }}}`.",
     "tag.belongsServer": "au serveur",

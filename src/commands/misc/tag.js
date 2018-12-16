@@ -431,10 +431,10 @@ class SearchSubcommand extends Command {
 
   async execute(context) {
     const search = context.args.join(' ');
-    if (!search || search.length <= 4) return context.replyError(context.__('tag.search.invalidTerms', { count: 4 }));
+    if (!search || search.length <= 3) return context.replyError(context.__('tag.search.invalidTerms', { count: 3 }));
 
     const foundTags = await this.client.database.getDocuments('tags', true)
-      .then(tags => tags.filter(t => t.name.toLowerCase().includes(search)));
+      .then(tags => tags.filter(t => t.id.toLowerCase().includes(search)));
     if (foundTags.length === 0) return context.replyWarning(context.__('tag.search.zeroResult', { search }));
 
     const msg = [
