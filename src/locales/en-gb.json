@@ -347,6 +347,7 @@
   "lookup.gift.type.2": "DLC",
   "lookup.gift.type.3": "In-App purchase",
   "lookup.gift.type.4": "Bundle",
+  "lookup.gift.type.5": "Internal"
   "lookup.gift.usable.yes": "Usable",
   "lookup.gift.usable.no": "Unusable",
   "lookup.nothingFound": "No guild, user or invite found matching `{{{ search }}}`.",

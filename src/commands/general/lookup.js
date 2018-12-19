@@ -171,10 +171,10 @@ class LookupCommand extends Command {
       .then((gift) => {
         done = true;
 
-        const usable = (gift.redeemed || (gift.uses >= gift.max_uses));
+        const usable = (gift.uses >= gift.max_uses);
         const giftInformation = [
           `${this.dot} ${context.__('lookup.gift.product')}: ${gift.store_listing.sku ? `**${gift.store_listing.sku.name}**` : context.__('global.unknown')} (${context.__(`lookup.gift.type.${gift.store_listing.sku ? gift.store_listing.sku.type : '-1'}`)})`,
-          `${this.dot} ${context.__('lookup.gift.summary')}: **${gift.summary}**`,
+          `${this.dot} ${context.__('lookup.gift.summary')}: **${gift.store_listing.summary}**`,
           `${this.dot} ${context.__('lookup.gift.from')}: **${gift.user.username}**#${gift.user.discriminator} (ID:${gift.user.id})`,
           `${this.dot} ${context.__('lookup.gift.status')}: **${context.__(`lookup.gift.usable.${usable ? 'yes' : 'no'}`)}** (**${gift.uses}**/**${gift.max_uses}**)`,
           `${this.dot} ${context.__('lookup.gift.reedem')}: **[${gift.code}](https://discord.gift/${gift.code})**`,

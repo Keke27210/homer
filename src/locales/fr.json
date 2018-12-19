@@ -337,6 +337,7 @@
     "lookup.gift.type.2": "DLC",
     "lookup.gift.type.3": "Achat in-app",
     "lookup.gift.type.4": "Bundle",
+    "lookup.gift.type.5": "Interne",
     "lookup.gift.usable.yes": "Utilisable",
     "lookup.gift.usable.no": "Inutilisable",
     "lookup.nothingFound": "Aucun serveur, utilisateur ou invitation trouvée correspondant à `{{{ search }}}`.",
