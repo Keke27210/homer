@@ -164,7 +164,11 @@ class LookupCommand extends Command {
           { embed },
         );
       })
-      .catch(() => null);
+      .catch(() => {
+        done = false;
+      });
+
+    if (done) return;
 
     // Gift
     await this.client.rest.makeRequest('get', `/entitlements/gift-codes/${this.client.other.resolveGiftCode(search)}`, true)
