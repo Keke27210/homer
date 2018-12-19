@@ -350,7 +350,7 @@
   "lookup.gift.type.5": "Internal",
   "lookup.gift.usable.yes": "Usable",
   "lookup.gift.usable.no": "Unusable",
-  "lookup.nothingFound": "No guild, user or invite found matching `{{{ search }}}`.",
+  "lookup.nothingFound": "No guild, user, invite or gift code found matching `{{{ search }}}`.",
 
   "names.title": "Previous names for {{{ name }}}:",
   "names.noPreviousNames": "No previous names recorded for {{{ name }}}",
