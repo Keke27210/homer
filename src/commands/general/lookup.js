@@ -171,8 +171,9 @@ class LookupCommand extends Command {
     // Gift
     await this.client.rest.makeRequest('get', `/entitlements/gift-codes/${this.client.other.resolveGiftCode(search)}`, true)
       .then((gift) => {
-        const usable = (gift.redeemed || (gift.uses >= gift.max_uses));
+        done = true;
 
+        const usable = (gift.redeemed || (gift.uses >= gift.max_uses));
         const giftInformation = [
           `${this.dot} ${context.__('lookup.gift.product')}: ${gift.store_listing.sku ? `**${gift.store_listing.sku.name}**` : context.__('global.unknown')} (${context.__(`lookup.gift.type.${gift.store_listing.sku ? gift.store_listing.sku.type : '-1'}`)})`,
           `${this.dot} ${context.__('lookup.gift.summary')}: **${gift.summary}**`,
@@ -187,7 +188,7 @@ class LookupCommand extends Command {
           .setTimestamp(new Date(gift.expires_at));
         if (gift.store_listing.sku && gift.store_listing.thumbnail) embed.setThumbnail(`https://cdn.discordapp.com/app-assets/${gift.store_listing.sku.application_id}/store/${gift.store_listing.thumbnail.id}.png`);
 
-        context.reply(
+        message.edit(
           context.__('lookup.gift.main', { code: gift.code }),
           { embed },
         );
