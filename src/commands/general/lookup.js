@@ -168,6 +168,34 @@ class LookupCommand extends Command {
         done = false;
       });
 
+    // Gift
+    await this.client.rest.makeRequest('get', `/entitlements/gift-codes/${this.client.other.resolveGiftCode(search)}`, true)
+      .then((gift) => {
+        const usable = (gift.redeemed || (gift.uses >= gift.max_uses));
+
+        const giftInformation = [
+          `${this.dot} ${context.__('lookup.gift.product')}: ${gift.store_listing.sku ? `**${gift.store_listing.sku.name}**` : context.__('global.unknown')} (${context.__(`lookup.gift.type.${gift.store_listing.sku ? gift.store_listing.sku.type : '-1'}`)})`,
+          `${this.dot} ${context.__('lookup.gift.summary')}: **${gift.summary}**`,
+          `${this.dot} ${context.__('lookup.gift.from')}: **${gift.user.username}**#${gift.user.discriminator} (ID:${gift.user.id})`,
+          `${this.dot} ${context.__('lookup.gift.status')}: **${context.__(`lookup.gift.usable.${usable ? 'yes' : 'no'}`)}** (**${gift.uses}**/**${gift.max_uses}**)`,
+          `${this.dot} ${context.__('lookup.gift.reedem')}: **[${gift.code}](https://discord.gift/${gift.code})**`,
+        ].join('\n');
+
+        const embed = new RichEmbed()
+          .setDescription(giftInformation)
+          .setFooter(context.__('lookup.gift.expires'))
+          .setTimestamp(new Date(gift.expires_at));
+        if (gift.store_listing.sku && gift.store_listing.thumbnail) embed.setThumbnail(`https://cdn.discordapp.com/app-assets/${gift.store_listing.sku.application_id}/store/${gift.store_listing.thumbnail.id}.png`);
+
+        context.reply(
+          context.__('lookup.gift.main', { code: gift.code }),
+          { embed },
+        );
+      })
+      .catch(() => {
+        done = false;
+      });
+
     if (!done) {
       message.edit(`${this.client.constants.emotes.error} ${context.__('lookup.nothingFound', { search })}`);
     }

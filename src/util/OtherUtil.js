@@ -70,6 +70,14 @@ class OtherUtil {
 
     return b2;
   }
+
+  // Code template from discord.js "resolveInviteCode" method
+  resolveGiftCode(data) {
+    const inviteRegex = /discord(?:app\.com\/gift|\.gift(?:\/gift)?)\/([\w-]{2,255})/i;
+    const match = inviteRegex.exec(data);
+    if (match && match[1]) return match[1];
+    return data;
+  }
 }
 
 module.exports = OtherUtil;
