@@ -163,7 +163,8 @@ class LookupCommand extends Command {
           context.__('lookup.invite.title', { invite: invite.code }),
           { embed },
         );
-      });
+      })
+      .catch(() => null);
 
     // Gift
     await this.client.rest.makeRequest('get', `/entitlements/gift-codes/${this.client.other.resolveGiftCode(search)}`, true)
