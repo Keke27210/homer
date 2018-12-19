@@ -171,7 +171,7 @@ class LookupCommand extends Command {
       .then((gift) => {
         done = true;
 
-        const usable = (gift.uses >= gift.max_uses);
+        const usable = (gift.uses < gift.max_uses);
         const giftInformation = [
           `${this.dot} ${context.__('lookup.gift.product')}: ${gift.store_listing.sku ? `**${gift.store_listing.sku.name}**` : context.__('global.unknown')} (${context.__(`lookup.gift.type.${gift.store_listing.sku ? gift.store_listing.sku.type : '-1'}`)})`,
           `${this.dot} ${context.__('lookup.gift.summary')}: **${gift.store_listing.summary}**`,
