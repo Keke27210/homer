@@ -163,9 +163,6 @@ class LookupCommand extends Command {
           context.__('lookup.invite.title', { invite: invite.code }),
           { embed },
         );
-      })
-      .catch(() => {
-        done = false;
       });
 
     // Gift
