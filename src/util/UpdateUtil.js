@@ -30,13 +30,13 @@ class UpdateUtil {
   async updateBotList() {
     // Discord Bots
     request
-      .post(`https://bots.discord.pw/api/bots/${this.client.user.id}/stats`)
-      .set('Authorization', this.client.config.api.discordBotsPw)
+      .post(`https://discord.bots.gg/api/v1/bots/${this.client.user.id}/stats`)
+      .set('Authorization', this.client.config.api.discordBotsGg)
       .set('Content-Type', 'application/json')
       .send({
-        shard_id: this.client.shard.id,
-        shard_count: this.client.shard.count,
-        server_count: this.client.guilds.size,
+        shardId: this.client.shard.id,
+        shardCount: this.client.shard.count,
+        guildCount: this.client.guilds.size,
       })
       .catch(() => null);
 
