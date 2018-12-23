@@ -282,12 +282,12 @@ class SessionsSubcommand extends Command {
   }
 
   async execute(context) {
-    const voiceBroadcasts = Object.values(this.client.voiceBroadcasts);
+    const voiceBroadcasts = Object.entries(this.client.voiceBroadcasts);
     if (voiceBroadcasts.length === 0) return context.replyWarning('There are no active sessions at the moment.');
 
     const sessions = [];
-    for (const voiceBroadcast of voiceBroadcasts) {
-      const radio = await this.client.database.getDocument('radios', voiceBroadcast.radio);
+    for (const [id, voiceBroadcast] of voiceBroadcasts) {
+      const radio = await this.client.database.getDocument('radios', id);
 
       const page = [`${radio.emote} **${radio.name}** - **${radio.id}**Mhz`, '', '🔌 Active sessions:'];
       for (let i = 0; i < voiceBroadcast.dispatchers.length; i += 1) {
