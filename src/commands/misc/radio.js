@@ -290,12 +290,18 @@ class SessionsSubcommand extends Command {
     for (const [id, voiceBroadcast] of voiceBroadcasts) {
       const radio = id === 'NOPRG' ? ({ emote: '🚫', name: 'NO PROGRAMME', id: '000.0' }) : await this.client.database.getDocument('radios', id);
 
-      const page = [`${radio.emote} **${radio.name}** - **${radio.id}**Mhz`, '', '🔌 Active sessions:'];
+      const page = [
+        `${radio.emote} **${radio.name}** - **${radio.id}**Mhz`,
+        `📡 [BROADCASTED AUDIO](${radio.url})`,
+        '',
+        '🔌 Active sessions:',
+      ];
+
       if (voiceBroadcast.dispatchers.length === 0) page.push('None');
       for (let i = 0; i < voiceBroadcast.dispatchers.length; i += 1) {
         const dispatcher = voiceBroadcast.dispatchers[i];
         const voiceConnection = dispatcher.player.voiceConnection;
-        page.push(`- **${voiceConnection.channel.guild.name}** (ID:${voiceConnection.channel.guild.id}) | 🎧 **${voiceConnection.channel.members.filter(m => !m.user.bot).size}** | 🕛 ${this.client.time.timeSince((Date.now() - dispatcher.totalStreamTime), 'en-gb', true)}`);
+        page.push(`- **${voiceConnection.channel.guild.name}** (ID:${voiceConnection.channel.guild.id}) | 🎧 **${voiceConnection.channel.members.filter(m => !m.user.bot).size}** | 🔈 **${Math.floor(dispatcher.volume * 100)}**% (**${Math.floor(dispatcher.volumeDecibels)}**db) | 🕛 ${this.client.time.timeSince((Date.now() - dispatcher.totalStreamTime), 'en-gb', true)}`);
       }
 
       sessions.push(page.join('\n'));
