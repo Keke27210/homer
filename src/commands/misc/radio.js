@@ -291,6 +291,7 @@ class SessionsSubcommand extends Command {
       const radio = id === 'NOPRG' ? ({ emote: '🚫', name: 'NO PROGRAMME', id: '000.0' }) : await this.client.database.getDocument('radios', id);
 
       const page = [`${radio.emote} **${radio.name}** - **${radio.id}**Mhz`, '', '🔌 Active sessions:'];
+      if (voiceBroadcast.dispatchers.length === 0) page.push('None');
       for (let i = 0; i < voiceBroadcast.dispatchers.length; i += 1) {
         const dispatcher = voiceBroadcast.dispatchers[i];
         const voiceConnection = dispatcher.player.voiceConnection;
