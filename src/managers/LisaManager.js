@@ -40,7 +40,7 @@ class LisaManager extends Manager {
     let output = this.filterEscapes(string);
     let lastOutput = null;
 
-    while (output !== lastOutput && output.length < 2000) {
+    while (output !== lastOutput) {
       const end = output.indexOf('}');
       const start = (end === -1 ? -1 : output.lastIndexOf('{', end));
       lastOutput = output;
