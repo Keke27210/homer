@@ -277,6 +277,7 @@ class SessionsSubcommand extends Command {
     super(client, {
       name: 'sessions',
       category: 'misc',
+      dm: true,
       private: true,
     });
   }
