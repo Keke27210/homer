@@ -36,6 +36,7 @@ class LisaManager extends Manager {
 
   async parseString(context, string, type, tagArgs = [], children = false, embedCode) {
     const env = new Environment(this.client, context, type, tagArgs, children, embedCode);
+    let repeatUsed = false;
 
     let output = this.filterEscapes(string);
     let lastOutput = null;
@@ -71,6 +72,11 @@ class LisaManager extends Manager {
             .map(a => this.defilterAll(a));
 
           if (method) {
+            if (method.name === 'repeat') {
+              if (repeatUsed) continue;
+              repeatUsed = true;
+            }
+
             try { result = await method.parseComplex(env, params); }
             catch (e) { result = `<invalid ${name} statement>`; }
           }
