@@ -16,6 +16,7 @@ class RadioCommand extends Command {
         new StopSubcommand(client),
         new ChannelSubcommand(client),
         new InfoSubcommand(client),
+        new SessionsSubcommand(client),
       ],
     });
   }
@@ -64,7 +65,7 @@ class TuneSubcommand extends Command {
     if (!channel.joinable || !channel.speakable) return context.replyError(context.__('radio.cannotJoinOrSpeak', { name: channel.name }));
     if (!channel.members.has(context.message.author.id)) return context.replyWarning(context.__('radio.notInChannel', { name: channel.name }));
 
-    const frequency = context.args[0];
+    const frequency = context.args[0] ? context.args[0].replace(/,/g, '.') : null;
     if (!frequency) return context.replyError(context.__('radio.tune.noFrequency'));
 
     let connection = this.client.voiceConnections.get(context.message.guild.id);
@@ -268,6 +269,43 @@ class InfoSubcommand extends Command {
       .setThumbnail(`${this.client.constants.CDN}/assets/radios/${meta.logo}.png?nocache=${Date.now()}`);
 
     context.reply(context.__('radio.info.title'), { embed });
+  }
+}
+
+class SessionsSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'sessions',
+      category: 'misc',
+      private: true,
+    });
+  }
+
+  async execute(context) {
+    const voiceBroadcasts = Object.values(this.client.voiceBroadcasts);
+    if (voiceBroadcasts.length === 0) return context.replyWarning('There are no active sessions at the moment.');
+
+    const sessions = [];
+    for (const voiceBroadcast of voiceBroadcasts) {
+      const radio = await this.client.database.getDocument('radios', voiceBroadcast.radio);
+
+      const page = [`${radio.emote} **${radio.name}** - **${radio.id}**Mhz`, '', '🔌 Active sessions:'];
+      for (let i = 0; i < voiceBroadcast.dispatchers.length; i += 1) {
+        const dispatcher = voiceBroadcast.dispatchers[i];
+        const voiceConnection = dispatcher.player.voiceConnection;
+        page.push(`- **${voiceConnection.channel.guild.name}** (ID:${voiceConnection.channel.guild.id}) | 🎧 **${voiceConnection.channel.members.filter(m => !m.user.bot).size}** | 🕛 ${this.client.time.timeSince((Date.now() - dispatcher.totalStreamTime), 'en-gb', true)}`);
+      }
+
+      sessions.push(page.join('\n'));
+    }
+
+    const menu = new Menu(
+      context,
+      sessions,
+      { entriesPerPage: 1 },
+    );
+
+    menu.send('📻 Active radio streams:');
   }
 }
 
