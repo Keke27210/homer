@@ -331,7 +331,7 @@ class DiscoverSubcommand extends Command {
   async execute(context) {
     const featured = await this.client.database.getDocuments('radioFeatured', true)
       .then(a => shuffleArray(a));
-    if (featured.length === 0) return context.reply(context.__('radio.discover.noFeaturedProgramme'));
+    if (featured.length === 0) return context.replyWarning(context.__('radio.discover.noFeaturedProgramme'));
 
     const pages = [];
     const titles = [];
@@ -360,7 +360,7 @@ class DiscoverSubcommand extends Command {
       },
     );
 
-    menu.send(``);
+    menu.send(context.__('radio.discover.main'));
   }
 }
 
