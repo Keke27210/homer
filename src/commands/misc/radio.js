@@ -317,6 +317,52 @@ class SessionsSubcommand extends Command {
   }
 }
 
+class DiscoverSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'discover',
+      aliases: ['featured'],
+      category: 'misc',
+      dm: true,
+    });
+  }
+
+  async execute(context) {
+    const featured = await this.client.database.getDocuments('radioFeatured', true)
+      .then(a => shuffleArray(a));
+    if (featured.length === 0) return context.reply(context.__('radio.discover.noFeaturedProgramme'));
+
+    const pages = [];
+    const titles = [];
+    const thumbnails = [];
+    for (let i = 0; i < featured.length; i += 1) {
+      const programme = featured[i];
+      const radio = await this.client.database.getDocument('radios', programme.radio);
+
+      titles.push(programme.title);
+      thumbnails.push(programme.thumbnail || null);
+      pages.push([
+        programme.text,
+        '',
+        `${radio.emote} **${radio.name}** - **${radio.id}**Mhz`,
+      ].join('\n'));
+    }
+
+    const menu = new Menu(
+      context,
+      pages,
+      {
+        titles,
+        entriesPerPage: 1,
+        thumbnails,
+        footer: context.__('radio.discover.embedFooter'),
+      },
+    );
+
+    menu.send(``);
+  }
+}
+
 async function parseURL(url) {
   const path = url.split('?')[0];
   const extension = ['pls', 'm3u'].find(e => path.toLowerCase().endsWith(e));
@@ -333,6 +379,19 @@ function getVolume(volume) {
   let str = '──────────';
   const index = Math.round(volume * 10);
   return str.substring(0, index - 1) + '○' + str.substring(index);
+}
+
+/**
+ * Randomize array element order in-place.
+ * Using Durstenfeld shuffle algorithm.
+ */
+function shuffleArray(array) {
+  for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+  }
 }
 
 module.exports = RadioCommand;
