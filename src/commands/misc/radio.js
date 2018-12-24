@@ -16,6 +16,7 @@ class RadioCommand extends Command {
         new StopSubcommand(client),
         new ChannelSubcommand(client),
         new InfoSubcommand(client),
+        new DiscoverSubcommand(client),
         new SessionsSubcommand(client),
       ],
     });
@@ -321,7 +322,7 @@ class DiscoverSubcommand extends Command {
   constructor(client) {
     super(client, {
       name: 'discover',
-      aliases: ['featured'],
+      aliases: ['featured', 'programmes'],
       category: 'misc',
       dm: true,
     });
