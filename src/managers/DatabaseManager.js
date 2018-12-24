@@ -14,6 +14,7 @@ const tables = [
   'names',
   'profiles',
   'radios',
+  'radioFeatured',
   'reports',
   'settings',
   'tags',
