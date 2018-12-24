@@ -393,6 +393,8 @@ function shuffleArray(array) {
       array[i] = array[j];
       array[j] = temp;
   }
+
+  return array;
 }
 
 module.exports = RadioCommand;
