@@ -27,7 +27,7 @@ class GoogleCommand extends Command {
         if (body.queries.request[0].totalResults === '0') return message.edit(`${this.client.constants.emotes.error} ${context.__('google.error.noResult')}`);
 
         message.edit(context.__('google.result', {
-          mention: `<@${context.message.member.nickname ? '!' : ''}${context.message.author.id}>`,
+          mention: `<@${context.message.member && context.message.member.nickname ? '!' : ''}${context.message.author.id}>`,
           link: body.items[0].link,
         }));
       })
