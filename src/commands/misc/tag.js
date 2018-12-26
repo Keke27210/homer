@@ -1,4 +1,5 @@
 const Command = require('../../structures/Command');
+const Menu = require('../../structures/Menu');
 const { Attachment } = require('discord.js');
 const { splitMessage } = require('discord.js').Util;
 
@@ -24,6 +25,7 @@ class TagCommand extends Command {
         new OverrideSubcommand(client),
         new UnoverrideSubcommand(client),
         new SearchSubcommand(client),
+        new DomainsSubcommand(client),
       ],
       dm: true,
     });
@@ -450,6 +452,82 @@ class SearchSubcommand extends Command {
     } else {
       context.reply(msg);
     }
+  }
+}
+
+class DomainsSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'domains',
+      aliases: ['websites'],
+      children: [new AddDomainSubcommand(client), new RemoveDomainSubcommand(client)],
+      category: 'misc',
+      dm: true,
+    });
+  }
+
+  async execute(context) {
+    const whitelist = await this.client.database.getDocument('bot', 'settings')
+      .then(s => s.domainWhitelist);
+    if (whitelist.length === 0) return context.replyWarning(context.__('tag.domains.whitelistEmpty'));
+
+    const menu = new Menu(
+      context,
+      whitelist.map(w => `${this.dot} ${w}`),
+      { footer: context.__('tag.domains.footer') },
+    );
+
+    menu.send(context.__('tag.domains.main'));
+  }
+}
+
+class AddDomainSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'add',
+      category: 'misc',
+      dm: true,
+      private: true,
+    });
+  }
+
+  async execute(context) {
+    if (context.args.length === 0) return context.replyError('You must provide a domain to whitelist.');
+
+    const whitelist = await this.client.database.getDocument('bot', 'settings')
+      .then(s => s.domainWhitelist);
+    const domain = context.args.join(' ').toLowerCase();
+
+    if (whitelist.includes(domain)) return context.replyWarning(`The domain \`${domain}\` has already been whitelisted.`);
+    whitelist.push(domain);
+    this.client.database.updateDocument('bot', 'settings', { domainWhitelist: whitelist });
+
+    context.replySuccess(`The domain \`${domain}\` has been whitelisted successfully!`);
+  }
+}
+
+class RemoveDomainSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'remove',
+      category: 'misc',
+      dm: true,
+      private: true,
+    });
+  }
+
+  async execute(context) {
+    if (context.args.length === 0) return context.replyError('You must provide a domain to remove from the whitelist.');
+
+    const whitelist = await this.client.database.getDocument('bot', 'settings')
+      .then(s => s.domainWhitelist);
+    const domain = context.args.join(' ').toLowerCase();
+
+    if (!whitelist.includes(domain)) return context.replyWarning(`The domain \`${domain}\` isn't whitelisted.`);
+    whitelist.splice(whitelist.indexOf(domain), 1);
+    this.client.database.updateDocument('bot', 'settings', { domainWhitelist: whitelist });
+
+    context.replySuccess(`The domain \`${domain}\` has been removed from the whitelist successfully!`);
   }
 }
 

@@ -263,6 +263,7 @@
     "helpUtil.tag.override": "Créer une exception de tag",
     "helpUtil.tag.unoverride": "Supprimer une exception de tag",
     "helpUtil.tag.search": "Rechercher des tags",
+    "helpUtil.tag.domains": "Obtenir la liste des domaines autorisés pour la fonction `http`",
     "helpUtil.telephone": "Gérer l'abonnement téléphonique",
     "helpUtil.telephone.subscribe": "S'abonner au service téléphonique d'Homer",
     "helpUtil.telephone.terminate": "Résillier un abonnement téléphonique",
@@ -653,6 +654,9 @@
     "tag.search.results": "🔍 Tags trouvés correspondant au terme `{{{ search }}}`:",
     "tag.search.zeroResult": "Aucun tag trouvé avec le terme `{{{ search }}}`.",
     "tag.belongsServer": "au serveur",
+    "tag.domains.main": "🖥 Domaines autorisés",
+    "tag.domains.footer": "Rejoignez le serveur d'assistance pour demander l'autorisation d'un domaine.",
+    "tag.domains.whitelistEmpty": "Il n'y a aucun domaine autorisé pour le moment.",
   
     "telephone.notAssigned": "Le numéro fourni n'est pas assigné.",
     "telephone.refusedConnection": "La connexion à votre correspondant a été refusée. Vous avez peut-être été **blacklisté** ou le service téléphonique est **en maintenance**.",
