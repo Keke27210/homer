@@ -654,7 +654,7 @@
     "tag.search.results": "🔍 Tags trouvés correspondant au terme `{{{ search }}}`:",
     "tag.search.zeroResult": "Aucun tag trouvé avec le terme `{{{ search }}}`.",
     "tag.belongsServer": "au serveur",
-    "tag.domains.main": "🖥 Domaines autorisés",
+    "tag.domains.main": "🖥 Domaines autorisés:",
     "tag.domains.footer": "Rejoignez le serveur d'assistance pour demander l'autorisation d'un domaine.",
     "tag.domains.whitelistEmpty": "Il n'y a aucun domaine autorisé pour le moment.",
   

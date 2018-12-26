@@ -671,7 +671,7 @@
   "tag.search.results": "🔍 Tags found matching term `{{{ search }}}`:",
   "tag.search.zeroResult": "No tag found matching term `{{{ search }}}`.",
   "tag.belongsServer": "the server",
-  "tag.domains.main": "🖥 Whitelisted domains",
+  "tag.domains.main": "🖥 Whitelisted domains:",
   "tag.domains.footer": "Join the support server to ask for a domain to be added.",
   "tag.domains.whitelistEmpty": "There are no whitelisted websites for the moment.",
 
