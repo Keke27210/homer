@@ -79,8 +79,10 @@ class Menu {
           this.currentPage = (this.pages.length - 1);
         }
 
+        console.log(this.customButtons[reaction.emoji.name])
+        console.log(Object.keys(this.customButtons))
         if (typeof this.customButtons[reaction.emoji.name] === 'function') {
-          this.customButtons[reaction.emoji.name](this);
+          console.log(this.customButtons[reaction.emoji.name](this));
         }
 
         reaction.remove(this.context.message.author.id).catch(() => null);
