@@ -58,7 +58,7 @@ class Menu {
       const emotes = this.emotes.concat(Object.keys(this.customButtons));
       for (const e of emotes) await m.react(e);
       const collector = m.createReactionCollector(
-        (reaction, user) => this.emotes.includes(reaction.emoji.name) && user.id === this.context.message.author.id,
+        (reaction, user) => this.emotes.concat(Object.keys(this.customButtons)).includes(reaction.emoji.name) && user.id === this.context.message.author.id,
         {
           time: 300000,
         },
@@ -77,11 +77,8 @@ class Menu {
         } else if (reaction.emoji.name === '⏩') {
           this.currentPage = (this.pages.length - 1);
         }
-        console.log(this.customButtons);
-        console.log(reaction.emoji.name)
-        console.log(this.customButtons[reaction.emoji.name])
 
-        if (this.customButtons[reaction.emoji.name]) {
+        if (typeof this.customButtons[reaction.emoji.name] === 'function') {
           this.customButtons[reaction.emoji.name](this);
         }
 
