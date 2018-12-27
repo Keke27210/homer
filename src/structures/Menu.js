@@ -17,7 +17,6 @@ class Menu {
     // Filling the pages
     this.currentPage = 0;
     this._patch(data);
-    
 
     // Prebuilding the embed
     this.embed = new RichEmbed()
@@ -79,10 +78,8 @@ class Menu {
           this.currentPage = (this.pages.length - 1);
         }
 
-        console.log(this.customButtons[reaction.emoji.name])
-        console.log(Object.keys(this.customButtons))
-        if (typeof this.customButtons[reaction.emoji.name] === 'function') {
-          console.log(this.customButtons[reaction.emoji.name](this));
+        if (this.customButtons[reaction.emoji.name]) {
+          this.customButtons[reaction.emoji.name](this);
         }
 
         reaction.remove(this.context.message.author.id).catch(() => null);
