@@ -77,6 +77,9 @@ class Menu {
         } else if (reaction.emoji.name === '⏩') {
           this.currentPage = (this.pages.length - 1);
         }
+        console.log(this.customButtons);
+        console.log(reaction.emoji.name)
+        console.log(this.customButtons[reaction.emoji.name])
 
         if (this.customButtons[reaction.emoji.name]) {
           this.customButtons[reaction.emoji.name](this);
