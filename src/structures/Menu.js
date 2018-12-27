@@ -79,8 +79,8 @@ class Menu {
           this.currentPage = (this.pages.length - 1);
         }
 
-        if (typeof this.currentPage[reaction.emoji.name] === 'function') {
-          this.currentPage[reaction.emoji.name](this);
+        if (typeof this.customButtons[reaction.emoji.name] === 'function') {
+          this.customButtons[reaction.emoji.name](this);
         }
 
         reaction.remove(this.context.message.author.id).catch(() => null);
