@@ -363,10 +363,9 @@ class DiscoverSubcommand extends Command {
         data: { radios },
         customButtons: {
           '📻': (menu) => {
-            const tuneCommand = this.client.commands.getCommand('radio');
             const context = menu.context;
-            context.args = ['tune', menu.data.radios[menu.currentPage]];
-            tuneCommand.execute(context);
+            context.args = [menu.data.radios[menu.currentPage]];
+            super.children.find(c => c.name === 'tune').execute(context);
           },
         },
       },
