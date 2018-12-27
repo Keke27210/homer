@@ -11,6 +11,8 @@ class Menu {
     this.thumbnails = options.thumbnails || [];
     this.footer = options.footer;
     this.entriesPerPage = options.entriesPerPage || 10;
+    this.customButtons = options.customButtons || {};
+    this.data = options.data || {};
 
     // Filling the pages
     this.currentPage = 0;
@@ -54,7 +56,8 @@ class Menu {
     this.context.message.channel.send(content, options).then(async (m) => {
       this.menuMessage = m;
 
-      for (const e of this.emotes) await m.react(e);
+      const emotes = this.emotes.concat(Object.keys(this.customButtons));
+      for (const e of emotes) await m.react(e);
       const collector = m.createReactionCollector(
         (reaction, user) => this.emotes.includes(reaction.emoji.name) && user.id === this.context.message.author.id,
         {
@@ -74,6 +77,10 @@ class Menu {
           this.currentPage += 1;
         } else if (reaction.emoji.name === '⏩') {
           this.currentPage = (this.pages.length - 1);
+        }
+
+        if (typeof this.currentPage[reaction.emoji.name] === 'function') {
+          this.currentPage[reaction.emoji.name](this);
         }
 
         reaction.remove(this.context.message.author.id).catch(() => null);

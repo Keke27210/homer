@@ -336,6 +336,7 @@ class DiscoverSubcommand extends Command {
     const pages = [];
     const titles = [];
     const thumbnails = [];
+    const radios = [];
     for (let i = 0; i < featured.length; i += 1) {
       const programme = featured[i];
       const radio = await this.client.database.getDocument('radios', programme.radio);
@@ -348,6 +349,7 @@ class DiscoverSubcommand extends Command {
         '',
         `${radio.emote} **[${radio.name}](${radio.url})** - **${radio.id}**Mhz`,
       ].join('\n'));
+      radios.push(radio.id);
     }
 
     const menu = new Menu(
@@ -358,6 +360,15 @@ class DiscoverSubcommand extends Command {
         entriesPerPage: 1,
         thumbnails,
         footer: context.__('radio.discover.embedFooter'),
+        data: { radios },
+        customButtons: {
+          '📻': (menu) => {
+            const tuneCommand = this.client.commands.getCommand('radio');
+            const context = menu.context;
+            context.args = ['tune', menu.data.radios[menu.currentPage]];
+            tuneCommand.execute(context);
+          },
+        },
       },
     );
 
