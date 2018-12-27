@@ -365,7 +365,10 @@ class DiscoverSubcommand extends Command {
           '📻': (menu) => {
             const context = menu.context;
             context.args = [menu.data.radios[menu.currentPage]];
-            super.children.find(c => c.name === 'tune').execute(context);
+
+            const cmd = this.client.commands.getCommand('radio').children.find(c => c.name === 'tune');
+            if (!cmd) return;
+            cmd.execute(context);
           },
         },
       },
