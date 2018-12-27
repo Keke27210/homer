@@ -339,6 +339,7 @@ class DiscoverSubcommand extends Command {
     for (let i = 0; i < featured.length; i += 1) {
       const programme = featured[i];
       const radio = await this.client.database.getDocument('radios', programme.radio);
+      if (!radio) continue; // Should never happen but I got some errors on it (??? unknown source ???)
 
       titles.push(programme.title);
       thumbnails.push(programme.thumbnail || null);
