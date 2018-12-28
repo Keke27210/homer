@@ -456,6 +456,7 @@
   "quote.missingUserPermissions": "You do not have required permissions to see this message (View Channel and Read Message History).",
   
   "radio.hub": "📻 Welcome to the radio hub! Run `{{{ prefix }}}radio help` to have the list of subcommands.",
+  "radio.broken": "⚠ **Out of order** ⚠",
   "radio.noRadioChannel": "You must specify a radio channel using `{{{ prefix }}}radio channel`.",
   "radio.cannotJoinOrSpeak": "The bot cannot join or speak in **{{{ name }}}**.",
   "radio.notInChannel": "You must be in the radio channel (**{{{ name }}}**) to run this command!",

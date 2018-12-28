@@ -446,6 +446,7 @@
   "quote.missingUserPermissions":"Vous n'avez pas la permission de voir ce message (Voir le salon et Voir les anciens messages).",
 
   "radio.hub":"📻 Bienvenue sur la radio d'Homer ! Tapez `{{{ prefix }}}radio help` pour obtenir la liste des sous-commandes.",
+  "radio.broken": "⚠ **Hors-service** ⚠",
   "radio.noRadioChannel":"Vous devez spécifier un salon de diffusion radio avec `{{{ prefix }}}radio channel`.",
   "radio.cannotJoinOrSpeak":"Le bot ne peut se connecter ou parler dans **{{{ name }}}**.",
   "radio.notInChannel":"Vous devez être dans le salon de diffusion radio (**{{{ name }}}**) pour utiliser cette commande !",
