@@ -364,8 +364,9 @@ class DiscoverSubcommand extends Command {
         customButtons: {
           '📻': (menu) => {
             const context = menu.context;
-            context.args = [menu.data.radios[menu.currentPage]];
+            if (!context.message.guild) return context.replyWarning(context.__('radio.discover.cannotAutotune'));
 
+            context.args = [menu.data.radios[menu.currentPage]];
             const cmd = this.client.commands.getCommand('radio').children.find(c => c.name === 'tune');
             if (!cmd) return;
             cmd.execute(context);

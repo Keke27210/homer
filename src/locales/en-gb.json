@@ -486,6 +486,7 @@
   "radio.discover.main": "📻 Featured programmes:",
   "radio.discover.noFeaturedProgramme": "No featured programme to show at this moment.",
   "radio.discover.embedFooter": "Tune into this programme using h:radio tune <frequency> | Time is given in UTC",
+  "radio.discover.cannotAutotune": "You must be in a server to tune into this programme.",
   "radio.types.0": "Hits",
   "radio.types.1": "Pop",
   "radio.types.2": "Classic",
