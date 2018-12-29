@@ -19,7 +19,7 @@ class VoiceStateUpdate extends Event {
     // Mark the session as inactive if the bot is alone
     const radioChannel = this.client.channels.get(settings.radio.channel);
     if (radioChannel) {
-      if (radioChannel.members.filter(m => !m.user.bot) === 0) this.inactivity[newMember.guild.id] = Date.now();
+      if (radioChannel.members.filter(m => !m.user.bot).size === 0) this.inactivity[newMember.guild.id] = Date.now();
       else delete this.inactivity[newMember.guild.id];
     }
   }
