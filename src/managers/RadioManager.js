@@ -47,7 +47,7 @@ class RadioManager extends Manager {
   stopBroadcast(broadcast, error) {
     broadcast.dispatchers.forEach((dispatcher) => {
       dispatcher.end();
-      dispatcher.player.voiceConnection.playStream(error ? this.ERROR_PATH : INTERRUPTION_PATH, { volume: 1, bitrate: 64 })
+      dispatcher.player.voiceConnection.playStream(error ? this.ERROR_PATH : this.INTERRUPTION_PATH, { volume: 1, bitrate: 64 })
         .on('error', () => dispatcher.player.voiceConnection.disconnect())
         .once('end', () => dispatcher.player.voiceConnection.disconnect());
     });
