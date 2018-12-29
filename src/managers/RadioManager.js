@@ -7,11 +7,8 @@ class RadioManager extends Manager {
   constructor(client) {
     super(client);
 
-    // Data
-    this.ERROR_URL = `${this.client.constants.CDN}/assets/radios/ERROR.mp3`;
-
-    // Broadcasts
     this.broadcasts = [];
+    this.inactivity = {};
   }
 
   async createBroadcast(radio, playError = true) {
