@@ -8,6 +8,8 @@ class RadioManager extends Manager {
     super(client);
 
     this.ERROR_PATH = `${this.client.constants.CDN}/assets/radios/ERROR.mp3`;
+    this.INTERRUPTION_PATH = `${this.client.constants.CDN}/assets/radios/INTERRUPTED.mp3`;
+    this.service = true;
     this.broadcasts = [];
     this.inactivity = {};
   }
@@ -15,7 +17,7 @@ class RadioManager extends Manager {
   async createBroadcast(radio, playError = true) {
     const broadcast = this.client.createVoiceBroadcast();
     broadcast.on('unsubscribe', () => this.clearBroadcast(broadcast.radio));
-    broadcast.on('error', error => this.stopBroadcast(broadcast, error, playError));
+    broadcast.on('error', error => this.stopBroadcast(broadcast, true));
     broadcast.on('warn', warn => this.client.print(`RADIO: Broadcast warning (${broadcast.radio || '?'}): ${warn instanceof Error ? warn.message : warn}`));
     broadcast.name = radio.name;
     broadcast.radio = radio.id;
@@ -42,17 +44,18 @@ class RadioManager extends Manager {
     });
   }
 
-  stopBroadcast(broadcast, error, play = true) {
+  stopBroadcast(broadcast, error) {
     broadcast.dispatchers.forEach((dispatcher) => {
       dispatcher.end();
-      dispatcher.player.voiceConnection.playStream(this.ERROR_PATH, { volume: 1, bitrate: 64 })
+      dispatcher.player.voiceConnection.playStream(error ? this.ERROR_PATH : INTERRUPTION_PATH, { volume: 1, bitrate: 64 })
         .on('error', () => dispatcher.player.voiceConnection.disconnect())
         .once('end', () => dispatcher.player.voiceConnection.disconnect());
     });
 
     broadcast.destroy();
     this.broadcasts.splice(this.broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
-    this.client.print(`RADIO: Voice broadcast error for ${broadcast.radio}`);
+    if (error) this.client.print(`RADIO: Voice broadcast error for ${broadcast.radio}`);
+    else this.client.print(`RADIO: Interrupted service for ${broadcast.radio}`);
   }
 
   clearBroadcast(radio) {

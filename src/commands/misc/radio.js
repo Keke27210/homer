@@ -17,6 +17,7 @@ class RadioCommand extends Command {
         new InfoSubcommand(client),
         new DiscoverSubcommand(client),
         new SessionsSubcommand(client),
+        new SwitchSubcommand(client),
       ],
     });
   }
@@ -64,6 +65,8 @@ class TuneSubcommand extends Command {
     if (!channel) return context.replyWarning(context.__('radio.noRadioChannel', { prefix: this.client.prefix }));
     if (!channel.joinable || !channel.speakable) return context.replyError(context.__('radio.cannotJoinOrSpeak', { name: channel.name }));
     if (!channel.members.has(context.message.author.id)) return context.replyWarning(context.__('radio.notInChannel', { name: channel.name }));
+
+    if (!this.client.radio.service) return context.replyWarning(context.__('radio.disabledService'));
 
     const frequency = context.args[0] ? context.args[0].replace(/,/g, '.') : null;
     if (!frequency) return context.replyError(context.__('radio.tune.noFrequency'));
@@ -325,6 +328,27 @@ class DiscoverSubcommand extends Command {
     );
 
     menu.send(context.__('radio.discover.main'));
+  }
+}
+
+class SwitchSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'switch',
+      private: true,
+      dm: true,
+    });
+  }
+
+  async execute(context) {
+    if (this.client.radio.service) {
+      this.client.radio.service = false;
+      this.client.radio.broadcasts.forEach(b => this.client.radio.stopBroadcast(b, false));
+      context.replySuccess('The radio service has been disabled successfully!');
+    } else {
+      this.client.radio.service = true;
+      context.replySuccess('The radio service has been enabled successfully!');
+    }
   }
 }
 

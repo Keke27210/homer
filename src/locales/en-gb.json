@@ -457,6 +457,7 @@
   
   "radio.hub": "📻 Welcome to the radio hub! Run `{{{ prefix }}}radio help` to have the list of subcommands.",
   "radio.broken": "**Unavailable broadcast**",
+  "radio.disabledService": "The radio service is currently unavailable. Please try again later.",
   "radio.dispatcherError": "An error has occured during programme broadcast. Sorry for the inconvenience.",
   "radio.noRadioChannel": "You must specify a radio channel using `{{{ prefix }}}radio channel`.",
   "radio.cannotJoinOrSpeak": "The bot cannot join or speak in **{{{ name }}}**.",

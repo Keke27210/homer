@@ -447,6 +447,7 @@
 
   "radio.hub":"📻 Bienvenue sur la radio d'Homer ! Tapez `{{{ prefix }}}radio help` pour obtenir la liste des sous-commandes.",
   "radio.broken": "**Programme indisponible**",
+  "radio.disabledService": "Le service radio est actuellement disponible. Veuillez réessayer plus tard.",
   "radio.dispatcherError": "Une erreur est survenue pendant la diffusion du programme. Désolé pour la gêne occasionnée.",
   "radio.noRadioChannel":"Vous devez spécifier un salon de diffusion radio avec `{{{ prefix }}}radio channel`.",
   "radio.cannotJoinOrSpeak":"Le bot ne peut se connecter ou parler dans **{{{ name }}}**.",
