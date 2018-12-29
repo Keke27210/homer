@@ -78,7 +78,7 @@ class TuneSubcommand extends Command {
 
     const broadcast = await this.client.radio.getBroadcast(frequency);
     if (!broadcast) return message.edit(context.__('radio.tune.noProgramme', { frequency }));
-
+  
     const dispatcher = await connection.playBroadcast(broadcast, { volume: context.settings.radio.volume || 0.5 });
     dispatcher.on('error', error => this.client.radio.dispatcherError(context, dispatcher, error));
     dispatcher.on('reboot', shutdown => this.client.radio.rebootMessage(context, shutdown));
@@ -169,9 +169,12 @@ class ChannelSubcommand extends Command {
         .radio;
       await context.message.guild.voiceConnection.disconnect();
 
-      const radioCommand = await this.client.commands.getCommand('radio').children.find(c => c.name === 'tune');
-      context.args = [currentRadio];
-      radioCommand.execute(context);
+      const broadcast = await this.client.radio.getBroadcast(currentRadio);
+      const dispatcher = await connection.playBroadcast(broadcast, { volume: context.settings.radio.volume || 0.5 });
+      dispatcher.on('error', error => this.client.radio.dispatcherError(context, dispatcher, error));
+      dispatcher.on('reboot', shutdown => this.client.radio.rebootMessage(context, shutdown));
+      dispatcher.once('speaking', () => message.edit(context.__('radio.tune.playing', { name: broadcast.name })));
+
       context.replyWarning(context.__('radio.channel.botMoved'));
     }
   }
