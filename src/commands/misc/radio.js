@@ -75,7 +75,7 @@ class TuneSubcommand extends Command {
     const message = await context.message.channel.send(context.__('radio.tune.tuning', { frequency }));
 
     const broadcast = await this.client.radio.getBroadcast(frequency);
-    if (!broadcast) return message.edit(`${this.client.constants.emotes.warning} ${context.__('radio.tune.noProgramme', { frequency })}`);
+    if (!broadcast) return message.edit(context.__('radio.tune.noProgramme', { frequency }));
 
     const dispatcher = await connection.playBroadcast(broadcast, { volume: context.settings.radio.volume || 0.5 });
     dispatcher.on('error', error => this.client.radio.dispatcherError(context, dispatcher, error));
