@@ -15,20 +15,16 @@ class RadioManager extends Manager {
   }
 
   async createBroadcast(radio, playError = true) {
-    console.log('Pre-debug')
     const broadcast = this.client.createVoiceBroadcast();
-    console.log('Debug #0')
-    broadcast.on('unsubscribe', () => this.clearBroadcasts());
+    broadcast.on('unsubscribe', () => this.clearBroadcast(broadcast.radio));
     broadcast.on('error', error => this.stopBroadcast(broadcast, error, playError));
     broadcast.on('warn', warn => null); //this.client.debug(`RADIO: Broadcast warning (${broadcast.radio || '?'}): ${warn instanceof Error ? warn.message : warn}`)
     broadcast.name = radio.name;
     broadcast.radio = radio.id;
-    console.log('Debug #1')
     const url = await parseURL(radio.url);
     broadcast.playStream(url, { bitrate: 64 });
     broadcast.started = true;
     this.broadcasts.push(broadcast);
-    console.log('Debug #2')
     return broadcast;
   }
 
@@ -58,16 +54,12 @@ class RadioManager extends Manager {
     //writeFileSync(`./errors/ERROR_${now}.txt`, `Date: ${new Date(now).toUTCString()}\r\nCode: ${error.code || 'None'}\r\nMessage: ${error.message}`);
   }
 
-  clearBroadcasts() {
-    this.broadcasts
-      .filter(b => b.dispatchers.length === 0)
-      .forEach((broadcast) => {
-        console.log('oh no')
-        if (!broadcast.started) return;
-        broadcast.destroy();
-        this.broadcasts.splice(this.broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
-        //this.client.debug(`RADIO: Cleared ${list.length} broadcasts: ${list.map(b => b.radio).join(', ')}`);
-      });
+  clearBroadcast(radio) {
+    const broadcast = this.broadcasts.find(b => b.radio === radio);
+    if (!broadcast) return;
+    broadcast.destroy();
+    this.broadcasts.splice(this.broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
+    //this.client.debug(`RADIO: Cleared ${list.length} broadcasts: ${list.map(b => b.radio).join(', ')}`);
   }
 
   dispatcherError(context, dispatcher, error) {
