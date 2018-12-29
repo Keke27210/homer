@@ -7,6 +7,7 @@ class RadioManager extends Manager {
   constructor(client) {
     super(client);
 
+    this.ERROR_PATH = `${this.client.constants.CDN}/assets/radios/ERROR.mp3`;
     this.broadcasts = [];
     this.inactivity = {};
   }
@@ -44,7 +45,7 @@ class RadioManager extends Manager {
   stopBroadcast(broadcast, error, play = true) {
     broadcast.destroy();
     this.broadcasts.splice(this.broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
-    broadcast.dispatchers.forEach(d => d.player.voiceConnection.channel.leave());
+    broadcast.dispatchers.forEach(d => d.player.voiceConnection.playFile(this.ERROR_PATH, { volume: 1, bitrate: 64 }));
     this.client.print(`RADIO: Voice broadcast error for ${broadcast.radio}`);
   }
 
