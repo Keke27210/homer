@@ -106,6 +106,10 @@ class DiscordClient extends Client {
 
     delete require.cache[fullPath];
   }
+
+  print(message) {
+    if (this.config.debug) console.log(message);
+  }
 }
 
 module.exports = DiscordClient;
