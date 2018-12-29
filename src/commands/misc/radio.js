@@ -174,6 +174,7 @@ class StopSubcommand extends Command {
     await channel.leave();
 
     delete this.client.currentBroadcasts[context.message.guild.id];
+    this.client.clearBroadcasts();
     /*const broad = this.client.voiceBroadcasts[currentBroadcast.radio];
     if (broad && broad.dispatchers.length === 0) {
       broad.destroy();
