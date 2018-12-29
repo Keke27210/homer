@@ -193,7 +193,7 @@ class InfoSubcommand extends Command {
     const currentBroadcast = this.client.radio.broadcasts.find(b => b.dispatchers.find(d => d.player.voiceConnection.channel.guild.id === context.message.guild.id));
     if (!currentBroadcast) return context.replyWarning(context.__('radio.info.noActiveStream'));
     if (currentBroadcast.radio === 0) return context.replyWarning(context.__('radio.info.unavailableProgramme'));
-    const meta = await this.client.database.getDocument('radios', currentBroadcast);
+    const meta = await this.client.database.getDocument('radios', currentBroadcast.radio);
 
     let playing = context.__('global.noInformation');
     if (meta.stationId) {
