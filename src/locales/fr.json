@@ -472,7 +472,7 @@
   "radio.info.title":"📻 Informations sur la diffusion en cours:",
   "radio.discover.main":"📻 Programmes recommandés:",
   "radio.discover.noFeaturedProgramme":"Aucun programme recommandé à montrer pour le moment.",
-  "radio.discover.embedFooter":"Écoutez ce programme en faisant h:radio tune <fréquence> | L'heure est donnée en UTC",
+  "radio.discover.embedFooter":"Écoutez cette station de radio en appuyant sur 📻 juste au-dessous | L'heure est donnée en UTC",
   "radio.discover.cannotAutotune":"Vous devez être dans un serveur pour écouter ce programme.",
   "radio.types.0":"Hits",
   "radio.types.1":"Pop",
