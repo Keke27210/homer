@@ -15,7 +15,7 @@ class RadioManager extends Manager {
 
   createBroadcast(playError = true) {
     const broadcast = this.client.createVoiceBroadcast();
-    broadcast.on('unsubscribe', this.clearBroadcasts());
+    broadcast.on('unsubscribe', this.clearBroadcasts);
     broadcast.on('error', error => this.stopBroadcast(broadcast, error, playError));
     broadcast.on('warn', warn => this.client.debug(`RADIO: Broadcast warning (${broadcast.radio || '?'}): ${warn instanceof Error ? warn.message : warn}`));
   }
