@@ -24,6 +24,8 @@ class RadioManager extends Manager {
 
     const url = await parseURL(radio.url);
     broadcast.playStream(url, { bitrate: 64 });
+    this.broadcasts.push(broadcast);
+
     return broadcast;
   }
 
@@ -32,7 +34,6 @@ class RadioManager extends Manager {
     if (!radio) return null;
 
     const broadcast = this.broadcasts.find(b => b.radio === frequency) || await this.createBroadcast(radio);
-    this.broadcasts.push(broadcast);
     //this.client.debug(`RADIO: Created voice broadcast for ${radio.name} (${radio.id})`);
     return broadcast;
   }
