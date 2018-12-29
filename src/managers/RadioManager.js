@@ -43,14 +43,15 @@ class RadioManager extends Manager {
   }
 
   stopBroadcast(broadcast, error, play = true) {
-    broadcast.destroy();
-    this.broadcasts.splice(this.broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
     broadcast.dispatchers.forEach((dispatcher) => {
       dispatcher.end();
       dispatcher.player.voiceConnection.playStream(this.ERROR_PATH, { volume: 1, bitrate: 64 })
         .on('error', () => dispatcher.player.voiceConnection.disconnect())
         .once('end', () => dispatcher.player.voiceConnection.disconnect());
     });
+
+    broadcast.destroy();
+    this.broadcasts.splice(this.broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
     this.client.print(`RADIO: Voice broadcast error for ${broadcast.radio}`);
   }
 
