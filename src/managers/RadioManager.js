@@ -36,12 +36,9 @@ class RadioManager extends Manager {
   }
 
   playError(dispatchers) {
-    const broadcast = this.createBroadcast(false);
-    dispatchers.forEach(d => d.player.voiceConnection.playBroadcast(broadcast));
-    broadcast.playStream(this.ERROR_URL, { bitrate: 64 });
-    broadcast.on('end', () => {
-      dispatchers.forEach(d => d.player.voiceConnection.channel.leave());
-      broadcast.destroy();
+    dispatchers.forEach((dispatcher) => {
+      const newDispatcher = dispatcher.player.voiceConnection.playStream(this.ERROR_URL, { bitrate: 64 });
+      newDispatcher.on('end', () => dispatcher.player.voiceConnection.channel.leave());
     });
   }
 
