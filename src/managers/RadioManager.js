@@ -15,17 +15,19 @@ class RadioManager extends Manager {
   }
 
   async createBroadcast(radio, playError = true) {
+    console.log('Pre-debug')
     const broadcast = this.client.createVoiceBroadcast();
+    console.log('Debug #0')
     broadcast.on('unsubscribe', () => this.clearBroadcasts());
     broadcast.on('error', error => this.stopBroadcast(broadcast, error, playError));
     broadcast.on('warn', warn => null); //this.client.debug(`RADIO: Broadcast warning (${broadcast.radio || '?'}): ${warn instanceof Error ? warn.message : warn}`)
     broadcast.name = radio.name;
     broadcast.radio = radio.id;
-
+    console.log('Debug #1')
     const url = await parseURL(radio.url);
     broadcast.playStream(url, { bitrate: 64 });
     this.broadcasts.push(broadcast);
-
+    console.log('Debug #2')
     return broadcast;
   }
 
