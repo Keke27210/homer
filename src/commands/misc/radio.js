@@ -225,7 +225,7 @@ class InfoSubcommand extends Command {
         .catch(() => null);
 
       if (req && req[0]) {
-        playing = request[0].streamTitle;
+        playing = req[0].streamTitle;
       }
     }
 
