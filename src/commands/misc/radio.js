@@ -157,11 +157,23 @@ class ChannelSubcommand extends Command {
       else if (foundChannels.length > 1) return context.replyWarning(this.client.finder.formatChannels(foundChannels, context.settings.misc.locale));
     }
     if (!channel) return context.replyWarning(context.__('radio.channel.noChannelFound'));
+    if (!channel.joinable || !channel.speakable) return context.replyError(context.__('radio.cannotJoinOrSpeak', { name: channel.name }));
 
     context.settings.radio.channel = channel.id;
     await context.saveSettings();
-
     context.replySuccess(context.__('radio.channel.set', { name: channel.name }));
+
+    if (context.message.guild.voiceConnection) {
+      const currentRadio = this.client.radio.broadcasts
+        .find(b => b.dispatchers.find(d => d.player.voiceConnection.channel.id === context.message.guild.voiceConnection.channel.id))
+        .radio;
+      await context.message.guild.voiceConnection.disconnect();
+
+      const radioCommand = await this.client.commands.getCommand('radio');
+      context.args = ['tune', currentRadio];
+      radioCommand.execute(context);
+      context.replyWarning(context.__('radio.channel.botMoved'));
+    }
   }
 }
 
@@ -181,6 +193,10 @@ class ChannelClearSubcommand extends Command {
     context.settings.radio.channel = null;
     await context.saveSettings();
     context.replySuccess(context.__('radio.channel.clear.cleared'));
+    if (context.message.guild.voiceConnection) {
+      context.message.guild.voiceConnection.disconnect();
+      context.replyWarning(context.__('radio.channel.clear.disconnected'));
+    }
   }
 }
 
