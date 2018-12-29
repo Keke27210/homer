@@ -15,6 +15,7 @@ client.login(client.config.discord.token);
 scheduleJob({ second: 10 }, async () => {
   if (!client.ready) return;
 
+  // Handling polls & reminders
   const jobs = await client.database.getDocuments('jobs').then(jobs => jobs.filter((job) => {
     if (job.end - Date.now() < 0) return true;
     return false;
@@ -29,6 +30,17 @@ scheduleJob({ second: 10 }, async () => {
       if (client.shard.id !== 0) return;
       client.handler.remind(job);
     }
+  }
+
+  // Leave inactive radio channels
+  const inactives = Object.entries(client.radio.inactivity)
+    .filter(([id, time]) => time > 300000)
+    .map(([id]) => id);
+
+  for (const inactive of inactives) {
+    const voiceConnection = client.guilds.get(inactive).voiceConnection;
+    if (!voiceConnection) continue;
+    voiceConnection.disconnect();
   }
 });
 
