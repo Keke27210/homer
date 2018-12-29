@@ -41,6 +41,7 @@ scheduleJob({ second: 10 }, async () => {
     const voiceConnection = client.guilds.get(inactive).voiceConnection;
     if (!voiceConnection) continue;
     voiceConnection.disconnect();
+    delete client.radio.inactivity[inactive];
   }
 });
 
