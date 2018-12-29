@@ -16,7 +16,7 @@ class RadioManager extends Manager {
 
   async createBroadcast(radio, playError = true) {
     const broadcast = this.client.createVoiceBroadcast();
-    broadcast.on('unsubscribe', this.clearBroadcasts);
+    broadcast.on('unsubscribe', () => this.clearBroadcasts());
     broadcast.on('error', error => this.stopBroadcast(broadcast, error, playError));
     broadcast.on('warn', warn => null); //this.client.debug(`RADIO: Broadcast warning (${broadcast.radio || '?'}): ${warn instanceof Error ? warn.message : warn}`)
     broadcast.name = radio.name;
@@ -56,14 +56,14 @@ class RadioManager extends Manager {
   }
 
   clearBroadcasts() {
-    /*const list = this.broadcasts.filter(b => b.dispatchers.length === 0);
+    const list = this.broadcasts.filter(b => b.dispatchers.length === 0);
     if (list.length === 0) return;
 
     list.forEach((broadcast) => {
       broadcast.destroy();
       broadcasts.splice(broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
       //this.client.debug(`RADIO: Cleared ${list.length} broadcasts: ${list.map(b => b.radio).join(', ')}`);
-    });*/
+    });
   }
 
   dispatcherError(context, dispatcher, error) {
