@@ -51,7 +51,9 @@ class OtherUtil {
     return `${id.substring(id.length - 3)}-${this.ran()}${this.ran()}${this.ran()}`;
   }
 
-  async getRadio(id, url) {
+  async getRadio(frequency) {
+    const radio = await this.client.database.getDocument('radios', frequency);
+
     const b1 = this.client.voiceBroadcasts[id];
     if (b1) return b1;
 

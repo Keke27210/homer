@@ -7,6 +7,7 @@ const CommandManager = require('../managers/CommandManager');
 const DatabaseManager = require('../managers/DatabaseManager');
 const LocaleManager = require('../managers/LocaleManager');
 const LisaManager = require('../managers/LisaManager');
+const RadioManager = require('../managers/RadioManager');
 
 // Util
 const Constants = require('../util/Constants');
@@ -23,9 +24,6 @@ class DiscordClient extends Client {
     this.constants = Constants;
     this.cooldown = {};
     this.events = [];
-    this.currentBroadcasts = {};
-    this.voiceBroadcasts = {};
-    this.voiceInactivity = {};
     this.ready = false;
     this.maintenance = false;
     this.debug = this.config.discord.debug ? true : false;
@@ -34,6 +32,7 @@ class DiscordClient extends Client {
     this.database = new DatabaseManager(this);
     this.localization = new LocaleManager(this);
     this.lisa = new LisaManager(this);
+    this.radio = new RadioManager(this);
 
     this.finder = new FinderUtil(this);
     this.time = new TimeUtil(this);
@@ -108,23 +107,8 @@ class DiscordClient extends Client {
     delete require.cache[fullPath];
   }
 
-  clearBroadcasts() {
-    // Clearing empty connections
-    this.client.voiceConnections
-      .filter(vc => vc.channel.members.filter(m => !m.user.bot).size === 0)
-      .forEach((vc) => {
-      vc.channel.leave();
-      vc.disconnect();
-      delete this.client.currentBroadcasts[vc.channel.guild.id];
-    });
-
-    // Clearing broadcasts
-    Object.entries(this.client.voiceBroadcasts)
-      .filter(([id, vb]) => vb.dispatchers.length === 0)
-      .forEach(([id, vb]) => {
-        vb.destroy();
-        delete this.client.voiceBroadcasts[id];
-      });
+  debug(message) {
+    // To be done
   }
 }
 

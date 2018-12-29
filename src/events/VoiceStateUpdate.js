@@ -11,9 +11,7 @@ class VoiceStateUpdate extends Event {
 
     if (newMember.id === this.client.user.id) {
       if (newMember.voiceChannel && (newMember.voiceChannel.id !== settings.radio.channel)) {
-        await newMember.voiceChannel.leave();
-        delete this.client.currentBroadcasts[context.message.guild.id];
-        this.client.clearBroadcasts();
+        newMember.voiceChannel.leave();
       }
     }
   }

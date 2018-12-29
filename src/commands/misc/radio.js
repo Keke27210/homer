@@ -72,55 +72,14 @@ class TuneSubcommand extends Command {
     let connection = this.client.voiceConnections.get(context.message.guild.id);
     if (!connection) connection = await channel.join();
 
-    const currentBroad = this.client.currentBroadcasts[context.message.guild.id];
-    const radio = await this.client.database.getDocument('radios', frequency) || ({
-      name: '?',
-      id: 0,
-    });
+    const message = await context.message.channel.send(context.__('radio.tune.tuning', { frequency }));
 
-    const hq = (this.client.config.owners.includes(context.message.author.id) || await this.client.database.getDocument('donators', context.message.author.id));
-    const message = await context.message.channel.send(context.__('radio.tune.tuning', { name: radio.name }));
+    const broadcast = await this.client.radio.getBroadcast(frequency);
+    if (!broadcast) return context.replyWarning(context.__('radio.tune.noProgramme', { frequency }));
 
-    const broadcast = await this.client.other.getRadio(radio.url ? radio.id : 'NOPRG', radio.url ? (await parseURL(radio.url)) : `${this.client.constants.CDN}/assets/radios/NO_PROGRAMME.mp3`);
-    const dispatcher = await connection.playBroadcast(
-      broadcast,
-      {
-        volume: context.settings.radio.volume || 0.5,
-        bitrate: hq ? 64000 : 48000,
-      },
-    );
-
-    const broad = this.client.voiceBroadcasts[currentBroad];
-    if (broad && broad.dispatchers.length === 0) {
-      broad.destroy();
-      delete this.client.voiceBroadcasts[currentBroad];
-    }
-
-    delete this.client.currentBroadcasts[context.message.guild.id];
-    this.client.currentBroadcasts[context.message.guild.id] = radio.id;
-
-    dispatcher.once('error', (message) => {
-      context.message.channel.send(context.__('radio.tune.error', { message }));
-      delete this.client.currentBroadcasts[context.message.guild.id];
-      if (channel.members.has(this.client.user.id)) channel.leave();
-    });
-
-    dispatcher.once('speaking', () => {
-      message.edit(context.__('radio.tune.playing', { name: radio.name }));
-
-      setTimeout(async () => {
-        if (!connection.dispatcher) {
-          const broadcast = await this.client.other.getRadio('NOPRG', `${this.client.constants.CDN}/assets/radios/NO_PROGRAMME.mp3`);
-          connection.playBroadcast(
-            broadcast,
-            {
-              volume: context.settings.radio.volume || 0.5,
-              bitrate: hq ? 64000 : 48000,
-            },
-          );
-        }
-      }, 2500);
-    });
+    const dispatcher = await connection.playBroadcast(broadcast, { volume: context.settings.radio.volume || 0.5 });
+    dispatcher.on('error', error => this.client.radio.dispatcherError(context, dispatcher, error));
+    dispatcher.once('speaking', message.edit(context.__('radio.tune.playing', { name: broadcast.name })));
   }
 }
 
@@ -173,14 +132,6 @@ class StopSubcommand extends Command {
     if (!connection) return context.replyWarning(context.__('radio.stop.noActiveStream', { name: connection.channel.name }));
     await channel.leave();
 
-    delete this.client.currentBroadcasts[context.message.guild.id];
-    this.client.clearBroadcasts();
-    /*const broad = this.client.voiceBroadcasts[currentBroadcast.radio];
-    if (broad && broad.dispatchers.length === 0) {
-      broad.destroy();
-      delete this.client.voiceBroadcasts[currentBroadcast.radio];
-    }*/
-
     context.replySuccess(context.__('radio.stop.done'));
   }
 }
@@ -227,7 +178,7 @@ class ChannelClearSubcommand extends Command {
     const channel = context.message.guild.channels.get(context.settings.radio.channel);
     if (!channel) return context.replyWarning(context.__('radio.noRadioChannel', { prefix: this.client.prefix }));
 
-    context.settings.radio.channel = '0';
+    context.settings.radio.channel = null;
     await context.saveSettings();
     context.replySuccess(context.__('radio.channel.clear.cleared'));
   }
@@ -285,12 +236,12 @@ class SessionsSubcommand extends Command {
   }
 
   async execute(context) {
-    const voiceBroadcasts = Object.entries(this.client.voiceBroadcasts);
+    const voiceBroadcasts = this.client.radio.broadcasts;
     if (voiceBroadcasts.length === 0) return context.replyWarning('There are no active sessions at the moment.');
 
     const sessions = [];
-    for (const [id, voiceBroadcast] of voiceBroadcasts) {
-      const radio = id === 'NOPRG' ? ({ emote: '🚫', name: 'NO PROGRAMME', id: '000.0' }) : await this.client.database.getDocument('radios', id);
+    for (const voiceBroadcast of voiceBroadcasts) {
+      const radio = await this.client.database.getDocument('radios', voiceBroadcast.radio) || ({ emote: '?', name: 'Unknown', id: '000.0', url: '?' });
 
       const page = [
         `${radio.emote} **${radio.name}** - **${radio.id}**Mhz`,
@@ -315,7 +266,7 @@ class SessionsSubcommand extends Command {
       { entriesPerPage: 1 },
     );
 
-    menu.send('📻 Active radio streams:');
+    menu.send('📻 Current radio sessions:');
   }
 }
 
@@ -378,18 +329,6 @@ class DiscoverSubcommand extends Command {
 
     menu.send(context.__('radio.discover.main'));
   }
-}
-
-async function parseURL(url) {
-  const path = url.split('?')[0];
-  const extension = ['pls', 'm3u'].find(e => path.toLowerCase().endsWith(e));
-
-  if (extension) {
-    const data = await request.get(url).then(r => r.text).catch(() => '');
-    return parser[extension.toUpperCase()].parse(data)[0].file;
-  }
-
-  return url;
 }
 
 function getVolume(volume) {
