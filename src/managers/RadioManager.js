@@ -48,7 +48,7 @@ class RadioManager extends Manager {
   stopBroadcast(broadcast, error, play = true) {
     broadcast.destroy();
     this.broadcasts.splice(this.broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
-    if (play) this.playError(broadcast.dispatchers);
+    broadcast.dispatchers.forEach(d => d.player.voiceConnection.channel.leave());
 
     //const now = Date.now();
     //this.client.debug(`RADIO: Voice broadcast error for ${broadcast.radio} (see ERROR_${now}.txt file)`);
