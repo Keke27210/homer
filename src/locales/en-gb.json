@@ -456,7 +456,7 @@
   "quote.missingUserPermissions": "You do not have required permissions to see this message (View Channel and Read Message History).",
   
   "radio.hub": "📻 Welcome to the radio hub! Run `{{{ prefix }}}radio help` to have the list of subcommands.",
-  "radio.broken": "⚠ **Out of order** ⚠",
+  "radio.broken": "**Unavailable broadcast**",
   "radio.noRadioChannel": "You must specify a radio channel using `{{{ prefix }}}radio channel`.",
   "radio.cannotJoinOrSpeak": "The bot cannot join or speak in **{{{ name }}}**.",
   "radio.notInChannel": "You must be in the radio channel (**{{{ name }}}**) to run this command!",
@@ -465,7 +465,7 @@
   "radio.list.title": "📻 Radios available on **{{{ name }}}**:",
   "radio.tune.noFrequency": "You must provide a frequency to tune in.",
   "radio.tune.noRadioFound": "No radio found on frequency `{{{ frequency }}}`.",
-  "radio.tune.tuning": "📻 Tuning into **{{{ name }}}**...",
+  "radio.tune.tuning": "📻 Tuning into **{{{ frequency }}}**Mhz...",
   "radio.tune.playing": "📻 You are listening to **{{{ name }}}**.",
   "radio.tune.error": "📻 A streaming error has occured: `{{{ message }}}`.",
   "radio.volume.invalidVolume": "The volume must be greater (or equal) to 1 and fewer (or equal) to 100.",
