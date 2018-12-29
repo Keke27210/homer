@@ -106,10 +106,6 @@ class DiscordClient extends Client {
 
     delete require.cache[fullPath];
   }
-
-  debug(message) {
-    // To be done
-  }
 }
 
 module.exports = DiscordClient;

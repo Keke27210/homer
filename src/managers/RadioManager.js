@@ -1,6 +1,6 @@
 const Manager = require('../structures/Manager');
 const request = require('superagent');
-const { writeFileSync } = require('fs');
+//const { writeFileSync } = require('fs');
 
 class RadioManager extends Manager {
   constructor(client) {
@@ -17,7 +17,7 @@ class RadioManager extends Manager {
     const broadcast = this.client.createVoiceBroadcast();
     broadcast.on('unsubscribe', this.clearBroadcasts);
     broadcast.on('error', error => this.stopBroadcast(broadcast, error, playError));
-    broadcast.on('warn', warn => this.client.debug(`RADIO: Broadcast warning (${broadcast.radio || '?'}): ${warn instanceof Error ? warn.message : warn}`));
+    broadcast.on('warn', warn => null); //this.client.debug(`RADIO: Broadcast warning (${broadcast.radio || '?'}): ${warn instanceof Error ? warn.message : warn}`)
     return broadcast;
   }
 
@@ -31,7 +31,7 @@ class RadioManager extends Manager {
     broadcast.radio = radio.id;
     broadcast.playStream(url, { bitrate: 64 });
     this.broadcasts.push(broadcast);
-    this.client.debug(`RADIO: Created voice broadcast for ${radio.name} (${radio.id})`);
+    //this.client.debug(`RADIO: Created voice broadcast for ${radio.name} (${radio.id})`);
     return broadcast;
   }
 
@@ -50,9 +50,9 @@ class RadioManager extends Manager {
     this.broadcasts.splice(this.broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
     if (play) this.playError(broadcast.dispatchers);
 
-    const now = Date.now();
-    this.client.debug(`RADIO: Voice broadcast error for ${broadcast.radio} (see ERROR_${now}.txt file)`);
-    writeFileSync(`./errors/ERROR_${now}.txt`, `Date: ${new Date(now).toUTCString()}\r\nCode: ${error.code || 'None'}\r\nMessage: ${error.message}`);
+    //const now = Date.now();
+    //this.client.debug(`RADIO: Voice broadcast error for ${broadcast.radio} (see ERROR_${now}.txt file)`);
+    //writeFileSync(`./errors/ERROR_${now}.txt`, `Date: ${new Date(now).toUTCString()}\r\nCode: ${error.code || 'None'}\r\nMessage: ${error.message}`);
   }
 
   clearBroadcasts() {
@@ -62,12 +62,12 @@ class RadioManager extends Manager {
     list.forEach((broadcast) => {
       broadcast.destroy();
       this.broadcasts.splice(this.broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
-      this.client.debug(`RADIO: Cleared ${list.length} broadcasts: ${list.map(b => b.radio).join(', ')}`);
+      //this.client.debug(`RADIO: Cleared ${list.length} broadcasts: ${list.map(b => b.radio).join(', ')}`);
     });
   }
 
   dispatcherError(context, dispatcher, error) {
-    this.client.debug(`RADIO: Dispatcher error (guild ${context.message.guild.id}): ${error.message}`);
+    //this.client.debug(`RADIO: Dispatcher error (guild ${context.message.guild.id}): ${error.message}`);
 
     context.replyWarning(context.__('radio.dispatcherError'));
     dispatcher.end();
