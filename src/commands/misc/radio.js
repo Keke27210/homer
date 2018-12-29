@@ -242,7 +242,7 @@ class SessionsSubcommand extends Command {
 
       const page = [
         `${radio.emote} **${radio.name}** - **${radio.id}**Mhz`,
-        `📡 [BROADCASTED AUDIO](${radio.url})`,
+        `📡 [BROADCASTED AUDIO](${radio.url}) @ **OPUS 64Kbps**`,
         '',
         '🔌 Active sessions:',
       ];
@@ -251,7 +251,7 @@ class SessionsSubcommand extends Command {
       for (let i = 0; i < voiceBroadcast.dispatchers.length; i += 1) {
         const dispatcher = voiceBroadcast.dispatchers[i];
         const voiceConnection = dispatcher.player.voiceConnection;
-        page.push(`- **[${voiceConnection.channel.guild.name}](https://www.google.com/search?q=${voiceConnection.channel.guild.id})** | 🎧 **${voiceConnection.channel.members.filter(m => !m.user.bot).size}** | 🔈 **${Math.floor(dispatcher.volume * 100)}**% (**${Math.floor(dispatcher.volumeDecibels)}**db) | 🕛 ${this.client.time.timeSince((Date.now() - dispatcher.totalStreamTime), 'en-gb', true)}`);
+        page.push(`- **${voiceConnection.channel.guild.name}** | 🎧 **${voiceConnection.channel.members.filter(m => !m.user.bot).size}** | 🔈 **${Math.floor(dispatcher.volume * 100)}**% (**${Math.floor(dispatcher.volumeDecibels)}**db) | 🕛 ${this.client.time.timeSince((Date.now() - dispatcher.totalStreamTime), 'en-gb', true)} | ♥ ${dispatcher.player.voiceConnection.speaking ? 'OK' : 'NO AUDIO'}`);
       }
 
       sessions.push(page.join('\n'));
