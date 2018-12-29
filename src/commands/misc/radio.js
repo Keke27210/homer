@@ -169,6 +169,7 @@ class ChannelSubcommand extends Command {
         .radio;
       await context.message.guild.voiceConnection.disconnect();
 
+      const connection = await channel.join();
       const broadcast = await this.client.radio.getBroadcast(currentRadio);
       const dispatcher = await connection.playBroadcast(broadcast, { volume: context.settings.radio.volume || 0.5 });
       dispatcher.on('error', error => this.client.radio.dispatcherError(context, dispatcher, error));
