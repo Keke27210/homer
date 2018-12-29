@@ -12,12 +12,20 @@ class RadioManager extends Manager {
     this.service = true;
     this.broadcasts = [];
     this.inactivity = {};
+    this.volumeChange = new Set();
   }
 
-  async createBroadcast(radio, playError = true) {
+  async createBroadcast(radio) {
     const broadcast = this.client.createVoiceBroadcast();
-    broadcast.on('unsubscribe', () => this.clearBroadcast(broadcast.radio));
-    broadcast.on('error', error => this.stopBroadcast(broadcast, true));
+    broadcast.on('unsubscribe', (dispatcher) => {
+      if (this.volumeChange.has(dispatcher.player.voiceConnection.channel.guild.id)) {
+        this.volumeChange.delete(dispatcher.player.voiceConnection.channel.guild.id);
+        return;
+      }
+
+      this.clearBroadcast(broadcast.radio);
+    });
+    broadcast.on('error', () => this.stopBroadcast(broadcast, true));
     broadcast.on('warn', warn => this.client.print(`RADIO: Broadcast warning (${broadcast.radio || '?'}): ${warn instanceof Error ? warn.message : warn}`));
     broadcast.name = radio.name;
     broadcast.radio = radio.id;

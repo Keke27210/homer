@@ -110,6 +110,7 @@ class VolumeSubcommand extends Command {
 
     const voiceConnection = context.message.guild.voiceConnection;
     if (voiceConnection && voiceConnection.dispatcher) {
+      this.client.radio.volumeChange.add(context.message.guild.id);
       voiceConnection.dispatcher.setVolume(volume);
     }
 
