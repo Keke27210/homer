@@ -108,8 +108,10 @@ class VolumeSubcommand extends Command {
     context.settings.radio.volume = volume;
     await context.saveSettings();
 
-    const currentBroadcast = this.client.voiceConnections.get(context.message.guild.id);
-    if (currentBroadcast && currentBroadcast.dispatcher) await currentBroadcast.dispatcher.setVolume(volume);
+    const voiceConnection = context.message.guild.voiceConnection;
+    if (voiceConnection && voiceConnection.dispatcher) {
+      voiceConnection.dispatcher.setVolume(volume);
+    }
 
     context.replySuccess(context.__('radio.volume.set', { volume: (volume * 100) }));
   }
