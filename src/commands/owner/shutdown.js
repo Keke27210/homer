@@ -1,4 +1,5 @@
 const Command = require('../../structures/Command');
+const wait = require('util').promisify(setTimeout);
 
 class ShutdownCommand extends Command {
   constructor(client) {
@@ -12,6 +13,14 @@ class ShutdownCommand extends Command {
 
   async execute(context) {
     const message = await context.replyLoading(`Shutting down **${this.client.shard.count}** shards...`);
+
+    // Sending messages in radio channels
+    this.client.voiceConnections.forEach((vc) => {
+      vc.dispatcher.emit('reboot', true);
+      vc.channel.leave();
+    });
+
+    await wait(2500);
     await this.client.shard.send({ type: 'shutdown', message: `${context.message.channel.id}|${message.id}|false` });
   }
 }

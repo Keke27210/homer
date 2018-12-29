@@ -70,6 +70,10 @@ class RadioManager extends Manager {
     dispatcher.end();
     dispatcher.player.voiceConnection.channel.leave();
   }
+
+  rebootMessage(context, dispatcher, shutdown = false) {
+    context.replyWarning(context.__(`radio.system.${shutdown ? 'shutdown' : 'reboot'}`));
+  }
 }
 
 async function parseURL(url) {
