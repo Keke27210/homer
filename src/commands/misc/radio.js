@@ -73,11 +73,14 @@ class TuneSubcommand extends Command {
 
     const message = await context.message.channel.send(context.__('radio.tune.tuning', { frequency }));
 
+    console.log('Starting debug')
     const broadcast = await this.client.radio.getBroadcast(frequency);
     if (!broadcast) return message.edit(context.__('radio.tune.noProgramme', { frequency }));
-
-    if (connection.dispatcher) await connection.dispatcher.end();
+    console.log('Debug #3')
+    if (connection.dispatcher) await connection.dispatcher.end(); console.log('Debug #4b')
+    console.log('Debug #4a')
     const dispatcher = await connection.playBroadcast(broadcast, { volume: context.settings.radio.volume || 0.5 });
+    console.log('Debug #5')
     dispatcher.on('error', error => this.client.radio.dispatcherError(context, dispatcher, error));
     dispatcher.on('reboot', shutdown => this.client.radio.rebootMessage(context, shutdown));
     dispatcher.once('speaking', () => message.edit(context.__('radio.tune.playing', { name: broadcast.name })));
