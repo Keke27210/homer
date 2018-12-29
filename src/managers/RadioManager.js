@@ -53,7 +53,7 @@ class RadioManager extends Manager {
     if (!broadcast) return;
     broadcast.destroy();
     this.broadcasts.splice(this.broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
-    this.client.print(`RADIO: Cleared ${list.length} broadcasts: ${list.map(b => b.radio).join(', ')}`);
+    this.client.print(`RADIO: Destroyed broadcast for ${broadcast.name} (${broadcast.radio})`);
   }
 
   dispatcherError(context, dispatcher, error) {
