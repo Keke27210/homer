@@ -128,10 +128,7 @@ class StopSubcommand extends Command {
     if (!channel.members.has(this.client.user.id)) return context.replyWarning(context.__('radio.botNotInChannel'));
     if (!channel.members.has(context.message.author.id)) return context.replyWarning(context.__('radio.notInChannel', { name: channel.name }));
 
-    const connection = this.client.voiceConnections.get(context.message.guild.id);
-    if (!connection) return context.replyWarning(context.__('radio.stop.noActiveStream', { name: channel.name }));
     await channel.leave();
-
     context.replySuccess(context.__('radio.stop.done'));
   }
 }
