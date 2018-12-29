@@ -51,28 +51,6 @@ class OtherUtil {
     return `${id.substring(id.length - 3)}-${this.ran()}${this.ran()}${this.ran()}`;
   }
 
-  async getRadio(frequency) {
-    const radio = await this.client.database.getDocument('radios', frequency);
-
-    const b1 = this.client.voiceBroadcasts[id];
-    if (b1) return b1;
-
-    const b2 = this.client.createVoiceBroadcast();
-    b2.radio = id;
-
-    await b2.playStream(url, { bitrate: 64 });
-    this.client.voiceBroadcasts[id] = b2;
-
-    b2.on('unsubscribe', () => {
-      if (b2.dispatchers.length === 0) {
-        b2.destroy();
-        delete this.client.voiceBroadcasts[id];
-      }
-    });
-
-    return b2;
-  }
-
   // Code template from discord.js "resolveInviteCode" method
   resolveGiftCode(data) {
     const inviteRegex = /discord(?:app\.com\/gift|\.gift(?:\/gift)?)\/([\w-]{2,255})/i;
