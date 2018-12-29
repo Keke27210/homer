@@ -37,7 +37,7 @@ class RadioManager extends Manager {
 
   playError(dispatchers) {
     const broadcast = this.createBroadcast(false);
-    dispatchers.forEach(d => d.playBroadcast(broadcast));
+    dispatchers.forEach(d => d.player.voiceConnection.playBroadcast(broadcast));
     broadcast.playStream(this.ERROR_URL, { bitrate: 64 });
     broadcast.on('end', () => {
       dispatchers.forEach(d => d.player.voiceConnection.channel.leave());
