@@ -52,11 +52,11 @@ class Menu {
   send(content, options = {}) {
     options.embed = this.embed;
 
-    this.context.message.channel.send(content, options).then(async (m) => {
+    this.context.message.channel.send(content, options).then((m) => {
       this.menuMessage = m;
 
       const emotes = this.emotes.concat(Object.keys(this.customButtons));
-      for (const e of emotes) await m.react(e);
+      (async function () { for (const e of emotes) await m.react(e); })();
       const collector = m.createReactionCollector(
         (reaction, user) => this.emotes.concat(Object.keys(this.customButtons)).includes(reaction.emoji.name) && user.id === this.context.message.author.id,
         {
