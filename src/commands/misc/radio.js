@@ -299,7 +299,7 @@ class DiscoverSubcommand extends Command {
       pages.push([
         programme.text,
         '',
-        `${radio.emote} **[${radio.name}](${radio.url})** - **${radio.id}**Mhz`,
+        `${radio.emote} **[${radio.name}](${radio.website})** - **${radio.id}**Mhz`,
       ].join('\n'));
       radios.push(radio.id);
     }
