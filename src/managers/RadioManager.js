@@ -7,7 +7,7 @@ class RadioManager extends Manager {
     super(client);
 
     // Data
-    this.ERROR_URL = `${this.client.config.CDN}/assets/radios/ERROR.mp3`;
+    this.ERROR_URL = `${this.client.constants.CDN}/assets/radios/ERROR.mp3`;
 
     // Broadcasts
     this.broadcasts = [];
