@@ -34,7 +34,7 @@ scheduleJob({ second: 10 }, async () => {
 
   // Leave inactive radio channels
   const inactives = Object.entries(client.radio.inactivity)
-    .filter(([id, time]) => time > 300000)
+    .filter(([id, time]) => (Date.now() - time) > 300000)
     .map(([id]) => id);
 
   for (const inactive of inactives) {
