@@ -26,6 +26,7 @@ class RadioManager extends Manager {
     console.log('Debug #1')
     const url = await parseURL(radio.url);
     broadcast.playStream(url, { bitrate: 64 });
+    broadcast.started = true;
     this.broadcasts.push(broadcast);
     console.log('Debug #2')
     return broadcast;
@@ -61,6 +62,7 @@ class RadioManager extends Manager {
     this.broadcasts
       .filter(b => b.dispatchers.length === 0)
       .forEach((broadcast) => {
+        if (!broadcast.started) return;
         broadcast.destroy();
         this.broadcasts.splice(this.broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
         //this.client.debug(`RADIO: Cleared ${list.length} broadcasts: ${list.map(b => b.radio).join(', ')}`);
