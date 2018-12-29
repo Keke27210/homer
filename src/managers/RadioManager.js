@@ -62,6 +62,7 @@ class RadioManager extends Manager {
     this.broadcasts
       .filter(b => b.dispatchers.length === 0)
       .forEach((broadcast) => {
+        console.log('oh no')
         if (!broadcast.started) return;
         broadcast.destroy();
         this.broadcasts.splice(this.broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
