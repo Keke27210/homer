@@ -18,6 +18,7 @@ class RadioManager extends Manager {
     broadcast.on('unsubscribe', this.clearBroadcasts);
     broadcast.on('error', error => this.stopBroadcast(broadcast, error, playError));
     broadcast.on('warn', warn => this.client.debug(`RADIO: Broadcast warning (${broadcast.radio || '?'}): ${warn instanceof Error ? warn.message : warn}`));
+    return broadcast;
   }
 
   async getBroadcast(frequency) {
@@ -31,6 +32,7 @@ class RadioManager extends Manager {
     broadcast.playStream(url, { bitrate: 64 });
     this.broadcasts.push(broadcast);
     this.client.debug(`RADIO: Created voice broadcast for ${radio.name} (${radio.id})`);
+    return broadcast;
   }
 
   playError(dispatchers) {
