@@ -108,7 +108,7 @@ class DiscordClient extends Client {
   }
 
   print(message) {
-    if (this.config.debug) console.log(message);
+    if (this.debug) console.log(message);
   }
 }
 
