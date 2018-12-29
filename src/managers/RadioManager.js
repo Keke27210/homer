@@ -56,14 +56,15 @@ class RadioManager extends Manager {
   }
 
   clearBroadcasts() {
-    const list = this.broadcasts.filter(b => b.dispatchers.length === 0)
+    console.log(this.broadcasts);
+    /*const list = this.broadcasts.filter(b => b.dispatchers.length === 0);
     if (list.length === 0) return;
 
     list.forEach((broadcast) => {
       broadcast.destroy();
       this.broadcasts.splice(this.broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
       //this.client.debug(`RADIO: Cleared ${list.length} broadcasts: ${list.map(b => b.radio).join(', ')}`);
-    });
+    });*/
   }
 
   dispatcherError(context, dispatcher, error) {
