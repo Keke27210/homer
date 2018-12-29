@@ -169,8 +169,8 @@ class ChannelSubcommand extends Command {
         .radio;
       await context.message.guild.voiceConnection.disconnect();
 
-      const radioCommand = await this.client.commands.getCommand('radio');
-      context.args = ['tune', currentRadio];
+      const radioCommand = await this.client.commands.getCommand('radio').children.find(c => c.name === 'tune');
+      context.args = [currentRadio];
       radioCommand.execute(context);
       context.replyWarning(context.__('radio.channel.botMoved'));
     }
