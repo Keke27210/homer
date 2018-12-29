@@ -14,23 +14,24 @@ class RadioManager extends Manager {
     this.broadcasts = [];
   }
 
-  createBroadcast(playError = true) {
+  async createBroadcast(radio, playError = true) {
     const broadcast = this.client.createVoiceBroadcast();
     broadcast.on('unsubscribe', this.clearBroadcasts);
     broadcast.on('error', error => this.stopBroadcast(broadcast, error, playError));
     broadcast.on('warn', warn => null); //this.client.debug(`RADIO: Broadcast warning (${broadcast.radio || '?'}): ${warn instanceof Error ? warn.message : warn}`)
+    broadcast.name = radio.name;
+    broadcast.radio = radio.id;
+
+    const url = await parseURL(radio.url);
+    broadcast.playStream(url, { bitrate: 64 });
     return broadcast;
   }
 
   async getBroadcast(frequency) {
     const radio = await this.client.database.getDocument('radios', frequency);
     if (!radio) return null;
-    const url = await parseURL(radio.url);
 
-    const broadcast = this.createBroadcast();
-    broadcast.name = radio.name;
-    broadcast.radio = radio.id;
-    broadcast.playStream(url, { bitrate: 64 });
+    const broadcast = this.broadcasts.find(b => b.radio === frequency) || await this.createBroadcast(radio);
     this.broadcasts.push(broadcast);
     //this.client.debug(`RADIO: Created voice broadcast for ${radio.name} (${radio.id})`);
     return broadcast;
