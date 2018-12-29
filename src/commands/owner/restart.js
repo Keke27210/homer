@@ -17,7 +17,7 @@ class RestartCommand extends Command {
 
     // Sending messages in radio channels
     this.client.voiceConnections.forEach((vc) => {
-      vc.dispatcher.emit('reboot');
+      if (vc.dispatcher) vc.dispatcher.emit('reboot');
       vc.channel.leave();
     });
 

@@ -16,7 +16,7 @@ class ShutdownCommand extends Command {
 
     // Sending messages in radio channels
     this.client.voiceConnections.forEach((vc) => {
-      vc.dispatcher.emit('reboot', true);
+      if (vc.dispatcher) vc.dispatcher.emit('reboot', true);
       vc.channel.leave();
     });
 
