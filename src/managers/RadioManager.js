@@ -1,5 +1,6 @@
 const Manager = require('../structures/Manager');
 const request = require('superagent');
+const parser = require('playlist-parser');
 //const { writeFileSync } = require('fs');
 
 class RadioManager extends Manager {
@@ -71,7 +72,7 @@ class RadioManager extends Manager {
     dispatcher.player.voiceConnection.channel.leave();
   }
 
-  rebootMessage(context, dispatcher, shutdown = false) {
+  rebootMessage(context, shutdown = false) {
     context.replyWarning(context.__(`radio.system.${shutdown ? 'shutdown' : 'reboot'}`));
   }
 }

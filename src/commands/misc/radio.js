@@ -1,6 +1,5 @@
 const { RichEmbed } = require('discord.js');
 const request = require('snekfetch');
-const parser = require('playlist-parser');
 const Menu = require('../../structures/Menu');
 const Command = require('../../structures/Command');
 
@@ -79,7 +78,7 @@ class TuneSubcommand extends Command {
 
     const dispatcher = await connection.playBroadcast(broadcast, { volume: context.settings.radio.volume || 0.5 });
     dispatcher.on('error', error => this.client.radio.dispatcherError(context, dispatcher, error));
-    dispatcher.on('reboot', shutdown => this.client.radio.rebootMessage(context, dispatcher, shutdown));
+    dispatcher.on('reboot', shutdown => this.client.radio.rebootMessage(context, shutdown));
     dispatcher.once('speaking', () => message.edit(context.__('radio.tune.playing', { name: broadcast.name })));
   }
 }
