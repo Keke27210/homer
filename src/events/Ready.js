@@ -13,7 +13,7 @@ class ReadyEvent extends Event {
     });
 
     // If it is a reboot, edit the message and clear cache
-    const reboot = this.client.database.getDocument('bot', 'settings').then(s => s.reboot);
+    const reboot = await this.client.database.getDocument('bot', 'settings').then(s => s.reboot);
     if (reboot) {
       const channel = this.client.channels.get(reboot[0]);
       if (channel) {
