@@ -60,7 +60,7 @@ class RadioManager extends Manager {
       .filter(b => b.dispatchers.length === 0)
       .forEach((broadcast) => {
         broadcast.destroy();
-        this.broadcasts.splice(broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
+        this.broadcasts.splice(this.broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
         //this.client.debug(`RADIO: Cleared ${list.length} broadcasts: ${list.map(b => b.radio).join(', ')}`);
       });
   }
