@@ -53,6 +53,7 @@ class MenuManager extends Manager {
       entries,
       pages,
       options,
+      lang,
       footer: options.footer || null,
       currentPage: 0,
       time: Date.now(),
