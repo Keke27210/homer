@@ -14,7 +14,7 @@ class MessageReactionAddEvent extends Event {
       // Trying to delete the reaction
       const message = reaction.message;
       if (!message.guild || !message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) return;
-      reaction.remove();
+      reaction.remove(user);
     }
   }
 }
