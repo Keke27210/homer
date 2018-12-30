@@ -43,7 +43,7 @@ class MenuManager extends Manager {
     return parsedEntries;
   }
 
-  async createMenu(channel, author, authorMessage, lang, content, pages, entries, options = {}) {
+  async createMenu(channel, author, authorMessage, lang, content, pages = [], entries, options = {}) {
     options = this._parseOptions(options);
     entries = this._parseEntries(entries, options.entriesPerPage);
 
