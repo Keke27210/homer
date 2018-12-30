@@ -87,7 +87,7 @@ class MenuManager extends Manager {
   async updateMenu(instance) {
     const message = await this.client.channels.get(instance.channel).fetchMessage(instance.message);
     const generatedEmbed = this.generateEmbed(instance);
-    return message.edit({ embed: generatedEmbed });
+    return message.edit(message.content, { embed: generatedEmbed });
   }
 
   async stopMenu(instance) {
