@@ -14,6 +14,7 @@ class MenuManager extends Manager {
     super(client);
 
     this.instances = [];
+    this.client.setInterval(() => this._cleanExpired(), 60000);
   }
 
   __(lang, key, args) {
@@ -24,7 +25,7 @@ class MenuManager extends Manager {
     return ({
       entriesPerPage: options.entriesPerPage || 10,
       footer: options.footer || null,
-      timeout: options.timeout || 120000, // in ms
+      timeout: options.timeout || 1800000, // in ms (default: 30 minutes)
     });
   }
 
@@ -41,6 +42,22 @@ class MenuManager extends Manager {
       entries = entries.slice(entriesPerPage);
     }
     return parsedEntries;
+  }
+
+  _cleanExpired() {
+    this.instances
+      .filter(i => (i.time + i.options.timeout) < Date.now())
+      .forEach((i) => {
+        this.instances.splice(this.instances.indexOf(i), 1);
+        this._cleanReactions(i);
+      });
+  }
+
+  _cleanReactions(i) {
+    const message = this.client.channels.get(i.channel).fetchMessage(i.message);
+    message.reactions
+      .filter(r => r.me)
+      .forEach(r => r.remove());
   }
 
   async createMenu(channel, author, authorMessage, lang, content, pages, entries, options = {}) {
