@@ -1,7 +1,5 @@
-const { RichEmbed } = require('discord.js');
-const request = require('superagent');
 const Command = require('../../structures/Command');
-const Menu = require('../../structures/Menu');
+const request = require('superagent');
 const moment = require('moment-timezone');
 
 class WeatherCommand extends Command {
@@ -123,8 +121,10 @@ class WeatherCommand extends Command {
       context.__('weather.title', { location: `**${locationData.city || context.__('global.unknown')}**${region ? ` (${region})` : ''}` }),
       pages,
       entries,
-      { entriesPerPage: 1 },
+      { entriesPerPage: 1, footer: `${context.__('weather.embed.footer.location')} Bing™ Maps • ${context.__('weather.embed.footer.weather')} DarkSky™` },
     );
+
+    message.delete();
 
     /*// Météo-France weather alerts (only for Metropolitain France territory)
     if (locationData.country === 'France' && locationData.postalcode) {
