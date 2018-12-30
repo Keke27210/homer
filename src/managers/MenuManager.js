@@ -33,7 +33,7 @@ class MenuManager extends Manager {
     for (let i = 0; i < pageCount; i += 1) {
       const thisPage = [];
       for (let j = 0; j < entriesPerPage; j += 1) {
-        const d = data[j];
+        const d = entries[j];
         if (d) thisPage.push(d);
       }
       parsedEntries.push(thisPage.join('\n'));
