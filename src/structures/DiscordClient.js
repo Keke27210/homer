@@ -8,6 +8,7 @@ const DatabaseManager = require('../managers/DatabaseManager');
 const LocaleManager = require('../managers/LocaleManager');
 const LisaManager = require('../managers/LisaManager');
 const RadioManager = require('../managers/RadioManager');
+const MenuManager = require('../managers/MenuManager');
 
 // Util
 const Constants = require('../util/Constants');
@@ -33,6 +34,7 @@ class DiscordClient extends Client {
     this.localization = new LocaleManager(this);
     this.lisa = new LisaManager(this);
     this.radio = new RadioManager(this);
+    this.menu = new MenuManager(this);
 
     this.finder = new FinderUtil(this);
     this.time = new TimeUtil(this);
