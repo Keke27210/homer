@@ -492,8 +492,10 @@
   "radio.types.14":"Événements",
   "radio.types.15":"Politique",
   "radio.types.16":"Économie",
-  "radio.types.17":"K-Pop",
+  "radio.types.17":"Musique asiatique (C/K/J-Pop)",
   "radio.types.18":"Musique contemporaine",
+  "radio.types.19": "Musiques du monde",
+  "radio.types.20": "Religieux",
 
   "remind.noDuration":"Vous devez fournir une durée pour le rappel.",
   "remind.noText":"Vous devez fournir une description pour le rappel.",

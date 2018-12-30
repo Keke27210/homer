@@ -511,8 +511,10 @@
   "radio.types.14": "Events",
   "radio.types.15": "Politics",
   "radio.types.16": "Economy",
-  "radio.types.17": "K-Pop",
+  "radio.types.17": "Asian music (K/C/J-Pop)",
   "radio.types.18": "Contemporary music",
+  "radio.types.19": "Musics of the world",
+  "radio.types.20": "Religious",
   
   "remind.noDuration": "You must provide a duration for your remind.",
   "remind.noText": "You must provide a text for your remind.",
