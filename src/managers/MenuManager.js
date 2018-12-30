@@ -77,11 +77,11 @@ class MenuManager extends Manager {
     if (user.id !== instance.author) return;
 
     const newPage = emotes[reaction.emoji.name](instance.pages.length, instance.currentPage);
-    if (newPage === -1) return stopMenu(instance);
+    if (newPage === -1) return this.stopMenu(instance);
 
     instance.currentPage = newPage;
     this.instances[this.instances.findIndex(i => i.message === reaction.message.id)].currentPage = newPage;
-    return updateMenu(instance);
+    return this.updateMenu(instance);
   }
 
   async updateMenu(instance) {
