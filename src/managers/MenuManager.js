@@ -76,7 +76,7 @@ class MenuManager extends Manager {
     if (!instance) return;
     if (user.id !== instance.author) return;
 
-    const newPage = emotes[reaction.emoji.name](instance.pages.length, instance.currentPage);
+    const newPage = emotes[reaction.emoji.name](instance.entries.length, instance.currentPage);
     if (newPage === -1) return this.stopMenu(instance);
 
     instance.currentPage = newPage;
