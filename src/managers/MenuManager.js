@@ -53,8 +53,8 @@ class MenuManager extends Manager {
       });
   }
 
-  _cleanReactions(i) {
-    const message = this.client.channels.get(i.channel).fetchMessage(i.message);
+  async _cleanReactions(i) {
+    const message = await this.client.channels.get(i.channel).fetchMessage(i.message);
     message.reactions
       .filter(r => r.me)
       .forEach(r => r.remove());
