@@ -40,14 +40,17 @@ class ListSubcommand extends Command {
     const radios = await this.client.database.getDocuments('radios', true);
     if (radios.length === 0) return context.replyWarning(context.__('radio.list.noRadio'));
 
-    const menu = new Menu(
-      context,
+    this.client.menu.createMenu(
+      context.message.channel.id,
+      context.message.author.id,
+      context.message.id,
+      context.settings.misc.locale,
+      context.__('radio.list.title', { name: this.client.user.username }),
+      null,
       radios
         .sort((a, b) => parseFloat(a.id) - parseFloat(b.id))
         .map(r => `\`${r.id}\`: ${r.emote} [${r.name}](${r.website}) - ${r.broken ? context.__('radio.broken') : `${r.language} (${r.country}) - ${r.type.map(t => context.__(`radio.types.${t}`)).join(', ')}`}`),
     );
-
-    menu.send(context.__('radio.list.title', { name: this.client.user.username }));
   }
 }
 
