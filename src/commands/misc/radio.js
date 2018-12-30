@@ -1,6 +1,5 @@
 const { RichEmbed } = require('discord.js');
 const request = require('snekfetch');
-const Menu = require('../../structures/Menu');
 const Command = require('../../structures/Command');
 
 class RadioCommand extends Command {
@@ -286,13 +285,15 @@ class SessionsSubcommand extends Command {
       sessions.push(page.join('\n'));
     }
 
-    const menu = new Menu(
-      context,
+    this.client.menu.createMenu(
+      context.message.channel.id,
+      context.message.author.id,
+      context.message.id,
+      context.settings.misc.locale,
+      '📻 Current radio sessions:',
+      null,
       sessions,
-      { entriesPerPage: 1 },
     );
-
-    menu.send('📻 Current radio sessions:');
   }
 }
 
@@ -312,48 +313,30 @@ class DiscoverSubcommand extends Command {
     if (featured.length === 0) return context.replyWarning(context.__('radio.discover.noFeaturedProgramme'));
 
     const pages = [];
-    const titles = [];
-    const thumbnails = [];
-    const radios = [];
+    const entries = [];
     for (let i = 0; i < featured.length; i += 1) {
       const programme = featured[i];
       const radio = await this.client.database.getDocument('radios', programme.radio);
       if (!radio) continue; // Should never happen but I got some errors on it (??? unknown source ???)
 
-      titles.push(programme.title);
-      thumbnails.push(programme.thumbnail || null);
-      pages.push([
+      pages.push({ title: programme.title, thumb: programme.thumbnail, footer: context.__('radio.discover.footer', { frequency: programme.radio }) });
+      entries.push([
         programme.text,
         '',
         `${radio.emote} **[${radio.name}](${radio.website})** - **${radio.id}**Mhz`,
       ].join('\n'));
-      radios.push(radio.id);
     }
 
-    const menu = new Menu(
-      context,
+    this.client.menu.createMenu(
+      context.message.channel.id,
+      context.message.author.id,
+      context.message.id,
+      context.settings.misc.locale,
+      context.__('radio.discover.main'),
       pages,
-      {
-        titles,
-        entriesPerPage: 1,
-        thumbnails,
-        footer: context.__('radio.discover.embedFooter'),
-        data: { radios },
-        customButtons: {
-          '📻': (menu) => {
-            const context = menu.context;
-            if (!context.message.guild) return context.replyWarning(context.__('radio.discover.cannotAutotune'));
-
-            context.args = [menu.data.radios[menu.currentPage]];
-            const cmd = this.client.commands.getCommand('radio').children.find(c => c.name === 'tune');
-            if (!cmd) return;
-            cmd.execute(context);
-          },
-        },
-      },
+      entries,
+      { entriesPerPage: 1 },
     );
-
-    menu.send(context.__('radio.discover.main'));
   }
 }
 

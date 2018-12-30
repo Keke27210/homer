@@ -24,7 +24,6 @@ class MenuManager extends Manager {
   _parseOptions(options) {
     return ({
       entriesPerPage: options.entriesPerPage || 10,
-      footer: options.footer || null,
       timeout: options.timeout || 1800000, // in ms (default: 30 minutes)
     });
   }
@@ -72,7 +71,6 @@ class MenuManager extends Manager {
       pages: pages || [],
       options,
       lang,
-      footer: options.footer || null,
       currentPage: 0,
       time: Date.now(),
     });
@@ -129,7 +127,7 @@ class MenuManager extends Manager {
     const embed = new RichEmbed()
       .setTitle(pages[currentPage] && pages[currentPage].title ? pages[currentPage].title : this.__(lang, 'global.page', { num: (currentPage + 1) }))
       .setDescription(instance.entries[currentPage])
-      .setFooter(instance.footer || this.__(lang, 'global.page', { num: `${currentPage + 1}/${instance.entries.length}` }))
+      .setFooter(pages[currentPage] && pages[currentPage].footer ? pages[currentPage].footer : this.__(lang, 'global.page', { num: `${currentPage + 1}/${instance.entries.length}` }))
       .setColor(pages[currentPage] && pages[currentPage].color ? pages[currentPage].color : undefined)
       .setThumbnail(pages[currentPage] && pages[currentPage].thumb ? pages[currentPage].thumb : undefined);
 
