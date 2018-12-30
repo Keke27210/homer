@@ -29,12 +29,15 @@ class PhonebookCommand extends Command {
 
     if (numbers.length === 0) return context.replyWarning(context.__('phonebook.notFound'));
 
-    const menu = new Menu(
-      context,
+    this.client.menu.createMenu(
+      context.message.channel.id,
+      context.message.author.id,
+      context.message.id,
+      context.settings.misc.locale,
+      context.__('phonebook.title'),
+      null,
       numbers.map(e => `${this.dot} ${e.number}: ${e.phonebook}`),
     );
-
-    menu.send(context.__('phonebook.title'));
   }
 }
 

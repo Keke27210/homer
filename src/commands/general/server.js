@@ -130,12 +130,15 @@ class EmotesSubcommand extends Command {
       return context.replyWarning(context.__('server.emotes.noEmote', { name: context.message.guild.name }));
     }
 
-    const menu = new Menu(
-      context,
+    this.client.menu.createMenu(
+      context.message.channel.id,
+      context.message.author.id,
+      context.message.id,
+      context.settings.misc.locale,
+      `${this.client.constants.emotes.success} ${context.__('server.emotes.title', { name: context.message.guild.name })}`,
+      null,
       context.message.guild.emojis.map(e => `${e.toString()} **${e.name}** (ID:${e.id})`),
     );
-
-    menu.send(`${this.client.constants.emotes.success} ${context.__('server.emotes.title', { name: context.message.guild.name })}`);
   }
 }
 

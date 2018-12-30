@@ -62,17 +62,33 @@ class WeatherCommand extends Command {
       vigilance,
     ].join('\n');
 
-    const pages = [currently];
-    const titles = [context.__('weather.currently'), context.__('weather.today'), context.__('weather.tomorrow')];
-    const thumbnails = [`${this.client.constants.CDN}/assets/weather/${weatherData.currently.icon}.png`];
+    const entries = [currently];
+    const pages = [{
+      title: context.__('weather.currently'),
+      thumb: `${this.client.constants.CDN}/assets/weather/${weatherData.currently.icon}.png`,
+    }];
 
     for (let i = 0; i < weatherData.daily.data.length; i += 1) {
       const item = weatherData.daily.data[i];
       const uv = Math.floor(item.uvIndex);
-      if (i >= 2) titles.push(moment.tz((item.time * 1000), weatherData.timezone)
-        .locale(context.settings.misc.locale)
-        .tz(weatherData.timezone)
-        .format(context.__('weather.dayFormat')));
+
+      let title = null;
+      switch (i) {
+        case 0:
+          title = context.__('weather.today');
+          break;
+        case 1:
+          title = context.__('weather.tomorrow');
+          break;
+        default:
+          title = moment.tz((item.time * 1000), weatherData.timezone)
+            .locale(context.settings.misc.locale)
+            .tz(weatherData.timezone)
+            .format(context.__('weather.dayFormat'));
+          break;
+      }
+
+      pages.push({ title, thumb: `${this.client.constants.CDN}/assets/weather/${item.icon}.png` });
 
       // Moon phase
       // Moon phase
@@ -80,7 +96,7 @@ class WeatherCommand extends Command {
       // 0.45 > x > 0.55: full moon | 0.55 > x > 0.70: waning gibbous | 0.70 > x > 0.80: last quarter | 0.75 > x > 0.95: waning crescent
       const moon = this.getMoon(item.moonPhase);
 
-      pages.push([
+      entries.push([
         `${this.dot} ${context.__('weather.embed.weather')}: **${item.summary}**`,
         `${this.dot} ${context.__('weather.embed.temperature')}: ${context.__('weather.embed.temperatures', {
           min: Math.floor(item.temperatureMin), max: Math.floor(item.temperatureMax),
@@ -93,23 +109,22 @@ class WeatherCommand extends Command {
         `${this.dot} ${context.__('weather.embed.sunrise')}: **${moment(item.sunriseTime * 1000).tz(weatherData.timezone).format('HH:mm')}** - ${context.__('weather.embed.sunset')}: **${moment(item.sunsetTime * 1000).locale(context.settings.misc.locale).tz(weatherData.timezone).format('HH:mm')}**`,
         `${this.dot} ${context.__('weather.embed.moon')}: ${moon[0]} **${context.__(`weather.moon.${moon[1]}`)}**`,
       ].join('\n'));
-
-      thumbnails.push(`${this.client.constants.CDN}/assets/weather/${item.icon}.png`);
     }
-
-    const menu = new Menu(context, pages, {
-      titles,
-      thumbnails,
-      footer: `${context.__('weather.embed.footer.location')} Bing™ Maps • ${context.__('weather.embed.footer.weather')} DarkSky™`,
-      entriesPerPage: 1,
-    });
 
     const region = [locationData.region, locationData.country]
       .filter(a => a)
       .join(', ');
 
-    message.delete();
-    menu.send(context.__('weather.title', { location: `**${locationData.city || context.__('global.unknown')}**${region ? ` (${region})` : ''}` }));
+    this.client.menu.createMenu(
+      context.message.channel.id,
+      context.message.author.id,
+      context.message.id,
+      context.settings.misc.locale,
+      context.__('weather.title', { location: `**${locationData.city || context.__('global.unknown')}**${region ? ` (${region})` : ''}` }),
+      pages,
+      entries,
+      { entriesPerPage: 1 },
+    );
 
     /*// Météo-France weather alerts (only for Metropolitain France territory)
     if (locationData.country === 'France' && locationData.postalcode) {

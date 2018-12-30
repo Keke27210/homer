@@ -471,13 +471,15 @@ class DomainsSubcommand extends Command {
       .then(s => s.domainWhitelist);
     if (whitelist.length === 0) return context.replyWarning(context.__('tag.domains.whitelistEmpty'));
 
-    const menu = new Menu(
-      context,
+    this.client.menu.createMenu(
+      context.message.channel.id,
+      context.message.author.id,
+      context.message.id,
+      context.settings.misc.locale,
+      context.__('tag.domains.main'),
+      null,
       whitelist.map(w => `${this.dot} ${w}`),
-      { footer: context.__('tag.domains.footer') },
     );
-
-    menu.send(context.__('tag.domains.main'));
   }
 }
 

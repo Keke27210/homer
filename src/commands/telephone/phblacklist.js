@@ -17,14 +17,17 @@ class PhblacklistCommand extends Command {
     if (!subscription) return context.replyWarning(context.__('telephone.noSubscription', { command: `${this.client.prefix}telephone subscribe` }));
     if (subscription.blacklist.length === 0) return context.replyWarning(context.__('phblacklist.noEntry'));
 
-    const menu = new Menu(
-      context,
+    this.client.menu.createMenu(
+      context.message.channel.id,
+      context.message.author.id,
+      context.message.id,
+      context.settings.misc.locale,
+      context.__('phblacklist.title', {
+        name: context.message.guild ? `**#${context.message.channel.name}**` : `**${context.__('global.dm')}**`,
+      }),
+      null,
       subscription.blacklist.map(a => `${this.dot} ${context.__('phblacklist.number')}: **${a.number}** - ${context.__('phblacklist.date')}: **${context.formatDate(a.time)}**`),
     );
-
-    menu.send(context.__('phblacklist.title', {
-      name: context.message.guild ? `**#${context.message.channel.name}**` : `**${context.__('global.dm')}**`,
-    }));
   }
 }
 

@@ -16,12 +16,15 @@ class ContactsCommand extends Command {
     if (!subscription) return context.replyWarning(context.__('telephone.noSubscription', { command: `${this.client.prefix}telephone subscribe` }));
     if (subscription.contacts.length === 0) return context.replyWarning(context.__('contacts.noEntry'));
 
-    const menu = new Menu(
-      context,
+    this.client.menu.createMenu(
+      context.message.channel.id,
+      context.message.author.id,
+      context.message.id,
+      context.settings.misc.locale,
+      context.__('contacts.title', { name: context.message.guild ? `**#${context.message.channel.name}**` : `**${context.__('global.dm')}**` }),
+      null,
       subscription.contacts.map(c => `${this.dot} **${c.number}**: ${c.description}`),
     );
-
-    menu.send(context.__('contacts.title', { name: context.message.guild ? `**#${context.message.channel.name}**` : `**${context.__('global.dm')}**` }));
   }
 }
 

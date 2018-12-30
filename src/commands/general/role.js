@@ -192,14 +192,17 @@ class MembersSubcommand extends Command {
       m.push({ username: u.username, discriminator: u.discriminator, id: u.id });
     }
 
-    const menu = new Menu(
-      context,
+    this.client.menu.createMenu(
+      context.message.channel.id,
+      context.message.author.id,
+      context.message.id,
+      context.settings.misc.locale,
+      context.__('role.members.title', { role: role.name }),
+      null,
       m
         .sort((a, b) => a.username.toLowerCase().localeCompare(b.username.toLowerCase()))
         .map(mm => `${this.dot} **${mm.username}**#${mm.discriminator} (ID:${mm.id})`),
     );
-
-    menu.send(context.__('role.members.title', { role: role.name }));
   }
 }
 
@@ -218,12 +221,15 @@ class ListSubcommand extends Command {
       .map(r => `${this.dot} <@&${r.id}> (ID:${r.id})`);
     if (list.size === 0) return context.replyWarning(context.__('role.list.noRoles', { name: context.message.guild.name }));
 
-    const m = new Menu(
-      context,
+    this.client.menu.createMenu(
+      context.message.channel.id,
+      context.message.author.id,
+      context.message.id,
+      context.settings.misc.locale,
+      context.__('role.list.title', { name: context.message.guild.name }),
+      null,
       list,
     );
-
-    m.send(context.__('role.list.title', { name: context.message.guild.name }));
   }
 }
 

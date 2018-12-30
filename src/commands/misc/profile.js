@@ -128,12 +128,16 @@ class FieldsSubcommand extends Command {
   }
 
   async execute(context) {
-    const menu = new Menu(
-      context,
+    this.client.menu.createMenu(
+      context.message.channel.id,
+      context.message.author.id,
+      context.message.id,
+      context.settings.misc.locale,
+      context.__('profile.fields'),
+      null,
       this.client.constants.profileFields.map(field => `${this.dot} \`${field.id}\`: **${field.name}**`),
+      { entriesPerPage: 1 },
     );
-
-    menu.send(context.__('profile.fields'));
   }
 }
 
