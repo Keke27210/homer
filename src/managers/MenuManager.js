@@ -23,6 +23,7 @@ class MenuManager extends Manager {
   _parseOptions(options) {
     return ({
       entriesPerPage: options.entriesPerPage || 10,
+      footer: options.footer || null,
       timeout: options.timeout || 120000, // in ms
     });
   }
