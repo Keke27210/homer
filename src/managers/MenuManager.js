@@ -42,7 +42,7 @@ class MenuManager extends Manager {
     return parsedEntries;
   }
 
-  createMenu(channel, author, authorMessage, lang, content, pages, entries, options = {}) {
+  async createMenu(channel, author, authorMessage, lang, content, pages, entries, options = {}) {
     options = _parseOptions(options);
     entries = _parseEntries(entries, options.entriesPerPage);
 
@@ -84,13 +84,13 @@ class MenuManager extends Manager {
     return updateMenu(instance);
   }
 
-  updateMenu(instance) {
+  async updateMenu(instance) {
     const message = await this.client.channels.get(instance.channel).fetchMessage(instance.message);
     const generatedEmbed = this.generateEmbed(instance);
     return message.edit({ embed: generatedEmbed });
   }
 
-  stopMenu(instance) {
+  async stopMenu(instance) {
     const message = await this.client.channels.get(instance.channel).fetchMessage(instance.message);
     message.delete();
     this.instances.splice(this.instances.indexOf(instance), 1);
