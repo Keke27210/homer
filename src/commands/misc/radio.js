@@ -277,7 +277,7 @@ class SessionsSubcommand extends Command {
       for (let i = 0; i < voiceBroadcast.dispatchers.length; i += 1) {
         const dispatcher = voiceBroadcast.dispatchers[i];
         const voiceConnection = dispatcher.player.voiceConnection;
-        page.push(`- **${voiceConnection.channel.guild.name}** | 🎧 **${voiceConnection.channel.members.filter(m => !m.user.bot).size}** | 🔈 **${Math.floor(dispatcher.volume * 100)}**% (**${Math.floor(dispatcher.volumeDecibels)}**db) | 🕛 ${this.client.time.timeSince((Date.now() - dispatcher.totalStreamTime), 'en-gb', true)} | ♥ ${dispatcher.player.voiceConnection.speaking ? 'OK' : 'NO AUDIO'}`);
+        page.push(`- **${voiceConnection.channel.guild.name}** | 🎧 **${voiceConnection.channel.members.filter(m => !m.user.bot).size}** | 🔈 **${Math.floor(dispatcher.volume * 100)}**% (**${Math.floor(dispatcher.volumeDecibels)}**db) | 🕛 ${this.client.time.timeSince((Date.now() - dispatcher.totalStreamTime), 'en-gb', true)}`);
       }
 
       sessions.push(page.join('\n'));
