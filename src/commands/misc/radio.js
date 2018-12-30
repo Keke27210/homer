@@ -319,7 +319,7 @@ class DiscoverSubcommand extends Command {
       const radio = await this.client.database.getDocument('radios', programme.radio);
       if (!radio) continue; // Should never happen but I got some errors on it (??? unknown source ???)
 
-      pages.push({ title: programme.title, thumb: programme.thumbnail, footer: context.__('radio.discover.footer', { frequency: programme.radio }) });
+      pages.push({ title: programme.title, thumb: programme.thumbnail, color: programme.color, footer: context.__('radio.discover.footer', { frequency: programme.radio }) });
       entries.push([
         programme.text,
         '',
