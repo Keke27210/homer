@@ -17,6 +17,7 @@ class RadioCommand extends Command {
         new DiscoverSubcommand(client),
         new SessionsSubcommand(client),
         new SwitchSubcommand(client),
+        new StatsSubcommand(client),
       ],
     });
   }
