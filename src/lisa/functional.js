@@ -58,6 +58,13 @@ module.exports = [
     (env, params) => evaluateMath(params.join('|')).toString(),
   ),
 
+  // random
+  new Method(
+    'random',
+    (env) => Math.random().toString(),
+    null,
+  ),
+
   // abs
   new Method(
     'abs',
