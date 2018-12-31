@@ -1,9 +1,9 @@
+const Util = require('./Util');
 const BigInt = require('big-integer');
-const request = require('superagent');
 
-class OtherUtil {
+class OtherUtil extends Util {
   constructor(client) {
-    Object.defineProperty(this, 'client', { value: client, enumerable: false });
+    super(client);
   }
 
   getShardID(id) {

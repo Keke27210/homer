@@ -1,9 +1,10 @@
+const Util = require('./Util');
 const request = require('superagent');
 let radio = false;
 
-class UpdateUtil {
+class UpdateUtil extends Util {
   constructor(client) {
-    Object.defineProperty(this, 'client', { value: client, enumerable: false });
+    super(client);
   }
 
   async updateGame() {

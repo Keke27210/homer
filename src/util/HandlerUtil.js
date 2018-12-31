@@ -1,8 +1,9 @@
+const Util = require('./Util');
 const { RichEmbed } = require('discord.js');
 
-class HandlerUtil {
+class HandlerUtil extends Util {
   constructor(client) {
-    Object.defineProperty(this, 'client', { value: client, enumerable: false });
+    super(client);
   }
 
   async remind(job) {

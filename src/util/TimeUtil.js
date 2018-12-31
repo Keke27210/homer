@@ -1,8 +1,9 @@
+const Util = require('./Util');
 const XRegExp = require('xregexp');
 
-class TimeUtil {
+class TimeUtil extends Util {
   constructor(client) {
-    Object.defineProperty(this, 'client', { value: client, enumerable: false });
+    super(client);
     this.default = this.client.localization.defaultLocale;
   }
 
