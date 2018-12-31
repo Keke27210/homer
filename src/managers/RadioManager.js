@@ -10,20 +10,41 @@ class RadioManager extends Manager {
     this.INTERRUPTION_PATH = `${this.client.constants.CDN}/assets/radios/INTERRUPTED.mp3`;
     this.service = true;
     this.broadcasts = [];
+    this.stats = {};
     this.inactivity = {};
     this.volumeChange = new Set();
   }
 
   async createBroadcast(radio) {
     const broadcast = this.client.createVoiceBroadcast();
-    broadcast.on('unsubscribe', (dispatcher) => {
+    broadcast.on('subscribe', (dispatcher) => {
+      this.stats[dispatcher.player.voiceConnection.channel.guild.id] = {
+        radio: broadcast.radio,
+        time: Date.now(),
+      };
+    });
+
+    broadcast.on('unsubscribe', async (dispatcher) => {
       if (this.volumeChange.has(dispatcher.player.voiceConnection.channel.guild.id)) {
         this.volumeChange.delete(dispatcher.player.voiceConnection.channel.guild.id);
         return;
       }
 
+      // Clear broadcast if no-one else listen to the radio
       this.clearBroadcast(broadcast.radio);
+
+      // Update radio statistics
+      const stats = await this.client.database.getDocument('radioStats', broadcast.radio);
+      const index = stats.entries.findIndex(e => e.id === dispatcher.player.voiceConnection.channel.guild.id);
+      stats.entries.push({
+        id: dispatcher.player.voiceConnection.channel.guild.id,
+        time: (stats.entries[index] ? stats.entries[index].time : 0) + this.stats[dispatcher.player.voiceConnection.channel.guild.id],
+      });
+      if (index !== -1) stats.entries.splice(index, 1);
+      this.client.database.updateDocument('radioStats', broadcast.radio, stats);
+      delete this.stats[dispatcher.player.voiceConnection.channel.guild.id];
     });
+
     broadcast.on('error', () => this.stopBroadcast(broadcast, true));
     broadcast.on('warn', warn => this.client.logger.info(`RADIO: Broadcast warning (${broadcast.radio || '?'}): ${warn instanceof Error ? warn.message : warn}`));
     broadcast.name = radio.name;
