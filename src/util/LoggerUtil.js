@@ -19,19 +19,19 @@ class LoggerUtil extends Util {
   }
 
   info(message) {
-    appendFile(`${this.LOG_PATH}/${this.generateFilename('info')}`, `[${prefixTime()}] ${message}\r\n\r\n`, (err) => {
+    appendFile(`${this.LOG_PATH}/${this.generateFilename('info')}`, `[${prefixTime()}] ${message}\r\n`, (err) => {
       if (err) console.error(err);
     });
   }
 
   warn(message) {
-    appendFile(`${this.LOG_PATH}/${this.generateFilename('warn')}`, `[${prefixTime()}] ${message}\r\n\r\n`, (err) => {
+    appendFile(`${this.LOG_PATH}/${this.generateFilename('warn')}`, `[${prefixTime()}] ${message}\r\n`, (err) => {
       if (err) console.error(err);
     });
   }
 
   error(message) {
-    appendFile(`${this.LOG_PATH}/${this.generateFilename('error')}`, `[${prefixTime()}] ${message}\r\n\r\n`, (err) => {
+    appendFile(`${this.LOG_PATH}/${this.generateFilename('error')}`, `[${prefixTime()}] ${message}\r\n`, (err) => {
       if (err) console.error(err);
     });
   }
