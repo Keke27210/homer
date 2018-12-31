@@ -307,7 +307,7 @@ class StatsSubcommand extends Command {
       context.__('radio.stats.main'),
       null,
       pages,
-      { entriesPerPage: 1 },
+      { entriesPerPage: 1, footer: context.__('radio.stats.footer') },
     );
   }
 }
