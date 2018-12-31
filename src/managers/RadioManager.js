@@ -32,7 +32,7 @@ class RadioManager extends Manager {
       if (index === -1) {
         stats.entries.push({
           id: dispatcher.player.voiceConnection.channel.guild.id,
-          time: this.stats[dispatcher.player.voiceConnection.channel.guild.id].time,
+          time: (Date.now() - this.stats[dispatcher.player.voiceConnection.channel.guild.id].time),
         });
       } else {
         stats.entries[index].time = stats.entries[index].time + (Date.now() - this.stats[dispatcher.player.voiceConnection.channel.guild.id].time);
