@@ -46,19 +46,19 @@ scheduleJob({ second: 10 }, async () => {
 
   // Cancel inactive phone calls
   if (client.shard.id === 0) {
-    const calls = await this.client.database.getDocuments('calls')
+    const calls = await client.database.getDocuments('calls')
       .then(calls => calls.filter(c => (Date.now() - c.activity) > 300000));
 
     for (const call of calls) {
-      this.client.database.deleteDocument('calls', call.id);
+      client.database.deleteDocument('calls', call.id);
 
       // Sender
-      const senderSettings = (await this.client.database.getDocument('settings', call.sender.settings) || this.client.constants.defaultUserSettings(call.sender.settings)).misc.locale;
-      this.client.sendMessage(call.sender.id, this.client.__(senderSettings, 'telephone.inactiveCall'));
+      const senderSettings = (await client.database.getDocument('settings', call.sender.settings) || client.constants.defaultUserSettings(call.sender.settings)).misc.locale;
+      client.sendMessage(call.sender.id, client.__(senderSettings, 'telephone.inactiveCall'));
 
       // Receiver
-      const receiverSettings = (await this.client.database.getDocument('settings', call.receiver.settings) || this.client.constants.defaultUserSettings(call.receiver.settings)).misc.locale;
-      this.client.sendMessage(call.receiver.id, this.client.__(receiverSettings, 'telephone.inactiveCall'));
+      const receiverSettings = (await client.database.getDocument('settings', call.receiver.settings) || client.constants.defaultUserSettings(call.receiver.settings)).misc.locale;
+      client.sendMessage(call.receiver.id, client.__(receiverSettings, 'telephone.inactiveCall'));
     }
   }
 });
