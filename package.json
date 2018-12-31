@@ -23,6 +23,7 @@
     "rethinkdbdash": "^2.3.31",
     "superagent": "^3.8.3",
     "uws": "^99.0.0",
-    "xregexp": "^4.2.0"
+    "xregexp": "^4.2.0",
+    "ytdl-core": "^0.28.3"
   }
 }
