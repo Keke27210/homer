@@ -9,6 +9,13 @@ class VoiceStateUpdate extends Event {
     const settings = await this.client.database.getDocument('settings', newMember.guild.id);
     if (!settings) return;
 
+    // Delete the inactivity mark if the bot has left a voice channel
+    if (newMember.id === this.client.user.id && !newMember.voiceChannel) {
+      if (this.client.radio.inactivity[newMember.guild.id]) {
+        delete this.client.radio.inactivity[newMember.guild.id];
+      }
+    }
+
     // Prevent bot to be moved to a non-radio channel
     if (newMember.id === this.client.user.id) {
       if (newMember.voiceChannel && (newMember.voiceChannel.id !== settings.radio.channel)) {
