@@ -5,6 +5,7 @@ class TuneCommand extends Command {
     super(client, {
       name: 'tune',
       category: 'misc',
+      hidden: true,
     });
   }
 
