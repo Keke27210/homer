@@ -70,15 +70,16 @@ class TuneSubcommand extends Command {
 
     if (!this.client.radio.service) return context.replyWarning(context.__('radio.disabledService'));
 
-    const frequency = context.args[0] ? context.args[0].replace(/,/g, '.') : null;
+    const frequency = context.args[0] ? parseFloat(context.args[0].replace(/,/g, '.')) : null;
     if (!frequency) return context.replyError(context.__('radio.tune.noFrequency'));
+    if (Number.isNaN(frequency)) return context.replyWarning(context.__('radio.tune.invalidFrequency', { frequency }));
 
     let connection = this.client.voiceConnections.get(context.message.guild.id);
     if (!connection) connection = await channel.join();
 
     const message = await context.message.channel.send(context.__('radio.tune.tuning', { frequency }));
 
-    const broadcast = await this.client.radio.getBroadcast(frequency);
+    const broadcast = await this.client.radio.getBroadcast(frequency.toString());
     if (!broadcast) return message.edit(context.__('radio.tune.noProgramme', { frequency }));
   
     const dispatcher = await connection.playBroadcast(broadcast, { volume: context.settings.radio.volume || 0.5 });
