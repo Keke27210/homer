@@ -250,6 +250,67 @@ class InfoSubcommand extends Command {
   }
 }
 
+class StatsSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'stats',
+      category: 'misc',
+      dm: true,
+    });
+  }
+
+  async execute(context) {
+    const radioStats = await this.client.database.getDocuments('radioStats');
+    if (radioStats.length === 0) return context.replyWarning(context.__('radio.stats.noStats'));
+    const radios = await this.client.database.getDocuments('radios');
+
+    const pages = [];
+
+    // Guild stats
+    if (context.message.guild) {
+      const guildRanking = radioStats
+        .map(r => ({ id: r.id, time: (r.entries.find(e => e.id === context.message.guild.id) || {}).time || 0 }))
+        .sort((a, b) => a.time < b.time)
+        .slice(0, 10);
+
+      pages.push([
+        `🏠 **${context.message.guild.name}**`,
+        '',
+        guildRanking.map((r, i) => {
+          const radio = radios.find(rad => rad.id === r.id);
+          return `**${i}.** ${radio.emote} **${radio.name}**: ${(r.time / 1000 / 60 / 60).toFixed(2)}h`;
+        }).join('\n') || context.__('global.none'),
+      ].join('\n'));
+    }
+
+    // Global stats
+    const globalRanking = radioStats
+      .map(r => ({ id: r.id, time: (r.entries.reduce((prev, val) => prev + val.time, 0)) || 0 }))
+      .sort((a, b) => a.time < b.time)
+      .slice(0, 10);
+
+    pages.push([
+      `🌐 **${context.__('global.allservers')}**`,
+      '',
+      globalRanking.map((r, i) => {
+        const radio = radios.find(rad => rad.id === r.id);
+        return `**${i}.** ${radio.emote} **${radio.name}**: ${(r.time / 1000 / 60 / 60).toFixed(2)}h`;
+      }).join('\n') || context.__('global.none'),
+    ].join('\n'));
+
+    this.client.menu.createMenu(
+      context.message.channel.id,
+      context.message.author.id,
+      context.message.id,
+      context.settings.misc.locale,
+      context.__('radio.stats.main'),
+      null,
+      pages,
+      { entriesPerPage: 1 },
+    );
+  }
+}
+
 class SessionsSubcommand extends Command {
   constructor(client) {
     super(client, {
