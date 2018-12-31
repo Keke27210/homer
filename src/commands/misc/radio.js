@@ -72,7 +72,6 @@ class TuneSubcommand extends Command {
 
     const frequency = context.args[0] ? parseFloat(context.args[0].replace(/,/g, '.')) : null;
     if (!frequency) return context.replyError(context.__('radio.tune.noFrequency'));
-    if (Number.isNaN(frequency)) return context.replyWarning(context.__('radio.tune.invalidFrequency', { frequency }));
 
     let connection = this.client.voiceConnections.get(context.message.guild.id);
     if (!connection) connection = await channel.join();
