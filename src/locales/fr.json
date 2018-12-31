@@ -497,6 +497,8 @@
   "radio.types.18":"Musique contemporaine",
   "radio.types.19": "Musiques du monde",
   "radio.types.20": "Religieux",
+  "radio.types.21": "Sports",
+  "radio.types.22": "Talk",
 
   "remind.noDuration":"Vous devez fournir une durée pour le rappel.",
   "remind.noText":"Vous devez fournir une description pour le rappel.",

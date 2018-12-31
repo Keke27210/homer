@@ -516,6 +516,8 @@
   "radio.types.18": "Contemporary music",
   "radio.types.19": "Musics of the world",
   "radio.types.20": "Religious",
+  "radio.types.21": "Sports",
+  "radio.types.22": "Talk",
   
   "remind.noDuration": "You must provide a duration for your remind.",
   "remind.noText": "You must provide a text for your remind.",
