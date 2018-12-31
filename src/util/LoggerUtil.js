@@ -10,7 +10,7 @@ class LoggerUtil extends Util {
 
   prefixTime() {
     const date = new Date();
-    return `[${date.getUTCHours()}:${date.getUTCMinutes()}:${date.getUTCSeconds()}.${date.getUTCMilliseconds()}]`;
+    return `${date.getUTCHours()}:${date.getUTCMinutes()}:${date.getUTCSeconds()}.${date.getUTCMilliseconds()}`;
   }
 
   generateFilename(type) {
