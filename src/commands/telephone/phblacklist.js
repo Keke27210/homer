@@ -1,5 +1,4 @@
 const Command = require('../../structures/Command');
-const Menu = require('../../structures/Menu');
 
 class PhblacklistCommand extends Command {
   constructor(client) {

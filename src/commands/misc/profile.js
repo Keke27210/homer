@@ -1,5 +1,4 @@
 const Command = require('../../structures/Command');
-const Menu = require('../../structures/Menu');
 const { RichEmbed } = require('discord.js');
 
 class ProfileCommand extends Command {

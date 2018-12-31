@@ -1,5 +1,4 @@
 const Command = require('../../structures/Command');
-const Menu = require('../../structures/Menu');
 const { Attachment } = require('discord.js');
 const { splitMessage } = require('discord.js').Util;
 
