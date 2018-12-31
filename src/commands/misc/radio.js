@@ -87,7 +87,7 @@ class TuneSubcommand extends Command {
     dispatcher.on('reboot', shutdown => this.client.radio.rebootMessage(context, shutdown));
     dispatcher.once('speaking', () => message.edit(context.__('radio.tune.playing', { name: broadcast.name })));
 
-    this.stats[context.message.guild.id] = {
+    this.client.radio.stats[context.message.guild.id] = {
       radio: broadcast.radio,
       time: Date.now(),
     };
