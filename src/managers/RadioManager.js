@@ -29,7 +29,6 @@ class RadioManager extends Manager {
       // Update radio statistics
       const stats = await this.client.database.getDocument('radioStats', broadcast.radio) || ({ id: broadcast.radio, entries: [] });
       const index = stats.entries.findIndex(e => e.id === dispatcher.player.voiceConnection.channel.guild.id);
-      console.log(`Now: ${Date.now()} - Start: ${this.stats[dispatcher.player.voiceConnection.channel.guild.id].time} - Delta: ${Date.now() - this.stats[dispatcher.player.voiceConnection.channel.guild.id].time}`)
       if (index === -1) {
         stats.entries.push({
           id: dispatcher.player.voiceConnection.channel.guild.id,

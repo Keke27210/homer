@@ -286,7 +286,7 @@ class StatsSubcommand extends Command {
         '',
         guildRanking.map((r, i) => {
           const radio = radios.find(rad => rad.id === r.id);
-          return `**${i + 1}.** ${radio.emote} **${radio.name}**: ${(r.time / 1000 / 60 / 60).toFixed(2)}h`;
+          return `**${i + 1}.** ${radio.emote} **${radio.name}**: ${this.client.time.timeSince(Date.now() + r.time, context.settings.misc.locale, true, false)}`;
         }).join('\n') || context.__('global.none'),
       ].join('\n'));
     }
@@ -302,7 +302,7 @@ class StatsSubcommand extends Command {
       '',
       globalRanking.map((r, i) => {
         const radio = radios.find(rad => rad.id === r.id);
-        return `**${i + 1}.** ${radio.emote} **${radio.name}**: ${(r.time / 1000 / 60 / 60).toFixed(2)}h`;
+        return `**${i + 1}.** ${radio.emote} **${radio.name}**: ${this.client.time.timeSince(Date.now() + r.time, context.settings.misc.locale, true, false)}`;
       }).join('\n') || context.__('global.none'),
     ].join('\n'));
 
