@@ -27,18 +27,20 @@ class RadioManager extends Manager {
       this.clearBroadcast(broadcast.radio);
 
       // Update radio statistics
-      const stats = await this.client.database.getDocument('radioStats', broadcast.radio) || ({ id: broadcast.radio, entries: [] });
-      const index = stats.entries.findIndex(e => e.id === dispatcher.player.voiceConnection.channel.guild.id);
-      if (index === -1) {
-        stats.entries.push({
-          id: dispatcher.player.voiceConnection.channel.guild.id,
-          time: (Date.now() - this.stats[dispatcher.player.voiceConnection.channel.guild.id].time),
-        });
-      } else {
-        stats.entries[index].time = stats.entries[index].time + (Date.now() - this.stats[dispatcher.player.voiceConnection.channel.guild.id].time);
+      if (this.stats[dispatcher.player.voiceConnection.channel.guild.id]) {
+        const stats = await this.client.database.getDocument('radioStats', broadcast.radio) || ({ id: broadcast.radio, entries: [] });
+        const index = stats.entries.findIndex(e => e.id === dispatcher.player.voiceConnection.channel.guild.id);
+        if (index === -1) {
+          stats.entries.push({
+            id: dispatcher.player.voiceConnection.channel.guild.id,
+            time: (Date.now() - this.stats[dispatcher.player.voiceConnection.channel.guild.id].time),
+          });
+        } else {
+          stats.entries[index].time = stats.entries[index].time + (Date.now() - this.stats[dispatcher.player.voiceConnection.channel.guild.id].time);
+        }
+        this.client.database.insertDocument('radioStats', stats, { conflict: 'update' });
+        delete this.stats[dispatcher.player.voiceConnection.channel.guild.id];
       }
-      this.client.database.insertDocument('radioStats', stats, { conflict: 'update' });
-      delete this.stats[dispatcher.player.voiceConnection.channel.guild.id];
     });
 
     broadcast.on('error', () => this.stopBroadcast(broadcast, true));
