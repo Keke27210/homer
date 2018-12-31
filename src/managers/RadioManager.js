@@ -17,13 +17,6 @@ class RadioManager extends Manager {
 
   async createBroadcast(radio) {
     const broadcast = this.client.createVoiceBroadcast();
-    broadcast.on('subscribe', (dispatcher) => {
-      this.stats[dispatcher.player.voiceConnection.channel.guild.id] = {
-        radio: broadcast.radio,
-        time: Date.now(),
-      };
-    });
-
     broadcast.on('unsubscribe', async (dispatcher) => {
       if (this.volumeChange.has(dispatcher.player.voiceConnection.channel.guild.id)) {
         this.volumeChange.delete(dispatcher.player.voiceConnection.channel.guild.id);
