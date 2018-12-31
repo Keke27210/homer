@@ -1,7 +1,6 @@
 const Manager = require('../structures/Manager');
 const request = require('superagent');
 const parser = require('playlist-parser');
-//const { writeFileSync } = require('fs');
 
 class RadioManager extends Manager {
   constructor(client) {
@@ -26,7 +25,7 @@ class RadioManager extends Manager {
       this.clearBroadcast(broadcast.radio);
     });
     broadcast.on('error', () => this.stopBroadcast(broadcast, true));
-    broadcast.on('warn', warn => this.client.print(`RADIO: Broadcast warning (${broadcast.radio || '?'}): ${warn instanceof Error ? warn.message : warn}`));
+    broadcast.on('warn', warn => this.client.logger.info(`RADIO: Broadcast warning (${broadcast.radio || '?'}): ${warn instanceof Error ? warn.message : warn}`));
     broadcast.name = radio.name;
     broadcast.radio = radio.id;
     const url = await parseURL(radio.url);
@@ -41,7 +40,7 @@ class RadioManager extends Manager {
     if (!radio) return null;
 
     const broadcast = this.broadcasts.find(b => b.radio === frequency) || await this.createBroadcast(radio);
-    this.client.print(`RADIO: Created voice broadcast for ${radio.name} (${radio.id})`);
+    this.client.logger.info(`RADIO: Created voice broadcast for ${radio.name} (${radio.id})`);
     return broadcast;
   }
 
@@ -62,8 +61,8 @@ class RadioManager extends Manager {
 
     broadcast.destroy();
     this.broadcasts.splice(this.broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
-    if (error) this.client.print(`RADIO: Voice broadcast error for ${broadcast.radio}`);
-    else this.client.print(`RADIO: Interrupted service for ${broadcast.radio}`);
+    if (error) this.client.logger.info(`RADIO: Voice broadcast error for ${broadcast.radio}`);
+    else this.client.logger.info(`RADIO: Interrupted service for ${broadcast.radio}`);
   }
 
   clearBroadcast(radio) {
@@ -71,14 +70,14 @@ class RadioManager extends Manager {
     if (!broadcast) return;
     broadcast.destroy();
     this.broadcasts.splice(this.broadcasts.findIndex(b => b.radio === broadcast.radio), 1);
-    this.client.print(`RADIO: Destroyed broadcast for ${broadcast.name} (${broadcast.radio})`);
+    this.client.logger.info(`RADIO: Destroyed broadcast for ${broadcast.name} (${broadcast.radio})`);
   }
 
   dispatcherError(context, dispatcher, error) {
     context.replyWarning(context.__('radio.dispatcherError'));
     dispatcher.end();
     dispatcher.player.voiceConnection.disconnect();
-    this.client.print(`RADIO: Dispatcher error (guild ${context.message.guild.id}): ${error.message}`);
+    this.client.logger.info(`RADIO: Dispatcher error (guild ${context.message.guild.id}): ${error.message}`);
   }
 
   rebootMessage(context, shutdown = false) {

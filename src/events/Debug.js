@@ -6,11 +6,14 @@ class DebugEvent extends Event {
   }
 
   handle(debug) {
-    if (!this.client.debug) return;
-    this.client.shard.send({
-      type: 'log',
-      message: `DEBUG: ${debug}`,
-    });
+    this.client.logger.info(`Client debug: ${debug}`);
+
+    if (this.client.debug) {
+      this.client.shard.send({
+        type: 'log',
+        message: `DEBUG: ${debug}`,
+      });
+    }
   }
 }
 

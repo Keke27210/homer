@@ -7,6 +7,8 @@ class WarnError extends Event {
 
   handle(warning) {
     console.warn(warning);
+
+    this.client.logger.warn(`Client warn:\r\n${typeof warning === 'string' ? warning : warning.stack}`);
   }
 }
 

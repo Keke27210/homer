@@ -7,6 +7,8 @@ class ErrorEvent extends Event {
 
   handle(error) {
     console.error(error);
+
+    this.client.logger.error(`Client error:\r\n${typeof error === 'string' ? error : error.stack}`);
   }
 }
 

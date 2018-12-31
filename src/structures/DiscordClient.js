@@ -16,6 +16,7 @@ const UpdateUtil = require('../util/UpdateUtil');
 const FinderUtil = require('../util/FinderUtil');
 const TimeUtil = require('../util/TimeUtil');
 const HandlerUtil = require('../util/HandlerUtil');
+const LoggerUtil = require('../util/LoggerUtil');
 const OtherUtil = require('../util/OtherUtil');
 
 class DiscordClient extends Client {
@@ -40,6 +41,7 @@ class DiscordClient extends Client {
     this.time = new TimeUtil(this);
     this.update = new UpdateUtil(this);
     this.handler = new HandlerUtil(this);
+    this.logger = new LoggerUtil(this);
     this.other = new OtherUtil(this);
 
     // Load events and commands
@@ -107,10 +109,6 @@ class DiscordClient extends Client {
     }
 
     delete require.cache[fullPath];
-  }
-
-  print(message) {
-    if (this.debug) console.log(message);
   }
 }
 
