@@ -79,7 +79,7 @@ process.on('unhandledRejection', (err) => {
     ].join('\n'),
   );
 
-  this.client.logger.error(`Unhandled rejection:\r\n${err.stack}`);
+  client.logger.error(`Unhandled rejection:\r\n${err.stack}`);
 });
 
 // Misc
