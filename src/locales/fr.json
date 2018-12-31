@@ -670,6 +670,7 @@
   "telephone.refusedConnection":"La connexion à votre correspondant a été refusée. Vous avez peut-être été **blacklisté** ou le service téléphonique est **en maintenance**.",
   "telephone.attachments":"🔗 **Pièces jointes:**",
   "telephone.noCall":"Personne ne vous appelle.",
+  "telephone.inactiveCall": "L'appel en cours a été terminé à cause d'une inactivité supérieure à 5 minutes.",
   "telephone.title":"📞 Souscription pour {{{ name }}}:",
   "telephone.embed.number":"Numéro",
   "telephone.embed.phonebook":"Annuaire",

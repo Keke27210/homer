@@ -84,6 +84,7 @@ class MessageEvent extends Event {
           }
 
           this.client.sendMessage(target, msg.join('\n'));
+          this.client.database.updateDocument('calls', callObject.id, { activity: Date.now() });
         });
     }
   }

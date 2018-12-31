@@ -43,6 +43,24 @@ scheduleJob({ second: 10 }, async () => {
     voiceConnection.disconnect();
     delete client.radio.inactivity[inactive];
   }
+
+  // Cancel inactive phone calls
+  if (client.shard.id === 0) {
+    const calls = await this.client.database.getDocuments('calls')
+      .filter(calls => calls.filter(c => (Date.now() - c.activity) > 300000));
+
+    for (const call of calls) {
+      this.client.database.deleteDocument('calls', call.id);
+
+      // Sender
+      const senderSettings = (await this.client.database.getDocument('settings', call.sender.settings) || this.client.constants.defaultUserSettings(call.sender.settings)).misc.locale;
+      this.client.sendMessage(call.sender.id, this.client.__(senderSettings, 'telephone.inactiveCall'));
+
+      // Receiver
+      const receiverSettings = (await this.client.database.getDocument('settings', call.receiver.settings) || this.client.constants.defaultUserSettings(call.receiver.settings)).misc.locale;
+      this.client.sendMessage(call.receiver.id, this.client.__(receiverSettings, 'telephone.inactiveCall'));
+    }
+  }
 });
 
 // Error handling
