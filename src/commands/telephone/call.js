@@ -55,7 +55,7 @@ class CallCommand extends Command {
         senderMessage: thisMessage.id,
         receiverMessage: toMessage.id,
         state: 0,
-        activity: Date.now();
+        activity: Date.now(),
         time: Date.now(),
       },
       {
