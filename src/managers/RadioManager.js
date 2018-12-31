@@ -38,7 +38,7 @@ class RadioManager extends Manager {
       const index = stats.entries.findIndex(e => e.id === dispatcher.player.voiceConnection.channel.guild.id);
       stats.entries.push({
         id: dispatcher.player.voiceConnection.channel.guild.id,
-        time: (stats.entries[index] ? stats.entries[index].time : 0) + this.stats[dispatcher.player.voiceConnection.channel.guild.id].time,
+        time: (stats.entries[index] ? stats.entries[index].time : 0) + (Date.now() - this.stats[dispatcher.player.voiceConnection.channel.guild.id].time),
       });
       if (index !== -1) stats.entries.splice(index, 1);
       this.client.database.insertDocument('radioStats', stats, { conflict: 'update' });

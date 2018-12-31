@@ -499,6 +499,7 @@
   "radio.stats.main": "📻 Statistics about Homer radio:",
   "radio.stats.noStats": "There are no statistics available for the moment.",
   "radio.stats.allServers": "All servers",
+  "radio.stats.footer": "Cumulative listening time since January 1, 2019.",
   "radio.types.0": "Hits",
   "radio.types.1": "Pop",
   "radio.types.2": "Classic",

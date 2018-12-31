@@ -480,6 +480,7 @@
   "radio.stats.main": "📻 Statistiques sur la radio d'Homer",
   "radio.stats.noStats": "Il n'y a aucune statistique disponible pour le moment.",
   "radio.stats.allServers": "Tous les serveurs",
+  "radio.stats.footer": "Temps d'écoute cumulé depuis le 1er janvier 2019.",
   "radio.types.0":"Hits",
   "radio.types.1":"Pop",
   "radio.types.2":"Classique",

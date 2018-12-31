@@ -291,7 +291,7 @@ class StatsSubcommand extends Command {
       .slice(0, 10);
 
     pages.push([
-      `🌐 **${context.__('global.allservers')}**`,
+      `🌐 **${context.__('radio.stats.allServers')}**`,
       '',
       globalRanking.map((r, i) => {
         const radio = radios.find(rad => rad.id === r.id);
