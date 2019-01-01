@@ -53,7 +53,7 @@ class OtherUtil extends Util {
       const pages = [];
       const entries = [];
 
-      const filteredItems = parsed.items.filter(i => (Date.now() - new Date(i.pubDate).getTime()) < used);
+      const filteredItems = parsed.items.filter(i => (Date.now() - new Date(i.pubDate).getTime()) < feed.used);
       for (const item of filteredItems) {
         pages.push({ title: item.title, url: item.link, color: 'ORANGE', footer: this.client.__(language, 'rss.update.footer', { total: filteredItems.length, i: (filteredItems.indexOf(item) + 1) }), time: new Date(item.pubDate) });
         entries.push((item.contentSnippet || item.content || this.client.__(language, 'rss.update.noContent')).slice(0, 2000));
