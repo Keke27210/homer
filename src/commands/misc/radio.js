@@ -82,7 +82,11 @@ class TuneSubcommand extends Command {
     const broadcast = await this.client.radio.getBroadcast(frequency.toString());
     if (!broadcast) return message.edit(context.__('radio.tune.noProgramme', { frequency }));
   
-    const dispatcher = await connection.playBroadcast(broadcast, { volume: context.settings.radio.volume || 0.5 });
+    const dispatcher = await connection.playBroadcast(broadcast, {
+      bitrate: this.client.other.isDonator(context.message.author.id) ? 96 : 48,
+      volume: context.settings.radio.volume || 0.5,
+    });
+
     dispatcher.on('error', error => this.client.radio.dispatcherError(context, dispatcher, error));
     dispatcher.on('reboot', shutdown => this.client.radio.rebootMessage(context, shutdown));
     dispatcher.once('speaking', () => message.edit(context.__('radio.tune.playing', { name: broadcast.name })));
@@ -339,7 +343,7 @@ class SessionsSubcommand extends Command {
 
       const page = [
         `${radio.emote} **${radio.name}** - **${radio.id}**Mhz`,
-        `📡 [BROADCASTED AUDIO](${radio.url}) @ **OPUS 64Kbps**`,
+        `📡 [BROADCASTED AUDIO](${radio.url}) @ **OPUS 96Kbps**`,
         '',
         '🔌 Active sessions:',
       ];

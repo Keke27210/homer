@@ -13,6 +13,13 @@ class OtherUtil extends Util {
     return new BigInt(id).shiftRight('22').mod(this.client.config.sharder.totalShards);
   }
 
+  isDonator(id) {
+    return this.client
+      .guilds.get('382951433378594817')
+      .roles.get('382967473135288320')
+      .members.has(id);
+  }
+
   async getBadges(id) {
     const owner = this.client.config.owners.includes(id);
     const donator = await this.client.database.getDocument('donators', id).then(a => (a ? true : false));
