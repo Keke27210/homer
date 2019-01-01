@@ -112,7 +112,7 @@ class RemoveSubcommand extends Command {
     if (!feed) return context.replyError(context.__('rss.remove.notFound', { command: `${this.client.prefix}rss list` }));
 
     const message = await context.replyWarning(context.__('rss.remove.question', { name: feed.name }));
-    (async function () { for (const e of this.emotes) await message.react(e); })(); // Independent reacting system
+    (async () => { for (const e of this.emotes) await message.react(e); })(); // Independent reacting system
 
     message.awaitReactions(
       (reaction, user) => this.emotes.includes(reaction.emoji.identifier) && user.id === context.message.author.id,
