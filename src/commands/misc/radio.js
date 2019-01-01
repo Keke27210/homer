@@ -52,7 +52,7 @@ class ListSubcommand extends Command {
       context.message.id,
       context.settings.misc.locale,
       context.__('radio.list.title', { name: this.client.user.username }),
-      null,
+      pages,
       radios
         .sort((a, b) => parseFloat(a.id) - parseFloat(b.id))
         .map(r => `\`${r.id}\`: ${r.emote} [${r.name}](${r.website}) - ${r.broken ? context.__('radio.broken') : `${r.language} (${r.country}) - ${r.type.map(t => context.__(`radio.types.${t}`)).join(', ')}`}`),
