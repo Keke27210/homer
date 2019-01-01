@@ -61,6 +61,7 @@ class OtherUtil extends Util {
           title: item.title,
           url: item.link,
           color: 'ORANGE',
+          time: new Date(item.isoDate),
           thumb: item.enclosure ? item.enclosure.url : undefined,
           footer: this.client.__(language, 'rss.update.footer', { total: filteredItems.length, i: (filteredItems.indexOf(item) + 1) }), time: new Date(item.isoDate),
         });
