@@ -44,6 +44,7 @@ class OtherUtil extends Util {
 
   async processRSS() {
     const feeds = await this.client.database.getDocuments('rss', true);
+    console.log(`Feeds: ${feeds.map(c => c.channel)}`)
 
     for (const feed of feeds) {
       const language = await this.client.database.getDocument('settings', feed.settings).then(s => s ? s.misc.locale : 'en-gb');
