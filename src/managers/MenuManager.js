@@ -89,6 +89,7 @@ class MenuManager extends Manager {
   }
 
   handleReaction(reaction, user) {
+    if (user.bot) return;
     const instance = this.instances.find(i => i.message === reaction.message.id);
     if (!instance) return;
     if (instance.author !== 'everyone' && user.id !== instance.author) return;
