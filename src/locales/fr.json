@@ -458,6 +458,7 @@
   "radio.botNotInChannel":"Je ne suis pas dans le salon de diffusion radio.",
   "radio.list.noRadio":"Il n'y a aucune radio disponible pour le moment.",
   "radio.list.title":"📻 Radios disponibles sur **{{{ name }}}**:",
+  "radio.list.footer": "Écoutez un programme avec {{{ command }}} | Page {{{ page }}}",
   "radio.tune.noFrequency":"Vous devez fournir une fréquence à écouter.",
   "radio.tune.invalidFrequency": "**{{{ frequency }}** n'est pas une fréquence valide.",
   "radio.tune.tuning":"📻 Recherche du signal sur **{{{ frequency }}}**...",

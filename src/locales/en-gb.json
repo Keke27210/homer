@@ -470,6 +470,7 @@
   "radio.system.shutdown": "Homer will shutdown, to prevent problems with Discord it will leave the radio channel. You can tune again into your radio once the bot is back online.",
   "radio.list.noRadio": "There are no radios available for the moment.",
   "radio.list.title": "📻 Radios available on **{{{ name }}}**:",
+  "radio.list.footer": "Tune into a programme using {{{ command }}} | Page {{{ page }}}",
   "radio.tune.noFrequency": "You must provide a frequency to tune in.",
   "radio.tune.invalidFrequency": "**{{{ frequency }}** is not a valid frequency.",
   "radio.tune.noRadioFound": "No radio found on frequency `{{{ frequency }}}`.",
