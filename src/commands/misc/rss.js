@@ -84,6 +84,7 @@ class AddSubcommand extends Command {
       channel: context.message.channel.id,
       settings: context.message.guild ? context.message.guild.id : context.message.author.id,
       created: Date.now(),
+      used: 0,
     });
 
     context.replySuccess(context.__('rss.add.added', { name }));
