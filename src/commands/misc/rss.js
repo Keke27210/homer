@@ -108,11 +108,11 @@ class RemoveSubcommand extends Command {
     const index = context.args[0];
     if (!index || Number.isNaN(parseInt(index))) return context.replyError(context.__('rss.remove.invalidIndex'));
 
-    const feed = feeds[index];
+    const feed = feeds[index - 1];
     if (!feed) return context.replyError(context.__('rss.remove.notFound', { command: `${this.client.prefix}rss list` }));
 
     const message = await context.replyWarning(context.__('rss.remove.question', { name: feed.name }));
-    for (const e of emotes) await message.react(e);
+    for (const e of this.emotes) await message.react(e);
 
     message.awaitReactions(
       (reaction, user) => this.emotes.includes(reaction.emoji.name) && user.id === context.message.author.id,
