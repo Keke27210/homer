@@ -55,7 +55,7 @@ class OtherUtil extends Util {
 
       for (const item of parsed.items.filter(i => (Date.now() - new Date(i.pubDate).getTime()) < 3600000)) {
         pages.push({ title: item.title, url: item.url, color: 'ORANGE', footer: this.client.__(language, 'rss.update.footer'), time: new Date(item.pubDate) });
-        entries.push(item.snippedContent.slice(0, 2000));
+        entries.push((item.content || item.snippedContent || this.client.__(language, 'rss.update.noContent')).slice(0, 2000));
       }
 
       if (entries.length === 0) continue;
