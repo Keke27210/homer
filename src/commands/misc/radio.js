@@ -294,10 +294,12 @@ class StatsSubcommand extends Command {
       pages.push([
         `🏠 **${context.message.guild.name}**`,
         '',
-        guildRanking.map((r, i) => {
-          const radio = radios.find(rad => rad.id === r.id);
-          return `**${i + 1}.** ${radio.emote} **${radio.name}**: ${this.client.time.timeSince(Date.now() + r.time, context.settings.misc.locale, true, false)}`;
-        }).join('\n') || context.__('global.none'),
+        guildRanking
+          .filter(r => r.time > 0)
+          .map((r, i) => {
+            const radio = radios.find(rad => rad.id === r.id);
+            return `**${i + 1}.** ${radio.emote} **${radio.name}**: ${this.client.time.timeSince(Date.now() + r.time, context.settings.misc.locale, true, false)}`;
+          }).join('\n') || context.__('global.none'),
       ].join('\n'));
     }
 
