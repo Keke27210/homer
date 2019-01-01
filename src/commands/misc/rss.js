@@ -46,7 +46,7 @@ class ListSubcommand extends Command {
     context.reply(
       context.__('rss.list.main', {
         emote: this.client.constants.emotes.rss,
-        name: context.message.guild ?  `**#${context.channel.name}**` : `**${context.message.author.username}**#${context.message.author.discriminator}`,
+        name: context.message.guild ?  `**#${context.message.channel.name}**` : `**${context.message.author.username}**#${context.message.author.discriminator}`,
       }),
       { embed },
     );
