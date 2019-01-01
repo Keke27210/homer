@@ -55,7 +55,7 @@ class OtherUtil extends Util {
       const pages = [];
       const entries = [];
 
-      const filteredItems = parsed.items.filter(i => new Date(i.isoDate).getTime() > feed.used);
+      const filteredItems = parsed.items//.filter(i => new Date(i.isoDate).getTime() > feed.used);
       for (const item of filteredItems) {
         pages.push({
           title: item.title,
