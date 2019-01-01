@@ -16,6 +16,7 @@
   "global.dm":"Messages Privés",
   "global.groupDm":"Conversation de groupe",
   "global.page":"Page {{{ num }}}",
+  "global.donatorsOnly": "Cette fonctionnalité est réservée uniquement aux donateurs.",
 
   "about.title":"{{{ emote }}} Informations à propos d'{{{ name }}}:",
   "about.embed.text":"Hello!\nI am a general purpose bot for all Discord communities.\nI provide you necessary tools to meet your needs, from utility to fun features you can fully enjoy me.\nYou can get below some useful information about me.",
