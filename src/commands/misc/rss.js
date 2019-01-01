@@ -75,7 +75,7 @@ class AddSubcommand extends Command {
       .count();
     if (feedCount >= 5) return context.replyWarning(context.__('rss.add.reachedLimit'));
 
-    const parsed = await rssParser.parseURL(encodeURIComponent(url)).catch(() => null);
+    const parsed = await rssParser.parseURL(url).catch(() => null);
     if (!parsed) return context.replyWarning(context.__('rss.add.error', { url }));
 
     await this.client.database.insertDocument({
