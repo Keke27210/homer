@@ -88,7 +88,7 @@ class MenuManager extends Manager {
     this.instances.push(instance);
   }
 
-  handleReaction(reaction, user) {
+  async handleReaction(reaction, user) {
     if (user.bot) return;
     const instance = this.instances.find(i => i.message === reaction.message.id);
     if (!instance) return;
