@@ -47,7 +47,7 @@ class OtherUtil extends Util {
 
     for (const feed of feeds) {
       const language = await this.client.database.getDocument('settings', feed.settings).then(s => s ? s.misc.locale : 'en-gb');
-      const parsed = this.client.rss.parseURL(feed.url).catch(() => null);
+      const parsed = await this.client.rss.parseURL(feed.url).catch(() => null);
       if (!parsed) return this.client.sendMessage(feed.channel, `${this.client.constants.emotes.warning} ${client.__(language, 'rss.update.error', { name: feed.name })}`);
 
       const pages = [];
@@ -55,12 +55,12 @@ class OtherUtil extends Util {
 
       for (const item of parsed.items.filter(i => (Date.now() - new Date(i.pubDate).getTime()) < 3600000)) {
         pages.push({ title: item.title, url: item.url, color: 'ORANGE', footer: this.client.__(language, 'rss.update.footer'), time: new Date(i.pubDate) });
-        entries.push(item.snippedContent);
+        entries.push(item.snippedContent.slice(0, 2000));
       }
 
       if (entries.length === 0) continue;
       this.client.menu.createMenu(
-        feed.chanel,
+        feed.channel,
         null,
         null,
         language,
