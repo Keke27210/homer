@@ -61,7 +61,11 @@ class OtherUtil extends Util {
         entries.push((item.contentSnippet || item.content || this.client.__(language, 'rss.update.noContent')).slice(0, 2000));
       }
 
-      if (entries.length === 0) continue;
+      if (entries.length === 0) {
+        this.client.logger.info(`RSS: Feed ${feed.id} ignored: no new content`);
+        continue;
+      }
+
       this.client.menu.createMenu(
         feed.channel,
         'everyone',
