@@ -726,6 +726,7 @@
   "telephone.text.disabled": "You will no longer receive text messages from other people.",
   "telephone.text.mustEnable": "You must enable receiving text messages to be able to send one.",
   "telephone.change.success": "You have successfully changed your number to `{{{ number }}}`.",
+  "telephone.change.alreadyExists": "A subscription already exists with the number `{{{ number }}}`.",
   "telephone.change.wrongFormat": "Wrong format, the number must be like `XXX-XXX` with only alphanumeric characters (excluding underscores).",
   "telephone.change.notOwner": "You must be the owner of the telephone line to change the number of.",
   "telephone.change.noNumber": "You must provide a new number to set.",

@@ -707,6 +707,7 @@
   "telephone.text.disabled":"Vous ne recevrez plus les SMS. Vous ne pourrez plus envoyer de SMS également.",
   "telephone.text.mustEnable":"Vous devez accepter de recevoir des messages pour pouvoir en envoyer.",
   "telephone.change.success": "Votre nouveau numéro de téléphone est le `{{{ number }}}`.",
+  "telephone.change.alreadyExists": "Un abonnement existe déjà sur le numéro `{{{ number }}}`.",
   "telephone.change.wrongFormat": "Mauvais format, le numéro doit être de la forme `XXX-XXX` avec seulement des caractères alphanumériques (hors underscores).",
   "telephone.change.notOwner": "Vous devez être le propriétaire de la ligne sur laquelle changer le numéro.",
   "telephone.change.noNumber": "Vous devez fournir un nouveau numéro à définir.",

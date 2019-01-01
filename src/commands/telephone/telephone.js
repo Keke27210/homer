@@ -291,6 +291,9 @@ class ChangeSubcommand extends Command {
     if (!number) return context.replyError(context.__('telephone.change.noNumber'));
     if (!/^[a-zA-Z\d]{3}-[a-zA-Z\d]{3}$/.test(number)) return context.replyWarning(context.__('telephone.change.wrongFormat'));
 
+    const checkAvailability = await this.client.database.findDocuments('telephone', { number });
+    if (checkAvailability.length > 0) return context.replyWarning(context.__('telephone.change.alreadyExists', { number }));
+
     await this.client.database.updateDocument('telephone', subscription.id, { number });
     context.replySuccess(context.__('telephone.change.success', { number }));
   }
