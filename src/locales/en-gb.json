@@ -603,6 +603,9 @@
   "rss.about.info.2": "Some information may not be decoded by the bot (author, images, etc).",
   "rss.about.info.3": "Feeds requiring authentication are not supported.",
   "rss.about.info.4": "You are limited to 5 feeds per salon.",
+  "rss.update.main": "{{{ emote }}} **{{{ name }}}** feed updates:",
+  "rss.update.footer": "Publish date",
+  "rss.update.error": "An error has occured while trying to retrieve RSS feed of **{{{ name }}}**.",
   
   "say.includesEveryone": "Your message includes an **@everyone** or **@here** mention.",
   "say.includesMention": "Your message includes a **member** or **role** mention.",

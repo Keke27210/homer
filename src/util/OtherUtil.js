@@ -42,6 +42,38 @@ class OtherUtil extends Util {
     if (subscription) this.client.database.deleteDocument('telephone', id);
   }
 
+  async processRSS() {
+    const feeds = await this.client.database.getDocuments('rss', true);
+
+    for (const feed of feeds) {
+      const language = await this.client.database.getDocument('settings', feed.settings).then(s => s ? s.misc.locale : 'en-gb');
+      const parsed = client.rss.parseURL(feed.url).catch(() => null);
+      if (!parsed) return client.sendMessage(feed.channel, `${this.client.constants.emotes.warning} ${client.__(language, 'rss.update.error', { name: feed.name })}`);
+
+      const pages = [];
+      const entries = [];
+
+      for (const item of parsed.items.filter(i => (Date.now() - new Date(i.pubDate).getTime()) < 3600000)) {
+        pages.push({ title: item.title, url: item.url, color: 'ORANGE', footer: this.client.__(language, 'rss.update.footer'), time: new Date(i.pubDate) });
+        entries.push(item.snippedContent);
+      }
+
+      if (entries.length === 0) continue;
+      this.client.menu.createMenu(
+        feed.chanel,
+        null,
+        null,
+        language,
+        this.client.__(language, 'rss.update.main', { emote: this.client.constants.emotes.rss, name: feed.name }),
+        pages,
+        entries,
+        { entriesPerPage: 1 },
+      );
+
+      this.client.database.updateDocument('rss', feed.id, { used: Date.now() });
+    }
+  }
+
   humanizePermissions(permissions, lang) {
     return permissions
       .filter(p => !this.client.constants.deprecatedPermissions.includes(p))
