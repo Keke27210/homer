@@ -115,7 +115,7 @@ class RemoveSubcommand extends Command {
     for (const e of this.emotes) await message.react(e);
 
     message.awaitReactions(
-      (reaction, user) => this.emotes.includes(reaction.emoji.name) && user.id === context.message.author.id,
+      (reaction, user) => this.emotes.includes(reaction.emoji.identifier) && user.id === context.message.author.id,
       { max: 1 },
     )
       .then(async (reactions) => {
