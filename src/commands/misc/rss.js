@@ -35,7 +35,7 @@ class ListSubcommand extends Command {
   }
 
   async execute(context) {
-    const feeds = await this.client.database.findDocuments('rss', { channel: context.message.channel.id });
+    const feeds = await this.client.database.findDocuments('rss', { channel: context.message.channel.id }, true);
     if (feeds.length === 0) return context.replyWarning(context.__('rss.noFeed'));
 
     const embed = new RichEmbed()
@@ -102,7 +102,7 @@ class RemoveSubcommand extends Command {
   }
 
   async execute(context) {
-    const feeds = await this.client.database.findDocuments('rss', { channel: context.message.channel.id });
+    const feeds = await this.client.database.findDocuments('rss', { channel: context.message.channel.id }, true);
     if (feeds.length === 0) return context.replyWarning(context.__('rss.noFeed'));
 
     const index = context.args[0];
