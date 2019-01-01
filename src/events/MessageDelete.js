@@ -41,6 +41,7 @@ class MessageDeleteEvent extends Event {
       message.mentions.members
         .forEach(async (u) => {
           if (message.author.id === u.id) return;
+          if ((Date.now() - message.createdTimestamp) > (this.client.isDonator(u.id) ? 3600000 : 60000)) return;
 
           const settings = await this.client.database.getDocument('settings', u.id);
           if (!settings || !settings.misc.antighost) return;
