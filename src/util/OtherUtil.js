@@ -55,7 +55,9 @@ class OtherUtil extends Util {
       const pages = [];
       const entries = [];
 
-      const filteredItems = parsed.items.filter(i => new Date(i.isoDate).getTime() > feed.used);
+      const filteredItems = parsed.items
+        .filter(i => new Date(i.isoDate).getTime() > feed.used)
+        .sort((a, b) => new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime());
       for (const item of filteredItems) {
         pages.push({
           title: item.title,
@@ -63,7 +65,7 @@ class OtherUtil extends Util {
           color: 'ORANGE',
           time: new Date(item.isoDate),
           thumb: item.enclosure ? item.enclosure.url : undefined,
-          footer: this.client.__(language, 'rss.update.footer', { total: filteredItems.length, i: (filteredItems.indexOf(item) + 1) }), time: new Date(item.isoDate),
+          footer: this.client.__(language, 'rss.update.footer', { total: filteredItems.length, i: (filteredItems.indexOf(item) + 1) }),
         });
 
         entries.push((item.contentSnippet || item.content || this.client.__(language, 'rss.update.noContent')).slice(0, 2000));
