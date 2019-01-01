@@ -2,6 +2,9 @@ const { Client } = require('discord.js');
 const readdir = require('util').promisify(require('fs').readdir);
 const DjsConstants = require('../../node_modules/discord.js/src/util/Constants');
 
+// Modules
+const RssParser = require('rss-parser');
+
 // Managers
 const CommandManager = require('../managers/CommandManager');
 const DatabaseManager = require('../managers/DatabaseManager');
@@ -43,6 +46,8 @@ class DiscordClient extends Client {
     this.handler = new HandlerUtil(this);
     this.logger = new LoggerUtil(this);
     this.other = new OtherUtil(this);
+
+    this.rss = new RssParser(this.config.rss || {});
 
     // Load events and commands
     this.loadEvents();
