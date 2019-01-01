@@ -91,7 +91,7 @@ class MenuManager extends Manager {
   handleReaction(reaction, user) {
     const instance = this.instances.find(i => i.message === reaction.message.id);
     if (!instance) return;
-    if (user.id !== instance.author) return;
+    if (instance.author !== 'everyone' && user.id !== instance.author) return;
 
     const newPage = emotes[reaction.emoji.name](instance.entries.length, instance.currentPage);
     if (newPage === -1) return this.stopMenu(instance);

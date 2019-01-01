@@ -58,6 +58,7 @@ class AddSubcommand extends Command {
     super(client, {
       name: 'add',
       category: 'misc',
+      usage: '<feed name> <feed URL>',
       userPermissions: ['MANAGE_GUILD'],
       dm: true,
     });
@@ -96,6 +97,7 @@ class RemoveSubcommand extends Command {
       name: 'remove',
       aliases: ['delete'],
       category: 'misc',
+      usage: '<feed index>',
       userPermissions: ['MANAGE_GUILD'],
       dm: true,
     });
