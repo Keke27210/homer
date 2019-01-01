@@ -1,5 +1,6 @@
 const Util = require('./Util');
 const BigInt = require('big-integer');
+const wait = require('util').promisify(setTimeout);
 
 class OtherUtil extends Util {
   constructor(client) {
@@ -73,6 +74,7 @@ class OtherUtil extends Util {
       );
 
       this.client.database.updateDocument('rss', feed.id, { used: Date.now() });
+      await wait(5000);
     }
   }
 
