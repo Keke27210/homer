@@ -17,6 +17,7 @@ const tables = [
   'radioFeatured',
   'radioStats',
   'reports',
+  'rss',
   'settings',
   'tags',
   'telephone',
