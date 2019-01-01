@@ -77,7 +77,7 @@ class MenuManager extends Manager {
     });
 
     const generatedEmbed = this.generateEmbed(instance);
-    const sentMessage = await this.client.channels.get(instance.channel).send(content, { embed: generatedEmbed });
+    const sentMessage = await (this.client.channels.get(instance.channel) || await this.client.fetchUser(instance.author)).send(content, { embed: generatedEmbed });
 
     (async function () {
       const reactions = Object.keys(emotes);
