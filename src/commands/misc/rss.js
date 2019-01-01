@@ -1,6 +1,6 @@
 const Command = require('../../structures/Command');
 const { RichEmbed } = require('discord.js');
-const rssParser = require('rss-parser');
+const rssParser = new (require('rss-parser'))();
 
 class RssCommand extends Command {
   constructor(client) {
@@ -15,8 +15,6 @@ class RssCommand extends Command {
       ],
       dm: true,
     });
-
-    this.parser = new rssParser();
   }
 
   async execute(context) {
@@ -77,7 +75,7 @@ class AddSubcommand extends Command {
       .count();
     if (feedCount >= 5) return context.replyWarning(context.__('rss.add.reachedLimit'));
 
-    const parsed = await this.parser.parseURL(encodeURIComponent(url)).catch(() => null);
+    const parsed = await rssParser.parseURL(encodeURIComponent(url)).catch(() => null);
     if (!parsed) return context.replyWarning(context.__('rss.add.error', { url }));
 
     await this.client.database.insertDocument({
