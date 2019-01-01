@@ -30,6 +30,10 @@ class ChannelDeleteEvent extends Event {
 
     // Deleting phone subscription
     this.client.other.deleteSub(channel.id);
+
+    // Deleting existing RSS feeds
+    const feeds = await this.client.database.findDocuments('rss', { channel: channel.id }, true);
+    for (let i = 0; i < feeds.length; i += 1) this.client.database.deleteDocument('rss', feeds[i].id);
   }
 }
 

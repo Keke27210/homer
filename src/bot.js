@@ -32,6 +32,19 @@ scheduleJob({ second: 10 }, async () => {
     }
   }
 
+  // RSS feeds
+  if (client.shard.id === 0 && new Date().getMinutes() === 10) {
+    const feeds = await this.client.database.getDocuments('rss', true);
+
+    for (const feed of feeds) {
+      const language = await this.client.database.getDocument('settings', feed.settings).then(s => s ? s.misc.locale : 'en-gb');
+      const parsed = client.rss.parseURL(feed.url).catch(() => null);
+      if (!parsed) return client.sendMessage(feed.channel, `${this.client.constants.emotes.warning} ${client.__(language, 'rss.update.error', { name: feed.name })}`);
+
+
+    }
+  }
+
   // Leave inactive radio channels
   const inactives = Object.entries(client.radio.inactivity)
     .filter(([id, time]) => (Date.now() - time) > 300000)
