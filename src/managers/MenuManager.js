@@ -94,6 +94,12 @@ class MenuManager extends Manager {
     if (!instance) return;
     if (instance.author !== 'everyone' && user.id !== instance.author) return;
 
+    if (instance.author === 'everyone' && reaction.emoji.name === '⏹' && reaction.message.guild) {
+      const permission = await reaction.message.guild.fetchMember(user.id)
+        .then(m => m.permissions.has('MANAGE_MESSAGES'));
+      if (!permission) return;
+    }
+
     const newPage = emotes[reaction.emoji.name](instance.entries.length, instance.currentPage);
     if (newPage === -1) return this.stopMenu(instance);
 
