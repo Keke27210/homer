@@ -8,7 +8,6 @@ class MessageReactionAddEvent extends Event {
   handle(reaction, user) {
     const instance = this.client.menu.instances.find(i => i.message === reaction.message.id);
     if (instance) {
-      if (user.id !== instance.author) return;
       this.client.menu.handleReaction(reaction, user);
 
       // Trying to delete the reaction
