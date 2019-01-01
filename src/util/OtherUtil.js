@@ -55,14 +55,9 @@ class OtherUtil extends Util {
       const pages = [];
       const entries = [];
 
-<<<<<<< HEAD
       const filteredItems = parsed.items
         .filter(i => new Date(i.isoDate).getTime() > feed.used)
         .sort((a, b) => new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime());
-=======
-      const filteredItems = parsed.items.sort((a, b) => new Date(b.isoDate).getTime() > new Date(a.isoDate).getTime())
-      //.filter(i => new Date(i.isoDate).getTime() > feed.used);
->>>>>>> 488488ac3ac7384049929e7d3174ecdbe60b2dbb
       for (const item of filteredItems) {
         pages.push({
           title: item.title,
