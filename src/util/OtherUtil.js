@@ -45,7 +45,7 @@ class OtherUtil extends Util {
 
   async processRSS() {
     const feeds = await this.client.database.getDocuments('rss', true);
-    console.log(`Feeds: ${feeds.map(c => c.channel)}`)
+    this.client.logger.info(`RSS: Processing ${feeds.length} feeds...`);
 
     for (const feed of feeds) {
       const language = await this.client.database.getDocument('settings', feed.settings).then(s => s ? s.misc.locale : 'en-gb');
@@ -74,7 +74,7 @@ class OtherUtil extends Util {
       );
 
       this.client.database.updateDocument('rss', feed.id, { used: Date.now() });
-      await wait(5000);
+      this.client.logger.info(`RSS: Feed ${feed.id} processed`);
     }
   }
 
