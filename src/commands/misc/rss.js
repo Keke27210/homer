@@ -78,7 +78,7 @@ class AddSubcommand extends Command {
     const parsed = await rssParser.parseURL(url).catch(() => null);
     if (!parsed) return context.replyWarning(context.__('rss.add.error', { url }));
 
-    await this.client.database.insertDocument({
+    await this.client.database.insertDocument('rss', {
       name,
       url,
       channel: context.message.channel.id,
