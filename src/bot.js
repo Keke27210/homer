@@ -33,8 +33,8 @@ scheduleJob({ second: 10 }, async () => {
   }
 
   // RSS feeds
-  if (client.shard.id === 0 && new Date().getMinutes() === 10) {
-    this.client.other.processRSS();
+  if (client.shard.id === 0 && new Date().getMinutes() === 15) {
+    client.other.processRSS();
   }
 
   // Leave inactive radio channels

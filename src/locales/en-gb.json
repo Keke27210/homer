@@ -599,7 +599,7 @@
   "rss.remove.notFound": "No feed found with given index, find indexes using `{{{ command }}}`.",
   "rss.remove.invalidIndex": "You must provide an index of feed to remove.",
   "rss.about.main": "{{{ emote }}} Information about Homer's **RSS feeds**:",
-  "rss.about.info.1": "Updates take place once an hour (at each hour:10).",
+  "rss.about.info.1": "Updates take place once an hour (at each hour:15).",
   "rss.about.info.2": "Some information may not be decoded by the bot (author, images, etc).",
   "rss.about.info.3": "Feeds requiring authentication are not supported.",
   "rss.about.info.4": "You are limited to 5 feeds per salon.",
