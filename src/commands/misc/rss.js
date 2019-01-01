@@ -119,7 +119,7 @@ class RemoveSubcommand extends Command {
       { max: 1 },
     )
       .then(async (reactions) => {
-        const choice = reactions.first().emoji.name;
+        const choice = reactions.first().emoji.identifier;
 
         if (choice === this.emotes[0]) {
           await this.client.database.deleteDocument('rss', feed.id);
@@ -131,7 +131,7 @@ class RemoveSubcommand extends Command {
   }
 
   get emotes() {
-    return [this.client.constants.emotes.success, this.client.constants.emotes.error];
+    return [this.client.constants.emotes.successID, this.client.constants.emotes.errorID];
   }
 }
 
