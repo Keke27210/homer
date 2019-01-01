@@ -280,6 +280,7 @@
   "helpUtil.telephone.terminate": "Terminate your telephone subscription",
   "helpUtil.telephone.phonebook": "Set your phonebook's description (or \"off\" to not appear on it)",
   "helpUtil.telephone.text": "Switch the text message option for the current subscription",
+  "helpUtil.telephone.change": "Customize your telephone number (donators only)",
   "helpUtil.text": "Send a text message to someone",
   "helpUtil.timefor": "Get current time for a user",
   "helpUtil.timezone": "Set the server timezone",
@@ -723,6 +724,10 @@
   "telephone.text.enabled": "You can now receive text messages from other people.",
   "telephone.text.disabled": "You will no longer receive text messages from other people.",
   "telephone.text.mustEnable": "You must enable receiving text messages to be able to send one.",
+  "telephone.change.success": "You have successfully changed your number to `{{{ number }}}`.",
+  "telephone.change.wrongFormat": "Wrong format, the number must be like `XXX-XXX` with only alphanumeric characters (excluding underscores).",
+  "telephone.change.notOwner": "You must be the owner of the telephone line to change the number of.",
+  "telephone.change.noNumber": "You must provide a new number to set.",
   
   "text.sent": "Text message successfully sent to **{{{ number }}}**!",
   "text.title": "📧 Text message by {{{ user }}} from **{{{ number }}}**:",

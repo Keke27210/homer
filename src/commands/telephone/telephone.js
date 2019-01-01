@@ -12,6 +12,7 @@ class TelephoneCommand extends Command {
         new PhonebookSubcommand(client),
         new SwitchSubcommand(client),
         new TextSubcommand(client),
+        new ChangeSubcommand(client),
       ],
       category: 'telephone',
       dm: true,
@@ -266,6 +267,32 @@ class TextSubcommand extends Command {
       await this.client.database.updateDocument('telephone', context.message.channel.id, { textable: true });
       context.replySuccess(context.__('telephone.text.enabled'));
     }
+  }
+}
+
+class ChangeSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'change',
+      aliases: ['changenumber'],
+      category: 'telephone',
+      dm: true,
+    });
+  }
+
+  async execute(context) {
+    if (!this.client.other.isDonator(context.message.author.id)) return context.replyError(context.__('global.donatorsOnly'));
+
+    const subscription = await this.client.database.getDocument('telephone', context.message.channel.id);
+    if (!subscription) return context.replyWarning(context.__('telephone.noSubscription', { command: `${this.client.prefix}telephone subscribe` }));
+    if (subscription.subscriber !== context.message.author.id) return context.replyWarning(context.__('telephone.change.notOwner'));
+
+    const number = context.args[0];
+    if (!number) return context.replyError(context.__('telephone.change.noNumber'));
+    if (!/^[a-zA-Z\d]{3}-[a-zA-Z\d]{3}$/.test(number)) return context.replyWarning(context.__('telephone.change.wrongFormat'));
+
+    await this.client.database.updateDocument('telephone', subscription.id, { number });
+    context.replySuccess(context.__('telephone.change.success', { number }));
   }
 }
 
