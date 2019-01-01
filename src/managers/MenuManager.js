@@ -113,6 +113,7 @@ class MenuManager extends Manager {
     this.instances.splice(this.instances.indexOf(instance), 1);
 
     // Trying to delete author's message
+    if (!instance.authorMessage) return;
     const authorMessage = await this.client.channels.get(instance.channel).fetchMessage(instance.authorMessage)
       .catch(() => null);
     if (!authorMessage) return;
