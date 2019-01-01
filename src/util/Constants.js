@@ -60,6 +60,7 @@ exports.emotes = {
 
   // Services
   dbans: '<:discordbans:420715963718041641>',
+  rss: '<:rss:529596823275307019>',
   verifiedServer: '<:verified:452764762699464724>',
 };
 
