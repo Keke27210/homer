@@ -141,8 +141,11 @@ class MenuManager extends Manager {
         (instance.options.footer || this.__(lang, 'global.page', { num: `${currentPage + 1}/${instance.entries.length}` })))
       .setColor(pages[currentPage] && pages[currentPage].color ? pages[currentPage].color : undefined)
       .setThumbnail(pages[currentPage] && pages[currentPage].thumb ? pages[currentPage].thumb : undefined)
-      .setTimestamp(pages[currentPage] && pages[currentPage].time ? pages[currentPage].time : undefined)
       .setURL(pages[currentPage] && pages[currentPage].url ? pages[currentPage].url : undefined);
+
+    if (pages[currentPage] && pages[currentPage].time) {
+      embed.setTimestamp(pages[currentPage].time);
+    }
 
     return embed;
   }
