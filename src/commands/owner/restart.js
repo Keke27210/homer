@@ -16,7 +16,7 @@ class RestartCommand extends Command {
     await this.client.database.updateDocument('bot', 'settings', { reboot: [context.message.channel.id, message.id] });
 
     // Sending messages in radio channels
-    await this.client.radio.saveSessions();
+    //await this.client.radio.saveSessions();
     this.client.voiceConnections.forEach((vc) => {
       if (vc.dispatcher) vc.dispatcher.emit('reboot');
       vc.channel.leave();

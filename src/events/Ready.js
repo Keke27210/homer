@@ -20,7 +20,7 @@ class ReadyEvent extends Event {
     }
 
     // Resume audio sessions
-    this.client.radio.resumeSessions();
+    //this.client.radio.resumeSessions();
 
     // Update game & bot list count
     this.client.update.updateGame();

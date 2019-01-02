@@ -15,7 +15,7 @@ class ShutdownCommand extends Command {
     const message = await context.replyLoading(`Shutting down **${this.client.shard.count}** shards...`);
 
     // Sending messages in radio channels
-    await this.client.radio.saveSessions();
+    //await this.client.radio.saveSessions();
     this.client.voiceConnections.forEach((vc) => {
       if (vc.dispatcher) vc.dispatcher.emit('reboot', true);
       vc.channel.leave();
