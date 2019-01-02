@@ -19,6 +19,9 @@ class ReadyEvent extends Event {
       this.client.database.updateDocument('bot', 'settings', { reboot: null });
     }
 
+    // Resume audio sessions
+    this.client.radio.resumeSessions();
+
     // Update game & bot list count
     this.client.update.updateGame();
     this.client.update.updateBotList();

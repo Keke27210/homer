@@ -133,6 +133,8 @@ class RadioManager extends Manager {
           .catch(() => null);
       });
     }
+
+    this.client.database.updateDocument('bot', 'settings', { sessions: null });
   }
 }
 
