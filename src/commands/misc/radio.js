@@ -242,18 +242,34 @@ class InfoSubcommand extends Command {
     const meta = await this.client.database.getDocument('radios', currentBroadcast.radio);
 
     let playing = context.__('global.noInformation');
+    let image = `${this.client.constants.CDN}/assets/radios/${meta.logo}.png?nocache=${Date.now()}`;
     if (meta.stationId) {
-      const req = await request.get(`https://api.radio.net/info/v2/search/nowplaying?apikey=${this.client.config.api.radio}&numberoftitles=1&station=${meta.stationId}`)
-        .then(r => r.body)
-        .catch(() => null);
+      // radio.net
+      if (meta.stationId.startsWith('RADIONET_')) {
+        const req = await request.get(`https://api.radio.net/info/v2/search/nowplaying?apikey=${this.client.config.api.radio}&numberoftitles=1&station=${meta.stationId.split('_')[1]}`)
+          .then(r => r.body)
+          .catch(() => null);
 
-      if (req && req[0]) {
-        playing = `**${req[0].streamTitle.split('-').join('**-**')}**`;
+        if (req && req[0]) {
+          playing = req[0].streamTitle;
+        }
+      }
+      // tune-in
+      else if (meta.stationId.startsWith('TUNEIN_')) {
+        const req = await request.get(`https://feed.tunein.com/profiles/s${meta.stationId.split('_')[1]}/nowPlaying`)
+          .then(r => r.body)
+          .catch(() => null);
+
+        if (req) {
+          const programme = req.Secondary || req.Primary || req.Header;
+          playing = programme.Title;
+          image = programme.Image;
+        }
       }
     }
 
     const infoDescription = [
-      `🎛 **[${meta.name}](${meta.website})** - ${meta.id} MHz`,
+      `${meta.emote} **[${meta.name}](${meta.website})** - ${meta.id}MHz`,
       `🎵 ${playing}`,
       `🚩 ${meta.language} (${meta.country})`,
       `🔖 ${meta.type.map(t => context.__(`radio.types.${t}`)).join(', ')}`,
@@ -262,7 +278,7 @@ class InfoSubcommand extends Command {
 
     const embed = new RichEmbed()
       .setDescription(infoDescription)
-      .setThumbnail(`${this.client.constants.CDN}/assets/radios/${meta.logo}.png?nocache=${Date.now()}`);
+      .setThumbnail(image);
 
     context.reply(context.__('radio.info.title'), { embed });
   }
