@@ -109,10 +109,14 @@
   "contacts.delete.deleted": "This contact has been deleted successfully!",
   
   "donators.main": "💶 Donations for **{{{ name }}}**:",
-  "donators.embedDescription": "Donations are required to host the bot, support the developer and pay all third-part services that the bot uses.\nBy donating for Homer, you let me upgrade servers which host the bot to allow more security, scalability and performance.\nI accept donations via PayPal.me at this address: [click here]({{{ link }}}).\n**Note**: Once you donated, please send me a DM with your PayPal account name so I can identify you.\n\nThank you ❤",
-  "donators.donatorsList": "👥 Donators",
-  "donators.perksTitle": "🎁 Donation perks",
-  "donators.perksContent": "Available soon™",
+  "donators.text": "Homer is a free Discord bot developed by a student on a voluntary basis.\nDespite the motivation to maintain the bot, the hosting of the latter remains profitable.\nYou can help me finance the hosting of the bot by making a donation, you will enjoy some nice little benefits that you find just below.\nThe minimum amount, which allows you to take advantage of the advantages, is 2€ but you can give more according to your desires.\n\nThank you very much ❤,\niDroid.",
+  "donators.donators": "👥 Donators",
+  "donators.perks": "🎁 Perks",
+  "donators.perk.1": "Better audio quality (96kbps instead of 48kbps)",
+  "donators.perk.2": "Customizable telephone number",
+  "donators.perk.3": "Longer time detection in anti-ghost ping (1h instead of d'1m)",
+  "donators.perk.4": "⬅ Your name at the left",
+  "donators.perk.5": "All my grattitude ❤",
 
   "emote.title": "Information about **{{{ name }}}**:",
   "emote.embed.id": "Discord ID",
