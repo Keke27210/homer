@@ -124,7 +124,7 @@ class RadioManager extends Manager {
         if (!voiceChannel) return;
 
         voiceChannel.join()
-          .then((vc) => {
+          .then(async (vc) => {
             const dispatcher = await vc.playBroadcast(broadcast);
             dispatcher.on('error', error => this.client.radio.dispatcherError(null, dispatcher, error));
             dispatcher.on('reboot', shutdown => this.client.radio.rebootMessage(null, shutdown));
