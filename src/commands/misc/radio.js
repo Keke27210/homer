@@ -122,6 +122,7 @@ class VolumeSubcommand extends Command {
     if (!channel.members.has(context.message.author.id)) return context.replyWarning(context.__('radio.notInChannel', { name: channel.name }));
 
     let volume = context.args[0];
+    if (!volume) return context.reply(context.__('radio.volume.currentVolume', { volume: context.settings.radio.volume }));
     if (isNaN(parseInt(volume)) || volume < 0 || volume > 100) return context.replyError(context.__('radio.volume.invalidVolume'));
 
     volume = (volume / 100).toFixed(2);
