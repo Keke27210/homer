@@ -603,6 +603,7 @@
   "rss.about.info.2": "Some information may not be decoded by the bot (author, images, etc).",
   "rss.about.info.3": "Feeds requiring authentication are not supported.",
   "rss.about.info.4": "You are limited to 5 feeds per salon.",
+  "rss.about.info.5": "Only new content are shown (everything at the first update).",
   "rss.update.main": "{{{ emote }}} **{{{ name }}}** feed updates:",
   "rss.update.footer": "Content {{{ i }}}/{{{ total }}} | Publish date",
   "rss.update.noContent": "No content to display.",

@@ -584,6 +584,7 @@
   "rss.about.info.2": "Quelques infomations peuvent ne pas être décodées par le bot (auteur, image, etc).",
   "rss.about.info.3": "Les fils qui requièrent une authentification ne sont pas supportés.",
   "rss.about.info.4": "Vous êtes limité à 5 fils par salon.",
+  "rss.about.info.5": "Seul les nouveaux contenus sont affichés (tous à la première mise à jour).",
   "rss.update.main": "{{{ emote }}} Mises à jour du fil **{{{ name }}}**:",
   "rss.update.footer": "Contenu {{{ i }}}/{{{ total }}} | Date de publication",
   "rss.update.noContent": "Aucun contenu à afficher.",
