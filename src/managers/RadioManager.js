@@ -93,14 +93,46 @@ class RadioManager extends Manager {
   }
 
   dispatcherError(context, dispatcher, error) {
-    context.replyWarning(context.__('radio.dispatcherError'));
+    if (context) context.replyWarning(context.__('radio.dispatcherError'));
     dispatcher.end();
     dispatcher.player.voiceConnection.disconnect();
-    this.client.logger.info(`RADIO: Dispatcher error (guild ${context.message.guild.id}): ${error.message}`);
+    this.client.logger.info(`RADIO: Dispatcher error (guild ${context ? context.message.guild.id : dispatcher.player.voiceConnection.channel.guild.id}): ${error.message}`);
   }
 
   rebootMessage(context, shutdown = false) {
-    context.replyWarning(context.__(`radio.system.${shutdown ? 'shutdown' : 'reboot'}`));
+    if (context) context.replyWarning(context.__(`radio.system.${shutdown ? 'shutdown' : 'reboot'}`));
+  }
+
+  async saveSessions() {
+    const sessions = {};
+    this.broadcasts.forEach(b => { sessions[b.radio] = b.dispatchers.map(d => d.player.voiceConnection.channel.guild.id) });
+    await this.client.database.updateDocument('bot', 'settings', { sessions });
+    return true;
+  }
+
+  async resumeSessions() {
+    const sessions = await this.client.database.getDocument('bot', 'settings').then(s => s.sessions);
+    if (!sessions) return;
+
+    for (const radio of Object.keys(sessions)) {
+      const broadcast = await this.getBroadcast(radio);
+      sessions[radio].forEach(async (id) => {
+        const settings = await this.client.database.getDocument('settings', id);
+        if (!settings) return;
+
+        const voiceChannel = this.client.channels.get(settings.radio.channel);
+        if (!voiceChannel) return;
+
+        voiceChannel.join()
+          .then((vc) => {
+            const dispatcher = await vc.playBroadcast(broadcast);
+            dispatcher.on('error', error => this.client.radio.dispatcherError(null, dispatcher, error));
+            dispatcher.on('reboot', shutdown => this.client.radio.rebootMessage(null, shutdown));
+            dispatcher.once('speaking', () => message.edit(context.__('radio.tune.playing', { name: broadcast.name })));
+          })
+          .catch(() => null);
+      });
+    }
   }
 }
 
