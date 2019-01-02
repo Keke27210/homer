@@ -100,7 +100,7 @@
   "contacts.delete.deleted":"Ce contact a été supprimé avec succès !",
 
   "donators.main":"💶 Donations pour **{{{ name }}}**:",
-  "donators.text":"Homer est un bot Discord gratuit développé bénévolement par un étudiant.\nMalgré la motivation à vouloir maintenir le bot, l'hébergement de ce dernier reste payant.\nVous pouvez m'aider à financer l'hébergement du bot en faisant une donation, vous profiterez de petits avantages sympa que vous retrouvez juste en-dessous.\nLe montant minimum, qui vous permet de profiter des avantages, est de 2€ mais vous pouvez donner plus selon vos envies.\n\nMerci énormément ❤,\niDroid.",
+  "donators.text":"Homer est un bot Discord gratuit développé bénévolement par un étudiant.\nMalgré la motivation à vouloir maintenir le bot, l'hébergement de ce dernier reste payant.\nVous pouvez m'aider à financer l'hébergement du bot en faisant une donation, vous profiterez de petits avantages sympa que vous retrouvez juste en-dessous.\nLe montant minimum, qui vous permet de profiter des avantages, est de 2€ mais vous pouvez donner plus selon vos envies.\n\nMerci énormément, ❤\niDroid.\n\n**[Lien de donation sécurité]({{{ link }}})**",
   "donators.donators":"👥 Donateurs",
   "donators.perks":"🎁 Avantages",
   "donators.perk.1": "Meilleure qualité audio",

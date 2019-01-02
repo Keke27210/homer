@@ -170,6 +170,6 @@ exports.deprecatedPermissions = [
   'MANAGE_ROLES_OR_PERMISSIONS',
 ];
 
-exports.donationLink = 'https://paypal.me/ibotandidroid';
-exports.githubLink = 'https://github.com/iDroid27210/homer';
+exports.donationLink = id => `https://donatebot.io/checkout/382951433378594817?buyer=${id}`;
+exports.githubLink = 'https://github.com/iDroid27/homer';
 exports.logChannel = '458334746338918403';

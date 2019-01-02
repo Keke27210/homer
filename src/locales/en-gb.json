@@ -109,7 +109,7 @@
   "contacts.delete.deleted": "This contact has been deleted successfully!",
   
   "donators.main": "💶 Donations for **{{{ name }}}**:",
-  "donators.text": "Homer is a free Discord bot developed by a student on a voluntary basis.\nDespite the motivation to maintain the bot, the hosting of the latter remains profitable.\nYou can help me finance the hosting of the bot by making a donation, you will enjoy some nice little benefits that you find just below.\nThe minimum amount, which allows you to take advantage of the advantages, is 2€ but you can give more according to your desires.\n\nThank you very much ❤,\niDroid.",
+  "donators.text": "Homer is a free Discord bot developed by a student on a voluntary basis.\nDespite the motivation to maintain the bot, the hosting of the latter remains profitable.\nYou can help me finance the hosting of the bot by making a donation, you will enjoy some nice little benefits that you find just below.\nThe minimum amount, which allows you to take advantage of the advantages, is 2€ but you can give more according to your desires.\n\nThank you very much, ❤\niDroid.\n\n**[Secured donation link]({{{ link }}})**",
   "donators.donators": "👥 Donators",
   "donators.perks": "🎁 Perks",
   "donators.perk.1": "Better audio quality",
