@@ -26,17 +26,11 @@ class DonatorsCommand extends Command {
       .join('\n');
 
     const embed = new RichEmbed()
-      .setDescription(context.__(
-        'donators.text',
-        { link: this.client.constants.donationLink },
-      ))
-      .addField(context.__('donators.donators'), donators || context.__('global.none'))
-      .addField(context.__('donators.perks'), perks || context.__('global.none'));
+      .setDescription(context.__('donators.text', { link: this.client.constants.donationLink }))
+      .addField(context.__('donators.donators'), donators || context.__('global.none'), true)
+      .addField(context.__('donators.perks'), perks || context.__('global.none'), true);
 
-    context.reply(
-      context.__('donators.main', { name: this.client.user.username }),
-      { embed },
-    );
+    context.reply(context.__('donators.main', { name: this.client.user.username }), { embed });
   }
 }
 

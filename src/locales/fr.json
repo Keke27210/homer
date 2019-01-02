@@ -103,9 +103,9 @@
   "donators.text":"Homer est un bot Discord gratuit développé bénévolement par un étudiant.\nMalgré la motivation à vouloir maintenir le bot, l'hébergement de ce dernier reste payant.\nVous pouvez m'aider à financer l'hébergement du bot en faisant une donation, vous profiterez de petits avantages sympa que vous retrouvez juste en-dessous.\nLe montant minimum, qui vous permet de profiter des avantages, est de 2€ mais vous pouvez donner plus selon vos envies.\n\nMerci énormément ❤,\niDroid.",
   "donators.donators":"👥 Donateurs",
   "donators.perks":"🎁 Avantages",
-  "donators.perk.1": "Meilleure qualité audio (96kbps au lieu de 48kbps)",
+  "donators.perk.1": "Meilleure qualité audio",
   "donators.perk.2": "Numéro de téléphone personnalisable",
-  "donators.perk.3": "Temps de détection de l'anti-ghost ping plus long (1h au lieu d'1m)",
+  "donators.perk.3": "Temps de détection de l'anti-ghost ping plus long",
   "donators.perk.4": "⬅ Votre nom à gauche",
   "donators.perk.5": "Toute ma reconnaissance ❤",
 
