@@ -15,12 +15,7 @@ class ReadyEvent extends Event {
     // If it is a reboot, edit the message and clear cache
     const reboot = await this.client.database.getDocument('bot', 'settings').then(s => s.reboot);
     if (reboot) {
-      const channel = this.client.channels.get(reboot[0]);
-      if (channel) {
-        const message = await channel.fetchMessage(reboot[1]).catch(() => null);
-        if (message) message.edit(`${this.client.constants.emotes.success} Successfully restarted all shards!`);
-      }
-
+      this.client.updateMessage(reboot[0], reboot[1], `${this.client.constants.emotes.success} Successfully restarted all shards!`);
       this.client.database.updateDocument('bot', 'settings', { reboot: null });
     }
 
