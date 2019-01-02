@@ -263,7 +263,7 @@ class InfoSubcommand extends Command {
         if (req) {
           const programme = req.Secondary || req.Primary || req.Header;
           playing = programme.Title;
-          image = programme.Image;
+          if (programme.Image !== 'http://cdn-radiotime-logos.tunein.com/p0q.png') image = programme.Image;
         }
       }
     }
