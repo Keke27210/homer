@@ -305,7 +305,7 @@ class StatsSubcommand extends Command {
     if (context.message.guild) {
       const guildRanking = radioStats
         .map(r => ({ id: r.id, time: (r.entries.find(e => e.id === context.message.guild.id) || {}).time || 0 }))
-        .sort((a, b) => a.time < b.time)
+        .sort((a, b) => b.time - a.time)
         .slice(0, 10);
 
       pages.push([
@@ -323,7 +323,7 @@ class StatsSubcommand extends Command {
     // Global stats
     const globalRanking = radioStats
       .map(r => ({ id: r.id, time: (r.entries.reduce((prev, val) => prev + val.time, 0)) || 0 }))
-      .sort((a, b) => a.time < b.time)
+      .sort((a, b) => b.time - a.time)
       .slice(0, 10);
 
     pages.push([
