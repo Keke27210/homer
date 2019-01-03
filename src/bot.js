@@ -51,7 +51,7 @@ scheduleJob({ second: 10 }, async () => {
 
   // Cancel inactive phone calls
   if (client.shard.id === 0) {
-    const calls = await client.database.getDocuments('calls')
+    const calls = await client.database.getDocuments('calls', true)
       .then(calls => calls.filter(c => (Date.now() - c.activity) > 300000));
 
     for (const call of calls) {
