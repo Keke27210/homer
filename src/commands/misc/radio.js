@@ -18,7 +18,6 @@ class RadioCommand extends Command {
         new SessionsSubcommand(client),
         new SwitchSubcommand(client),
         new StatsSubcommand(client),
-        new ProgrammesSubcommand(client),
       ],
     });
   }
@@ -457,79 +456,6 @@ class SwitchSubcommand extends Command {
       this.client.radio.service = true;
       context.replySuccess('The radio service has been enabled successfully!');
     }
-  }
-}
-
-class ProgrammesSubcommand extends Command {
-  constructor(client) {
-    super(client, {
-      name: 'programmes',
-      aliases: ['onair', 'broadcasts'],
-      category: 'misc',
-      dm: true,
-    });
-  }
-
-  async execute(context) {
-    const radios = await this.client.database.getDocuments('radios', true)
-      .then(radios => radios.filter(r => r.stationId));
-
-    const entries = [];
-    const pages = [];
-
-    for (const radio of radios) {
-      let playing = context.__('global.noInformation');
-      let image = `${this.client.constants.CDN}/assets/radios/${radio.logo}.png?nocache=${Date.now()}`;
-
-      // radio.net
-      if (radio.stationId.startsWith('RADIONET_')) {
-        const req = await request.get(`https://api.radio.net/info/v2/search/nowplaying?apikey=${this.client.config.api.radio}&numberoftitles=1&station=${radio.stationId.split('_')[1]}`)
-          .then(r => r.body)
-          .catch(() => null);
-
-        if (req && req[0]) {
-          playing = req[0].streamTitle;
-        } else {
-          continue;
-        }
-      }
-      // tune-in
-      else if (radio.stationId.startsWith('TUNEIN_')) {
-        const req = await request.get(`https://feed.tunein.com/profiles/s${radio.stationId.split('_')[1]}/nowPlaying`)
-          .then(r => r.body)
-          .catch(() => null);
-
-        if (req) {
-          const programme = req.Secondary || req.Primary || req.Header;
-          playing = programme.Title;
-          if (programme.Image !== 'http://cdn-radiotime-logos.tunein.com/p0q.png') image = programme.Image;
-        }
-      }
-
-      entries.push([
-        `${radio.emote} **${radio.name}** - **${radio.id}**Mhz`,
-        '',
-        playing,
-      ].join('\n'));
-
-      pages.push({
-        title: ' ',
-        footer: context.__('radio.programmes.footer', { name: radio.name, prefix: this.client.prefix, id: radio.id }),
-        thumb: image,
-        time: new Date(),
-      });
-    }
-
-    this.client.menu.createMenu(
-      context.message.channel.id,
-      context.message.author.id,
-      context.message.id,
-      context.settings.misc.locale,
-      context.__('radio.programmes.main', { name: this.client.user.username }),
-      pages,
-      entries,
-      { entriesPerPage: 1 },
-    );
   }
 }
 
