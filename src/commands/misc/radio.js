@@ -464,7 +464,7 @@ class ProgrammesSubcommand extends Command {
   constructor(client) {
     super(client, {
       name: 'programmes',
-      aliases: ['shows', 'broadcasts'],
+      aliases: ['onair', 'broadcasts'],
       category: 'misc',
       dm: true,
     });
@@ -489,6 +489,8 @@ class ProgrammesSubcommand extends Command {
 
         if (req && req[0]) {
           playing = req[0].streamTitle;
+        } else {
+          continue;
         }
       }
       // tune-in
@@ -511,7 +513,7 @@ class ProgrammesSubcommand extends Command {
       ].join('\n'));
 
       pages.push({
-        title: '',
+        title: ' ',
         footer: context.__('radio.programmes.footer', { name: radio.name, prefix: this.client.prefix, id: radio.id }),
         thumb: image,
         time: new Date(),
