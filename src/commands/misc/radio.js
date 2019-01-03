@@ -295,9 +295,9 @@ class StatsSubcommand extends Command {
   }
 
   async execute(context) {
-    const radioStats = await this.client.database.getDocuments('radioStats');
+    const radioStats = await this.client.database.getDocuments('radioStats', true);
     if (radioStats.length === 0) return context.replyWarning(context.__('radio.stats.noStats'));
-    const radios = await this.client.database.getDocuments('radios');
+    const radios = await this.client.database.getDocuments('radios', true);
 
     const pages = [];
 
