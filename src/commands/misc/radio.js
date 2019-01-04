@@ -43,7 +43,7 @@ class ListSubcommand extends Command {
     const pageCount = Math.ceil(radios.length / 10);
     const pages = [];
     for (let i = 0; i < pageCount; i += 1) {
-      pages.push({ footer: context.__('radio.list.footer', { command: `${this.client.prefix}radio tune <frequency>`, page: `${i + 1}/${pageCount}` }) });
+      pages.push({ title: ' ', footer: context.__('radio.list.footer', { command: `${this.client.prefix}radio tune <frequency>`, page: `${i + 1}/${pageCount}` }) });
     }
 
     this.client.menu.createMenu(
