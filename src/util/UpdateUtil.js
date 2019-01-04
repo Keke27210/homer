@@ -29,6 +29,19 @@ class UpdateUtil extends Util {
   }
 
   async updateBotList() {
+    // DiscordBotList.com
+    request
+      .post(`https://discordbotlist.com/api/bots/${this.client.user.id}/stats`)
+      .set('Authorization', this.client.config.api.discordBotsCom)
+      .set('Content-Type', 'application/json')
+      .send({
+        shard_id: this.client.shard.id,
+        guilds: this.client.guilds.size,
+        users: this.client.users.size, // may be inaccurate since it only takes cached users into account
+        voice_connections: this.client.voiceConnections.size,
+      })
+      .catch(() => null);
+
     // Discord Bots
     request
       .post(`https://discord.bots.gg/api/v1/bots/${this.client.user.id}/stats`)
