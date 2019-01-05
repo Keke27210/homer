@@ -34,7 +34,7 @@ class MessageDeleteEvent extends Event {
       const embed = new RichEmbed()
         .setAuthor(message.author.username, message.author.avatarURL)
         .setDescription(message.content)
-        .setColor(message.member.displayHexColor)
+        .setColor(message.member ? message.member.displayHexColor : undefined)
         .setFooter(`#${message.channel.name} (${message.guild.name})`)
         .setTimestamp(message.editedAt || message.createdAt);
 
