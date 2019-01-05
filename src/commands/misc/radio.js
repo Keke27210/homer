@@ -37,13 +37,22 @@ class ListSubcommand extends Command {
   }
 
   async execute(context) {
-    const radios = await this.client.database.getDocuments('radios', true);
+    const radios = await this.client.database.getDocuments('radios', true)
+      .then(radios => radios.sort((a, b) => parseFloat(a.id) - parseFloat(b.id)));
     if (radios.length === 0) return context.replyWarning(context.__('radio.list.noRadio'));
 
     const pageCount = Math.ceil(radios.length / 10);
     const pages = [];
     for (let i = 0; i < pageCount; i += 1) {
       pages.push({ title: ' ', footer: context.__('radio.list.footer', { command: `${this.client.prefix}radio tune <frequency>`, page: `${i + 1}/${pageCount}` }) });
+    }
+
+    const entries = [];
+    for (const radio of radios) {
+      const genres = (radio.genres || []).map(a => context.__(`radio.genre.${a}`));
+      const topics = (radio.topics || []).map(a => context.__(`radio.topic.${a}`));
+      const desc = genres.concat(topics).join(', ') || context.__('global.noInformation');
+      entries.push(`\`${radio.id}\`: ${radio.emote} [${radio.name}](${radio.website}) - ${radio.broken ? context.__('radio.broken') : `${radio.language} (${radio.country}) - ${desc}`}`);
     }
 
     this.client.menu.createMenu(
@@ -53,9 +62,7 @@ class ListSubcommand extends Command {
       context.settings.misc.locale,
       context.__('radio.list.title', { name: this.client.user.username }),
       pages,
-      radios
-        .sort((a, b) => parseFloat(a.id) - parseFloat(b.id))
-        .map(r => `\`${r.id}\`: ${r.emote} [${r.name}](${r.website}) - ${r.broken ? context.__('radio.broken') : `${r.language} (${r.country}) - ${r.type.map(t => context.__(`radio.types.${t}`)).join(', ')}`}`),
+      entries,
     );
   }
 }
