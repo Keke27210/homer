@@ -276,11 +276,15 @@ class InfoSubcommand extends Command {
       }
     }
 
+    const genres = (meta.genres || []).map(a => context.__(`radio.genre.${a}`));
+    const topics = (meta.topics || []).map(a => context.__(`radio.topic.${a}`));
+    const desc = genres.concat(topics).join(', ') || context.__('global.noInformation');
+
     const infoDescription = [
       `${meta.emote} **[${meta.name}](${meta.website})** - ${meta.id}MHz`,
       `🎵 ${playing}`,
       `🚩 ${meta.language} (${meta.country})`,
-      `🔖 ${meta.type.map(t => context.__(`radio.types.${t}`)).join(', ')}`,
+      `🔖 ${desc}`,
       `🔈 ${getVolume(this.client.voiceConnections.get(context.message.guild.id).dispatcher.volume)}`,
     ].join('\n');
 
