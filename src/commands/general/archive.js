@@ -47,7 +47,7 @@ class ArchiveCommand extends Command {
       (reaction, user) => this.emotes.includes(reaction.emoji.identifier) && user.id === context.message.author.id,
       { max: 1 },
     )
-      .then((reactions) => {
+      .then(async (reactions) => {
         const emote = reactions.first().emoji.identifier;
 
         // Text format
