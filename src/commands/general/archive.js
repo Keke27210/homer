@@ -98,18 +98,13 @@ class ArchiveCommand extends Command {
 
             const buffer = Buffer.from(string);
             const name = `archive_${channel.id}_${startTime}.txt`;
-            const form = new FormData();
-            form.append('Content-Type', 'text/plain')
-            form.append('Content-Disposition', 'form-data')
-            form.append('filename', name)
-            form.append('buffer', buffer);
 
             const response = await request
               .post('https://file.io')
               .set('Content-Type', 'multipart/form-data')
-              .send({ file: form })
+              .send({ file: buffer })
               .then(r => typeof r.body === 'object' ? r.body.key : null)
-              .catch(() => null);
+              .catch(e => e.body);
 
             const newEmbed = new RichEmbed(message.embeds[0])
               .setDescription(message.embeds[0].description += `\n\n${this.dot} ${context.__('archive.download')}: **<https://file.io/${response}>**`);
