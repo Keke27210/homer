@@ -1,7 +1,7 @@
 const Command = require('../../structures/Command');
 //const nodeXls = new (require('node-xls'));
 const { RichEmbed } = require('discord.js');
-const FormData = require('form-data');
+const { writeFileSync, unlinkSync, createReadStream } = require('fs');
 const request = require('superagent');
 
 class ArchiveCommand extends Command {
@@ -98,17 +98,20 @@ class ArchiveCommand extends Command {
 
             const buffer = Buffer.from(string);
             const name = `archive_${channel.id}_${startTime}.txt`;
+            writeFileSync(`./tmp/${name}`, buffer, { encoding: 'utf8' });
+            const stream = createReadStream(`./tmp/${name}`);
 
             const response = await request
               .post('https://file.io')
               .set('Content-Type', 'multipart/form-data')
-              .send({ file: buffer })
+              .send({ file: stream })
               .then(r => typeof r.body === 'object' ? r.body.key : null)
-              .catch(e => e.body);
+              .catch(() => null);
 
             const newEmbed = new RichEmbed(message.embeds[0])
               .setDescription(message.embeds[0].description += `\n\n${this.dot} ${context.__('archive.download')}: **<https://file.io/${response}>**`);
             message.edit(message.content, { embed: newEmbed });
+            unlinkSync(`./tmp/${name}`);
           }
 
           message.edit(`${this.client.constants.emotes.success} ${context.__('archive.success', { count: messages.size })}`);
