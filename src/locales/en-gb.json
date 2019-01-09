@@ -43,7 +43,7 @@
   "archive.embed.date": "Date",
   "archive.embed.instructions": "React with 📄 to export the channel messages into a text file. Otherwise, react with {{{ error }}}.",
   "archive.embed.footer": "You are limited to one archive per hour per server.",
-  "archive.success": "**{{{ count }}}** messages have been successfully archived. The file has been sent in this channel.",
+  "archive.success": "**{{{ count }}}** messages have been archived. The file has been sent in this channel.",
   "archive.cancelled": "You have cancelled the channel archive request.",
   "archive.dumpInProgress": "Dump in progress... It can take a lot of time, be patient.",
   "archive.error": "An error occured during the dump, please retry again later.",

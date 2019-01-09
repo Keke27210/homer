@@ -79,10 +79,10 @@ class ArchiveCommand extends Command {
               list,
             ].join('\r\n'));
 
-            context.reply({ files: [new Attachment(string, `dump.txt`)] });
+            context.reply({ files: [new Attachment(Buffer.from(string), `dump.txt`)] });
           }
 
-          message.edit(`${this.client.constants.emotes.warning} ${context.__('archive.success', { count: messages.size })}`);
+          message.edit(`${this.client.constants.emotes.success} ${context.__('archive.success', { count: messages.size })}`);
         }
 
         // Cancel
