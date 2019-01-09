@@ -95,7 +95,7 @@ class OtherUtil extends Util {
 
   async archiveChannel(channelID) {
     const channel = this.client.channels.get(channelID);
-    const messages = new Collection();
+    let messages = new Collection();
     if (!channel) return messages;
 
     let finished = false;
