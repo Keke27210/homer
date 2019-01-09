@@ -102,11 +102,11 @@ class ArchiveCommand extends Command {
               .post('https://file.io')
               .set('Content-Type', 'application/octet-stream')
               .send({ file: buffer, name })
-              .then(r => typeof r.body === 'object' ? r.body.link : null)
+              .then(r => typeof r.body === 'object' ? r.body.key : null)
               .catch(() => null);
 
             const newEmbed = new RichEmbed(message.embeds[0])
-              .setDescription(message.embeds[0].description += `\n\n${this.dot} ${context.__('archive.download')}: **<${response}>**`);
+              .setDescription(message.embeds[0].description += `\n\n${this.dot} ${context.__('archive.download')}: **<https://file.io/${response}>**`);
             message.edit(message.content, { embed: newEmbed });
           }
 
