@@ -56,7 +56,11 @@ class ArchiveCommand extends Command {
         // Text format
         if (emote === this.emotes[0]) {
           message.edit(`${this.client.constants.emotes.loading} ${context.__('archive.dumpInProgress')}`);
-          const messages = await this.client.other.archiveChannel(channel.id).then(me => me.filter(m => m.content));
+          const messages = await this.client.other.archiveChannel(channel.id)
+            .then(me => me.filter(m => m.content))
+            .catch(() => {
+              message.edit(`${this.client.constants.emotes.error} ${context.__('archive.error')}`);
+            });
           if (messages.size === 0) return message.edit(`${this.client.constants.emotes.warning} ${context.__('archive.noMessageDumped')}`);
 
           const list = messages
