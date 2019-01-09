@@ -99,12 +99,11 @@ class ArchiveCommand extends Command {
             const buffer = Buffer.from(string);
             const name = `archive_${channel.id}_${startTime}.txt`;
             writeFileSync(`./tmp/${name}`, buffer, { encoding: 'utf8' });
-            const stream = createReadStream(`./tmp/${name}`);
 
             const response = await request
               .post('https://file.io')
               .set('Content-Type', 'multipart/form-data')
-              .send({ file: stream })
+              .attach('file', `./tmp/${name}`, { filename: name, contentType: 'plain/text' })
               .then(r => typeof r.body === 'object' ? r.body.key : null)
               .catch(() => null);
 
