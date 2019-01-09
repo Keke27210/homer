@@ -32,7 +32,7 @@ class ArchiveCommand extends Command {
     }
 
     const archiveInformation = [
-      `${this.dot} ${context.__('archive.embed.requester')}: **${context.message.author.username}**#${context.message.author.id}`,
+      `${this.dot} ${context.__('archive.embed.requester')}: **${context.message.author.username}**#${context.message.author.discriminator}`,
       `${this.dot} ${context.__('archive.embed.date')}: **${context.formatDate()}**`,
       '',
       context.__('archive.embed.instructions', { error: this.client.constants.emotes.error }),
