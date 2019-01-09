@@ -55,6 +55,17 @@ class ArchiveCommand extends Command {
 
         // Text format
         if (emote === this.emotes[0]) {
+          const entry = await this.client.database.findDocuments('archives', { guild: context.message.guild.id }, true)
+            .then(entries => entries.filter(e => (Date.now() - e.time) < 3600000));
+          if (entry.length > 0) return message.edit(`${this.client.constants.emotes.error} ${context.__('archive.calmDown')}`);
+
+          this.client.database.insertDocument('archives', {
+            guild: context.message.guild.id,
+            channel: context.message.channel.id,
+            executor: context.message.author.id,
+            time: Date.now(),
+          });
+
           message.edit(`${this.client.constants.emotes.loading} ${context.__('archive.dumpInProgress')}`);
           const messages = await this.client.other.archiveChannel(channel.id)
             .then(me => me.filter(m => m.content))

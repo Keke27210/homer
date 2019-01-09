@@ -47,6 +47,7 @@
   "archive.cancelled": "You have cancelled the channel archive request.",
   "archive.dumpInProgress": "Dump in progress... It can take a lot of time, be patient.",
   "archive.error": "An error occured during the dump, please retry again later.",
+  "archive.calmDown": "An archive has already been started less than an hour ago in this server.",
   "archive.noMessageDumped": "No message could be dumped from the given channel (embeds are not supported).",
   "archive.permissionsUser": "You must have the **View Channel** and **Read Messages History** permissions in the given channel.",
   "archive.permissionsBot": "The bot needs the **View Channel** and **Read Message History** permissions in the given channel.",
