@@ -1,6 +1,7 @@
 const Command = require('../../structures/Command');
 //const nodeXls = new (require('node-xls'));
 const { Attachment, RichEmbed } = require('discord.js');
+const request = require('superagent');
 
 class ArchiveCommand extends Command {
   constructor(client) {
@@ -58,11 +59,12 @@ class ArchiveCommand extends Command {
             .then(entries => entries.filter(e => (Date.now() - e.time) < 3600000));
           if (entry.length > 0) return message.edit(`${this.client.constants.emotes.error} ${context.__('archive.calmDown')}`);
 
+          const startTime = Date.now();
           this.client.database.insertDocument('archives', {
             guild: context.message.guild.id,
             channel: context.message.channel.id,
             executor: context.message.author.id,
-            time: Date.now(),
+            time: startTime,
           });
 
           message.edit(`${this.client.constants.emotes.loading} ${context.__('archive.dumpInProgress')}`);
@@ -93,7 +95,19 @@ class ArchiveCommand extends Command {
               `TOTAL COUNT: ${messages.size}`,
             ].join('\r\n'));
 
-            context.reply({ files: [new Attachment(Buffer.from(string), 'dump.txt')] });
+            const buffer = Buffer.from(string);
+            const name = `archive_${channel.id}_${startTime}.txt`;
+
+            const response = await request
+              .post('https://file.io')
+              .set('Content-Type', 'application/octet-stream')
+              .send({ file: buffer, name })
+              .then(r => typeof r.body === 'object' ? r.body.link : null)
+              .catch(() => null);
+
+            const newEmbed = new RichEmbed(message.embeds[0])
+              .setDescription(message.embeds[0].description += `\n\n${this.dot} ${context.__('archive.download')}: **<${response}>**`);
+            message.edit(message.content, { embed: newEmbed });
           }
 
           message.edit(`${this.client.constants.emotes.success} ${context.__('archive.success', { count: messages.size })}`);
