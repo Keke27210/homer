@@ -1,6 +1,7 @@
 const Command = require('../../structures/Command');
 //const nodeXls = new (require('node-xls'));
-const { Attachment, RichEmbed } = require('discord.js');
+const { RichEmbed } = require('discord.js');
+const FormData = require('form-data');
 const request = require('superagent');
 
 class ArchiveCommand extends Command {
@@ -97,11 +98,16 @@ class ArchiveCommand extends Command {
 
             const buffer = Buffer.from(string);
             const name = `archive_${channel.id}_${startTime}.txt`;
+            const form = new FormData()
+              .append('Content-Type', 'text/plain')
+              .append('Content-Disposition', 'form-data')
+              .append('filename', name)
+              .append('file', buffer);
 
             const response = await request
               .post('https://file.io')
-              .set('Content-Type', 'application/octet-stream')
-              .send({ file: buffer, name })
+              .set('Content-Type', 'multipart/form-data')
+              .send({ file: form })
               .then(r => typeof r.body === 'object' ? r.body.key : null)
               .catch(() => null);
 
