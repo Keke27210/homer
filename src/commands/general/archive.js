@@ -89,6 +89,9 @@ class ArchiveCommand extends Command {
               '',
               '=== MESSAGES ===',
               list,
+              '',
+              '=== END OF MESSAGES ===',
+              `TOTAL COUNT: ${messages.size}`,
             ].join('\r\n'));
 
             context.reply({ files: [new Attachment(Buffer.from(string), 'dump.txt')] });
