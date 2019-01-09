@@ -35,16 +35,19 @@ class ArchiveCommand extends Command {
       `${this.dot} ${context.__('archive.embed.requester')}: **${context.message.author.username}**#${context.message.author.id}`,
       `${this.dot} ${context.__('archive.embed.date')}: **${context.formatDate()}**`,
       '',
-      context.__('archive.embed.instructions'),
+      context.__('archive.embed.instructions', { error: this.client.constants.emotes.error }),
     ].join('\n');
 
     const embed = new RichEmbed()
       .setDescription(archiveInformation)
       .setFooter(context.__('archive.embed.footer'));
     const message = await context.reply(context.__('archive.main', { channel: `#${channel.name}` }), { embed });
+    (async () => {
+      for (const emote of this.emotes) await message.react(emote);
+    })();
 
     message.awaitReactions(
-      (reaction, user) => this.emotes.includes(reaction.emoji.identifier) && user.id === context.message.author.id,
+      (reaction, user) => (this.emotes.includes(reaction.emoji.name) || this.emotes.includes(reaction.emoji.identifier)) && user.id === context.message.author.id,
       { max: 1 },
     )
       .then(async (reactions) => {
@@ -87,7 +90,7 @@ class ArchiveCommand extends Command {
 
   get emotes() {
     return [
-      '📄',
+      '%F0%9F%93%84',
       //'📊',
       this.client.constants.emotes.errorID,
     ];
