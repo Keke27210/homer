@@ -9,7 +9,6 @@ class ArchiveCommand extends Command {
       category: 'general',
       usage: '<channel>',
       userPermissions: ['MANAGE_CHANNELS'],
-      private: true,
     });
   }
 
