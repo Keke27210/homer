@@ -32,9 +32,11 @@ class ArchiveCommand extends Command {
       context.replyError(context.__('archive.permissionsBot'));
     }
 
+    const none = context.__('global.none');
     const archiveInformation = [
       `${this.dot} ${context.__('archive.embed.requester')}: **${context.message.author.username}**#${context.message.author.discriminator}`,
       `${this.dot} ${context.__('archive.embed.date')}: **${context.formatDate()}**`,
+      `${this.dot} ${context.__('archive.embed.download')}: ${none}`,
       '',
       context.__('archive.embed.instructions', { error: this.client.constants.emotes.error }),
     ].join('\n');
@@ -100,15 +102,15 @@ class ArchiveCommand extends Command {
             const name = `archive_${channel.id}_${startTime}.txt`;
             writeFileSync(`./tmp/${name}`, buffer, { encoding: 'utf8' });
 
-            const response = await request
+            const link = await request
               .post('https://file.io')
               .set('Content-Type', 'multipart/form-data')
               .attach('file', `./tmp/${name}`, { filename: name, contentType: 'plain/text' })
-              .then(r => typeof r.body === 'object' ? r.body.key : null)
+              .then(r => r.body.link)
               .catch(() => null);
 
             const newEmbed = new RichEmbed(message.embeds[0])
-              .setDescription(message.embeds[0].description += `\n\n${this.dot} ${context.__('archive.download')}: **<https://file.io/${response}>**`);
+              .setDescription(message.embeds[0].description.replace(none, `**<${link}>**`));
             message.edit(message.content, { embed: newEmbed });
             unlinkSync(`./tmp/${name}`);
           }
