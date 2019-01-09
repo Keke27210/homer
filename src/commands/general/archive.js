@@ -102,7 +102,7 @@ class ArchiveCommand extends Command {
             form.append('Content-Type', 'text/plain')
             form.append('Content-Disposition', 'form-data')
             form.append('filename', name)
-            form.append('file', buffer);
+            form.append('buffer', buffer);
 
             const response = await request
               .post('https://file.io')
