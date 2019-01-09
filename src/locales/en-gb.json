@@ -41,7 +41,7 @@
   "archive.main": "📤 Archive request for **{{{ channel }}}**:",
   "archive.embed.requester": "Requested by",
   "archive.embed.date": "Date",
-  "archive.embed.instructions": "React with 📄 to export the channel messages into a text file. Otherwise, react with {{{ error }}}.",
+  "archive.embed.instructions": "React with 📄 to export the channel messages into a text file.\nOtherwise, react with {{{ error }}}.",
   "archive.embed.footer": "You are limited to one archive per hour per server.",
   "archive.success": "**{{{ count }}}** messages have been archived. The file has been sent in this channel.",
   "archive.cancelled": "You have cancelled the channel archive request.",

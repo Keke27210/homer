@@ -3,6 +3,7 @@ const Manager = require('../structures/Manager');
 
 const tables = [
   'afk',
+  'archives',
   'blacklist',
   'bot',
   'calls',

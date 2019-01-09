@@ -66,20 +66,21 @@ class ArchiveCommand extends Command {
           const list = messages
             .filter(m => m.cleanContent)
             .sort((a, b) => a.createdTimestamp - b.createdTimestamp)
-            .map(m => `[${m.createdAt.toUTCString()}] ${m.author.tag} (ID:${m.author.id}): ${m.content}`)
+            .map(m => `[${context.formatDate(m.createdTimestamp)}] ${m.author.tag} (ID:${m.author.id}): ${m.content}`)
             .join('\r\n');
 
           if (emote === this.emotes[0]) {
             const string = ([
               `=== ARCHIVE FROM #${channel.name} (ID:${channel.id}) ===`,
-              `CHANNEL CREATION: ${channel.createdAt.toUTCString()}`,
+              `CHANNEL CREATION: ${context.formatDate(channel.createdTimestamp)}`,
               `ARCHIVE REQUESTED BY: ${context.message.author.tag} (ID:${context.message.author.id})`,
+              `DUMP DATE: ${context.formatDate()}`,
               '',
               '=== MESSAGES ===',
               list,
             ].join('\r\n'));
 
-            context.reply({ files: [new Attachment(Buffer.from(string), `dump.txt`)] });
+            context.reply({ files: [new Attachment(Buffer.from(string), 'dump.txt')] });
           }
 
           message.edit(`${this.client.constants.emotes.success} ${context.__('archive.success', { count: messages.size })}`);
