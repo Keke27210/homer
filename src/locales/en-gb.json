@@ -38,6 +38,18 @@
   "antighost.info": "👻 The anti-ghost ping feature tracks for message deletions, if you were mentioned in a message that has been deleted within the hour it was sent, Homer will alert you about this so you will know why you have received a notification.\n◻ If someone abuses of the system to spam you, please disable the feature and report the concerned user on the assistance server.",
   "antighost.dm": "This command must be ran in private messages with the bot.",
 
+  "archive.main": "📤 Archive request for **{{{ channel }}}**:",
+  "archive.embed.requester": "Requested by",
+  "archive.embed.date": "Date",
+  "archive.embed.instructions": "React with 📄 to export the channel messages into a text file. Otherwise, react with {{{ error }}}.",
+  "archive.embed.footer": "You are limited to one archive per hour per server.",
+  "archive.success": "**{{{ count }}}** messages have been successfully archived. The file has been sent in this channel.",
+  "archive.cancelled": "You have cancelled the channel archive request.",
+  "archive.dumpInProgress": "Dump in progress... It can take a lot of time, be patient.",
+  "archive.noMessageDumped": "No message could be dumped from the given channel (embeds are not supported).",
+  "archive.permissionsUser": "You must have the **View Channel** and **Read Messages History** permissions in the given channel.",
+  "archive.permissionsBot": "The bot needs the **View Channel** and **Read Message History** permissions in the given channel.",
+
   "avatar.title": "🖼 Avatar for {{{ name }}}:",
 
   "baninfo.title": "🔨 Ban information for {{{ user }}}:",
@@ -194,6 +206,7 @@
   "helpUtil.antighost.disable": "Disable the anti-ghost ping feature",
   "helpUtil.antighost.info": "Information about the anti-ghost ping feature",
   "helpUtil.avatar": "Get the avatar of a member",
+  "helpUtil.archive": "Archive messages from the specified channel.",
   "helpUtil.baninfo": "Get information about a ban entry",
   "helpUtil.call": "Call a number on the telephone",
   "helpUtil.channel": "Get information about a channel",

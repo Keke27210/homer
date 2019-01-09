@@ -1,5 +1,6 @@
 const Util = require('./Util');
 const BigInt = require('big-integer');
+const { Collection } = require('discord.js');
 const wait = require('util').promisify(setTimeout);
 
 class OtherUtil extends Util {
@@ -90,6 +91,24 @@ class OtherUtil extends Util {
       this.client.database.updateDocument('rss', feed.id, { used: Date.now() });
       this.client.logger.info(`RSS: Feed ${feed.id} processed`);
     }
+  }
+
+  async archiveChannel(channelID) {
+    const channel = this.client.channels.get(channelID);
+    const messages = new Collection();
+    if (!channel) return messages;
+
+    let finished = false;
+    let lastMessageID = null;
+    while (!finished) {
+      const fetched = await channel.fetchMessages({ limit: 100, before: lastMessageID });
+      await wait(250);
+      messages = messages.concat(fetched);
+      lastMessageID = fetched.last().id;
+      if (fetched.size < 100) finished = true;
+    }
+
+    return messages;
   }
 
   humanizePermissions(permissions, lang) {
