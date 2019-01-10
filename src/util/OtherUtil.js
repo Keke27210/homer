@@ -98,9 +98,11 @@ class OtherUtil extends Util {
     let messages = new Collection();
     if (!channel) return messages;
 
+    let loops = 0;
     let finished = false;
     let lastMessageID = null;
-    while (!finished) {
+    while (!finished && loops < 500) {
+      loops += 1;
       const fetched = await channel.fetchMessages({ limit: 100, before: lastMessageID });
       await wait(250);
       messages = messages.concat(fetched);
