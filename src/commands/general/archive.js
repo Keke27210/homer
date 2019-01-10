@@ -56,6 +56,7 @@ class ArchiveCommand extends Command {
     )
       .then(async (reactions) => {
         const emote = reactions.first().emoji.identifier;
+        let ok = true;
 
         // Text format
         if (emote === this.emotes[0]) {
@@ -74,16 +75,8 @@ class ArchiveCommand extends Command {
           message.edit(`${this.client.constants.emotes.loading} ${context.__('archive.dumpInProgress')}`);
           const messages = await this.client.other.archiveChannel(channel.id)
             .then(me => me.filter(m => m.content))
-            .catch(() => {
-              message.edit(`${this.client.constants.emotes.error} ${context.__('archive.error')}`);
-            });
+            
           if (messages.size === 0) return message.edit(`${this.client.constants.emotes.warning} ${context.__('archive.noMessageDumped')}`);
-
-          const list = messages
-            .filter(m => m.cleanContent)
-            .sort((a, b) => a.createdTimestamp - b.createdTimestamp)
-            .map(m => `[${context.formatDate(m.createdTimestamp)}] ${m.author.tag} (ID:${m.author.id}): ${m.content}`)
-            .join('\r\n');
 
           if (emote === this.emotes[0]) {
             const name = `archive_${channel.id}_${startTime}.txt`;
@@ -98,18 +91,26 @@ class ArchiveCommand extends Command {
               '=== MESSAGES ===\r\n',
             ].join('\r\n'));
 
-            let loops = 0;
-            let finished = false;
-            let lastMessageID = null;
-            while (!finished && loops < 500) {
-              loops += 1;
-              const fetched = await channel.fetchMessages({ limit: 100, before: lastMessageID });
-              await wait(250);
-              appendFileSync(`./tmp/${name}`, fetched.map(m => `[${context.formatDate(m.createdTimestamp)}] ${m.author.tag} (ID:${m.author.id}): ${m.cleanContent}`).join('\r\n'));
-              lastMessageID = fetched.last().id;
-              if (fetched.size < 100) finished = true;
-            }
+            (async function () {
+              let loops = 0;
+              let finished = false;
+              let lastMessageID = null;
+              while (!finished && loops < 500) {
+                loops += 1;
+                const fetched = await channel.fetchMessages({ limit: 100, before: lastMessageID })
+                  .then(m => m.filter(me => me.content));
+                await wait(250);
+                appendFileSync(`./tmp/${name}`, fetched.map(m => `[${context.formatDate(m.createdTimestamp)}] ${m.author.tag} (ID:${m.author.id}): ${m.cleanContent}`).join('\r\n'));
+                lastMessageID = fetched.last().id;
+                if (fetched.size < 100) finished = true;
+              }
+            })()
+              .catch(() => {
+                message.edit(`${this.client.constants.emotes.error} ${context.__('archive.error')}`);
+                ok = false;
+              });
 
+            if (!ok) return;
             appendFileSync(`./tmp/${name}`, [
               '',
               '=== END OF MESSAGES ===',
