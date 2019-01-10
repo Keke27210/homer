@@ -92,12 +92,13 @@ class ArchiveCommand extends Command {
               let lastMessageID = null;
               while (!finished && loops < 500) {
                 loops += 1;
-                const fetched = await channel.fetchMessages({ limit: 100, before: lastMessageID })
-                  .then(m => m.filter(me => me.content));
+                const fetched = await channel.fetchMessages({ limit: 100, before: lastMessageID });
+                if (fetched.size < 100) finished = true;
+                fetched = fetched.filter(m => m.content);
                 await wait(250);
                 appendFileSync(`./tmp/${name}`, fetched.map(m => `[${context.formatDate(m.createdTimestamp)}] ${m.author.tag} (ID:${m.author.id}): ${m.cleanContent}`).join('\r\n'));
                 lastMessageID = fetched.last().id;
-                if (fetched.size < 100) finished = true;
+                
               }
             })()
               .catch(() => {
