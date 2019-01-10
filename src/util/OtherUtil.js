@@ -93,26 +93,6 @@ class OtherUtil extends Util {
     }
   }
 
-  async archiveChannel(channelID) {
-    const channel = this.client.channels.get(channelID);
-    let messages = new Collection();
-    if (!channel) return messages;
-
-    let loops = 0;
-    let finished = false;
-    let lastMessageID = null;
-    while (!finished && loops < 500) {
-      loops += 1;
-      const fetched = await channel.fetchMessages({ limit: 100, before: lastMessageID });
-      await wait(250);
-      messages = messages.concat(fetched);
-      lastMessageID = fetched.last().id;
-      if (fetched.size < 100) finished = true;
-    }
-
-    return messages;
-  }
-
   humanizePermissions(permissions, lang) {
     return permissions
       .filter(p => !this.client.constants.deprecatedPermissions.includes(p))

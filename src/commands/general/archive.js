@@ -1,7 +1,7 @@
 const Command = require('../../structures/Command');
 //const nodeXls = new (require('node-xls'));
 const { RichEmbed } = require('discord.js');
-const { writeFileSync, unlinkSync, createReadStream } = require('fs');
+const { appendFileSync, unlinkSync } = require('fs');
 const request = require('superagent');
 
 class ArchiveCommand extends Command {
@@ -85,23 +85,36 @@ class ArchiveCommand extends Command {
             .join('\r\n');
 
           if (emote === this.emotes[0]) {
-            const string = ([
+            const name = `archive_${channel.id}_${startTime}.txt`;
+
+            // Dumping messages and storing them in a temp txt file
+            appendFileSync(`./tmp/${name}`, [
               `=== ARCHIVE FROM #${channel.name} (ID:${channel.id}) ===`,
               `CHANNEL CREATION: ${context.formatDate(channel.createdTimestamp)}`,
               `ARCHIVE REQUESTED BY: ${context.message.author.tag} (ID:${context.message.author.id})`,
               `DUMP DATE: ${context.formatDate()}`,
               '',
-              '=== MESSAGES ===',
-              list,
-              '',
-              '=== END OF MESSAGES ===',
-              `TOTAL COUNT: ${messages.size}`,
+              '=== MESSAGES ===\r\n',
             ].join('\r\n'));
 
-            const buffer = Buffer.from(string);
-            const name = `archive_${channel.id}_${startTime}.txt`;
-            writeFileSync(`./tmp/${name}`, buffer, { encoding: 'utf8' });
+            let loops = 0;
+            let finished = false;
+            let lastMessageID = null;
+            while (!finished && loops < 500) {
+              loops += 1;
+              const fetched = await channel.fetchMessages({ limit: 100, before: lastMessageID });
+              await wait(250);
+              appendFileSync(`./tmp/${name}`, fetched.map(m => `[${context.formatDate(m.createdTimestamp)}] ${m.author.tag} (ID:${m.author.id}): ${m.cleanContent}`).join('\r\n'));
+              lastMessageID = fetched.last().id;
+              if (fetched.size < 100) finished = true;
+            }
 
+            appendFileSync(`./tmp/${name}`, [
+              '',
+              '=== END OF MESSAGES ===',
+            ].join('\r\n'));
+            // Dumper end
+            
             const link = await request
               .post('https://file.io')
               .set('Content-Type', 'multipart/form-data')
