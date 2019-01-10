@@ -44,7 +44,7 @@
   "archive.embed.instructions": "Appuyez sur 📄 pour exporter les messages.\nAutrement, appuyez sur {{{ error }}}.",
   "archive.embed.download": "Téléchargement",
   "archive.embed.footer": "Vous êtes limité à un archivage par heure par serveur.",
-  "archive.success": "**{{{ count }}}** messages ont été archivés.",
+  "archive.success": "Les messages du salon ont été archivés avec succès.",
   "archive.cancelled": "Vous avez annulé la demande d'archive.",
   "archive.dumpInProgress": "Récupération en cours... Cela peut prendre énormément de temps, soyez patient.",
   "archive.error": "Une erreur est survenue durant la récupération, réessayez plus tard.",

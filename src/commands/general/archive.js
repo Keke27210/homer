@@ -121,7 +121,7 @@ class ArchiveCommand extends Command {
 
             const newEmbed = new RichEmbed(message.embeds[0])
               .setDescription(message.embeds[0].description.replace(none, `**<${link}>**`));
-            message.edit(`${this.client.constants.emotes.success} ${context.__('archive.success', { count: messages.size })}`, { embed: newEmbed });
+            message.edit(`${this.client.constants.emotes.success} ${context.__('archive.success')}`, { embed: newEmbed });
             unlinkSync(`./tmp/${name}`);
           }
         }
