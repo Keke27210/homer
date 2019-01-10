@@ -2,6 +2,7 @@ const Command = require('../../structures/Command');
 //const nodeXls = new (require('node-xls'));
 const { RichEmbed } = require('discord.js');
 const { appendFileSync, unlinkSync } = require('fs');
+const wait = require('util').promisify(setTimeout);
 const request = require('superagent');
 
 class ArchiveCommand extends Command {
