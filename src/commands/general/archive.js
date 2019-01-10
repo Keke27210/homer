@@ -118,7 +118,7 @@ class ArchiveCommand extends Command {
             const link = await request
               .post('https://file.io')
               .set('Content-Type', 'multipart/form-data')
-              .attach('file', `./tmp/${name}`, { filename: name, contentType: 'plain/text' })
+              .attach('file', `./tmp/${name}`, { filename: name, contentType: 'application/octet-stream' })
               .then(r => r.body.link)
               .catch(() => null);
 
