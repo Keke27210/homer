@@ -86,7 +86,7 @@ class ArchiveCommand extends Command {
               '=== MESSAGES ===\r\n',
             ].join('\r\n'));
 
-            (async function () {
+            await (async function () {
               let loops = 0;
               let finished = false;
               let lastMessageID = null;
