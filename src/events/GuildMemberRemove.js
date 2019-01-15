@@ -10,7 +10,7 @@ class GuildMemberRemoveEvent extends Event {
       if (!settings) return;
 
       const channel = member.guild.channels.get(settings.leave.channel);
-      if (!channel) return;
+      if (!channel || !settings.leave.message) return;
 
       member.settings = settings;
       const parsed = await this.client.lisa.parseString(member, settings.leave.message, 'memberlog');

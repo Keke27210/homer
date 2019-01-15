@@ -60,7 +60,7 @@ class ClearSubcommand extends Command {
   async execute(context) {
     if (!context.settings.leave.message) return context.replyWarning(context.__('leave.clear.noMessage'));
 
-    context.settings.leave.message = false;
+    context.settings.leave.message = null;
     await context.saveSettings();
     context.replySuccess(context.__('leave.clear.cleared'));
   }
