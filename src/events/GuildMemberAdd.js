@@ -10,7 +10,7 @@ class GuildMemberAddEvent extends Event {
       if (!settings) return;
 
       const channel = member.guild.channels.get(settings.welcome.channel);
-      if (!channel) return;
+      if (!channel || !settings.welcome.message) return;
 
       member.settings = settings;
       const parsed = await this.client.lisa.parseString(member, settings.welcome.message, 'memberlog');
