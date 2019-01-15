@@ -72,11 +72,9 @@ class MessageEvent extends Event {
           if (message.attachments.size > 0) msg.push('', this.client.__(toLanguage, 'telephone.attachments'));
           
           for (const attachment of message.attachments.array()) {
-            const result = await request.get(`https://api.sightengine.com/1.0/check.json?models=nudity&api_user=${this.client.config.api.sightUser}&api_secret=${this.client.config.api.sightKey}&url=${attachment.url}`)
-              .then(r => r.body)
-              .catch(() => null);
+            const data = await this.client.api.getSafety(attachment.url);
 
-            if (result && result.status === 'success' && result.nudity.safe <= this.client.config.misc.nsfwThresold) {
+            if (typeof data !== 'number' && data.status === 'success' && data.nudity.safe <= this.client.config.misc.nsfwThresold) {
               return;
             }
 

@@ -1,6 +1,6 @@
 const Command = require('../../structures/Command');
-const request = require('superagent');
 const moment = require('moment-timezone');
+const request = require('superagent');
 
 class WeatherCommand extends Command {
   constructor(client) {
@@ -19,13 +19,11 @@ class WeatherCommand extends Command {
 
     const message = await context.replyLoading(context.__('global.loading'));
 
-    const locationData = await request
-      .get(`https://dev.virtualearth.net/REST/v1/Locations?query=${query}&maxResults=1&culture=${context.settings.misc.locale}&key=${this.client.config.api.bingGeocode}`)
-      .then((res) => {
-        const body = res.body;
-        if (body.resourceSets[0].estimatedTotal === 0) return null;
+    const locationData = await this.client.api.getLocation(query)
+      .then((data) => {
+        if (typeof data === 'number' || data.resourceSets[0].estimatedTotal === 0) return null;
 
-        const foundLoc = body.resourceSets[0].resources[0];
+        const foundLoc = data.resourceSets[0].resources[0];
         return ({
           city: foundLoc.address.locality || foundLoc.address.formattedAddress || null,
           department: foundLoc.address.adminDistrict2 || null,
@@ -34,15 +32,11 @@ class WeatherCommand extends Command {
           postalcode: this.franceDepartments[foundLoc.address.adminDistrict2] || null,
           geometry: foundLoc.point.coordinates.join(','),
         });
-      })
-      .catch(() => null);
+      });
     if (!locationData) return message.edit(`${this.client.constants.emotes.warning} ${context.__('weather.unknownLocation')}`);
 
-    const weatherData = await request
-      .get(`https://api.darksky.net/forecast/${this.client.config.api.darkSky}/${locationData.geometry}?exclude=minutely,hourly,alerts,flags&lang=${context.settings.misc.locale.split('-')[0]}&units=si`)
-      .then(res => res.body)
-      .catch(() => null);
-    if (!weatherData) return context.replyWarning(context.__('weather.unknownError'));
+    const weatherData = await this.client.api.getWeather(locationData.geometry, { lang: context.settings.misc.locale.split('-')[0] });
+    if (typeof weatherData === 'number') return context.replyWarning(context.__('weather.unknownError'));
 
     const vigilance = (locationData.country === 'France' && locationData.postalcode) ? await this.getVigilance(locationData) : '';
 

@@ -1,3 +1,6 @@
+// Homer - Constants file
+// Contains some essential data & default settings in order to make Homer working
+
 exports.defaultGuildSettings = id => ({
   id,
   welcome: {
@@ -44,7 +47,7 @@ exports.userAgent = () => `DiscordBot (https://github.com/iDroid27210/homer) Nod
 exports.CDN = `https://raw.githubusercontent.com/iDroid27/homer_cdn/master`;
 
 exports.emotes = {
-  // Status
+  // Information emotes
   success: '<:success:453889194016899074>',
   warning: '<:warn:453591316027408395>',
   error: '<:error:453889225356738560>',
@@ -53,14 +56,14 @@ exports.emotes = {
   errorID: 'error:453889225356738560',
   loading: '<a:loading:455113752984027163>',
 
-  // Misc
+  // Design
   dot: '◽',
   bot: '<:bot:420699407344730122>',
   homer: '<:homer:474150825929998337>',
 
   // Services
-  dbans: '<:discordbans:420715963718041641>',
   rss: '<:rss:529596823275307019>',
+  translate: '<:translate:420659720727298054>',
   verifiedServer: '<:verified:452764762699464724>',
 };
 
@@ -77,10 +80,6 @@ exports.status = {
   dnd: '<:dnd:470860101545230337>',
   offline: '<:offline:470860118821699584>',
   streaming: '<:streaming:470860133656690701>',
-};
-
-exports.services = {
-  translate: '<:translate:420659720727298054>',
 };
 
 exports.regionFlags = {
@@ -172,4 +171,3 @@ exports.deprecatedPermissions = [
 
 exports.donationLink = id => `https://donatebot.io/checkout/382951433378594817?buyer=${id}`;
 exports.githubLink = 'https://github.com/iDroid27/homer';
-exports.logChannel = '458334746338918403';

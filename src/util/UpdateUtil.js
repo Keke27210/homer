@@ -1,6 +1,6 @@
 const Util = require('./Util');
 const request = require('superagent');
-let radio = false;
+let radio = 0;
 
 class UpdateUtil extends Util {
   constructor(client) {
@@ -8,12 +8,12 @@ class UpdateUtil extends Util {
   }
 
   async updateGame() {
-    if (radio) {
-      radio = false;
+    if (radio === 2) {
+      radio = 0;
       const radios = await this.client.database.getDocuments('radios', true).then(radios => radios.map(r => `${r.name} (${r.id})`));
-      return this.client.user.setActivity(`${radios[Math.floor(Math.random() * radios.length)]} on Homer Tuner 📻`, { type: 'LISTENING' });
+      return this.client.user.setActivity(`${radios[Math.floor(Math.random() * radios.length)]} on Homer Radio 📻`, { type: 'LISTENING' });
     } else {
-      radio = true;
+      radio += 1;
       const game = await this.client.database.getDocument('bot', 'settings')
         .then(settings => settings.customGame) || 'Type {prefix}help! On {servers} servers on shard {shard}.';
 
@@ -32,7 +32,7 @@ class UpdateUtil extends Util {
     // DiscordBotList.com
     request
       .post(`https://discordbotlist.com/api/bots/${this.client.user.id}/stats`)
-      .set('Authorization', this.client.config.api.discordBotsCom)
+      .set('Authorization', this.client.config.botlist.discordBotsCom)
       .set('Content-Type', 'application/json')
       .send({
         shard_id: this.client.shard.id,
@@ -45,7 +45,7 @@ class UpdateUtil extends Util {
     // Discord Bots
     request
       .post(`https://discord.bots.gg/api/v1/bots/${this.client.user.id}/stats`)
-      .set('Authorization', this.client.config.api.discordBotsGg)
+      .set('Authorization', this.client.config.botlist.discordBotsGg)
       .set('Content-Type', 'application/json')
       .send({
         shardId: this.client.shard.id,
@@ -57,7 +57,7 @@ class UpdateUtil extends Util {
     // Discordbots.org
     request
       .post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
-      .set('Authorization', this.client.config.api.discordBotsOrg)
+      .set('Authorization', this.client.config.botlist.discordBotsOrg)
       .set('Content-Type', 'application/json')
       .send({
         shard_id: this.client.shard.id,
@@ -69,7 +69,7 @@ class UpdateUtil extends Util {
     // Listcord
     request
       .post(`https://listcord.com/api/bot/${this.client.user.id}/guilds`)
-      .set('Authorization', this.client.config.api.listcord)
+      .set('Authorization', this.client.config.botlist.listcord)
       .set('Content-Type', 'application/json')
       .send({
         shard: this.client.shard.id,
@@ -86,7 +86,7 @@ class UpdateUtil extends Util {
 
       request
         .post(`https://discordbots.group/api/bot/${this.client.user.id}`)
-        .set('Authorization', this.client.config.api.discordbotsGroup)
+        .set('Authorization', this.client.config.botlist.discordbotsGroup)
         .set('Content-Type', 'application/json')
         .send({
           count: total,

@@ -28,11 +28,11 @@ class TranslateCommand extends Command {
           .setFooter(context.__('translate.footer'), 'https://upload.wikimedia.org/wikipedia/commons/d/db/Google_Translate_Icon.png');
 
         message.edit(
-          `${this.client.constants.services.translate} ${context.__('translate.title', { targetLanguage })}`,
+          `${this.client.constants.emotes.translate} ${context.__('translate.title', { targetLanguage })}`,
           { embed },
         );
       })
-      .catch((e) => {
+      .catch(() => {
         message.edit(`${this.client.constants.emotes.error} ${context.__('translate.error')}`);
       });
   }

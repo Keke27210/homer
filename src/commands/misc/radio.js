@@ -1,5 +1,4 @@
 const { RichEmbed } = require('discord.js');
-const request = require('snekfetch');
 const Command = require('../../structures/Command');
 
 class RadioCommand extends Command {
@@ -254,22 +253,18 @@ class InfoSubcommand extends Command {
     if (meta.stationId) {
       // radio.net
       if (meta.stationId.startsWith('RADIONET_')) {
-        const req = await request.get(`https://api.radio.net/info/v2/search/nowplaying?apikey=${this.client.config.api.radio}&numberoftitles=1&station=${meta.stationId.split('_')[1]}`)
-          .then(r => r.body)
-          .catch(() => null);
+        const data = await this.client.api.getRadionet(meta.stationId.split('_')[1]);
 
-        if (req && req[0]) {
-          playing = req[0].streamTitle;
+        if (typeof data !== 'number' && data[0]) {
+          playing = data[0].streamTitle;
         }
       }
       // tune-in
       else if (meta.stationId.startsWith('TUNEIN_')) {
-        const req = await request.get(`https://feed.tunein.com/profiles/s${meta.stationId.split('_')[1]}/nowPlaying`)
-          .then(r => r.body)
-          .catch(() => null);
+        const data = await this.client.api.getTunein(meta.stationId.split('_')[1]);
 
-        if (req) {
-          const programme = req.Secondary || req.Primary || req.Header;
+        if (typeof data !== 'number') {
+          const programme = data.Secondary || data.Primary || data.Header;
           playing = programme.Title;
           if (programme.Image !== 'http://cdn-radiotime-logos.tunein.com/p0q.png') image = programme.Image;
         }

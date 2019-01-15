@@ -1,6 +1,6 @@
-const request = require('superagent');
-const { RichEmbed } = require('discord.js');
 const Command = require('../../structures/Command');
+const { RichEmbed } = require('discord.js');
+const request = require('superagent');
 
 class BlacklistCommand extends Command {
   constructor(client) {
