@@ -5,8 +5,7 @@ class APIManager extends Manager {
   constructor(client) {
     super(client);
 
-    this.keys = this.client.config.api.keys;
-    this.httpOptions = this.client.config.api.options;
+    this.keys = this.client.config.api;
   }
 
   // Bing Maps
@@ -46,7 +45,7 @@ class APIManager extends Manager {
         fields: options.fields || 'queries(request(totalResults)),items(link)',
         lr: `lang_${(options.lang || this.client.localization.defaultLocale).split('-')[0]}`,
         num: options.num || 1,
-        filter: options.safe || 1,
+        filter: options.filter || 1,
         safe: options.safe || 'high',
         q: query,
       })
