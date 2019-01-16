@@ -39,10 +39,18 @@ class CallCommand extends Command {
     }
 
     const toLanguage = (await this.client.database.getDocument('settings', toSubscription.settings) || this.client.constants.defaultUserSettings(toSubscription.settings)).misc.locale;
-    const thisMessage = await context.reply(context.__('call.calling', { number }));
+    const thisMessage = await context.reply(context.__('call.calling', { identity:
+      thisSubscription.contacts.find(c => c.number === number) ?
+        `**${thisSubscription.contacts.find(c => c.number === number).description}** (**${number}**)` :
+        `**${number}**`,
+    }));
+
     const toMessage = await this.client.sendMessage(
       toSubscription.id,
-      `${this.client.__(toLanguage, 'call.incomingCall', { command: `${this.client.prefix}pickup`, number: thisSubscription.number })}${toSubscription.message.incoming ? `\n${toSubscription.message.incoming}` : ''}`,
+      `${this.client.__(toLanguage, 'call.incomingCall', {
+        command: `${this.client.prefix}pickup`,
+        identity: toSubscription.contacts.find(c => c.number === thisSubscription.number) ? `**${toSubscription.contacts.find(c => c.number === thisSubscription.number).description}** (**${thisSubscription.number}**)` : `**${thisSubscription.number}**`,
+      })}${toSubscription.message.incoming ? `\n${toSubscription.message.incoming}` : ''}`,
     );
 
     thisSubscription.locale = context.settings.misc.locale;
@@ -72,13 +80,19 @@ class CallCommand extends Command {
       this.client.updateMessage(
         callObject.sender.id,
         callObject.senderMessage,
-        `${context.__('call.senderMissed', { number })}${callObject.receiver.message.missed ? `\n${callObject.receiver.message.missed}` : ''}`,
+        `${context.__('call.senderMissed', { identity:
+          thisSubscription.contacts.find(c => c.number === number) ?
+            `**${thisSubscription.contacts.find(c => c.number === number).description}** (**${number}**)` :
+            `**${number}**`,
+        })}${callObject.receiver.message.missed ? `\n${callObject.receiver.message.missed}` : ''}`,
       );
 
       this.client.updateMessage(
         callObject.receiver.id,
         callObject.receiverMessage,
-        `${this.client.__(toLanguage, 'call.receiverMissed', { number: callObject.sender.number })}`,
+        `${this.client.__(toLanguage, 'call.receiverMissed', {
+          identity: toSubscription.contacts.find(c => c.number === thisSubscription.number) ? `**${toSubscription.contacts.find(c => c.number === thisSubscription.number).description}** (**${thisSubscription.number}**)` : `**${thisSubscription.number}**`,
+        })}`,
       );
     }, 30000);
   }
