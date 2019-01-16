@@ -35,7 +35,9 @@ class TextCommand extends Command {
       toSend.id,
       context.__('text.title', {
         user: `**${context.message.author.username}**#${context.message.author.discriminator}`,
-        number: subscription.number,
+        identity: toSend.contacts.find(c => c.number === subscription.number) ?
+        `**${toSend.contacts.find(c => c.number === subscription.number).description}** (**${subscription.number}**)` :
+        `**${subscription.number}**`,
       }),
       {
         embed: {
@@ -45,7 +47,11 @@ class TextCommand extends Command {
       }
     );
 
-    context.replySuccess(context.__('text.sent', { number }));
+    context.replySuccess(context.__('text.sent', {
+      identity: thisSubscription.contacts.find(c => c.number === number) ?
+        `**${thisSubscription.contacts.find(c => c.number === number).description}** (**${number}**)` :
+        `**${number}**`,
+    }));
   }
 }
 

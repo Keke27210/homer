@@ -836,8 +836,8 @@
   "telephone.change.notOwner": "You must be the owner of the telephone line to change the number of.",
   "telephone.change.noNumber": "You must provide a new number to set.",
   
-  "text.sent": "Text message successfully sent to **{{{ number }}}**!",
-  "text.title": "📧 Text message by {{{ user }}} from **{{{ number }}}**:",
+  "text.sent": "Text message successfully sent to {{{ identity }}}!",
+  "text.title": "📧 Text message by {{{ user }}} from {{{ identity }}}:",
   "text.footer": "You can answer to this message using {{{ command }}}.",
   "text.noNumber": "You must provide the number to text.",
   "text.noText": "You must provide the text to send.",

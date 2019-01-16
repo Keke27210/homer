@@ -817,8 +817,8 @@
   "telephone.change.notOwner": "Vous devez être le propriétaire de la ligne sur laquelle changer le numéro.",
   "telephone.change.noNumber": "Vous devez fournir un nouveau numéro à définir.",
 
-  "text.sent":"Message envoyé à **{{{ number }}}** avec succès !",
-  "text.title":"📧 Message reçu de {{{ user }}} / **{{{ number }}}**:",
+  "text.sent":"Message envoyé à {{{ identity }}} avec succès !",
+  "text.title":"📧 Message reçu de {{{ user }}} / {{{ identity }}}:",
   "text.footer":"Vous pouvez répondre à un message avec {{{ command }}}.",
   "text.noNumber":"Vous devez fournir le numéro à qui envoyer le message.",
   "text.noText":"Vous devez fournir un message à envoyer.",
