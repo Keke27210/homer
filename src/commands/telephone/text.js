@@ -48,8 +48,8 @@ class TextCommand extends Command {
     );
 
     context.replySuccess(context.__('text.sent', {
-      identity: thisSubscription.contacts.find(c => c.number === number) ?
-        `**${thisSubscription.contacts.find(c => c.number === number).description}** (**${number}**)` :
+      identity: subscription.contacts.find(c => c.number === number) ?
+        `**${subscription.contacts.find(c => c.number === number).description}** (**${number}**)` :
         `**${number}**`,
     }));
   }
