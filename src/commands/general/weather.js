@@ -13,7 +13,7 @@ class WeatherCommand extends Command {
   }
 
   async execute(context) {
-    const query = encodeURIComponent(context.args.join(' '));
+    const query = context.args.join(' ');
     if (!query) return context.replyError(context.__('weather.noSearch'));
     if (query.length > 64) return context.replyWarning(context.__('weather.queryTooLong'));
 
