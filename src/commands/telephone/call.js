@@ -23,6 +23,7 @@ class CallCommand extends Command {
 
     const numbers = context.args.map(a => a.toUpperCase());
     if (numbers.length === 0) return context.replyError(context.__('call.noNumber'));
+    if (numbers.find(n => n === subscription.number)) return context.replyError(context.__('call.self'));
 
     // Normal calls
     if (numbers.length === 1) {

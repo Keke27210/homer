@@ -1,8 +1,5 @@
 const Event = require('../structures/Event');
 const { RichEmbed } = require('discord.js');
-const request = require('superagent');
-
-const linkExpression = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
 
 class MessageEvent extends Event {
   constructor(client) {
@@ -52,39 +49,7 @@ class MessageEvent extends Event {
     }
 
     // Handle phone call
-    const blacklist = await this.client.database.getDocument('blacklist', message.author.id);
-    if ((!message.author.bot || this.client.config.botWhitelist.includes(message.author.id)) && !blacklist) {
-      this.client.database.getDocuments('calls')
-        .then(async (calls) => {
-          const callObject = calls.find(c => [c.sender.id, c.receiver.id].includes(message.channel.id) && c.state === 1);
-          if (!callObject) return;
-
-          const target = (message.channel.id === callObject.sender.id) ? callObject.receiver.id : callObject.sender.id;
-          const targetSettings = (message.channel.id === callObject.sender.id) ? callObject.receiver.settings : callObject.sender.settings;
-          if (targetSettings.ignored && targetSettings.ignored.find(i => i.id === message.author.id)) return;
-
-          const msg = [`📞 **${message.author.username}**#${message.author.discriminator}: ${message.cleanContent}`];
-
-          const linkTest = msg[0].match(linkExpression);
-          for (const link of (linkTest || [])) msg[0] = msg[0].replace(link, `<${link}>`);
-
-          const toLanguage = (await this.client.database.getDocument('settings', targetSettings) || this.client.constants.defaultUserSettings(targetSettings)).misc.locale;
-          if (message.attachments.size > 0) msg.push('', this.client.__(toLanguage, 'telephone.attachments'));
-          
-          for (const attachment of message.attachments.array()) {
-            const data = await this.client.api.getSafety(attachment.url);
-
-            if (typeof data !== 'number' && data.status === 'success' && data.nudity.safe <= this.client.config.misc.nsfwThresold) {
-              return;
-            }
-
-            msg.push(`- **${attachment.filename}**: <${attachment.url}>`);
-          }
-
-          this.client.sendMessage(target, msg.join('\n'));
-          this.client.database.updateDocument('calls', callObject.id, { activity: Date.now() });
-        });
-    }
+    this.client.telephone.handleMessage(message);
   }
 }
 

@@ -816,11 +816,8 @@
   "telephone.outgoingTimeout": "📞 No response from {{{ identity }}}.",
   "telephone.incomingTimeout": "📞 You missed a call from {{{ identity }}}.",
   "telephone.noCommunication": "You are not in communication at the moment.",
-
-"telephone.refusedConnection": "The connection with your correspondent has been refused. You may have been **blacklisted** or the telephone service is currently **under maintenance**.",
-  "telephone.attachments": "🔗 **Attachments:**",
-  "telephone.noCall": "Nobody is calling you.",
-  "telephone.inactiveCall": "📞 The ongoing telephone call has been terminated due to an inactivity of 5 minutes.",
+  "telephone.attachments": "🔗 Attachments:",
+  "telephone.inactiveCall": "📞 The current call was terminated due to inactivity of more than 5 minutes.",
 
   "telephone.title": "📞 Subscription for {{{ name }}}:",
   "telephone.embed.number": "Number",
