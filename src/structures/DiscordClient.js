@@ -21,6 +21,7 @@ const FinderUtil = require('../util/FinderUtil');
 const TimeUtil = require('../util/TimeUtil');
 const HandlerUtil = require('../util/HandlerUtil');
 const LoggerUtil = require('../util/LoggerUtil');
+const PhoneUtil = require('../util/PhoneUtil');
 const OtherUtil = require('../util/OtherUtil');
 
 class DiscordClient extends Client {
@@ -47,6 +48,7 @@ class DiscordClient extends Client {
     this.update = new UpdateUtil(this);
     this.handler = new HandlerUtil(this);
     this.logger = new LoggerUtil(this);
+    this.telephone = new PhoneUtil(this);
     this.other = new OtherUtil(this);
 
     this.rss = new RssParser(this.config.rss || {});

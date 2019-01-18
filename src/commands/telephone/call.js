@@ -6,95 +6,69 @@ class CallCommand extends Command {
       name: 'call',
       aliases: ['dial'],
       category: 'telephone',
-      usage: '<number>',
+      usage: '<number> [numbers...]',
       dm: true,
     });
   }
 
   async execute(context) {
     const status = await this.client.database.getDocument('bot', 'settings').then(s => s.telephone);
-    const calls = await this.client.database.getDocuments('calls', true);
+    if (!status) return context.replyWarning(context.__('telephone.unavailable'));
 
-    const thisSubscription = await this.client.database.getDocument('telephone', context.message.channel.id);
-    if (!thisSubscription) return context.replyWarning(context.__('telephone.noSubscription', { command: `${this.client.prefix}telephone subscribe` }));
+    const subscription = await this.client.database.getDocument('telephone', context.message.channel.id);
+    if (!subscription) return context.replyWarning(context.__('telephone.noSubscription', { command: `${this.client.prefix}telephone subscribe` }));
 
-    const c = calls.find(c => c.sender.number === thisSubscription.number || c.receiver.number === thisSubscription.number);
-    if (c) {
-      return context.reply(context.__('call.callerBusy', { number: c.sender.number === thisSubscription.number ? c.receiver.number : c.sender.number }));
-    }
+    const currentStatus = await this.client.telephone.getStatus(context.message.channel.id);
+    if (currentStatus !== 0) return context.replyWarning(context.__('call.inCall'));
 
-    const number = context.args[0] ? context.args[0].toUpperCase() : null;
-    if (!number) return context.replyError(context.__('call.noNumber'));
+    const numbers = context.args.map(a => a.toUpperCase());
+    if (numbers.length === 0) return context.replyError(context.__('call.noNumber'));
 
-    if (thisSubscription.number === number) return context.replyWarning(context.__('call.cannotCallOwn'));
+    // Normal calls
+    if (numbers.length === 1) {
+      const correspondent = await this.client.database.findDocuments('telephone', { number: numbers[0] }).then(a => a[0]);
+      if (!correspondent) return context.replyWarning(context.__('call.unassignedNumber', { number: numbers[0] }));
 
-    const toSubscription = await this.client.database.findDocuments('telephone', { number }).then(r => r[0]);
-    if (!toSubscription) return context.replyWarning(context.__('telephone.notAssigned', { number }));
-    if (toSubscription.blacklist.find(b => b.channel === context.message.channel.id) || !status) {
-      return context.replyWarning(context.__('telephone.refusedConnection'));
-    }
+      const correspondentStatus = await this.client.telephone.getStatus(correspondent.id);
+      if (correspondentStatus !== 0) return context.replyWarning(context.__('call.busyCorrespondent'));
 
-    if (calls.find(c => c.sender.number === number || c.receiver.number === number)) {
-      return context.replyWarning(context.__('call.receiverBusy'));
-    }
+      const blacklistStatus = correspondent.blacklist.find(b => b.channel === subscription.id || b.number === subscription.number);
+      if (blacklistStatus) return context.replyError(context.__('call.blacklisted'));
 
-    const toLanguage = (await this.client.database.getDocument('settings', toSubscription.settings) || this.client.constants.defaultUserSettings(toSubscription.settings)).misc.locale;
-    const thisMessage = await context.reply(context.__('call.calling', { identity:
-      thisSubscription.contacts.find(c => c.number === number) ?
-        `**${thisSubscription.contacts.find(c => c.number === number).description}** (**${number}**)` :
-        `**${number}**`,
-    }));
+      const contact = correspondent.contacts.find(c => c.number === subscription.number);
+      const identity = contact ? `**${contact.description}** (**${contact.number}**)` : `**${subscription.number}**`;
+      const correspondentContact = subscription.contact.find(c => c.number === correspondent.number);
+      const correspondentIdentity = correspondentContact ? `**${correspondentContact.description}** (**${correspondentContact.number}**)` : `**${correspondent.number}**`;
+      const correspondentLanguage = await this.client.database.getDocument('settings', correspondent.id).then(a => a ? a.misc.locale : this.client.localization.defaultLocale);
 
-    const toMessage = await this.client.sendMessage(
-      toSubscription.id,
-      `${this.client.__(toLanguage, 'call.incomingCall', {
-        command: `${this.client.prefix}pickup`,
-        identity: toSubscription.contacts.find(c => c.number === thisSubscription.number) ? `**${toSubscription.contacts.find(c => c.number === thisSubscription.number).description}** (**${thisSubscription.number}**)` : `**${thisSubscription.number}**`,
-      })}${toSubscription.message.incoming ? `\n${toSubscription.message.incoming}` : ''}`,
-    );
+      subscription.message = await this.client.sendMessage(
+        subscription.id,
+        context.__('telephone.outgoing', { identity: correspondentIdentity }),
+      ).then(m => m.id);
 
-    thisSubscription.locale = context.settings.misc.locale;
-    toSubscription.locale = toLanguage;
-    await this.client.database.insertDocument(
-      'calls',
-      {
-        sender: thisSubscription,
-        receiver: toSubscription,
-        senderMessage: thisMessage.id,
-        receiverMessage: toMessage.id,
+      correspondent.message = await this.client.sendMessage(
+        correspondent.id,
+        this.client.__(correspondentLanguage, 'telephone.incoming', { identity }),
+      ).then(m => m.id);
+
+      this.client.database.insertDocument('phoneLog', { id: subscription.number, type: 0, target: numbers[0], time: Date.now() });
+      this.client.database.insertDocument('phoneLog', { id: correspondent.number, type: 1, target: subscription.number, time: Date.now() });
+
+      await this.client.database.insertDocument('calls', {
+        sender: subscription,
+        receiver: correspondent,
+        start: Date.now(),
+        active: null,
         state: 0,
-        activity: Date.now(),
-        time: Date.now(),
-      },
-      {
-        conflict: 'update',
-      },
-    );
+        type: 0,
+      });
+    }
 
-    this.client.setTimeout(async () => {
-      const callObject = await this.client.database.getDocuments('calls', true)
-        .then(calls => calls.find(c => c.sender.number === thisSubscription.number && c.receiver.number === toSubscription.number));
-      if (!callObject || callObject.state !== 0) return;
-
-      this.client.database.deleteDocument('calls', callObject.id);
-      this.client.updateMessage(
-        callObject.sender.id,
-        callObject.senderMessage,
-        `${context.__('call.senderMissed', { identity:
-          thisSubscription.contacts.find(c => c.number === number) ?
-            `**${thisSubscription.contacts.find(c => c.number === number).description}** (**${number}**)` :
-            `**${number}**`,
-        })}${callObject.receiver.message.missed ? `\n${callObject.receiver.message.missed}` : ''}`,
-      );
-
-      this.client.updateMessage(
-        callObject.receiver.id,
-        callObject.receiverMessage,
-        `${this.client.__(toLanguage, 'call.receiverMissed', {
-          identity: toSubscription.contacts.find(c => c.number === thisSubscription.number) ? `**${toSubscription.contacts.find(c => c.number === thisSubscription.number).description}** (**${thisSubscription.number}**)` : `**${thisSubscription.number}**`,
-        })}`,
-      );
-    }, 30000);
+    // Group calls
+    else {
+      if (!this.client.other.isDonator(context.message.author.id)) return context.replyError(context.__('call.cannotGroup'));
+      context.replyWarning('This feature is currently being done, it\'ll be available soon!');
+    }
   }
 }
 
