@@ -61,8 +61,9 @@ class HangupCommand extends Command {
         if (destinations.length === 1) {
           this.client.sendMessage(destinations[0].id, this.client.__(destinations[0].locale, 'telephone.emptyGroup'));
           this.client.database.deleteDocument('calls', call.id);
+        } else {
+          this.client.database.updateDocument('calls', call.id, { receivers: destinations });
         }
-        else this.client.database.updateDocument('calls', call.id, { receivers: destinations });
       }
     }
   }
