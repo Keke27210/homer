@@ -49,12 +49,12 @@ scheduleJob({ second: 10 }, async () => {
     delete client.radio.inactivity[inactive];
   }
 
-  // Cancel inactive phone calls
-  if (client.shard.id === 0) {
-    const calls = await client.database.getDocuments('calls', true)
-      .then(calls => calls.filter(c => (Date.now() - c.activity) > 300000));
+  const calls = await client.database.getDocuments('calls', true)
+  // Cancel inactive phone calls - TO BE REWORKED
+  /*if (client.shard.id === 0) {
+    const inactiveCalls = calls.filter(c => (Date.now() - c.active) > 300000);
 
-    for (const call of calls) {
+    for (const call of inactiveCalls) {
       client.database.deleteDocument('calls', call.id);
 
       // Sender
@@ -64,6 +64,23 @@ scheduleJob({ second: 10 }, async () => {
       // Receiver
       const receiverSettings = (await client.database.getDocument('settings', call.receiver.settings) || client.constants.defaultUserSettings(call.receiver.settings)).misc.locale;
       client.sendMessage(call.receiver.id, client.__(receiverSettings, 'telephone.inactiveCall'));
+    }
+  }*/
+
+  // Phone call timeouts
+  if (client.shard.id === 0) {
+    for (const call of calls) {
+      if (call.type === 0 && (Date.now() - call.start) > 30000) {
+        // Sender
+        const senderContact = call.sender.contacts.find(c => c.number === call.receiver.number);
+        const senderIdentity = senderContact ? `**${senderContact.description}** (**${senderContact.number}**)` : `**${call.receiver.number}**`;
+        client.sendMessage(call.sender.id, client.__(call.sender.locale, 'outgoingTimeout', { identity: senderIdentity }));
+
+        // Receiver
+        const receiverContact = call.receiver.contacts.find(c => c.number === call.sender.number);
+        const receiverIdentity = receiverContact ? `**${receiverContact.description}** (**${receiverContact.number}**)` : `**${call.sender.number}**`;
+        client.sendMessage(call.receiver.id, client.__(call.receiver.locale, 'incomingTimeout', { identity: receiverIdentity }));
+      }
     }
   }
 });
