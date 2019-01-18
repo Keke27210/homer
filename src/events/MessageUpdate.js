@@ -8,11 +8,11 @@ class MessageUpdateEvent extends Event {
   async handle(oldMessage, newMessage) {
     if (newMessage.author.id !== this.client.user.id) {
       const calls = await this.client.database.getDocuments('calls', true);
-      const call = calls.find(c => c.type === 0 ? [c.sender.id, c.receiver.id].includes(context.message.channel.id) : c.receivers.find(r => r.id === context.message.channel.id));
+      const call = calls.find(c => c.type === 0 ? [c.sender.id, c.receiver.id].includes(newMessage.channel.id) : c.receivers.find(r => r.id === newMessage.channel.id));
       if (!call) return;
 
       if (call.type === 0) {
-        const target = (newMessage.channel.id === callObject.sender.id) ? callObject.receiver.id : callObject.sender.id;
+        const target = (newMessage.channel.id === call.sender.id) ? call.receiver.id : call.sender.id;
         const targetMessage = await this.client.rest.methods.getChannelMessages(target, { limit: 100 })
           .then((data) => {
             const filter = m => !m.webhook_id
