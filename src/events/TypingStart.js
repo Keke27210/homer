@@ -13,7 +13,7 @@ class TypingStartEvent extends Event {
 
       if (call.type === 0) {
         const destination = channel.id === call.sender.id ? 'receiver' : 'sender';
-        this.client.rest.methods.sentTyping(call[destination].id);
+        this.client.rest.methods.sendTyping(call[destination].id);
       }
     }
   }

@@ -26,6 +26,8 @@ class PhoneUtil extends Util {
     if (!call) return;
 
     if (call.type === 0) {
+      if (call.state === 0) return;
+
       const destination = call.sender.id === message.channel.id ? 'receiver' : 'sender';
       const destSettings = await this.client.database.getDocument('settings', call[destination].settings);
       if (destSettings && destSettings.ignored.includes(message.author.id)) return;
