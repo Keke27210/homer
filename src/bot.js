@@ -70,7 +70,7 @@ scheduleJob({ second: 10 }, async () => {
   // Phone call timeouts
   if (client.shard.id === 0) {
     for (const call of calls) {
-      if (call.type === 0 && (Date.now() - call.start) > 30000) {
+      if (call.type === 0 && call.state === 0 && (Date.now() - call.start) > 30000) {
         // Sender
         const senderContact = call.sender.contacts.find(c => c.number === call.receiver.number);
         const senderIdentity = senderContact ? `**${senderContact.description}** (**${senderContact.number}**)` : `**${call.receiver.number}**`;
