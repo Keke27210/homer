@@ -14,9 +14,9 @@ class HangupCommand extends Command {
 
     const call = calls.find(c => c.type === 0 ? [c.sender.id, c.receiver.id].includes(context.message.channel.id) : c.receivers.find(r => r.id === context.message.channel.id));
     if (!call) return context.replyError(context.__('telephone.noCommunication'));
-    await this.client.database.deleteDocument('calls', call.id);
 
     if (call.type === 0) {
+      this.client.database.deleteDocument('calls', call.id);
       const state = (context.message.channel.id === call.sender.id) ? 'sender' : 'receiver';
       if (call.state === 1) {
         if (state === 'sender') {
