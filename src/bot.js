@@ -80,6 +80,8 @@ scheduleJob({ second: 10 }, async () => {
         const receiverContact = call.receiver.contacts.find(c => c.number === call.sender.number);
         const receiverIdentity = receiverContact ? `**${receiverContact.description}** (**${receiverContact.number}**)` : `**${call.sender.number}**`;
         client.sendMessage(call.receiver.id, client.__(call.receiver.locale, 'incomingTimeout', { identity: receiverIdentity }));
+
+        this.client.database.deleteDocument('calls', call.id);
       }
     }
   }
