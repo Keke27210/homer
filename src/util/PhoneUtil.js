@@ -16,7 +16,6 @@ class PhoneUtil extends Util {
   }
 
   async handleMessage(message) {
-    return;
     const blacklist = await this.client.database.getDocument('blacklist', message.author.id);
     if (blacklist) return;
 
