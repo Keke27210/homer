@@ -43,6 +43,33 @@ class PhoneUtil extends Util {
 
       this.client.sendMessage(call[destination].id, msg.join('\n'));
       this.client.database.updateDocument('calls', call.id, { active: Date.now() });
+    } else {
+      const destinations = call.receivers.filter(r => r.id !== message.channel.id);
+      const number = call.receivers.find(r => r.id === message.channel.id).number;
+
+      // Removing link auto-embed
+      let content = message.cleanContent;
+      const linkTest = content.match(/(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm);
+      for (const link of linkTest || []) content = content.replace(link, `<${link}>`);
+      const attachments = message.attachments.map(a => `- **${a.filename}** - <${a.url}>`);
+
+      for (let i = 0; i < destinations.length; i += 1) {
+        const destination = destinations[i];
+        const destSettings = await this.client.database.getDocument('settings', destination.settings);
+        if (destSettings.ignored.includes(message.author.id)) return;
+
+        const contact = destination.contacts.find(c => c.number === number);
+        const identity = contact ? `**${contact.description}** / **${number}**` : `**${number}**`;
+
+        const msg = [`📞 **${message.author.username}**#${message.author.discriminator} (${identity}): ${content}`];
+        if (message.attachments.size > 0) {
+          msg.push('', this.client.__(destSettings.misc.locale, 'telephone.attachments'), attachments.join('\n'));
+        }
+
+        this.client.sendMessage(destination.id, msg.join('\n'));
+      }
+
+      this.client.database.updateDocument('calls', call.id, { active: Date.now() });
     }
   }
 }
