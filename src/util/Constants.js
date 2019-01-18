@@ -170,5 +170,6 @@ exports.deprecatedPermissions = [
 ];
 
 exports.suggestionsChannel = '535539166637850631';
+exports.reportsChannel = '535787193159909376';
 exports.donationLink = id => `https://donatebot.io/checkout/382951433378594817?buyer=${id}`;
 exports.githubLink = 'https://github.com/iDroid27/homer';
