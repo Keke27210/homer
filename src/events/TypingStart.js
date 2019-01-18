@@ -7,13 +7,14 @@ class TypingStartEvent extends Event {
 
   async handle(channel, user) {
     if (user.id !== this.client.user.id) {
-      this.client.database.getDocuments('calls').then((calls) => {
-        const callObject = calls.find(c => [c.sender.id, c.receiver.id].includes(channel.id) && c.state === 1);
-        if (!callObject) return;
+      const calls = await this.client.database.getDocuments('calls', true);
+      const call = calls.find(c => c.type === 0 ? [c.sender.id, c.receiver.id].includes(context.message.channel.id) : c.receivers.find(r => r.id === context.message.channel.id));
+      if (!call) return;
 
-        const state = (channel.id === callObject.sender.id) ? 'receiver' : 'sender';
-        this.client.rest.methods.sendTyping(callObject[state].id);
-      });
+      if (call.type === 0) {
+        const destination = channel.id === call.sender.id ? 'receiver' : 'sender';
+        this.client.rest.methods.sentTyping(call[destination].id);
+      }
     }
   }
 }
