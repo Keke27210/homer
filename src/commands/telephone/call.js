@@ -37,7 +37,7 @@ class CallCommand extends Command {
 
       const contact = correspondent.contacts.find(c => c.number === subscription.number);
       const identity = contact ? `**${contact.description}** (**${contact.number}**)` : `**${subscription.number}**`;
-      const correspondentContact = subscription.contact.find(c => c.number === correspondent.number);
+      const correspondentContact = subscription.contacts.find(c => c.number === correspondent.number);
       const correspondentIdentity = correspondentContact ? `**${correspondentContact.description}** (**${correspondentContact.number}**)` : `**${correspondent.number}**`;
       const correspondentLanguage = await this.client.database.getDocument('settings', correspondent.id).then(a => a ? a.misc.locale : this.client.localization.defaultLocale);
 
