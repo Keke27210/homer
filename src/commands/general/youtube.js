@@ -12,7 +12,7 @@ class YoutubeCommand extends Command {
   }
 
   async execute(context) {
-    const search = encodeURIComponent(context.args.join(' '));
+    const search = context.args.join(' ');
     if (!search) return context.replyError(context.__('youtube.noSearch'));
     if (search.length > 128) return context.replyWarning(context.__('youtube.searchTooLong'));
 

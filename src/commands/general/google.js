@@ -12,7 +12,7 @@ class GoogleCommand extends Command {
   }
 
   async execute(context) {
-    const query = encodeURIComponent(context.args.join(' '));
+    const query = context.args.join(' ');
     if (!query) return context.replyError(context.__('google.noSearch'));
     if (query.length > 256) return context.replyWarning(context.__('google.searchTooLong'));
 
