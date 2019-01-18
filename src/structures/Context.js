@@ -73,11 +73,11 @@ class Context {
     return emote.substring(2, (emote.length - 1));
   }
 
-  formatDate(date) {
+  formatDate(date, format) {
     return mtz(date)
       .tz(this.settings.misc.timezone)
       .locale(this.settings.misc.locale)
-      .format(`${this.settings.misc.dateFormat} ${this.settings.misc.timeFormat}`);
+      .format(format || `${this.settings.misc.dateFormat} ${this.settings.misc.timeFormat}`);
   }
 
   parseOptions() {

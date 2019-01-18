@@ -169,5 +169,6 @@ exports.deprecatedPermissions = [
   'MANAGE_ROLES_OR_PERMISSIONS',
 ];
 
+exports.suggestionsChannel = '535539166637850631';
 exports.donationLink = id => `https://donatebot.io/checkout/382951433378594817?buyer=${id}`;
 exports.githubLink = 'https://github.com/iDroid27/homer';

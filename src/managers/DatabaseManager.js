@@ -20,6 +20,7 @@ const tables = [
   'reports',
   'rss',
   'settings',
+  'suggestions',
   'tags',
   'telephone',
   'vip',

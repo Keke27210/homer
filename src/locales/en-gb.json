@@ -263,7 +263,7 @@
   "helpUtil.remind": "Set a remind",
   "helpUtil.remind.list": "Manage your active reminds",
   "helpUtil.remind.delete": "Delete an active remind",
-  "helpUtil.report": "Send a feedback to devs",
+  "helpUtil.report": "Flag users who violate Homer rules (telephone, tags, etc)",
   "helpUtil.role": "Get information about a role",
   "helpUtil.role.members": "Get the list of all members having the specified role",
   "helpUtil.role.give": "Give someone a role",
@@ -284,6 +284,7 @@
   "helpUtil.server.emotes": "List all emotes of the server",
   "helpUtil.settings": "Overview the server settings",
   "helpUtil.stats": "Get statistics about the bot",
+  "helpUtil.suggest": "Suggest ideas for Homer's development",
   "helpUtil.support": "Join the support server",
   "helpUtil.tag": "Run tags, powered by Lisa - a JagTag port",
   "helpUtil.tag.create": "Create a tag",
@@ -619,8 +620,10 @@
   "remind.delete.noID": "You must provide the ID of the remind to delete.",
   "remind.delete.notFound": "No remind found with ID `{{{ id }}}`.",
   
-  "report.success": "Your message has been successfully sent!",
-  "report.noMessage": "You must provide a message to send",
+  "report.sent": "You have successfully flagged the specified user. It'll be reviewed shortly.",
+  "report.textTooShort": "The flag reason must be greater than 32 characters.",
+  "report.answer.main": "🗨 You have received an answer about one of your reports:",
+  "report.answer.footer": "Please join the support server if you have questions about this answer.",
   
   "role.title": "🎭 Information about **{{{ name }}}**:",
   "role.embed.id": "Discord ID",
@@ -753,6 +756,11 @@
   "stats.embed.currentCalls": "Ongoing calls",
   "stats.embed.currentBroadcasts": "Current broadcasts",
 
+  "suggest.sent": "Your suggestion has been successfully sent! Thanks for contributing to Homer's development.",
+  "suggest.textTooShort": "The text length must be greater than 32 characters.",
+  "suggest.answer.main": "🗨 You have received a reply about one of your suggestions:",
+  "suggest.answer.footer": "Please join the support server if you have questions about this answer.",
+  
   "support.main": "🛂 Join the Homer support server to get assistance or be aware of the latest news about me: <{{{ invite }}}>.",
 
   "tag.noName": "You must provide the name of a tag",
