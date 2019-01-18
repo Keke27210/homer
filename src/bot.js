@@ -74,14 +74,14 @@ scheduleJob({ second: 10 }, async () => {
         // Sender
         const senderContact = call.sender.contacts.find(c => c.number === call.receiver.number);
         const senderIdentity = senderContact ? `**${senderContact.description}** (**${senderContact.number}**)` : `**${call.receiver.number}**`;
-        client.sendMessage(call.sender.id, client.__(call.sender.locale, 'outgoingTimeout', { identity: senderIdentity }));
+        client.sendMessage(call.sender.id, client.__(call.sender.locale, 'telephone.outgoingTimeout', { identity: senderIdentity }));
 
         // Receiver
         const receiverContact = call.receiver.contacts.find(c => c.number === call.sender.number);
         const receiverIdentity = receiverContact ? `**${receiverContact.description}** (**${receiverContact.number}**)` : `**${call.sender.number}**`;
-        client.sendMessage(call.receiver.id, client.__(call.receiver.locale, 'incomingTimeout', { identity: receiverIdentity }));
+        client.sendMessage(call.receiver.id, client.__(call.receiver.locale, 'telephone.incomingTimeout', { identity: receiverIdentity }));
 
-        this.client.database.deleteDocument('calls', call.id);
+        client.database.deleteDocument('calls', call.id);
       }
     }
   }
