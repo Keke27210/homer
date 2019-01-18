@@ -18,6 +18,7 @@ class SuggestCommand extends Command {
 
     const caseID = `${Date.now()}_${context.message.author.id}`;
     await this.client.database.insertDocument('suggestions', {
+      id: caseID,
       author: context.message.author.id,
       channel: context.message.channel.id,
       guild: context.message.guild ? context.message.guild.id : null,
