@@ -191,6 +191,9 @@
   
   "hangup.author": "📞 You hung up the phone.",
   "hangup.target": "📞 They hung up the phone.",
+  "hangup.group.main": "📞 You terminated the group call.",
+  "hangup.group.receivers": "📞 The call instantiater terminated the group call.",
+  "hangup.group.receiver": "📞 {{{ identity }}} hung up the phone.",
   
   "help.title": "📚 Help for **{{{ name }}}**",
   "help.category.bot": "Bot",

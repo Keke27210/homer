@@ -39,6 +39,27 @@ class HangupCommand extends Command {
         this.client.sendMessage(call.sender.id, this.client.__(call.sender.locale, 'hangup.target'));
         this.client.sendMessage(call.receiver.id, this.client.__(call.receiver.locale, 'hangup.author'));
       }
+    } else {
+      this.client.database.deleteDocument('calls', call.id);
+
+      const receiver = call.receivers.find(r => r.id === context.message.channel.id);
+      if (receiver.main) {
+        for (const r of receivers.filter(r => !r.main)) this.client.sendMessage(r.id, this.client.__(r.locale, 'hangup.group.receivers'));
+        context.reply(context.__('hangup.group.main'));
+      } else {
+        const destinations = call.receivers.filter(r => r.id !== context.message.channel.id);
+        for (const dest of destinations) {
+          const contact = dest.contacts.find(c => c.number === receiver.number);
+          const identity = contact ? `**${contact.description}** (\`${contact.number}\`)` : `\`${receiver.number}\``;
+
+          this.client.sendMessage(
+            dest.id,
+            this.client.__(dest.locale, 'hangup.receiver', { identity }),
+          );
+        }
+
+        this.client.database.updateDocument('calls', { receivers: destinations });
+      }
     }
   }
 }
