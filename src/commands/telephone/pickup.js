@@ -29,7 +29,7 @@ class PickupCommand extends Command {
       await this.client.database.updateDocument('calls', call.id, { receivers: call.receivers });
 
       for (const receiver of call.receivers.filter(r => r.id !== context.message.channel.id)) {
-        const contact = correspondent.contacts.find(c => c.number === call.receivers[receiverIndex].number);
+        const contact = receiver.contacts.find(c => c.number === call.receivers[receiverIndex].number);
         const identity = contact ? `**${contact.description}** (\`${contact.number}\`)` : `\`${call.receivers[receiverIndex].number}\``;
 
         this.client.sendMessage(
