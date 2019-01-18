@@ -28,7 +28,13 @@ class HangupCommand extends Command {
         }
       } else if (state === 'sender') {
         this.client.sendMessage(call.sender.id, this.client.__(call.sender.locale, 'hangup.author'));
-        this.client.updateMessage(call.receiver.id, call.receiver.message, this.client.__(call.receiver.locale, 'call.receiverMissed', { number: call.sender.number }));
+
+        const contact = receiver.contacts.find(c => c.number === c.sender.number);
+        this.client.updateMessage(
+          call.receiver.id,
+          call.receiver.message,
+          this.client.__(call.receiver.locale, 'telephone.incomingTimeout', { identity: contact ? `**${contact.description}** (**${contact.number}**)` : `**${contact.number}**` }),
+        );
       } else {
         this.client.sendMessage(call.sender.id, this.client.__(call.sender.locale, 'hangup.target'));
         this.client.sendMessage(call.receiver.id, this.client.__(call.receiver.locale, 'hangup.author'));
