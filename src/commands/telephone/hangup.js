@@ -58,6 +58,7 @@ class HangupCommand extends Command {
           );
         }
 
+        context.reply(context.__('hangup.author'));
         this.client.database.updateDocument('calls', { receivers: destinations });
       }
     }
