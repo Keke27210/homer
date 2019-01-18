@@ -29,7 +29,7 @@ class HangupCommand extends Command {
       } else if (state === 'sender') {
         this.client.sendMessage(call.sender.id, this.client.__(call.sender.locale, 'hangup.author'));
 
-        const contact = call.receiver.contacts.find(c => c.number === c.sender.number);
+        const contact = call.receiver.contacts.find(c => c.number === call.sender.number);
         this.client.updateMessage(
           call.receiver.id,
           call.receiver.message,

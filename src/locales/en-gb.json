@@ -63,6 +63,7 @@
   "baninfo.noQuery": "You must provide a user to search for!",
 
   "call.inCall": "You're already calling someone.",
+  "call.self": "You can't call your own number.",
   "call.cannotGroup": "You must be a donator in order to instantiate group calls.",
   "call.noNumber": "You must provide one or more numbers to call.",
   "call.busyCorrespondent": "Your correspondent is busy at the moment.",
