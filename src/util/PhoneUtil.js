@@ -39,7 +39,7 @@ class PhoneUtil extends Util {
         message.attachments.forEach(a => msg.push(`- **${a.filename}** - <${a.url}>`));
       }
 
-      this.client.sendMessage(destination.id, msg.join('\n'));
+      this.client.sendMessage(call[destination].id, msg.join('\n'));
       this.client.database.updateDocument('calls', call.id, { active: Date.now() });
     }
   }
