@@ -45,7 +45,7 @@ class PhoneUtil extends Util {
       this.client.database.updateDocument('calls', call.id, { active: Date.now() });
     } else {
       const destinations = call.receivers.filter(r => r.id !== message.channel.id);
-      const number = call.receivers.find(r => r.id === message.channel.id).number;
+      const { number, state } = call.receivers.find(r => r.id === message.channel.id);
 
       // Removing link auto-embed
       let content = message.cleanContent;
@@ -55,6 +55,8 @@ class PhoneUtil extends Util {
 
       for (let i = 0; i < destinations.length; i += 1) {
         const destination = destinations[i];
+        if (state === 0 || destination.state === 0) return;
+
         const destSettings = await this.client.database.getDocument('settings', destination.settings);
         if (destSettings.ignored.includes(message.author.id)) return;
 

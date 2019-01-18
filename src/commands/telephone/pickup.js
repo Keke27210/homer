@@ -14,13 +14,25 @@ class PickupCommand extends Command {
 
     const call = calls.find(c => c.type === 0 ? [c.sender.id, c.receiver.id].includes(context.message.channel.id) : c.receivers.find(r => r.id === context.message.channel.id));
     if (!call) return context.replyError(context.__('telephone.noCommunication'));
-    if (call.state === 1) return context.replyWarning(context.__('pickup.notPending'));
 
     if (call.type === 0) {
+      if (call.state === 1) return context.replyWarning(context.__('pickup.notPending'));
       if (call.receiver.id !== context.message.channel.id) return context.replyError(context.__('pickup.senderPickup'));
       this.client.database.updateDocument('calls', call.id, { state: 1 });
       this.client.sendMessage(call.sender.id, this.client.__(call.sender.locale, 'pickup.sender'));
       this.client.sendMessage(call.receiver.id, this.client.__(call.receiver.locale, 'pickup.receiver'));
+    } else {
+      const receiverIndex = call.receivers.findIndex(r => r.id === context.message.channel.id);
+      if (call.receivers[receiverIndex].state !== 0) return context.replyWarning(context.__('pickup.notPending'));
+      call.receivers[receiverIndex].state = 1;
+
+      await this.client.database.updateDocument('calls', call.id, { receivers: call.receivers });
+      this.client.sendMessage(
+        call.receivers.find(r => r.main).id,
+        this.client.__(call.receivers.find(r => r.main).locale, 'pickup.group', { number: call.receivers[receiverIndex].number }),
+      );
+
+      context.reply(context.__('pickup.receiver'));
     }
   }
 }
