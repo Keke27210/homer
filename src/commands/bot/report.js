@@ -19,7 +19,7 @@ class ReportCommand extends Command {
     const user = await this.client.fetchUser(id).catch(() => null);
     if (!user) return context.replyWarning(context.__('report.unknownUser', { id }));
 
-    const text = context.args.join(' ');
+    const text = context.args.slice(1).join(' ');
     if (text.length < 32) return context.replyError(context.__('report.textTooShort'));
 
     const caseID = `${Date.now()}_${context.message.author.id}`;
@@ -62,7 +62,7 @@ class AnswerSubcommand extends Command {
     const report = await this.client.database.getDocument('reports', id);
     if (!report) return context.replyError(`No report found with ID \`${id}\``);
 
-    const text = context.args.join(' ');
+    const text = context.args.slice(1).join(' ');
     if (text.length > 1024) return context.replyWarning('The text length must be fewer than 1024 characters.');
 
     await this.client.database.updateDocument('reports', report.id, { answer: text });

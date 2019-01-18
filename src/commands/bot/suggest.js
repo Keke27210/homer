@@ -55,7 +55,7 @@ class AnswerSubcommand extends Command {
     const suggestion = await this.client.database.getDocument('suggestions', id);
     if (!suggestion) return context.replyError(`No suggestion found with ID \`${id}\``);
 
-    const text = context.args.join(' ');
+    const text = context.args.slice(1).join(' ');
     if (text.length > 1024) return context.replyWarning('The text length must be fewer than 1024 characters.');
 
     await this.client.database.updateDocument('suggestions', suggestion.id, { answer: text });
