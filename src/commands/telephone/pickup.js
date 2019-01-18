@@ -27,10 +27,16 @@ class PickupCommand extends Command {
       call.receivers[receiverIndex].state = 1;
 
       await this.client.database.updateDocument('calls', call.id, { receivers: call.receivers });
-      this.client.sendMessage(
-        call.receivers.find(r => r.main).id,
-        this.client.__(call.receivers.find(r => r.main).locale, 'pickup.group', { number: call.receivers[receiverIndex].number }),
-      );
+
+      for (const receiver of call.receivers.filter(r => r.id !== context.message.channel.id)) {
+        const contact = correspondent.contacts.find(c => c.number === call.receivers[receiverIndex].number);
+        const identity = contact ? `**${contact.description}** (\`${contact.number}\`)` : `\`${call.receivers[receiverIndex].number}\``;
+
+        this.client.sendMessage(
+          receiver.id,
+          this.client.__(receiver.locale, 'pickup.group', { identity }),
+        );
+      }
 
       context.reply(context.__('pickup.receiver'));
     }

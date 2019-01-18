@@ -443,6 +443,7 @@
   "pickup.receiver": "📞 You picked up the phone.",
   "pickup.notPending": "You are already in communication with someone.",
   "pickup.senderPickup": "You cannot pick up the phone instead of the person you are calling.",
+  "pickup.group": "📞 {{{ identity }}} picked up the phone.",
 
   "ping.ping": "🏓 Ping...",
   "ping.pong": "🏓 Pong! API: **{{{ api }}}**ms - Message roundtrip: **{{{ heartbeat }}}**ms",
