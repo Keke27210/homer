@@ -68,12 +68,13 @@ class AnswerSubcommand extends Command {
     await this.client.database.updateDocument('reports', report.id, { answer: text });
 
     const user = this.client.users.get(report.author);
+    const lang = await this.client.database.getDocument('settings', user.id).then(s => s ? s.misc.locale : this.client.localization.defaultLocale);
     if (user) {
       const embed = new RichEmbed()
         .setDescription(text)
         .setTimestamp(new Date())
-        .setFooter(context.__('report.answer.footer'));
-      user.send(context.__('report.answer.main'), { embed });
+        .setFooter(this.client.__(lang, 'report.answer.footer'));
+      user.send(this.client.__(lang, 'report.answer.main'), { embed });
       context.replySuccess('Successfully replied to the report\'s author.');
     } else {
       context.replyWarning('Couldn\'t send the message to the report\'s author.');
