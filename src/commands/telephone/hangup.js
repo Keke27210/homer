@@ -11,10 +11,10 @@ class HangupCommand extends Command {
 
   async execute(context) {
     const calls = await this.client.database.getDocuments('calls', true);
-    if (!calls) return context.replyError(context.__('telephone.noCall'));
 
     const call = calls.find(c => c.type === 0 ? [c.sender.id, c.receiver.id].includes(context.message.channel.id) : c.receivers.find(r => r.id === context.message.channel.id));
-    await this.client.database.deleteDocument('calls', call.id);    
+    if (!call) return context.replyError(context.__('telephone.noCommunication'));
+    await this.client.database.deleteDocument('calls', call.id);
 
     if (call.type === 0) {
       const state = (context.message.channel.id === call.sender.id) ? 'sender' : 'receiver';

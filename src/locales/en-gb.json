@@ -439,10 +439,10 @@
   "phonebook.title": "🔖 Homer telephone book:",
   "phonebook.notFound": "The provided telephone number is either unassigned or we have committed to not provide information on it.",
 
-  "pickup.sender": "📞 They picked up the phone. Say hello!",
-  "pickup.receiver": "📞 You picked up the phone. Say hello!",
-  "pickup.alreadyAnswered": "You already answered to the call.",
-  "pickup.senderCannotPickup": "You can't pickup the phone as caller!",
+  "pickup.sender": "📞 Your correspondent picked up the phone.",
+  "pickup.receiver": "📞 You picked up the phone.",
+  "pickup.notPending": "You are already in communication with someone.",
+  "pickup.senderPickup": "You cannot pick up the phone instead of the person you are calling.",
 
   "ping.ping": "🏓 Ping...",
   "ping.pong": "🏓 Pong! API: **{{{ api }}}**ms - Message roundtrip: **{{{ heartbeat }}}**ms",
@@ -815,6 +815,7 @@
   "telephone.incoming": "📞 Incoming call from {{{ identity }}} - Answer with `h:pickup`.",
   "telephone.outgoingTimeout": "📞 No response from {{{ identity }}}.",
   "telephone.incomingTimeout": "📞 You missed a call from {{{ identity }}}.",
+  "telephone.noCommunication": "You are not in communication at the moment.",
 
 "telephone.refusedConnection": "The connection with your correspondent has been refused. You may have been **blacklisted** or the telephone service is currently **under maintenance**.",
   "telephone.attachments": "🔗 **Attachments:**",

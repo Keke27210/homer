@@ -41,11 +41,13 @@ class CallCommand extends Command {
       const correspondentIdentity = correspondentContact ? `**${correspondentContact.description}** (**${correspondentContact.number}**)` : `**${correspondent.number}**`;
       const correspondentLanguage = await this.client.database.getDocument('settings', correspondent.id).then(a => a ? a.misc.locale : this.client.localization.defaultLocale);
 
+      subscription.locale = context.settings.misc.locale;
       subscription.message = await this.client.sendMessage(
         subscription.id,
         context.__('telephone.outgoing', { identity: correspondentIdentity }),
       ).then(m => m.id);
 
+      correspondent.locale = correspondentLanguage;
       correspondent.message = await this.client.sendMessage(
         correspondent.id,
         this.client.__(correspondentLanguage, 'telephone.incoming', { identity }),
