@@ -20,7 +20,7 @@ class PhoneUtil extends Util {
     if (blacklist) return;
 
     const calls = await this.client.database.getDocuments('calls', true);
-    const call = calls.find(c => c.type === 0 ? [c.sender.id, c.receiver.id].includes(context.message.channel.id) : c.receivers.find(r => r.id === context.message.channel.id));
+    const call = calls.find(c => c.type === 0 ? [c.sender.id, c.receiver.id].includes(message.channel.id) : c.receivers.find(r => r.id === message.channel.id));
     if (!call) return;
 
     if (call.type === 0) {
