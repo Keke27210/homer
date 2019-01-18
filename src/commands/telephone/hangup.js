@@ -44,7 +44,7 @@ class HangupCommand extends Command {
 
       const receiver = call.receivers.find(r => r.id === context.message.channel.id);
       if (receiver.main) {
-        for (const r of receivers.filter(r => !r.main)) this.client.sendMessage(r.id, this.client.__(r.locale, 'hangup.group.receivers'));
+        for (const r of call.receivers.filter(r => !r.main)) this.client.sendMessage(r.id, this.client.__(r.locale, 'hangup.group.receivers'));
         context.reply(context.__('hangup.group.main'));
       } else {
         const destinations = call.receivers.filter(r => r.id !== context.message.channel.id);
