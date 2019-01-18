@@ -70,7 +70,50 @@ class CallCommand extends Command {
     // Group calls
     else {
       if (!this.client.other.isDonator(context.message.author.id)) return context.replyError(context.__('call.cannotGroup'));
-      context.replyWarning('This feature is currently being done, it\'ll be available soon!');
+      if (!this.client.config.owners.includes(context.message.author.id)) return context.replyWarning('This feature is currently being done, it\'ll be available soon!');
+
+      const callableNumbers = numbers.filter(n => n !== subscription.number);
+      if (!callableNumbers) return context.replyError(context.__('call.cannotInstantiateGroup'));
+
+      subscription.locale = context.settings.misc.locale;
+      subscription.main = true;
+      const receivers = [subscription];
+
+      for (let i = 0; i < callableNumbers; i += 1) {
+        const number = callableNumbers[i];
+
+        const correspondent = await this.client.database.findDocuments('telephone', { number }).then(a => a[0]);
+        if (!correspondent) return context.replyWarning(context.__('call.unassignedNumber', { number }));
+
+        const correspondentStatus = await this.client.telephone.getStatus(correspondent.id);
+        if (correspondentStatus !== 0) return context.replyWarning(context.__('call.busyCorrespondent', { number }));
+
+        const blacklistStatus = correspondent.blacklist.find(b => b.channel === subscription.id || b.number === subscription.number);
+        if (blacklistStatus) return context.replyError(context.__('call.blacklisted', { number }));
+
+        const contact = correspondent.contacts.find(c => c.number === subscription.number);
+        const identity = contact ? `**${contact.description}** (**${contact.number}**)` : `**${subscription.number}**`;
+
+        correspondent.locale = await this.client.database.getDocument('settings', correspondent.settings).then(a => a ? a.misc.locale : this.client.localization.defaultLocale);
+        correspondent.message = await this.client.sendMessage(
+          correspondent.id,
+          this.client.__('telephone.incomingGroup', { identity }),
+        ).then(m => m.id);
+
+        receivers.push(correspondent);
+      }
+
+      await this.client.database.insertDocument('calls', {
+        receivers,
+        start: Date.now(),
+        active: null,
+        state: 0,
+        type: 1,
+      });
+
+      context.reply(context.__('telephone.outgoingGroup', {
+        numbers: receivers.filter(r => r.number !== subscription.number).map(r => `\`${r.number}\``).join(', '),
+      }));
     }
   }
 }
