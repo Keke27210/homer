@@ -253,7 +253,7 @@
   "helpUtil.remind":"Ajouter un rappel",
   "helpUtil.remind.list":"Gérer vos rappels actifs",
   "helpUtil.remind.delete":"Supprimer un rappel actif",
-  "helpUtil.report":"Envoyer un retour aux développeurs",
+  "helpUtil.report":"Signalez un utilisateur qui ne respecte pas les règles (téléphone, tags, etc)",
   "helpUtil.role":"Obtenir des infos sur un rôle",
   "helpUtil.role.members":"Lister les membres appartenant au rôle spécifié",
   "helpUtil.role.give":"Donner un rôle à quelqu'un",
@@ -273,6 +273,7 @@
   "helpUtil.server.staff":"Tout le staff connecté sur le serveur",
   "helpUtil.server.emotes":"Lister toutes les emotes du serveur",
   "helpUtil.settings":"Afficher les paramètres du serveur",
+  "helpUtil.suggest":"Proposez des idées pour l'amélioration d'Homer",
   "helpUtil.stats":"Obtenir des stats sur le bot",
   "helpUtil.support":"Rejoindre le serveur d'assistance",
   "helpUtil.tag":"Exécutez des tags avec Lisa - un port de JagTag",
@@ -600,8 +601,11 @@
   "remind.delete.noID":"Vous devez fournir l'ID du rappel à supprimer.",
   "remind.delete.notFound":"Aucun rappel trouvé avec l'ID `{{{ id }}}`.",
 
-  "report.success":"Votre message a été envoyé avec succès !",
-  "report.noMessage":"Vous devez fournir un message à envoyer.",
+  "report.sent": "Vous avez signalé l'utilisateur spécifié avec succès. Le signalement sera examiné dans les plus brefs délais.",
+  "report.unknownUser": "L'ID d'utilisateur fourni ne correspond à aucun compte existant.",
+  "report.textTooShort": "La raison du signalement doit faire plus de 32 caractères.",
+  "report.answer.main": "🗨 Vous avez reçu une réponse à propos d'un de vos signalements:",
+  "report.answer.footer": "Rejoignez le serveur d'assistance pour plus d'informations sur cette réponse.",
 
   "role.title":"🎭 Informations sur **{{{ name }}}**:",
   "role.embed.id":"Discord ID",
@@ -733,6 +737,11 @@
   "stats.embed.commandsValue":"**{{{ count }}}** depuis le **{{{ date }}}**",
   "stats.embed.currentCalls":"Appels en cours",
   "stats.embed.currentBroadcasts":"Diffusions en cours",
+
+  "suggest.sent": "Votre suggestion a été envoyée avec succès ! Merci de contribuer à l'amélioration d'Homer.",
+  "suggest.textTooShort": "La suggestion doit faire plus de 32 caractères.",
+  "suggest.answer.main": "🗨 Vous avez reçu une réponse à propos d'une de vos suggestions:",
+  "suggest.answer.footer": "Rejoignez le serveur d'assistance pour plus d'informations sur cette réponse.",
 
   "support.main":"🛂 Rejoignez le serveur d'assistance pour obtenir de l'aide et être au courant des dernières nouveautés: <{{{ invite }}}>.",
 
