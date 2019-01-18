@@ -42,11 +42,11 @@ class HangupCommand extends Command {
     } else {
       const receiver = call.receivers.find(r => r.id === context.message.channel.id);
       if (receiver.main) {
-        for (const r of call.receivers.filter(r => !r.main)) this.client.sendMessage(r.id, this.client.__(r.locale, 'hangup.group.receivers'));
+        for (const r of call.receivers.filter(r => !r.main && r.state !== 0)) this.client.sendMessage(r.id, this.client.__(r.locale, 'hangup.group.receivers'));
         context.reply(context.__('hangup.group.main'));
         this.client.database.deleteDocument('calls', call.id);
       } else {
-        const destinations = call.receivers.filter(r => r.id !== context.message.channel.id);
+        const destinations = call.receivers.filter(r => r.id !== context.message.channel.id && r.state !== 0);
         for (const dest of destinations) {
           const contact = dest.contacts.find(c => c.number === receiver.number);
           const identity = contact ? `**${contact.description}** (\`${contact.number}\`)` : `\`${receiver.number}\``;
