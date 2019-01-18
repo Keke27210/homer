@@ -94,7 +94,7 @@ class CallCommand extends Command {
         correspondent.locale = await this.client.database.getDocument('settings', correspondent.settings).then(a => a ? a.misc.locale : this.client.localization.defaultLocale);
         correspondent.message = await this.client.sendMessage(
           correspondent.id,
-          this.client.__('telephone.incomingGroup', { identity }),
+          this.client.__(correspondent.locale, 'telephone.incomingGroup', { identity }),
         ).then(m => m.id);
 
         receivers.push(correspondent);
