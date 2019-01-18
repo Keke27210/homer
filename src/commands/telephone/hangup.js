@@ -53,7 +53,7 @@ class HangupCommand extends Command {
 
           this.client.sendMessage(
             dest.id,
-            this.client.__(dest.locale, 'hangup.receiver', { identity }),
+            this.client.__(dest.locale, 'hangup.group.receiver', { identity }),
           );
         }
 
@@ -62,7 +62,7 @@ class HangupCommand extends Command {
           this.client.sendMessage(destinations[0].id, this.client.__(destinations[0].locale, 'telephone.emptyGroup'));
           this.client.database.deleteDocument('calls', call.id);
         }
-        else this.client.database.updateDocument('calls', { receivers: destinations });
+        else this.client.database.updateDocument('calls', call.id, { receivers: destinations });
       }
     }
   }
