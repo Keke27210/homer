@@ -39,8 +39,8 @@ class ReportCommand extends Command {
     // Sending the message in a log channel
     this.client.sendMessage(
       this.client.constants.reportsChannel,
-      `\`[${context.formatDate(Date.now(), 'HH:mm:ss')}]\` Report from **${context.message.author.username}**#${context.message.author.discriminator} about **${user.username}**#${user.discriminator}:`,
-      { embed: { description: text, footer: { text: `Case ID: ${caseID}` } } },
+      `\`[${context.formatDate(Date.now(), 'HH:mm:ss')}]\` 🗨 Report from **${context.message.author.username}**#${context.message.author.discriminator}:`,
+      { embed: { description: `User: **${user.username}**#${user.discriminator} (ID:${user.id})\n\n${text}`, footer: { text: `Case ID: ${caseID}` } } },
     );
   }
 }
@@ -73,7 +73,7 @@ class AnswerSubcommand extends Command {
         .setDescription(text)
         .setTimestamp(new Date())
         .setFooter(context.__('report.answer.footer'));
-      user.send(context.__('report.answer.main', { embed }));
+      user.send(context.__('report.answer.main'), { embed });
       context.replySuccess('Successfully replied to the report\'s author.');
     } else {
       context.replyWarning('Couldn\'t send the message to the report\'s author.');

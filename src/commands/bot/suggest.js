@@ -31,7 +31,7 @@ class SuggestCommand extends Command {
     // Sending the message in a log channel
     this.client.sendMessage(
       this.client.constants.suggestionsChannel,
-      `\`[${context.formatDate(Date.now(), 'HH:mm:ss')}]\` Suggestion from **${context.message.author.username}**#${context.message.author.discriminator}:`,
+      `\`[${context.formatDate(Date.now(), 'HH:mm:ss')}]\` 🗨 Suggestion from **${context.message.author.username}**#${context.message.author.discriminator}:`,
       { embed: { description: text, footer: { text: `Case ID: ${caseID}` } } },
     );
   }
@@ -65,7 +65,7 @@ class AnswerSubcommand extends Command {
         .setDescription(text)
         .setTimestamp(new Date())
         .setFooter(context.__('suggest.answer.footer'));
-      user.send(context.__('suggest.answer.main', { embed }));
+      user.send(context.__('suggest.answer.main'), { embed });
       context.replySuccess('Successfully replied to the suggestion\'s author.');
     } else {
       context.replyWarning('Couldn\'t send the message to the suggestion\'s author.');
