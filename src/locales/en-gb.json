@@ -821,6 +821,7 @@
   "telephone.incomingTimeout": "📞 You missed a call from {{{ identity }}}.",
   "telephone.outgoingGroup": "📞 Outgoing group call to {{{ numbers }}}...",
   "telephone.incomingGroup": "📞 Incoming group call from {{{ identity }}} - Answer with `h:pickup`.",
+  "telephone.emptyGroup": "📞 The group call was terminated because all your correspondents have left the conversation.",
   "telephone.noCommunication": "You are not in communication at the moment.",
   "telephone.attachments": "🔗 Attachments:",
   "telephone.inactiveCall": "📞 The current call was terminated due to inactivity of more than 5 minutes.",

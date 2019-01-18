@@ -40,12 +40,11 @@ class HangupCommand extends Command {
         this.client.sendMessage(call.receiver.id, this.client.__(call.receiver.locale, 'hangup.author'));
       }
     } else {
-      this.client.database.deleteDocument('calls', call.id);
-
       const receiver = call.receivers.find(r => r.id === context.message.channel.id);
       if (receiver.main) {
         for (const r of call.receivers.filter(r => !r.main)) this.client.sendMessage(r.id, this.client.__(r.locale, 'hangup.group.receivers'));
         context.reply(context.__('hangup.group.main'));
+        this.client.database.deleteDocument('calls', call.id);
       } else {
         const destinations = call.receivers.filter(r => r.id !== context.message.channel.id);
         for (const dest of destinations) {
@@ -59,7 +58,11 @@ class HangupCommand extends Command {
         }
 
         context.reply(context.__('hangup.author'));
-        this.client.database.updateDocument('calls', { receivers: destinations });
+        if (destinations.length === 1) {
+          this.client.sendMessage(destinations[0].id, this.client.__(destinations[0].locale, 'telephone.emptyGroup'));
+          this.client.database.deleteDocument('calls', call.id);
+        }
+        else this.client.database.updateDocument('calls', { receivers: destinations });
       }
     }
   }
