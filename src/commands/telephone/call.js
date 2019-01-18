@@ -72,15 +72,12 @@ class CallCommand extends Command {
       if (!this.client.other.isDonator(context.message.author.id)) return context.replyError(context.__('call.cannotGroup'));
       if (!this.client.config.owners.includes(context.message.author.id)) return context.replyWarning('This feature is currently being done, it\'ll be available soon!');
 
-      const callableNumbers = numbers.filter(n => n !== subscription.number);
-      if (!callableNumbers) return context.replyError(context.__('call.cannotInstantiateGroup'));
-
       subscription.locale = context.settings.misc.locale;
       subscription.main = true;
       const receivers = [subscription];
 
-      for (let i = 0; i < callableNumbers; i += 1) {
-        const number = callableNumbers[i];
+      for (let i = 0; i < numbers.length; i += 1) {
+        const number = numbers[i];
 
         const correspondent = await this.client.database.findDocuments('telephone', { number }).then(a => a[0]);
         if (!correspondent) return context.replyWarning(context.__('call.unassignedNumber', { number }));
