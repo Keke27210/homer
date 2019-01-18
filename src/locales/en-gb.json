@@ -621,6 +621,7 @@
   "remind.delete.notFound": "No remind found with ID `{{{ id }}}`.",
   
   "report.sent": "You have successfully flagged the specified user. It'll be reviewed shortly.",
+  "report.unknownUser": "The provided user ID doesn't belong to any account.",
   "report.textTooShort": "The flag reason must be greater than 32 characters.",
   "report.answer.main": "🗨 You have received an answer about one of your reports:",
   "report.answer.footer": "Please join the support server if you have questions about this answer.",
