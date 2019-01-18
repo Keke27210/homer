@@ -13,6 +13,7 @@ const tables = [
   'jobs',
   'lastactive',
   'names',
+  'phoneLog',
   'profiles',
   'radios',
   'radioFeatured',
