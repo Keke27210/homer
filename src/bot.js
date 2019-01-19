@@ -109,10 +109,10 @@ scheduleJob({ second: 10 }, async () => {
           }
 
           if (call.receivers.length === 1) {
-            this.client.sendMessage(main.id, this.client.__(main.locale, 'telephone.emptyGroup'));
-            this.client.database.deleteDocument('calls', call.id);
+            client.sendMessage(main.id, client.__(main.locale, 'telephone.emptyGroup'));
+            client.database.deleteDocument('calls', call.id);
           } else {
-            this.client.database.updateDocument('calls', call.id, { receivers: call.receivers });
+            client.database.updateDocument('calls', call.id, { receivers: call.receivers });
           }
         }
       }
