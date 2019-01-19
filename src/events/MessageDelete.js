@@ -26,6 +26,25 @@ class MessageDeleteEvent extends Event {
         if (!targetMessage) return;
   
         this.client.deleteMessage(target, targetMessage.id);
+      } else {
+        const thisReceiver = call.receivers.find(r => r.id === message.channel.id);
+        for (const receiver of call.receivers) {
+          if (receiver.id === thisReceiver.id) continue;
+
+          const contact = receiver.contacts.find(c => c.number === thisReceiver.number);
+          const identity = contact ? `**${contact.description}** / **${contact.number}**` : `**${contact.number}**`;
+          const targetMessage = await this.client.rest.methods.getChannelMessages(receiver.id, { limit: 20 })
+            .then((data) => {
+              const filter = m => !m.webhook_id
+                && m.author.id == this.client.user.id
+                && m.content.startsWith(`📞 **${message.author.username}**#${message.author.discriminator} (${identity}): ${message.content}`);
+    
+              return data.find(filter);
+            });
+          if (!targetMessage) return;
+    
+          this.client.deleteMessage(receiver.id, targetMessage.id);
+        }
       }
     }
 

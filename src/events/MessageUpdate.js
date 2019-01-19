@@ -24,6 +24,25 @@ class MessageUpdateEvent extends Event {
         if (!targetMessage) return;
 
         this.client.updateMessage(target, targetMessage.id, `📞 **${newMessage.author.username}**#${newMessage.author.discriminator}: ${newMessage.content}`);
+      } else {
+        const thisReceiver = call.receivers.find(r => r.id === newMessage.channel.id);
+        for (const receiver of call.receivers) {
+          if (receiver.id === thisReceiver.id) continue;
+
+          const contact = receiver.contacts.find(c => c.number === thisReceiver.number);
+          const identity = contact ? `**${contact.description}** / **${contact.number}**` : `**${contact.number}**`;
+          const targetMessage = await this.client.rest.methods.getChannelMessages(receiver.id, { limit: 20 })
+            .then((data) => {
+              const filter = m => !m.webhook_id
+                && m.author.id == this.client.user.id
+                && m.content.startsWith(`📞 **${newMessage.author.username}**#${newMessage.author.discriminator} (${identity}): ${oldMessage.content}`);
+    
+              return data.find(filter);
+            });
+          if (!targetMessage) return;
+    
+          this.client.updateMessage(receiver.id, targetMessage.id, `📞 **${newMessage.author.username}**#${newMessage.author.discriminator} (${identity}): ${newMessage.content}`);
+        }
       }
     }
   }
