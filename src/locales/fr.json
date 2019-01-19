@@ -66,6 +66,7 @@
   "call.self": "Vous ne pouvez pas appeler votre propre numéro.",
   "call.cannotGroup": "Vous devez être donateur pour lancer des appels groupés.",
   "call.noNumber": "Vous devez fournir un ou plusieurs numéros à appeler.",
+  "call.manyNumbers": "Vous ne pouvez pas initier un appel groupé avec plus de 4 autres personnes.",
   "call.busyCorrespondent": "Votre correspondant (`{{{ identity }}}`) est occupé en ce moment.",
   "call.blacklisted": "Votre correspondant (`{{{ identity }}}`) vous a placé sur sa liste noire.",
 

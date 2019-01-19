@@ -76,6 +76,7 @@ class CallCommand extends Command {
       subscription.locale = context.settings.misc.locale;
       subscription.main = true;
       const receivers = [subscription];
+      if (numbers.length > 4) return context.replyError(context.__('call.manyNumbers'));
 
       for (let i = 0; i < numbers.length; i += 1) {
         const number = numbers[i];
