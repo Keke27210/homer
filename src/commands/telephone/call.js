@@ -167,8 +167,7 @@ class AddSubcommand extends Command {
       this.client.__(correspondent.locale, 'telephone.incomingGroup', { identity }),
     ).then(m => m.id);
 
-    receivers.push(correspondent);
-
+    call.receivers.push(correspondent);
     await this.client.database.updateDocument('calls', call.id, { receivers: call.receivers });
     context.reply(context.__('call.add.adding', {
       identity,
