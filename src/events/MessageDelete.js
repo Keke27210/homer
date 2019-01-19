@@ -9,24 +9,24 @@ class MessageDeleteEvent extends Event {
   async handle(message) {
     // Phone
     if (message.author.id !== this.client.user.id) {
-      this.client.database.getDocuments('calls')
-        .then(async (calls) => {
-          const callObject = calls.find(c => [c.sender.id, c.receiver.id].includes(message.channel.id) && c.state === 1);
-          if (!callObject) return;
-
-          const target = (message.channel.id === callObject.sender.id) ? callObject.receiver.id : callObject.sender.id;
-          const targetMessage = await this.client.rest.methods.getChannelMessages(target, { limit: 100 })
-            .then((data) => {
-              const filter = m => !m.webhook_id
-                && m.author.id == this.client.user.id
-                && m.content.startsWith(`📞 **${message.author.username}**#${message.author.discriminator}: ${message.content}`);
-
-              return data.find(filter);
-            });
-          if (!targetMessage) return;
-
-          this.client.deleteMessage(target, targetMessage.id);
-        });
+      const calls = await this.client.database.getDocuments('calls', true);
+      const call = calls.find(c => c.type === 0 ? [c.sender.id, c.receiver.id].includes(message.channel.id) : c.receivers.find(r => r.id === message.channel.id));
+      if (!call) return;
+  
+      if (call.type === 0) {
+        const target = (message.channel.id === call.sender.id) ? call.receiver.id : call.sender.id;
+        const targetMessage = await this.client.rest.methods.getChannelMessages(target, { limit: 100 })
+          .then((data) => {
+            const filter = m => !m.webhook_id
+              && m.author.id == this.client.user.id
+              && m.content.startsWith(`📞 **${message.author.username}**#${message.author.discriminator}: ${message.content}`);
+  
+            return data.find(filter);
+          });
+        if (!targetMessage) return;
+  
+        this.client.deleteMessage(target, targetMessage.id);
+      }
     }
 
     // Anti ghost-ping
