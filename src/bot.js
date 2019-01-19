@@ -11,7 +11,7 @@ const client = new DiscordClient(config);
 // Connecting
 client.login(client.config.discord.token);
 
-// Poll & Remind handler
+// TheDoEverything™
 scheduleJob({ second: 10 }, async () => {
   if (!client.ready) return;
 
@@ -55,8 +55,8 @@ scheduleJob({ second: 10 }, async () => {
     const inactiveCalls = calls.filter(c => (Date.now() - c.active) > 300000);
 
     for (const call of inactiveCalls) {
-      await client.database.deleteDocument('calls', call.id);
-
+      console.log(await client.database.deleteDocument('calls', call.id));
+      console.log('above')
       if (call.type === 0) {
         client.sendMessage(call.sender.id, client.__(call.sender.locale, 'telephone.inactive'));
         client.sendMessage(call.receiver.id, client.__(call.receiver.locale, 'telephone.inactive'));
