@@ -32,7 +32,7 @@ class MessageDeleteEvent extends Event {
           if (receiver.id === thisReceiver.id) continue;
 
           const contact = receiver.contacts.find(c => c.number === thisReceiver.number);
-          const identity = contact ? `**${contact.description}** / **${contact.number}**` : `**${contact.number}**`;
+          const identity = contact ? `**${contact.description}** / **${contact.number}**` : `**${thisReceiver.number}**`;
           const targetMessage = await this.client.rest.methods.getChannelMessages(receiver.id, { limit: 20 })
             .then((data) => {
               const filter = m => !m.webhook_id
