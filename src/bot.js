@@ -61,7 +61,7 @@ scheduleJob({ second: 10 }, async () => {
         client.sendMessage(call.sender.id, client.__(call.sender.locale, 'telephone.inactive'));
         client.sendMessage(call.receiver.id, client.__(call.receiver.locale, 'telephone.inactive'));
       } else {
-        for (const recv of call.receivers) client.sendMessage(recv.id, client.__(recv.locale, 'telephone.timeoutGroup'));
+        for (const recv of call.receivers) client.sendMessage(recv.id, client.__(recv.locale, 'telephone.inactiveGroup'));
       }
     }
   }
