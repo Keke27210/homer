@@ -821,6 +821,8 @@
   "telephone.incomingTimeout": "📞 You missed a call from {{{ identity }}}.",
   "telephone.outgoingGroup": "📞 Outgoing group call to {{{ numbers }}}...",
   "telephone.incomingGroup": "📞 Incoming group call from {{{ identity }}} - Answer with `h:pickup`.",
+  "telephone.outgoingGroupTimeout": "📞 {{{ identity }}} did not pick up the phone.",
+  "telephone.incomingGroupTimeout": "📞 You missed a group call instantiated by {{{ identity }}}.",
   "telephone.emptyGroup": "📞 The group call was terminated because all your correspondents have left the conversation.",
   "telephone.noCommunication": "You are not in communication at the moment.",
   "telephone.attachments": "🔗 Attachments:",

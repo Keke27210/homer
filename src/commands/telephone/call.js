@@ -92,6 +92,7 @@ class CallCommand extends Command {
         const contact = correspondent.contacts.find(c => c.number === subscription.number);
         const identity = contact ? `**${contact.description}** (**${contact.number}**)` : `**${subscription.number}**`;
 
+        correspondent.start = Date.now();
         correspondent.state = 0;
         correspondent.locale = await this.client.database.getDocument('settings', correspondent.settings).then(a => a ? a.misc.locale : this.client.localization.defaultLocale);
         correspondent.message = await this.client.sendMessage(

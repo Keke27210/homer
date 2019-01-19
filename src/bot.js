@@ -82,6 +82,39 @@ scheduleJob({ second: 10 }, async () => {
         client.updateMessage(call.receiver.id, call.receiver.message, client.__(call.receiver.locale, 'telephone.incomingTimeout', { identity: receiverIdentity }));
 
         client.database.deleteDocument('calls', call.id);
+      } else if (call.type === 1 && (Date.now() - call.start) > 30000) {
+        const main = call.receivers.find(r => r.main);
+        for (const receiver of call.receivers) {
+          if (receiver.main) continue;
+
+          if ((Date.now() - receiver.start) > 30000) {
+            call.receivers.slice(call.receivers.indexOf(receiver), 1);
+
+            // Main
+            const mainContact = main.contacts.find(c => c.number === receiver.number);
+            const mainIdentity = senderContact ? `**${mainContact.description}** (\`${mainContact.number}\`)` : `\`${receiver.number}\``;
+            client.sendMessage(
+              main.id,
+              client.__(main.locale, 'telephone.outgoingGroupTimeout', { identity: mainIdentity }),
+            );
+
+            // Receiver
+            const receiverContact = receiver.contacts.find(c => c.number === main.number);
+            const receiverIdentity = receiverContact ? `**${receiverContact.description}** (\`${receiverContact.number}\`)` : `\`${main.number}\``;
+            client.updateMessage(
+              receiver.id,
+              receiver.message,
+              client.__(receiver.locale, 'telephone.incomingGroupTimeout', { identity: receiverIdentity }),
+            );
+          }
+
+          if (call.receivers.length === 1) {
+            this.client.sendMessage(main.id, this.client.__(main.locale, 'telephone.emptyGroup'));
+            this.client.database.deleteDocument('calls', call.id);
+          } else {
+            this.client.database.updateDocument('calls', call.id, { receivers: call.receivers });
+          }
+        }
       }
     }
   }
