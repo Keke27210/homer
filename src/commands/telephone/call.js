@@ -6,7 +6,7 @@ class CallCommand extends Command {
       name: 'call',
       aliases: ['dial'],
       category: 'telephone',
-      children: [new AddSubcommand(client)],
+      children: [new AddSubcommand(client), new RemoveSubcommand(client)],
       usage: '<number> [numbers...]',
       dm: true,
     });
@@ -124,6 +124,7 @@ class AddSubcommand extends Command {
   constructor(client) {
     super(client, {
       name: 'add',
+      aliases: ['invite'],
       category: 'telephone',
       usage: '<number>',
       dm: true,
@@ -142,6 +143,7 @@ class AddSubcommand extends Command {
     const call = await this.client.database.getDocuments('calls', true)
       .then(calls => calls.find(c => c.type === 1 && c.receivers.find(r => r.main && r.id === context.message.channel.id)));
     if (!call) return context.replyError(context.__('call.notGroup'));
+    if (call.receivers.length >= 5) return context.replyWarning(context.__('call.manyNumbers'));
 
     const number = context.args[0] ? context.args[0].toUpperCase() : null;
     if (!number) return context.replyError(context.__('call.add.noNumber'));
@@ -170,6 +172,50 @@ class AddSubcommand extends Command {
     call.receivers.push(correspondent);
     await this.client.database.updateDocument('calls', call.id, { receivers: call.receivers });
     context.reply(context.__('call.add.adding', {
+      identity,
+    }));
+  }
+}
+
+class RemoveSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'remove',
+      aliases: ['kick'],
+      category: 'telephone',
+      usage: '<number>',
+      dm: true,
+    });
+  }
+
+  async execute(context) {
+    if (!this.client.other.isDonator(context.message.author.id)) return context.replyError(context.__('call.cannotGroup'));
+
+    const status = await this.client.database.getDocument('bot', 'settings').then(s => s.telephone);
+    if (!status) return context.replyWarning(context.__('telephone.unavailable'));
+
+    const subscription = await this.client.database.getDocument('telephone', context.message.channel.id);
+    if (!subscription) return context.replyWarning(context.__('telephone.noSubscription', { command: `${this.client.prefix}telephone subscribe` }));
+
+    const call = await this.client.database.getDocuments('calls', true)
+      .then(calls => calls.find(c => c.type === 1 && c.receivers.find(r => r.main && r.id === context.message.channel.id)));
+    if (!call) return context.replyError(context.__('call.notGroup'));
+    if (call.receivers.length >= 5) return context.replyWarning(context.__('call.manyNumbers'));
+
+    const number = context.args[0] ? context.args[0].toUpperCase() : null;
+    if (!number) return context.replyError(context.__('call.remove.noNumber'));
+    if (number === subscription.number) return context.replyError(context.__('call.self'));
+
+    const correspondent = await call.receivers.find(r => r.number === number);
+    if (!correspondent) return context.replyError(context.__('call.remove.noCorrespondent', { number }));
+
+    const contact = correspondent.contacts.find(c => c.number === subscription.number);
+    const identity = contact ? `**${contact.description}** (**${contact.number}**)` : `**${subscription.number}**`;
+
+    call.receivers.splice(call.receivers.indexOf(correspondent), 1);
+    this.client.sendMessage(correspondent.id, this.client.__(correspondent.locale, 'telephone.groupKick'));
+    await this.client.database.updateDocument('calls', call.id, { receivers: call.receivers });
+    context.reply(context.__('call.remove.removed', {
       identity,
     }));
   }
