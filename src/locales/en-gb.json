@@ -66,8 +66,8 @@
   "call.self": "You can't call your own number.",
   "call.cannotGroup": "You must be a donator in order to instantiate group calls.",
   "call.noNumber": "You must provide one or more numbers to call.",
-  "call.busyCorrespondent": "Your correspondent (`{{{ number }}}`) is busy at the moment.",
-  "call.blacklisted": "Your correspondent (`{{{ number }}}`) has placed you on their blacklist.",
+  "call.busyCorrespondent": "Your correspondent (`{{{ identity }}}`) is busy at the moment.",
+  "call.blacklisted": "Your correspondent (`{{{ identity }}}`) has placed you on their blacklist.",
 
   "channel.title": "🗺 Information about {{{ name }}}:",
   "channel.embed.id": "Discord ID",
