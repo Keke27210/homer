@@ -6,6 +6,7 @@ class CallCommand extends Command {
       name: 'call',
       aliases: ['dial'],
       category: 'telephone',
+      children: [new AddSubcommand(client)],
       usage: '<number> [numbers...]',
       dm: true,
     });
@@ -116,6 +117,62 @@ class CallCommand extends Command {
         numbers: receivers.filter(r => r.number !== subscription.number).map(r => `\`${r.number}\``).join(', '),
       }));
     }
+  }
+}
+
+class AddSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'add',
+      category: 'telephone',
+      usage: '<number>',
+      dm: true,
+    });
+  }
+
+  async execute(context) {
+    if (!this.client.other.isDonator(context.message.author.id)) return context.replyError(context.__('call.cannotGroup'));
+
+    const status = await this.client.database.getDocument('bot', 'settings').then(s => s.telephone);
+    if (!status) return context.replyWarning(context.__('telephone.unavailable'));
+
+    const subscription = await this.client.database.getDocument('telephone', context.message.channel.id);
+    if (!subscription) return context.replyWarning(context.__('telephone.noSubscription', { command: `${this.client.prefix}telephone subscribe` }));
+
+    const call = await this.client.database.getDocuments('calls', true)
+      .then(calls => calls.find(c => c.type === 1 && c.receivers.find(r => r.main && r.id === context.message.channel.id)));
+    if (!call) return context.replyError(context.__('call.notGroup'));
+
+    const number = context.args[0] ? context.args[0].toUpperCase() : null;
+    if (!number) return context.replyError(context.__('call.add.noNumber'));
+    if (number === subscription.number) return context.replyError(context.__('call.self'));
+
+    const correspondent = await this.client.database.findDocuments('telephone', { number }).then(a => a[0]);
+    if (!correspondent) return context.replyWarning(context.__('telephone.unassignedNumber', { number }));
+
+    const correspondentStatus = await this.client.telephone.getStatus(correspondent.id);
+    if (correspondentStatus !== 0) return context.replyWarning(context.__('call.busyCorrespondent', { number }));
+
+    const blacklistStatus = correspondent.blacklist.find(b => b.channel === subscription.id || b.number === subscription.number);
+    if (blacklistStatus) return context.replyError(context.__('call.blacklisted', { number }));
+
+    const contact = correspondent.contacts.find(c => c.number === subscription.number);
+    const identity = contact ? `**${contact.description}** (**${contact.number}**)` : `**${subscription.number}**`;
+
+    correspondent.start = Date.now();
+    correspondent.state = 0;
+    correspondent.locale = await this.client.database.getDocument('settings', correspondent.settings).then(a => a ? a.misc.locale : this.client.localization.defaultLocale);
+    correspondent.message = await this.client.sendMessage(
+      correspondent.id,
+      this.client.__(correspondent.locale, 'telephone.incomingGroup', { identity }),
+    ).then(m => m.id);
+
+    receivers.push(correspondent);
+
+    await this.client.database.updateDocument('calls', call.id, { receivers: call.receivers });
+    context.reply(context.__('call.add.adding', {
+      identity,
+    }));
   }
 }
 
