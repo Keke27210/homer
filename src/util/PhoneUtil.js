@@ -11,7 +11,7 @@ class PhoneUtil extends Util {
 
     return calls.find((call) => {
       if (call.type === 0) return call.sender.id === id || call.receiver.id === id;
-      else call.receivers.find(r => r.id === id);
+      else return call.receivers.find(r => r.id === id);
     }) ? 1 : 0;
   }
 

@@ -55,7 +55,7 @@ scheduleJob({ second: 10 }, async () => {
     const inactiveCalls = calls.filter(c => (Date.now() - c.active) > 300000);
 
     for (const call of inactiveCalls) {
-      client.database.deleteDocument('calls', call.id);
+      await client.database.deleteDocument('calls', call.id);
 
       if (call.type === 0) {
         client.sendMessage(call.sender.id, client.__(call.sender.locale, 'telephone.inactive'));

@@ -61,7 +61,7 @@ class CallCommand extends Command {
         sender: subscription,
         receiver: correspondent,
         start: Date.now(),
-        active: null,
+        active: Date.now(),
         state: 0,
         type: 0,
       });
