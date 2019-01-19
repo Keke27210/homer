@@ -92,7 +92,7 @@ scheduleJob({ second: 10 }, async () => {
 
             // Main
             const mainContact = main.contacts.find(c => c.number === receiver.number);
-            const mainIdentity = senderContact ? `**${mainContact.description}** (\`${mainContact.number}\`)` : `\`${receiver.number}\``;
+            const mainIdentity = mainContact ? `**${mainContact.description}** (\`${mainContact.number}\`)` : `\`${receiver.number}\``;
             client.sendMessage(
               main.id,
               client.__(main.locale, 'telephone.outgoingGroupTimeout', { identity: mainIdentity }),
