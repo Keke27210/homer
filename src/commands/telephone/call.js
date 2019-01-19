@@ -28,7 +28,7 @@ class CallCommand extends Command {
     // Normal calls
     if (numbers.length === 1) {
       const correspondent = await this.client.database.findDocuments('telephone', { number: numbers[0] }).then(a => a[0]);
-      if (!correspondent) return context.replyWarning(context.__('call.unassigned', { number: numbers[0] }));
+      if (!correspondent) return context.replyWarning(context.__('telephone.unassignedNumber', { number: numbers[0] }));
 
       const correspondentStatus = await this.client.telephone.getStatus(correspondent.id);
       if (correspondentStatus !== 0) return context.replyWarning(context.__('call.busyCorrespondent'));
@@ -81,7 +81,7 @@ class CallCommand extends Command {
         const number = numbers[i];
 
         const correspondent = await this.client.database.findDocuments('telephone', { number }).then(a => a[0]);
-        if (!correspondent) return context.replyWarning(context.__('call.unassigned', { number }));
+        if (!correspondent) return context.replyWarning(context.__('telephone.unassignedNumber', { number }));
 
         const correspondentStatus = await this.client.telephone.getStatus(correspondent.id);
         if (correspondentStatus !== 0) return context.replyWarning(context.__('call.busyCorrespondent', { number }));
