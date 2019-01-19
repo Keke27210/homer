@@ -57,12 +57,13 @@ class HangupCommand extends Command {
           );
         }
 
+        call.receivers.splice(call.receivers.findIndex(c => c.id === context.message.channel.id), 1);
         context.reply(context.__('hangup.author'));
-        if (destinations.length === 0) {
+        if (call.receivers.length === 1) {
           this.client.sendMessage(destinations[0].id, this.client.__(destinations[0].locale, 'telephone.emptyGroup'));
           this.client.database.deleteDocument('calls', call.id);
         } else {
-          this.client.database.updateDocument('calls', call.id, { receivers: destinations });
+          this.client.database.updateDocument('calls', call.id, { receivers: call.receivers });
         }
       }
     }
