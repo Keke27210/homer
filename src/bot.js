@@ -87,7 +87,7 @@ scheduleJob({ second: 10 }, async () => {
         for (const receiver of call.receivers) {
           if (receiver.main) continue;
 
-          if ((Date.now() - receiver.start) > 30000) {
+          if ((Date.now() - receiver.start) > 30000 && receiver.state === 0) {
             call.receivers.slice(call.receivers.indexOf(receiver), 1);
 
             // Main
