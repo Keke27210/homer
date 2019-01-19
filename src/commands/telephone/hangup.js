@@ -58,7 +58,7 @@ class HangupCommand extends Command {
         }
 
         context.reply(context.__('hangup.author'));
-        if (destinations.length === 1) {
+        if (destinations.length === 0) {
           this.client.sendMessage(destinations[0].id, this.client.__(destinations[0].locale, 'telephone.emptyGroup'));
           this.client.database.deleteDocument('calls', call.id);
         } else {
