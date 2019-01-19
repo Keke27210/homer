@@ -158,8 +158,8 @@ class AddSubcommand extends Command {
     const blacklistStatus = correspondent.blacklist.find(b => b.channel === subscription.id || b.number === subscription.number);
     if (blacklistStatus) return context.replyError(context.__('call.blacklisted', { number }));
 
-    const contact = correspondent.contacts.find(c => c.number === subscription.number);
-    const identity = contact ? `**${contact.description}** (**${contact.number}**)` : `**${subscription.number}**`;
+    const contact = correspondent.contacts.find(c => c.number === number);
+    const identity = contact ? `**${contact.description}** (**${contact.number}**)` : `**${number}**`;
 
     correspondent.start = Date.now();
     correspondent.state = 0;
