@@ -88,7 +88,7 @@ scheduleJob({ second: 10 }, async () => {
           if (receiver.main) continue;
 
           if ((Date.now() - receiver.start) > 30000 && receiver.state === 0) {
-            call.receivers.slice(call.receivers.indexOf(receiver), 1);
+            call.receivers.splice(call.receivers.indexOf(receiver), 1);
 
             // Main
             const mainContact = main.contacts.find(c => c.number === receiver.number);
