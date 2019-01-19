@@ -106,7 +106,7 @@ class CallCommand extends Command {
       await this.client.database.insertDocument('calls', {
         receivers,
         start: Date.now(),
-        active: null,
+        active: Date.now(),
         state: 0,
         type: 1,
       });
