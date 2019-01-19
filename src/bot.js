@@ -111,7 +111,7 @@ scheduleJob({ second: 10 }, async () => {
             client.sendMessage(main.id, client.__(main.locale, 'telephone.emptyGroup'));
             client.database.deleteDocument('calls', call.id);
           } else {
-            client.database.updateDocument('calls', call.id, { receivers: call.receivers });
+            client.database.insertDocument('calls', call, { conflict: 'update' });
           }
         }
       }
