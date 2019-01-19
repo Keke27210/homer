@@ -209,15 +209,21 @@ class RemoveSubcommand extends Command {
     const correspondent = await call.receivers.find(r => r.number === number);
     if (!correspondent) return context.replyError(context.__('call.remove.noCorrespondent', { number }));
 
-    const contact = correspondent.contacts.find(c => c.number === subscription.number);
-    const identity = contact ? `**${contact.description}** (**${contact.number}**)` : `**${subscription.number}**`;
+    const contact = correspondent.contacts.find(c => c.number === number);
+    const identity = contact ? `**${contact.description}** (**${contact.number}**)` : `**${number}**`;
 
     call.receivers.splice(call.receivers.indexOf(correspondent), 1);
     this.client.sendMessage(correspondent.id, this.client.__(correspondent.locale, 'telephone.groupKick'));
-    await this.client.database.updateDocument('calls', call.id, { receivers: call.receivers });
     context.reply(context.__('call.remove.removed', {
       identity,
     }));
+
+    if (call.receivers.length > 1) {
+      this.client.database.updateDocument('calls', call.id, { receivers: call.receivers });
+    } else {
+      this.client.sendMessage(subscription.id, this.client.__(subscription.locale, 'telephone.emptyGroup'));
+      this.client.database.deleteDocument('calls', call.id);
+    }
   }
 }
 

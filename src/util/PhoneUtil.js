@@ -61,7 +61,7 @@ class PhoneUtil extends Util {
         if (state === 0 || destination.state === 0) continue;
 
         const destSettings = await this.client.database.getDocument('settings', destination.settings);
-        if (destSettings && destSettings.ignored.includes(message.author.id)) continue;
+        if (destSettings && destSettings.ignored && destSettings.ignored.includes(message.author.id)) continue;
 
         const contact = destination.contacts.find(c => c.number === number);
         const identity = contact ? `**${contact.description}** / **${number}**` : `**${number}**`;
