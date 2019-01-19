@@ -24,6 +24,7 @@ class PhoneUtil extends Util {
     const calls = await this.client.database.getDocuments('calls', true);
     const call = calls.find(c => c.type === 0 ? [c.sender.id, c.receiver.id].includes(message.channel.id) : c.receivers.find(r => r.id === message.channel.id));
     if (!call) return;
+    this.client.database.updateDocument('calls', call.id, { active: Date.now() });
 
     if (call.type === 0) {
       if (call.state === 0) return;
@@ -72,8 +73,6 @@ class PhoneUtil extends Util {
 
         this.client.sendMessage(destination.id, msg.join('\n'));
       }
-
-      this.client.database.updateDocument('calls', call.id, { active: Date.now() });
     }
   }
 }

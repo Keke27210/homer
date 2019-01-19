@@ -50,22 +50,21 @@ scheduleJob({ second: 10 }, async () => {
   }
 
   const calls = await client.database.getDocuments('calls', true)
-  // Cancel inactive phone calls - TO BE REWORKED
-  /*if (client.shard.id === 0) {
+  // Cancel inactive phone calls
+  if (client.shard.id === 0) {
     const inactiveCalls = calls.filter(c => (Date.now() - c.active) > 300000);
 
     for (const call of inactiveCalls) {
       client.database.deleteDocument('calls', call.id);
 
-      // Sender
-      const senderSettings = (await client.database.getDocument('settings', call.sender.settings) || client.constants.defaultUserSettings(call.sender.settings)).misc.locale;
-      client.sendMessage(call.sender.id, client.__(senderSettings, 'telephone.inactiveCall'));
-
-      // Receiver
-      const receiverSettings = (await client.database.getDocument('settings', call.receiver.settings) || client.constants.defaultUserSettings(call.receiver.settings)).misc.locale;
-      client.sendMessage(call.receiver.id, client.__(receiverSettings, 'telephone.inactiveCall'));
+      if (call.type === 0) {
+        client.sendMessage(call.sender.id, client.__(call.sender.locale, 'telephone.inactive'));
+        client.sendMessage(call.receiver.id, client.__(call.receiver.locale, 'telephone.inactive'));
+      } else {
+        for (const recv of call.receivers) client.sendMessage(recv.id, client.__(recv.locale, 'telephone.timeoutGroup'));
+      }
     }
-  }*/
+  }
 
   // Phone call timeouts
   if (client.shard.id === 0) {

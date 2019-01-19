@@ -826,7 +826,8 @@
   "telephone.emptyGroup": "📞 The group call was terminated because all your correspondents have left the conversation.",
   "telephone.noCommunication": "You are not in communication at the moment.",
   "telephone.attachments": "🔗 Attachments:",
-  "telephone.inactiveCall": "📞 The current call was terminated due to inactivity of more than 5 minutes.",
+  "telephone.inactive": "📞 The current call was terminated due to inactivity of more than 5 minutes.",
+  "telephone.inactiveGroup": "📞 The current group call was terminated due to inactivity of more than 5 minutes.",
 
   "telephone.title": "📞 Subscription for {{{ name }}}:",
   "telephone.embed.number": "Number",
