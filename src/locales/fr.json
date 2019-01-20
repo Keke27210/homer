@@ -192,13 +192,13 @@
   "hangup.group.receivers": "📞 Le responsable de l'appel groupé a terminé l'appel.",
   "hangup.group.receiver": "📞 {{{ identity }}} a raccroché le téléphone.",
 
-  "help.title":"📚 Aide d'**{{{ name }}}**",
+  "help.main":"📚 Commandes d'{{{ name }}}:",
   "help.category.bot":"Bot",
   "help.category.general":"Général",
   "help.category.misc":"Divers",
   "help.category.settings":"Paramétrage",
   "help.category.telephone":"Téléphone",
-  "help.advancedHelp":"Obtenez une aide détaillée avec `{{{ command }}}` où command est une des commandes listées ci-dessus.",
+  "help.footer":"Ajoutez \"help\" à la fin de la commande pour obtenir une aide avancée.",
 
   "helpUtil.noDescription":"Aucune description disponible",
   "helpUtil.about":"Informations sur le bot",

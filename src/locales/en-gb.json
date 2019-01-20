@@ -202,13 +202,13 @@
   "hangup.group.receivers": "📞 The call instantiater terminated the group call.",
   "hangup.group.receiver": "📞 {{{ identity }}} hung up the phone.",
   
-  "help.title": "📚 Help for **{{{ name }}}**",
+  "help.main": "📚 Commandes d'{{{ name }}}:",
   "help.category.bot": "Bot",
   "help.category.general": "General",
   "help.category.misc": "Misc",
   "help.category.settings": "Settings",
   "help.category.telephone": "Telephone",
-  "help.advancedHelp": "Get advanced help on a command using `{{{ command }}}` where command can be any command above.",
+  "help.footer": "Add \"help\" at the end of the command to get advanced help.",
 
   "helpUtil.noDescription": "No description given",
   "helpUtil.about": "Information about the bot",

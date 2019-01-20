@@ -1,5 +1,4 @@
 const Command = require('../../structures/Command');
-const { Util } = require('discord.js');
 
 class HelpCommand extends Command {
   constructor(client) {
@@ -11,43 +10,49 @@ class HelpCommand extends Command {
   }
 
   async execute(context) {
-    const helpMessage = [
-      context.__('help.title', { name: this.client.user.username }),
-      '\n',
-      '\n',
-    ];
+    try {
+      const entries = [];
+      const pages = [];
 
-    for (const category of this.client.commands.categories.filter(c => c !== 'owner')) {
-      const categoryMessage = [`${this.client.constants.categoryEmotes[category]} **${context.__(`help.category.${category}`)}**`];
+      for (const category of this.client.commands.categories) {
+        if (category === 'owner') continue;
+        const msg = [`${this.client.constants.categoryEmotes[category]} **${context.__(`help.category.${category}`)}**`, ''];
 
-      const commands = this.client.commands.commands
-        .filter(c => c.category === category && !c.hidden)
-        .sort((a, b) => a.name.localeCompare(b.name));
-      commands.forEach((command) => {
-        categoryMessage.push(`\`${this.client.prefix}${command.name}${command.usage ? ` ${command.usage}` : ''}\` - ${this.client.localization.hasKey(context.settings.misc.locale, `helpUtil.${command.name}`) ? context.__(`helpUtil.${command.name}`) : context.__('helpUtil.noDescription')}`);
+        const commands = this.client.commands.commands
+          .filter(c => c.category === category && !c.hidden)
+          .sort((a, b) => a.name.localeCompare(b.name));
+        commands.forEach(c => msg.push(`${this.dot} \`${this.client.prefix}${c.name}\` - ${this.client.localization.hasKey(context.settings.misc.locale, `helpUtil.${c.name}`) ? context.__(`helpUtil.${c.name}`) : context.__('helpUtil.noDescription')}`));
+
+        entries.push(msg.join('\n'));
+        pages.push({ color: this.categoryColors[category] });
+      }
+
+      const channel = await context.message.author.createDM();
+      await this.client.menu.createMenu(
+        channel.id,
+        context.message.author.id,
+        context.message.id,
+        context.settings.misc.locale,
+        context.__('help.main', { name: this.client.user.username }),
+        pages,
+        entries,
+        { entriesPerPage: 1, footer: context.__('help.footer') },
+      ).then(() => {
+        context.reactSuccess();
       });
-
-      helpMessage.push(
-        categoryMessage.join('\n'),
-        '\n',
-        '\n',
-      );
+    } catch (e) {
+      context.replyError(context.__('commandHandler.help.cannotSend'));
     }
+  }
 
-    helpMessage.push(context.__('help.advancedHelp', { command: `${this.client.prefix}command help` }));
-
-    let ok = true;
-    const msgs = Util.splitMessage(helpMessage.join(''), { char: '\n\n' });
-
-    for (const msg of msgs) {
-      if (!ok) break;
-      await context.message.author.send(msg).catch(() => {
-        ok = false;
-      });
-    }
-
-    if (ok) context.reactSuccess();
-    else context.replyError(context.__('commandHandler.help.cannotSend'));
+  get categoryColors() {
+    return ({
+      bot: 'YELLOW',
+      general: 'BLUE',
+      misc: 'ORANGE',
+      settings: 'GREY',
+      telephone: 'RED',
+    });
   }
 }
 
