@@ -237,7 +237,7 @@
   "helpUtil.leave":"Modifier le message de départ",
   "helpUtil.leave.channel":"Modifier le salon de départ",
   "helpUtil.leave.clear":"Supprime le message de départ (désactive la fonctionnalité)",
-  "helpUtil.lookup":"Obtenir des infos sur un ID d'utilisateur ou de serveur ou sur une invitation",
+  "helpUtil.lookup":"Infos sur un ID, un code cadeau ou une invitation",
   "helpUtil.phblacklist":"Gérer la liste noire d'un abonnement téléphonique",
   "helpUtil.phmessage":"Gérer les messages automatiques d'un abonnement",
   "helpUtil.phonebook":"Ouvre l'annuaire téléphonique d'Homer",
