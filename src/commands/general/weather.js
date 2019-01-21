@@ -19,7 +19,7 @@ class WeatherCommand extends Command {
 
     const message = await context.replyLoading(context.__('global.loading'));
 
-    const locationData = await this.client.api.getLocation(query)
+    const locationData = await this.client.api.getLocation(query, { culture: context.settings.misc.locale.split('-')[0] })
       .then((data) => {
         if (typeof data === 'number' || data.resourceSets[0].estimatedTotal === 0) return null;
 
