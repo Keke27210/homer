@@ -55,8 +55,8 @@ class Command {
           .setDescription([
             description,
             '',
-            `${this.dot} ${context.__('commandHandler.help.aliases')}: ${this.aliases.map(a => `\`${a}\``).join(', ')}`,
-            `${this.dot} ${context.__('commandHandler.help.usage')}: \`${this.client.prefix}${parent.join('.')} ${this.usage}\``,
+            `${this.dot} ${context.__('commandHandler.help.aliases')}: ${this.aliases.map(a => `\`${a}\``).join(', ') || context.__('global.none')}`,
+            `${this.dot} ${context.__('commandHandler.help.usage')}: ${this.usage ? `\`${this.client.prefix}${parent.join('.')} ${this.usage}\`` : context.__('global.none')}`,
           ].join('\n'))
           .setColor(this.client.constants.categoryColors[this.category] || undefined);
 
@@ -69,7 +69,7 @@ class Command {
               description = context.__(`helpUtil.${parent.join('.')}.${c.name}`);
             }
 
-            msg.push(`${this.dot} \`${this.client.prefix}${parent.join('.')} ${children.name}\` - ${description}`);
+            msg.push(`${this.dot} \`${this.client.prefix}${parent.join('.')} ${c.name}\` - ${description}`);
           });
           embed.addField(context.__('commandHandler.help.subcommands'), msg.join('\n'));
         }

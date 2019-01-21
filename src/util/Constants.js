@@ -57,7 +57,7 @@ exports.emotes = {
   loading: '<a:loading:455113752984027163>',
 
   // Design
-  dot: '◽',
+  dot: '▫',
   bot: '<:bot:420699407344730122>',
   homer: '<:homer:474150825929998337>',
 
