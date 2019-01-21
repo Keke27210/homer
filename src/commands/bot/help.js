@@ -44,16 +44,6 @@ class HelpCommand extends Command {
       context.replyError(context.__('commandHandler.help.cannotSend'));
     }
   }
-
-  get categoryColors() {
-    return ({
-      bot: 'YELLOW',
-      general: 'BLUE',
-      misc: 'ORANGE',
-      settings: 'GREY',
-      telephone: 'RED',
-    });
-  }
 }
 
 module.exports = HelpCommand;

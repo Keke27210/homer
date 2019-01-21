@@ -149,6 +149,14 @@ exports.categoryEmotes = {
   telephone: '📞',
 };
 
+exports.categoryColors = {
+  bot: 'YELLOW',
+  general: 'BLUE',
+  misc: 'ORANGE',
+  settings: 'GREY',
+  telephone: 'RED',
+};
+
 exports.profileFields = [
   { id: 'about', name: 'About me' },
   { id: 'email', name: 'E-mail' },
