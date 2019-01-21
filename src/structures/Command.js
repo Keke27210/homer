@@ -85,9 +85,7 @@ class Command {
           context.replyWarning(context.__('commandHandler.help.cannotSend'));
           context.reactError();
         }
-
-        return;
-      } if (tempArgs) {
+      } else if (tempArgs) {
         const subcommand = this.children.find(c => c.name === tempArgs.toLowerCase() || c.aliases.includes(tempArgs.toLowerCase()));
         if (subcommand) {
           context.args.shift();
