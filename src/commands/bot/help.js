@@ -24,7 +24,7 @@ class HelpCommand extends Command {
         commands.forEach(c => msg.push(`${this.dot} \`${this.client.prefix}${c.name}\` - ${this.client.localization.hasKey(context.settings.misc.locale, `helpUtil.${c.name}`) ? context.__(`helpUtil.${c.name}`) : context.__('helpUtil.noDescription')}`));
 
         entries.push(msg.join('\n'));
-        pages.push({ color: this.categoryColors[category] });
+        pages.push({ color: this.client.constants.categoryColors[category] });
       }
 
       const channel = await context.message.author.createDM();

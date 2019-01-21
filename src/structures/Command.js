@@ -46,38 +46,45 @@ class Command {
       const tempArgs = context.args[0];
 
       if (tempArgs === 'help' && !this.hidden) {
-        const none = context.__('global.none');
-
-        const helpMessage = [
-          context.__('commandHandler.help.title', { command: parent.join(' ') }),
-          '\n',
-          context.__('commandHandler.help.usage', { usage: `${this.client.prefix}${parent.join(' ')}${this.usage ? ` ${this.usage}` : ''}` }),
-          '\n',
-          context.__('commandHandler.help.aliases', { aliases: this.aliases.map(a => `\`${a}\``).join(' ') || none }),
-          '\n',
-          context.__('commandHandler.help.description', {
-            description: this.client.localization.hasKey(context.settings.misc.locale, `helpUtil.${parent.join('.')}`)
-              ? context.__(`helpUtil.${parent.join('.')}`) : context.__('helpUtil.noDescription'),
-          }),
-        ];
-
-        if (this.children.length > 0 && this.children.filter(c => !c.hidden).length > 0) {
-          helpMessage.push('\n', '\n', context.__('commandHandler.help.subcommands'));
-
-          for (const subcommand of this.children.filter(c => !c.hidden)) {
-            const parentClone = Array.from(parent);
-            parentClone.push(subcommand.name);
-
-            helpMessage.push(
-              '\n',
-              `\`${this.client.prefix}${parentClone.join(' ')}${subcommand.usage ? ` ${subcommand.usage}` : ''}\` - ${this.client.localization.hasKey(context.settings.misc.locale, `helpUtil.${parent.join('.')}`) ? context.__(`helpUtil.${parentClone.join('.')}`) : context.__('helpUtil.noDescription')}`,
-            );
-          }
+        let description = context.__('helpUtil.noDescription');
+        if (this.client.localization.hasKey(context.settings.misc.locale, `helpUtil.${parent.join('.')}`)) {
+          description = context.__(`helpUtil.${parent.join('.')}`);
         }
 
-        return context.message.author.send(helpMessage.join(''))
-          .then(() => context.reactSuccess())
-          .catch(() => context.replyWarning(context.__('commandHandler.help.cannotSend')));
+        const embed = new RichEmbed()
+          .setDescription([
+            description,
+            '',
+            `${this.dot} ${context.__('commandHandler.help.aliases')}: ${this.aliases.map(a => `\`${a}\``).join(', ')}`,
+            `${this.dot} ${context.__('commandHandler.help.usage')}: \`${this.client.prefix}${parent.join('.')} ${this.usage}\``,
+          ].join('\n'))
+          .setColor(this.client.constants.categoryColor[this.category] || undefined);
+
+        const children = this.children.filter(c => !c.hidden);
+        if (children.length > 0) {
+          const msg = [];
+          children.forEach((c) => {
+            let description = context.__('helpUtil.noDescription');
+            if (this.client.localization.hasKey(context.settings.misc.locale, `helpUtil.${parent.join('.')}.${c.name}`)) {
+              description = context.__(`helpUtil.${parent.join('.')}.${c.name}`);
+            }
+
+            msg.push(`${this.dot} \`${this.client.prefix}${parent.join('.')} ${children.name}\` - ${description}`);
+          });
+          embed.addField(context.__('commandHandler.help.subcommands'), msg.join('\n'));
+        }
+
+        try {
+          await context.message.author.send(
+            context.__('commandHandler.help.title', { command: parent.join(' ') }),
+            { embed },
+          ).then(() => {
+            context.reactSuccess();
+          });
+        } catch (e) {
+          context.replyWarning(context.__('commandHandler.help.cannotSend'));
+          context.reactError();
+        }
       } if (tempArgs) {
         const subcommand = this.children.find(c => c.name === tempArgs.toLowerCase() || c.aliases.includes(tempArgs.toLowerCase()));
         if (subcommand) {

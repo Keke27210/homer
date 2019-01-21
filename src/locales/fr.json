@@ -102,10 +102,9 @@
   "commandHandler.unauthorized":"Vous ne pouvez pas utiliser cette commande dans ce salon.",
   "commandHandler.unavailableInDM":"Vous ne pouvez pas exécuter cette commande en messages privé.",
   "commandHandler.help.title":"📖 Aide pour `{{{ command }}}`:",
-  "commandHandler.help.usage":"Utilisation: `{{{ usage }}}`",
-  "commandHandler.help.aliases":"Aliases: {{{ aliases }}}",
-  "commandHandler.help.description":"Description: {{{ description }}}",
-  "commandHandler.help.subcommands":"**Sous-commandes**",
+  "commandHandler.help.usage":"Utilisation",
+  "commandHandler.help.aliases":"Aliases",
+  "commandHandler.help.subcommands":"Sous-commandes",
   "commandHandler.help.cannotSend":"Je n'ai pas pu vous envoyer l'aide en MP !",
 
   "contacts.title":"🔖 Contacts pour {{{ name }}}:",
