@@ -58,7 +58,7 @@ class Command {
             `${this.dot} ${context.__('commandHandler.help.aliases')}: ${this.aliases.map(a => `\`${a}\``).join(', ')}`,
             `${this.dot} ${context.__('commandHandler.help.usage')}: \`${this.client.prefix}${parent.join('.')} ${this.usage}\``,
           ].join('\n'))
-          .setColor(this.client.constants.categoryColor[this.category] || undefined);
+          .setColor(this.client.constants.categoryColors[this.category] || undefined);
 
         const children = this.children.filter(c => !c.hidden);
         if (children.length > 0) {
