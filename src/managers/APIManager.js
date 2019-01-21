@@ -15,7 +15,7 @@ class APIManager extends Manager {
       .query({
         query,
         maxResults: options.maxResults || 1,
-        culture: options.locale || this.client.localization.defaultLocale,
+        culture: options.culture || this.client.localization.defaultLocale,
         key: this.keys.bingGeocode,
       })
       .then(r => r.body)
