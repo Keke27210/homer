@@ -139,6 +139,14 @@ process.on('unhandledRejection', (err) => {
   client.logger.error(`Unhandled rejection:\r\n${err.stack}`);
 });
 
+// Shutdown handling
+process.on('SIGTERM', async () => {
+  await this.client.database.provider.getPoolMaster().drain();
+  await this.client.destroy();
+  client.logger.info(`Shutting down shard ID ${client.shard.id}`);
+  process.exit();
+});
+
 // Misc
 String.prototype.replaceAll = function (search, replacement) {
   return this.split(search).join(replacement);

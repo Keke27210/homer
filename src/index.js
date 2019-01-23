@@ -36,7 +36,7 @@ sharder.on('message', async (shard, mail) => {
 
     for (let i = 0; i < shards.length; i += 1) {
       const shard = shards[i];
-      shard.process.kill('SIGINT');
+      shard.process.kill('SIGTERM');
     }
 
     await wait(2500); // Security
