@@ -23,6 +23,7 @@
   "about.embed.owners":"Propriétaires",
   "about.embed.versions":"Versions",
   "about.embed.links":"Liens utiles",
+  "about.embed.support": "Serveur d'assistance",
 
   "afk.gone":"💤 Vous êtes AFK, à bientôt !",
   "afk.messageTooLong":"La longueur du message doit être inférieure à 256 caractères.",
