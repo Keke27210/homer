@@ -29,10 +29,12 @@ class UpdateUtil extends Util {
   }
 
   async updateBotList() {
+    const keys = await this.client.database.getDocument('bot', 'botlist');
+
     // DiscordBotList.com
     request
       .post(`https://discordbotlist.com/api/bots/${this.client.user.id}/stats`)
-      .set('Authorization', this.client.config.botlist.discordBotsCom)
+      .set('Authorization', keys.discordBotsCom)
       .set('Content-Type', 'application/json')
       .send({
         shard_id: this.client.shard.id,
@@ -45,7 +47,7 @@ class UpdateUtil extends Util {
     // Discord Bots
     request
       .post(`https://discord.bots.gg/api/v1/bots/${this.client.user.id}/stats`)
-      .set('Authorization', this.client.config.botlist.discordBotsGg)
+      .set('Authorization', keys.discordBotsGg)
       .set('Content-Type', 'application/json')
       .send({
         shardId: this.client.shard.id,
@@ -57,7 +59,7 @@ class UpdateUtil extends Util {
     // Discordbots.org
     request
       .post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
-      .set('Authorization', this.client.config.botlist.discordBotsOrg)
+      .set('Authorization', keys.discordBotsOrg)
       .set('Content-Type', 'application/json')
       .send({
         shard_id: this.client.shard.id,
@@ -69,7 +71,7 @@ class UpdateUtil extends Util {
     // Listcord
     request
       .post(`https://listcord.com/api/bot/${this.client.user.id}/guilds`)
-      .set('Authorization', this.client.config.botlist.listcord)
+      .set('Authorization', keys.listcord)
       .set('Content-Type', 'application/json')
       .send({
         shard: this.client.shard.id,
@@ -86,7 +88,7 @@ class UpdateUtil extends Util {
 
       request
         .post(`https://discordbots.group/api/bot/${this.client.user.id}`)
-        .set('Authorization', this.client.config.botlist.discordbotsGroup)
+        .set('Authorization', keys.discordbotsGroup)
         .set('Content-Type', 'application/json')
         .send({
           count: total,

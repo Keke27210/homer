@@ -5,7 +5,12 @@ class APIManager extends Manager {
   constructor(client) {
     super(client);
 
-    this.keys = this.client.config.api;
+    this.keys = {};
+  }
+
+  async _getKeys() {
+    const keys = await this.client.database.getDocuments('bot', 'api');
+    this.keys = keys;
   }
 
   // Bing Maps
