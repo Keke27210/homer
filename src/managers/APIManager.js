@@ -6,10 +6,11 @@ class APIManager extends Manager {
     super(client);
 
     this.keys = {};
+    this._getKeys();
   }
 
   async _getKeys() {
-    const keys = await this.client.database.getDocuments('bot', 'api');
+    const keys = await this.client.database.getDocument('bot', 'api');
     this.keys = keys;
   }
 
