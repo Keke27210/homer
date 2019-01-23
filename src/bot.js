@@ -1,5 +1,5 @@
 // Modules
-const { DiscordAPIError, RichEmbed } = require('discord.js');
+const { DiscordAPIError } = require('discord.js');
 const mtz = require('moment-timezone');
 const config = require('../config.json');
 const { scheduleJob } = require('node-schedule');

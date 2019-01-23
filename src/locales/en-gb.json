@@ -19,10 +19,11 @@
   "global.donatorsOnly": "This feature is reserved to donators only.",
 
   "about.title": "{{{ emote }}} Information about {{{ name }}}:",
-  "about.embed.text": "Hello!\nI am a general purpose bot for all Discord communities.\nI provide you necessary tools to meet your needs, from utility to fun features you can fully enjoy me.\nYou can get below some useful information about me.",
+  "about.embed.text": "Bonjour !\nJe suis un bot multifonctions pour Discord.\nI provide you necessary tools to meet your needs, from utility to fun features you can fully enjoy me.\nYou can get below some useful information about me.",
   "about.embed.owners": "Owners",
   "about.embed.versions": "Versions",
   "about.embed.links": "Links",
+  "about.embed.support": "Support server",
 
   "afk.gone": "💤 You have gone AFK, see you later!",
   "afk.messageTooLong": "The message length must be fewer than 256 characters.",

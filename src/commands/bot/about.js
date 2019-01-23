@@ -23,12 +23,13 @@ class AboutCommand extends Command {
       `${this.dot} ${context.__('about.embed.owners')}: ${owners.join(', ')}`,
       `${this.dot} ${context.__('about.embed.versions')}: **[Node.js](https://nodejs.org) ${process.version}** / **[discord.js](https://discord.js.org) v${version}**`,
       `${this.dot} ${context.__('about.embed.links')}: **[GitHub](${this.client.constants.githubLink})**`,
+      `${this.dot} ${context.__('about.embed.support')}: **[Homer - Support center](https://discord.gg/${this.client.config.misc.supportInvite})**`,
     ].join('\n');
 
     const embed = new RichEmbed()
       .setDescription(aboutInformation)
       .setThumbnail(this.client.user.avatar
-        ? `https://cdn.discordapp.com/avatars/${this.client.user.id}/${this.client.user.avatar}`
+        ? `https://cdn.discordapp.com/avatars/${this.client.user.id}/${this.client.user.avatar}.png`
         : this.getDefaultAvatar(this.client.user.discriminator));
 
     context.reply(
