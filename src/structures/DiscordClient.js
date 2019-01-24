@@ -34,6 +34,7 @@ class DiscordClient extends Client {
     this.ready = false;
     this.maintenance = false;
     this.debug = this.config.discord.debug ? true : false;
+    this.bootTime = Date.now();
 
     this.commands = new CommandManager(this);
     this.database = new DatabaseManager(this);

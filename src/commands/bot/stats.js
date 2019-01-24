@@ -34,7 +34,7 @@ class StatsCommand extends Command {
     const statsInformation = [
       `${this.dot} ${context.__('stats.embed.shards')}: **${shardCount}**`,
       `${this.dot} ${context.__('stats.embed.servers')}: **${serverCount}**`,
-      `${this.dot} ${context.__('stats.embed.uptime')}: ${this.client.time.timeSince(this.client.readyTimestamp, context.settings.misc.locale, true)}`,
+      `${this.dot} ${context.__('stats.embed.uptime')}: ${this.client.time.timeSince(this.client.bootTime, context.settings.misc.locale, true)}`,
       `${this.dot} ${context.__('stats.embed.memory')}: **${Math.floor(memoryUsage / 1024 / 1024)}**MB`,
       `${this.dot} ${context.__('stats.embed.currentCalls')}: **${currentCalls}**`,
       `${this.dot} ${context.__('stats.embed.currentBroadcasts')}: **${broadcastCount}**`,
