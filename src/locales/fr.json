@@ -20,10 +20,9 @@
 
   "about.title":"{{{ emote }}} Informations à propos d'{{{ name }}}:",
   "about.embed.text":"Hello!\nI am a general purpose bot for all Discord communities.\nI provide you necessary tools to meet your needs, from utility to fun features you can fully enjoy me.\nYou can get below some useful information about me.",
-  "about.embed.owners":"Propriétaires",
+  "about.embed.owner":"Développeur",
   "about.embed.versions":"Versions",
   "about.embed.links":"Liens utiles",
-  "about.embed.support": "Serveur d'assistance",
 
   "afk.gone":"💤 Vous êtes AFK, à bientôt !",
   "afk.messageTooLong":"La longueur du message doit être inférieure à 256 caractères.",

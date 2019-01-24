@@ -11,19 +11,14 @@ class AboutCommand extends Command {
   }
 
   async execute(context) {
-    const owners = [];
-    for (const owner of this.client.config.owners) {
-      const user = await this.client.fetchUser(owner);
-      owners.push(`**${user.username}**#${user.discriminator}`);
-    }
+    const user = await this.client.fetchUser(this.client.config.owners[0]);
 
     const aboutInformation = [
       context.__('about.embed.text'),
       '',
-      `${this.dot} ${context.__('about.embed.owners')}: ${owners.join(', ')}`,
+      `${this.dot} ${context.__('about.embed.owner')}: ${user ? `**${user.username}**#${user.discriminator}` : '@someone'}`,
       `${this.dot} ${context.__('about.embed.versions')}: **[Node.js](https://nodejs.org) ${process.version}** / **[discord.js](https://discord.js.org) v${version}**`,
-      `${this.dot} ${context.__('about.embed.links')}: **[GitHub](${this.client.constants.githubLink})**`,
-      `${this.dot} ${context.__('about.embed.support')}: **[Homer - Support center](https://discord.gg/${this.client.config.misc.supportInvite})**`,
+      `${this.dot} ${context.__('about.embed.links')}: **[Homer - Support center](https://discord.gg/${this.client.config.misc.supportInvite})** / **[GitHub](${this.client.constants.githubLink})**`,
     ].join('\n');
 
     const embed = new RichEmbed()
