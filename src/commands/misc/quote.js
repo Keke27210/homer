@@ -42,7 +42,7 @@ class QuoteCommand extends Command {
           .setAuthor(message.author.tag, message.author.avatar
             ? `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.${message.author.avatar.startsWith('a_') ? 'gif' : 'png'}`
             : this.getDefaultAvatar(message.author.discriminator))
-          .setDescription(message.content)
+          .setDescription(`${message.content}\n\n**[${context.__('quote.jump')}](${message.url})**`)
           .setFooter(`${channel.type === 'text' ? `#${channel.name}` : context.__('global.dm')} - ${message.editedTimestamp ? context.__('quote.edited') : context.__('quote.created')}`)
           .setTimestamp(message.editedAt || message.createdAt);
         if (memberColor) embed.setColor(memberColor);
@@ -53,6 +53,15 @@ class QuoteCommand extends Command {
           str += message.embeds[0].description;
 
           embed.addField(context.__('quote.embedDesc'), str);
+        }
+
+        if (message.attachments.size > 0) {
+          embed.addField(
+            context.__('quote.attachments'),
+            message.attachments
+              .map(a => `${this.dot} **[${a.filename}](${a.url})** (${(a.filesize / 1024 / 1024).toFixed(2)}MB)`)
+              .join('\n'),
+          );
         }
 
         context.reply({ embed });
