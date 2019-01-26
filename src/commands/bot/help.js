@@ -29,7 +29,7 @@ class HelpCommand extends Command {
 
       const msg = [`❔ **${context.__(`help.category.more`)}**`, '', context.__('help.more', { invite: this.client.config.misc.supportInvite })];
       entries.push(msg.join('\n'));
-      pages.push({ title: ' ', color: 'YELLOW' });
+      pages.push({ title: ' ', color: 0xFFFF00 });
 
       const channel = await context.message.author.createDM();
       await this.client.menu.createMenu(

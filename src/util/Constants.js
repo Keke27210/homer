@@ -150,7 +150,7 @@ exports.categoryEmotes = {
 };
 
 exports.categoryColors = {
-  bot: 'YELLOW',
+  bot: 0xFFFF00,
   general: 'BLUE',
   misc: 'ORANGE',
   settings: 'GREY',

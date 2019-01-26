@@ -198,7 +198,7 @@
   "help.category.settings":"Paramétrage",
   "help.category.telephone":"Téléphone",
   "help.category.more": "Plus d'aide",
-  "help.more": "Si vous avez plus de questions ou rencontrez un problème avec Homer, rejoignez-nous sur le **[serveur d'assistance]({{{ invite }}})** où vous pourrez rapidement être aidé !\nVous pouvez également effectuer une donation pour aider au développement d'Homer et avoir accès à des fonctionnalités réservées aux donateurs (tel qu'un numéro de téléphone personnalisable).",
+  "help.more": "Si vous avez plus de questions ou rencontrez un problème avec Homer, rejoignez-nous sur le **[serveur d'assistance](https://discord.gg/{{{ invite }}})** où vous pourrez rapidement être aidé !\nVous pouvez également effectuer une donation pour aider au développement d'Homer et avoir accès à des fonctionnalités réservées aux donateurs (tel qu'un numéro de téléphone personnalisable).",
   "help.footer":"Ajoutez \"help\" à la fin de la commande pour obtenir une aide avancée.",
 
   "helpUtil.noDescription":"Aucune description disponible",
