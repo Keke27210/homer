@@ -22,6 +22,10 @@ class ShutdownCommand extends Command {
     });
 
     await wait(2500);
+
+    // Closing RethinkDB and connection to Discord
+    await this.client.database.provider.getPoolMaster().drain();
+    await this.client.destroy();
     await this.client.shard.send({ type: 'shutdown', message: `${context.message.channel.id}|${message.id}|false` });
   }
 }
