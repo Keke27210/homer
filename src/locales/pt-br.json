@@ -18,7 +18,7 @@
 
   "about.title": "{{{ emote }}} Informações sobre {{{ name }}}:",
   "about.embed.text": "Olá!\nEu sou um bot de propósito geral para todas as comunidades Discord.\nEu forneço as ferramentas necessárias para atender às suas necessidades, desde a moderação até os recursos divertidos que você pode aproveitar.\nVocê pode obter algumas informações úteis sobre mim abaixo.",
-  "about.embed.owners": "Donos",
+  "about.embed.owner": "Dono",
   "about.embed.versions": "Versões",
   "about.embed.links": "Links",
 

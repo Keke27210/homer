@@ -25,7 +25,7 @@ class Command {
 
   async run(context, parent = []) {
     // Goodbye if maintenance
-    if (this.client.maintenance && !this.client.config.owners.includes(context.message.author.id)) return;
+    if (this.client.maintenance && this.client.config.owner !== context.message.author.id) return;
 
     // We stop right now if there is 'SEND_MESSAGES' or 'EMBED_LINKS' missing
     if (context.message.guild) {
@@ -97,7 +97,7 @@ class Command {
     }
 
     // Owner check
-    if (this.private && !this.client.config.owners.includes(context.message.author.id)) return;
+    if (this.private && this.client.config.owner !== context.message.author.id) return;
 
     if (context.message.guild) {
       // Ignored entities checking
@@ -123,7 +123,7 @@ class Command {
     }
 
     // Check if the command can be ran
-    if (!this.client.config.owners.includes(context.message.author.id) && !this.isAllowed(context.message.channel, parent) && this.category !== 'owner') {
+    if (this.client.config.owner !== context.message.author.id && !this.isAllowed(context.message.channel, parent) && this.category !== 'owner') {
       return context.replyError(context.__('commandHandler.unauthorized'));
     }
 
@@ -166,7 +166,7 @@ class Command {
     }
 
     // Insert stats and cooldown
-    if (!this.client.config.owners.includes(context.message.author.id)) {
+    if (this.client.config.owner !== context.message.author.id) {
       this.client.cooldown[context.message.author.id] = Date.now();
       this.client.setTimeout(() => { delete this.client.cooldown[context.message.author.id]; }, 2500);
       this.client.database.insertDocument('commandStats', {

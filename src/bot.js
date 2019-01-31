@@ -139,14 +139,6 @@ process.on('unhandledRejection', (err) => {
     message: err.stack,
   });
 
-  client.sendMessage(
-    client.config.misc.ownerDm,
-    [
-      `\`[${mtz().format('HH:mm:ss')}]\` ${client.constants.emotes.warning} **Unhandled rejection** on shard **${client.shard.id}** ${client.constants.emotes.warning}`,
-      `\`\`\`js\n${err.stack}\`\`\``,
-    ].join('\n'),
-  );
-
   client.logger.error(`Unhandled rejection:\r\n${err.stack}`);
 });
 

@@ -23,7 +23,7 @@ class OtherUtil extends Util {
   }
 
   async getBadges(id) {
-    const owner = this.client.config.owners.includes(id);
+    const owner = this.client.config.owner === id;
     const donator = await this.client.database.getDocument('donators', id).then(a => (a ? true : false));
     const vip = await this.client.database.getDocument('vip', id).then(a => (a ? true : false));
     const nitro = await this.client.fetchUser(id)

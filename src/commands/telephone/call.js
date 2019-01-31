@@ -71,7 +71,6 @@ class CallCommand extends Command {
     // Group calls
     else {
       if (!this.client.other.isDonator(context.message.author.id)) return context.replyError(context.__('call.cannotGroup'));
-      //if (!this.client.config.owners.includes(context.message.author.id)) return context.replyWarning('This feature is currently being done, it\'ll be available soon!');
 
       subscription.state = 1;
       subscription.locale = context.settings.misc.locale;

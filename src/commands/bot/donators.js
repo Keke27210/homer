@@ -16,7 +16,7 @@ class DonatorsCommand extends Command {
       .guilds.get('382951433378594817')
       .roles.get('382967473135288320')
       .members
-        .filter(m => !this.client.config.owners.includes(m.user.id))
+        .filter(m => this.client.config.owner !== m.user.id)
         .sort((a, b) => a > b)
         .map(m => `${this.dot} **${m.user.username}**#${m.user.discriminator}`)
         .join('\n');

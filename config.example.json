@@ -1,45 +1,34 @@
 {
-  "api": {
-    "bingGeocode": "",
-    "darkSky": "",
-    "discordBans": "",
-    "googleCx": "",
-    "googleKey": "",
-    "youtube": ""
-  },
-  "botWhitelist": [],
   "client": {
-    "messageCacheLifetime": 1,
-    "disableEveryone": false
+    "disableEveryone": true,
+    "fetchAllMembers": false,
+    "messageCacheLifetime": 3600,
+    "messageCacheMaxSize": 200,
+    "messageSweepInterval": 360
   },
   "commands": {
-    "categories": []
+    "categories": ["bot", "general", "owner", "misc", "settings", "telephone"]
   },
   "database": {
     "host": "",
-    "port": 1,
+    "port": 0,
     "db": ""
   },
   "discord": {
     "id": "",
     "prefixes": [],
-    "token": ""
+    "token": "",
+    "debug": false
   },
   "localization": {
-    "directory": ""
+    "directory": "../locales"
   },
-  "logChannel": "",
   "misc": {
-    "ownerDm": "",
+    "nsfwThresold": 0,
     "supportInvite": ""
   },
-  "owners": [],
-  "server": {
-    "domain": ""
-  },
+  "owner": "",
   "sharder": {
-    "totalShards": 0,
-    "delay": 1,
-    "respawn": false
+    "totalShards": 0
   }
 }
