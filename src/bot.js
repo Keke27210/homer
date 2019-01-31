@@ -118,6 +118,17 @@ scheduleJob({ second: 10 }, async () => {
       }
     }
   }
+
+  // Data log
+  if (new Date().getHours() === 12 && client.shard.id === 0) {
+    const stats = await client.database.getDocument('bot', 'stats');
+    const commandCount = await client.database.provider.table('commandStats').count();
+    const time = Date.now();
+
+    stats.commands.push({ time, count: commandCount });
+    stats.guilds.push({ time, count: client.guilds.size });
+    client.database.updateDocument('bot', 'stats', stats);
+  }
 });
 
 // Error handling
