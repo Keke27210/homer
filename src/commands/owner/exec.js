@@ -18,15 +18,16 @@ class ExecCommand extends Command {
     const code = context.args.join(' ');
     if (!code) return context.replyError('You must provide a code to execute.');
 
+    const msg = await context.replyLoading('Executing code...');
     exec(code, async (error, stdout, stderr) => {
-      if (error) return context.replyError(`An error occured during execution!\n\`\`\`js\n${error}\`\`\``);
+      if (error) return msg.edit(`${this.client.constants.emotes.error} An error occured during execution!\n\`\`\`js\n${error}\`\`\``);
 
       let message = '';
       if (stderr) message += stderr;
       if (stdout) message += stdout;
 
       if (message.length <= 1950) {
-        context.reply(message, { code: true });
+        msg.edit(message, { code: true });
       } else {
         const data = await request
           .post('https://hastebin.com/documents')
@@ -36,9 +37,9 @@ class ExecCommand extends Command {
           .catch(() => null);
 
         if (data) {
-          context.replyWarning(`Output too long! Uploaded on Hastebin: <https://hastebin.com/${data.key}>`);
+          msg.edit(`${this.client.constants.emotes.warning} Output too long! Uploaded on Hastebin: <https://hastebin.com/${data.key}>`);
         } else {
-          context.replyWarning('Output too long! Upload log file.', {
+          msg.edit(`${this.client.constants.emotes.warning} Output too long! Upload log file.`, {
             files: [new Attachment(Buffer.from(message), 'output.txt')],
           });
         }
