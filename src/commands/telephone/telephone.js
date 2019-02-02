@@ -13,6 +13,7 @@ class TelephoneCommand extends Command {
         new SwitchSubcommand(client),
         new TextSubcommand(client),
         new ChangeSubcommand(client),
+        new RulesSubcommand(client),
       ],
       category: 'telephone',
       dm: true,
@@ -70,22 +71,16 @@ class SubscribeSubcommand extends Command {
     const msg = context.args.join(' ');
     if (msg && msg.length > 64) return context.replyWarning(context.__('telephone.phonebook.messageTooLong'));
 
-    const time = Date.now();
-    const number = this.client.other.generateNumber(context.message.channel.id);
-    const setupInformation = [
-      `${this.dot} ${context.__('telephone.embed.number')}: **${number}**`,
-      `${this.dot} ${context.__('telephone.embed.subscriber')}: **${context.message.author.username}**#${context.message.author.discriminator}`,
-      `${this.dot} ${context.__('telephone.embed.phonebook')}: ${msg ? `**${context.__('global.yes')}** (${msg})` : `**${context.__('global.no')}**`}`,
-      `${this.dot} ${context.__('telephone.embed.date')}: **${context.formatDate(time)}**`,
-      '',
-      `${this.dot} ${context.__('telephone.setup.confirmation', { success: this.client.constants.emotes.success, error: this.client.constants.emotes.error })}`,
-    ].join('\n');
+    const noticeInformation = Object.keys(this.client.localization.locales['en-gb'])
+      .filter(key => key.startsWith('telephone.notice.'))
+      .map(key => `${this.dot} ${context.__(key)}`)
+      .join('\n');
 
     const embed = new RichEmbed()
-      .setDescription(setupInformation);
+      .setDescription(noticeInformation);
 
     const message = await context.reply(
-      context.__('telephone.setup.title', { name: context.message.guild ? `**#${context.message.channel.name}**` : `**${context.__('global.dm')}**` }),
+      context.__('telephone.notice'),
       { embed },
     );
 
@@ -97,39 +92,72 @@ class SubscribeSubcommand extends Command {
       { max: 1 },
     )
       .then(async (reactions) => {
-        const emoji = reactions.first().emoji.identifier;
-
-        if (context.message.guild && context.message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) {
-          message.clearReactions();
+        if (reactions.first().emoji.identifier !== this.client.constants.emotes.successID) {
+          return context.replyWarning(context.__('telephone.setup.cancelled'));
         }
+        message.delete();
 
-        if (emoji === this.client.constants.emotes.successID) {
-          await this.client.database.insertDocument(
-            'telephone',
-            {
-              id: context.message.channel.id,
-              settings: context.message.guild ? context.message.guild.id : context.message.author.id,
-              number,
-              subscriber: context.message.author.id,
-              phonebook: msg || false,
-              textable: true,
-              blacklist: [],
-              contacts: [],
-              message: {
-                incoming: false,
-                missed: false,
-              },
-              time,
-            },
-            {
-              conflict: 'update',
-            },
-          );
+        const time = Date.now();
+        const number = this.client.other.generateNumber(context.message.channel.id);
+        const setupInformation = [
+          `${this.dot} ${context.__('telephone.embed.number')}: **${number}**`,
+          `${this.dot} ${context.__('telephone.embed.subscriber')}: **${context.message.author.username}**#${context.message.author.discriminator}`,
+          `${this.dot} ${context.__('telephone.embed.phonebook')}: ${msg ? `**${context.__('global.yes')}** (${msg})` : `**${context.__('global.no')}**`}`,
+          `${this.dot} ${context.__('telephone.embed.date')}: **${context.formatDate(time)}**`,
+          '',
+          `${this.dot} ${context.__('telephone.setup.confirmation', { success: this.client.constants.emotes.success, error: this.client.constants.emotes.error })}`,
+        ].join('\n');
 
-          message.edit(`${this.client.constants.emotes.success} ${context.__('telephone.setup.done')}`);
-        } else {
-          message.edit(`${this.client.constants.emotes.success} ${context.__('telephone.setup.cancelled')}`);
-        }
+        const embed2 = new RichEmbed()
+          .setDescription(setupInformation);
+
+        const message2 = await context.reply(
+          context.__('telephone.setup.title', { name: context.message.guild ? `**#${context.message.channel.name}**` : `**${context.__('global.dm')}**` }),
+          { embed: embed2 },
+        );
+
+        await message2.react(this.client.constants.emotes.successID);
+        await message2.react(this.client.constants.emotes.errorID);
+
+        message2.awaitReactions(
+          (reaction, user) => [this.client.constants.emotes.successID, this.client.constants.emotes.errorID].includes(reaction.emoji.identifier) && user.id === context.message.author.id,
+          { max: 1 },
+        )
+          .then(async (reactions) => {
+            const emoji = reactions.first().emoji.identifier;
+
+            if (context.message.guild && context.message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) {
+              message.clearReactions();
+            }
+
+            if (emoji === this.client.constants.emotes.successID) {
+              await this.client.database.insertDocument(
+                'telephone',
+                {
+                  id: context.message.channel.id,
+                  settings: context.message.guild ? context.message.guild.id : context.message.author.id,
+                  number,
+                  subscriber: context.message.author.id,
+                  phonebook: msg || false,
+                  textable: true,
+                  blacklist: [],
+                  contacts: [],
+                  message: {
+                    incoming: false,
+                    missed: false,
+                  },
+                  time,
+                },
+                {
+                  conflict: 'update',
+                },
+              );
+
+              message.edit(`${this.client.constants.emotes.success} ${context.__('telephone.setup.done')}`);
+            } else {
+              message.edit(`${this.client.constants.emotes.success} ${context.__('telephone.setup.cancelled')}`);
+            }
+          });
       });
   }
 }
@@ -242,6 +270,32 @@ class SwitchSubcommand extends Command {
       await this.client.database.updateDocument('bot', 'settings', { telephone: true });
       context.replySuccess('The telephone service has been successfully **enabled**!');
     }
+  }
+}
+
+class RulesSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'rules',
+      aliases: ['tos', 'terms'],
+      category: 'telephone',
+      dm: true,
+    });
+  }
+
+  async execute(context) {
+    const updateTime = await this.client.database.getDocument('bot', 'settings').then(s => s.telephoneRulesUpdate);
+    const rulesInformation = Object.keys(this.client.localization.locales['en-gb'])
+      .filter(key => key.startsWith('telephone.rules.'))
+      .map(key => `${this.dot} ${context.__(key)}`)
+      .join('\n');
+
+    const embed = new RichEmbed()
+      .setDescription(rulesInformation)
+      .setFooter(context.__('telephone.rulesUpdate'))
+      .setTimestamp(new Date(updateTime));
+
+    context.reply(context.__('telephone.rules'), { embed });
   }
 }
 
