@@ -6,8 +6,8 @@ class Sharder extends ShardingManager {
     this.config = config;
   }
 
-  async eval(code) {
-    await eval(code);
+  eval(code) {
+    return eval(code);
   }
 }
 

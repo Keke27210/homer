@@ -4,7 +4,6 @@ const request = require('superagent');
 
 const domainExpression = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n\?\=]+)/im;
 const propertyExpression = /{item.(.*?)}/g;
-const emoteExpression = /(.{0,100}):(\d{17,20})/g;
 
 module.exports = [
   // uid
@@ -230,20 +229,6 @@ module.exports = [
     () => '',
     null,
   ),
-
-  // react
-  /*new Method(
-    'react',
-    null,
-    (env, params) => {
-      if (env.reactions.length > 10) return;
-
-      const emote = params[0];
-      console.log(emoteExpression.test(emote));
-      console.log(emoteExpression.exec(emote));
-      return '';
-    },
-  ),*/
 ];
 
 function uuid() {

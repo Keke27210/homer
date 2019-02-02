@@ -1,5 +1,5 @@
-const bigInteger = require('big-integer');
 const Method = require('../structures/Method');
+const bigInteger = require('big-integer');
 
 module.exports = [
   // note
