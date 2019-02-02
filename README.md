@@ -1,4 +1,18 @@
-# Introducing Homer
-Homer is a **featureful**, **multilingual** and **easy-to-use** bot for Discord communities. With more than 30 commands, you can moderate your server, use utility features (Google:tm: search, user information, etc...) and even enjoy of fun stuff such as tags (ran by Lisa, a [JagTag](https://github.com/jagrosh/JagTag) port) and a (almost) unique cross-servers telephone.  
-  
-The project was born in **April 2017** and is still alive in **December 2018**. Star this repository if you enjoy the bot!
+![Homer avatar](https://cdn.discordapp.com/avatars/305277118105911296/83edde7cf67d195b5828b731fb9ff9a4.png)
+
+# Main features
+• **General purpose** - Tons of useful commands for communities •  
+• **Multilingual** - Available in English, French and Portuguese (Brazil) •  
+• **Telephone** - Call people around Discord with Homer's telephone •  
+• **Radio** - Listen to worldwide radios from all styles in a good quality\* •  
+• **Customizable** - You can even customize date and time formats •  
+• **Advanced tags** - With Lisa, enhance your tags with dynamic features •  
+
+# Donations
+If you enjoy Homer, please consider donating. I (iDroid) am a French student who develops Homer during my free time but unfortunately I cannot afford a 100% reliable and powerful hosting.  
+Even if I can always find a way to keep Homer alive, it doesn't remain a stable solution. $5 every month could allow me to rent a powerful enough machine for Homer's prosperity.  
+Donators get cool perks such as higher audio quality, customizable telephone numbers and much more: if you are interested, just send `h:donate` to Homer in DMs and follow instructions.
+
+# Support place
+If you encounter issues using Homer, feel free to join the **[Homer support center](https://discord.gg/fYRm29b)** to get helped!  
+Support is available in English, French and German.
