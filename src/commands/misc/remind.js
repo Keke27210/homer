@@ -110,7 +110,7 @@ class DeleteSubcommand extends Command {
       (reaction, user) => [this.client.constants.emotes.successID, this.client.constants.emotes.errorID].includes(reaction.emoji.identifier) && user.id === context.message.author.id,
       { max: 1 },
     )
-      .then((reactions) => {
+      .then(async (reactions) => {
         const identifier = reactions.first().emoji.identifier;
         if (identifier === this.client.constants.emotes.successID) {
           await this.client.database.deleteDocument('jobs', job.id);
