@@ -33,7 +33,7 @@ class HangupCommand extends Command {
         this.client.updateMessage(
           call.receiver.id,
           call.receiver.message,
-          this.client.__(call.receiver.locale, 'telephone.incomingTimeout', { identity: contact ? `**${contact.description}** (**${contact.number}**)` : `**${contact.number}**` }),
+          this.client.__(call.receiver.locale, 'telephone.incomingTimeout', { identity: contact ? `**${contact.description}** (**${contact.number}**)` : `**${call.sender.number}**` }),
         );
       } else {
         this.client.sendMessage(call.sender.id, this.client.__(call.sender.locale, 'hangup.target'));
