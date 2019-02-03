@@ -65,9 +65,9 @@ class ListSubcommand extends Command {
 
     const listInformation = jobs
       .sort((a, b) => a.time - b.time)
-      .map((job) => {
+      .map((job, index) => {
         const timeExpire = this.client.time.timeSince(job.end, context.settings.misc.locale, true);
-        return `${this.dot} \`${job.id}\`: ${job.text} • ${context.__('remind.list.expireIn', { time: timeExpire })}`;
+        return `${this.dot} \`${index + 1}\`: ${job.text} • ${context.__('remind.list.expireIn', { time: timeExpire })}`;
       })
       .join('\n');
 
@@ -97,7 +97,7 @@ class DeleteSubcommand extends Command {
     if (!id) return context.replyError(context.__('remind.delete.noID'));
 
     const job = await this.client.database.findDocuments('jobs', { type: 'remind', user: context.message.author.id })
-      .then(jobs => jobs.sort((a, b) => a.time - b.time)[id]);
+      .then(jobs => jobs.sort((a, b) => a.time - b.time)[id - 1]);
     if (!job) return context.replyWarning(context.__('remind.delete.notFound', { id }));
 
     const m = await context.replyWarning(context.__('remind.delete.prompt', { text: job.text }));
