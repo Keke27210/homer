@@ -31,22 +31,20 @@ class RemindCommand extends Command {
 
     const start = (Date.now() + 1000);
     const end = (start + time);
-    const id = (Math.random().toFixed(4).toString().substring(2));
     await this.client.database.insertDocument(
       'jobs',
       {
-        id,
         start,
         duration: time,
         end,
         user: context.message.author.id,
         type: 'remind',
         text: text.trim(),
+        time: Date.now(),
       },
     );
 
     context.reply(context.__('remind.set', {
-      id,
       expire: this.client.time.timeSince(end, context.settings.misc.locale),
     }));
   }
@@ -62,14 +60,16 @@ class ListSubcommand extends Command {
   }
 
   async execute(context) {
-    const jobs = await this.client.database.getDocuments('jobs')
-      .then(jobs => jobs.filter(j => j.type === 'remind' && j.user === context.message.author.id));
+    const jobs = await this.client.database.findDocuments('jobs', { type: 'remind', user: context.message.author.id });
     if (jobs.length === 0) return context.replyWarning(context.__('remind.list.noActiveRemind'));
 
-    const listInformation = jobs.map((job) => {
-      const timeExpire = this.client.time.timeSince(job.end, context.settings.misc.locale, true);
-      return `${this.dot} \`${job.id}\`: ${job.text} • ${context.__('remind.list.expireIn', { time: timeExpire })}`;
-    }).join('\n');
+    const listInformation = jobs
+      .sort((a, b) => a.time - b.time)
+      .map((job) => {
+        const timeExpire = this.client.time.timeSince(job.end, context.settings.misc.locale, true);
+        return `${this.dot} \`${job.id}\`: ${job.text} • ${context.__('remind.list.expireIn', { time: timeExpire })}`;
+      })
+      .join('\n');
 
     const embed = new RichEmbed()
       .setDescription(listInformation);
@@ -96,11 +96,29 @@ class DeleteSubcommand extends Command {
     const id = context.args[0];
     if (!id) return context.replyError(context.__('remind.delete.noID'));
 
-    const job = await this.client.database.getDocument('jobs', id);
-    if (!job || job.type !== 'remind') return context.replyWarning(context.__('remind.delete.notFound', { id }));
+    const job = await this.client.database.findDocuments('jobs', { type: 'remind', user: context.message.author.id })
+      .then(jobs => jobs.sort((a, b) => a.time - b.time)[id]);
+    if (!job) return context.replyWarning(context.__('remind.delete.notFound', { id }));
 
-    await this.client.database.deleteDocument('jobs', job.id);
-    context.replySuccess(context.__('remind.delete.removed', { id }));
+    const m = await context.replyWarning(context.__('remind.delete.prompt', { text: job.text }));
+    (async () => {
+      await m.react(this.client.constants.emotes.successID);
+      await m.react(this.client.constants.emotes.errorID);
+    })();
+
+    m.awaitReactions(
+      (reaction, user) => [this.client.constants.emotes.successID, this.client.constants.emotes.errorID].includes(reaction.emoji.identifier) && user.id === context.message.author.id,
+      { max: 1 },
+    )
+      .then((reactions) => {
+        const identifier = reactions.first().emoji.identifier;
+        if (identifier === this.client.constants.emotes.successID) {
+          await this.client.database.deleteDocument('jobs', job.id);
+          message.edit(`${this.client.constants.emotes.success} ${context.__('remind.delete.removed', { id })}`);
+        } else {
+          message.edit(`${this.client.constants.emotes.error} ${context.__('remind.delete.cancel')}`);
+        }
+      });
   }
 }
 

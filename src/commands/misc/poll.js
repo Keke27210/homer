@@ -50,7 +50,6 @@ class PollCommand extends Command {
 
     const start = Date.now();
     const end = (start + duration);
-    const id = (Math.random().toFixed(4).toString().substring(2));
 
     const embed = new RichEmbed()
       .setTitle(title)
@@ -66,7 +65,6 @@ class PollCommand extends Command {
     await this.client.database.insertDocument(
       'jobs',
       {
-        id,
         start,
         duration,
         end,
@@ -78,6 +76,7 @@ class PollCommand extends Command {
         messageID: msg.id,
         channelID: context.message.channel.id,
         color: embed.hexColor || null,
+        time: Date.now(),
       },
     );
   }
