@@ -1,6 +1,7 @@
 const Manager = require('../structures/Manager');
 const Context = require('../structures/Context');
 const readdir = require('util').promisify(require('fs').readdir);
+const Util = require("../utils/Prefix");
 
 class CommandManager extends Manager {
   constructor(client) {
@@ -34,7 +35,8 @@ class CommandManager extends Manager {
     await context.getSettings();
 
     const prefixes = this.client.config.discord.prefixes.concat(context.settings.prefixes);
-    const prefix = prefixes.find((p) => {
+    const regprefix = new RegExp(`^<@?${this.client.user.id}> |^${Util.regExpEsc(prefixes)}`).exec(message.content)
+    const prefix = regprefix.find((p) => {
       if (context.message.content.toLowerCase().startsWith(p)) {
         context.prefix = p;
         return true;
@@ -44,9 +46,9 @@ class CommandManager extends Manager {
 
     context.args = context.args
       .join(' ')
-      .slice(prefix.length)
+      .slice(prefix[0].length)
       .trim()
-      .split(' ');
+      .split(/\s+/g);
 
     const cmdSearch = (context.args[0] || '').toLowerCase();
     const command = this.getCommand(cmdSearch);
