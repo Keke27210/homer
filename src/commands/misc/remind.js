@@ -114,9 +114,9 @@ class DeleteSubcommand extends Command {
         const identifier = reactions.first().emoji.identifier;
         if (identifier === this.client.constants.emotes.successID) {
           await this.client.database.deleteDocument('jobs', job.id);
-          message.edit(`${this.client.constants.emotes.success} ${context.__('remind.delete.removed', { id })}`);
+          m.edit(`${this.client.constants.emotes.success} ${context.__('remind.delete.removed', { id })}`);
         } else {
-          message.edit(`${this.client.constants.emotes.error} ${context.__('remind.delete.cancel')}`);
+          m.edit(`${this.client.constants.emotes.error} ${context.__('remind.delete.cancel')}`);
         }
       });
   }
