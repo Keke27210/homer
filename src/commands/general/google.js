@@ -22,10 +22,7 @@ class GoogleCommand extends Command {
     if (!data.queries) return message.edit(`${this.client.constants.emotes.error} ${context.__('google.error.unknown')}`);
     if (data.queries.request[0].totalResults === '0') return message.edit(`${this.client.constants.emotes.error} ${context.__('google.error.noResult')}`);
     
-    message.edit(context.__('google.result', {
-      mention: `<@${context.message.member && context.message.member.nickname ? '!' : ''}${context.message.author.id}>`,
-      link: data.items[0].link,
-    }));
+    message.edit(`🔍 **${context.message.author.username}**, ${data.items[0].link}`);
   }
 }
 
