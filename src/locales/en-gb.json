@@ -10,6 +10,7 @@
   "global.noReason": "No reason specified",
   "global.none": "None",
   "global.noInformation": "No information available",
+  "global.noInformationShort": "No info",
   "global.unknown": "Unknown",
   "global.image": "Image",
   "global.loading": "Loading...",
