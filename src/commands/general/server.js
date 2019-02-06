@@ -55,7 +55,7 @@ class ServerCommand extends Command {
 
     const embed = new RichEmbed()
       .setDescription(serverInformation)
-      .setThumbnail(guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : undefined)
+      .setThumbnail(guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` : undefined)
       .setImage(guild.splash ? `https://cdn.discordapp.com/splashes/${invite.guild.id}/${invite.guild.splash}.png?size=512` : undefined);
 
     context.reply(
