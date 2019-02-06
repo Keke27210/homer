@@ -519,6 +519,7 @@
   "radio.tune.noRadioFound": "No radio found on frequency `{{{ frequency }}}`.",
   "radio.tune.tuning": "📻 Tuning into **{{{ frequency }}}**Mhz...",
   "radio.tune.playing": "📻 You are listening to **{{{ name }}}**.",
+  "radio.tune.timeout": "📻 Looks like we have difficulties to reach this radio! Please retry again later.",
   "radio.tune.noProgramme": "📻 No programme found on frequency **{{{ frequency }}}**Mhz.",
   "radio.tune.error": "📻 A streaming error has occured: `{{{ message }}}`.",
   "radio.volume.currentVolume": "🔈 The current volume is `{{{ volume }}}%`.",

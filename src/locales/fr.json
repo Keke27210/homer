@@ -505,6 +505,7 @@
   "radio.tune.invalidFrequency": "**{{{ frequency }}** n'est pas une fréquence valide.",
   "radio.tune.tuning":"📻 Recherche du signal sur **{{{ frequency }}}**...",
   "radio.tune.playing":"📻 Vous écoutez **{{{ name }}}**.",
+  "radio.tune.timeout": "📻 Il semblerait qu'on ait des difficultés à atteindre cette radio ! Réessayez plus tard.",
   "radio.tune.noProgramme": "📻 Aucun programme trouvé sur la fréquence **{{{ frequency }}}**Mhz.",
   "radio.tune.error":"📻 Une erreur de diffusion est survenue: `{{{ message }}}`.",
   "radio.volume.currentVolume": "🔈 Le volume actuel est de `{{{ volume }}}%`.",
