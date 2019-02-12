@@ -63,6 +63,8 @@
   "baninfo.embed.date":"Date",
   "baninfo.noQuery":"Vous devez fournir un utilisateur à rechercher !",
 
+  "broadcast.announcement": "📡 Annonce des développeurs d'Homer:",
+
   "call.inCall": "Vous êtes déjà en cours de communication.",
   "call.self": "Vous ne pouvez pas appeler votre propre numéro.",
   "call.cannotGroup": "Vous devez être donateur pour lancer des appels groupés.",

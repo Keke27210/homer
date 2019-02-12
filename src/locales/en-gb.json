@@ -63,6 +63,8 @@
   "baninfo.embed.date": "Date",
   "baninfo.noQuery": "You must provide a user to search for!",
 
+  "broadcast.announcement": "📡 Announcement from Homer developers:",
+
   "call.inCall": "You're already calling someone.",
   "call.self": "You can't call your own number.",
   "call.cannotGroup": "You must be a donator in order to instantiate group calls.",
