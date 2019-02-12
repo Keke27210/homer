@@ -32,7 +32,7 @@ class BroadcastCommand extends Command {
       (reaction, user) => this.emotes.includes(reaction.emoji.id) && user.id === context.message.author.id,
       { max: 1 },
     ).then((reactions) => {
-      const emoji = reactions.first().emoji.id;
+      const emoji = reactions.first().emoji.identifier;
       if (emoji === this.emotes[0]) {
         for (const subscription of subscriptions) {
           const lang = await this.client.database.getDocument('settings', subscription.settings)
