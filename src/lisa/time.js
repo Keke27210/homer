@@ -29,4 +29,18 @@ module.exports = [
         .format(format);
     },
   ),
+
+  // time since / time to
+  new Method(
+    'timeto',
+    null,
+    (env, params) => {
+      const time = Number(params[0]);
+      if (Number.isNaN(time)) return 'INVALID_TIME';
+
+      const short = params[1] === 'true' ? true : false;
+      const ago = params[2] === 'true' ? true : false;
+      return env.client.time.timeSince(time, env.settings.misc.locale, short, ago);
+    },
+  ),
 ];
