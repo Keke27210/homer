@@ -48,8 +48,8 @@ class ListSubcommand extends Command {
 
     const entries = [];
     for (const radio of radios) {
-      const genres = (radio.genres || []).map(a => context.__(`radio.genre.${a}`));
-      const topics = (radio.topics || []).map(a => context.__(`radio.topic.${a}`));
+      const genres = (radio.genres || []).map(a => typeof a === 'number' ? context.__(`radio.genre.${a}`) : a);
+      const topics = (radio.topics || []).map(a => typeof a === 'number' ? context.__(`radio.topic.${a}`) : a);
       const desc = genres.concat(topics).join(', ') || context.__('global.noInformationShort');
       entries.push(`\`${radio.id}\`: ${radio.emote} [${radio.name}](${radio.website}) - ${radio.broken ? context.__('radio.broken') : `${radio.language} (${radio.country}) - ${desc}`}`);
     }
