@@ -70,7 +70,7 @@
   "call.cannotGroup": "You must be a donator in order to instantiate group calls.",
   "call.noNumber": "You must provide one or more numbers to call.",
   "call.manyNumbers": "You can't instantiate a group call with more than 4 other people.",
-  "call.busyCorrespondent": "Your correspondent (`{{{ identity }}}`) is busy at the moment.",
+  "call.busyCorrespondent": "Your correspondent (`{{{ number }}}`) is busy at the moment.",
   "call.blacklisted": "Your correspondent (`{{{ identity }}}`) has placed you on their blacklist.",
   "call.notGroup": "You must host a group call in order to invite or kick people.",
   "call.add.noNumber": "You must provide the number of the correspondent to invite.",
