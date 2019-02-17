@@ -32,7 +32,7 @@ class CallCommand extends Command {
       if (!correspondent) return context.replyWarning(context.__('telephone.unassignedNumber', { number: numbers[0] }));
 
       const correspondentStatus = await this.client.telephone.getStatus(correspondent.id);
-      if (correspondentStatus !== 0) return context.replyWarning(context.__('call.busyCorrespondent'));
+      if (correspondentStatus !== 0) return context.replyWarning(context.__('call.busyCorrespondent', { number: numbers[0] }));
 
       const blacklistStatus = correspondent.blacklist.find(b => b.channel === subscription.id || b.number === subscription.number);
       if (blacklistStatus) return context.replyError(context.__('call.blacklisted'));
