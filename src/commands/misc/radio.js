@@ -283,8 +283,8 @@ class InfoSubcommand extends Command {
       }
     }
 
-    const genres = (radio.genres || []).map(a => typeof a === 'number' ? context.__(`radio.genre.${a}`) : a);
-    const topics = (radio.topics || []).map(a => typeof a === 'number' ? context.__(`radio.topic.${a}`) : a);
+    const genres = (meta.genres || []).map(a => typeof a === 'number' ? context.__(`radio.genre.${a}`) : a);
+    const topics = (meta.topics || []).map(a => typeof a === 'number' ? context.__(`radio.topic.${a}`) : a);
     const desc = genres.concat(topics).join(', ') || context.__('global.noInformation');
 
     const infoDescription = [
