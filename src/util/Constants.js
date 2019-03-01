@@ -67,6 +67,15 @@ exports.emotes = {
   verifiedServer: '<:verified:452764762699464724>',
 };
 
+exports.historyIcons = {
+  INCOMING_SINGLE: '<:incomingcall:551099247945056256>',
+  INCOMING_GROUP: '<:groupcall:551099330421981184>',
+  OUTGOING_SINGLE: '<:outgoingcall:551099361367687168>',
+  OUTGOING_GROUP: '<:groupcall:551099330421981184>',
+  TEXT_SENT: '<:text:551099299786784778>',
+  TEXT_RECEIVED: '<:text:551099299786784778>',
+};
+
 exports.badges = {
   owner: '<:owner:471599105957953537>',
   donator: '<:donator:471599103126536202>',

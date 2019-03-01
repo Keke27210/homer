@@ -15,6 +15,21 @@ class PhoneUtil extends Util {
     }) ? 1 : 0;
   }
 
+  async addHistory(channel, action, user, number) {
+    const subscription = this.client.database.getDocument('telephone', channel);
+    if (!subscription) return;
+
+    if (!subscription.history) subscription.history = [];
+    subscription.history.push({
+      action,
+      user,
+      number,
+      time: Date.now(),
+    });
+
+    return this.client.database.updateDocument('telephone', channel, { history: subscription.history });
+  }
+
   async handleMessage(message) {
     if (message.author.bot) return;
 

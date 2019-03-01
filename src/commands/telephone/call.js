@@ -55,8 +55,19 @@ class CallCommand extends Command {
         this.client.__(correspondentLanguage, 'telephone.incoming', { identity }),
       ).then(m => m.id);
 
-      this.client.database.insertDocument('phoneLog', { id: subscription.number, type: 0, target: numbers[0], time: Date.now() });
-      this.client.database.insertDocument('phoneLog', { id: correspondent.number, type: 1, target: subscription.number, time: Date.now() });
+      this.client.telephone.addHistory(
+        subscription.id,
+        'OUTGOING_SINGLE',
+        context.message.author.id,
+        [correspondent.number],
+      );
+
+      this.client.telephone.addHistory(
+        correspondent.id,
+        'INCOMING_SINGLE',
+        context.message.author.id,
+        [subscription.number],
+      );
 
       await this.client.database.insertDocument('calls', {
         sender: subscription,
@@ -101,8 +112,24 @@ class CallCommand extends Command {
           this.client.__(correspondent.locale, 'telephone.incomingGroup', { identity }),
         ).then(m => m.id);
 
+        this.client.telephone.addHistory(
+          correspondent.id,
+          'INCOMING_GROUP',
+          context.message.author.id,
+          [subscription.number],
+        );
+
         receivers.push(correspondent);
       }
+
+      this.client.telephone.addHistory(
+        subscription.id,
+        'OUTGOING_GROUP',
+        context.message.author.id,
+        receivers
+          .filter(r => r.id !== context.message.channel.id)
+          .map(r => r.number),
+      );
 
       await this.client.database.insertDocument('calls', {
         receivers,

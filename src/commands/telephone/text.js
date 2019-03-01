@@ -31,6 +31,20 @@ class TextCommand extends Command {
       return context.replyWarning(context.__('text.cannotSend'));
     }
 
+    this.client.telephone.addHistory(
+      subscription.id,
+      'TEXT_SENT',
+      context.message.author.id,
+      [toSend.number],
+    );
+
+    this.client.telephone.addHistory(
+      toSend.id,
+      'TEXT_RECEIVED',
+      context.message.author.id,
+      [subscription.number],
+    );
+
     this.client.sendMessage(
       toSend.id,
       context.__('text.title', {
