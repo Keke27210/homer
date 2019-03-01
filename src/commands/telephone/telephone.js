@@ -389,7 +389,7 @@ class HistorySubcommand extends Command {
         await this.client.fetchUser(entry.user).then(u => `**${u.username}**#${u.discriminator}`) :
         null;
 
-      entries.push(`\`${time}\` ${this.getIcon(entry.action)} ${context.__(`telephone.history.action.${entry.action}`, { number: entry.number.map(n => `**${n}**`).join(', '), user })}`);
+      entries.push(`\`${time}\` ${this.getIcon(entry.action)} ${context.__(`telephone.history.action.${entry.action}`, { user, number: entry.number.map(n => `**${n}**`).join(', ') })}`);
     }
 
     this.client.menu.createMenu(
