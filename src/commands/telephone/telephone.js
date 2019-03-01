@@ -386,7 +386,7 @@ class HistorySubcommand extends Command {
         .tz(context.settings.misc.timezone)
         .format(context.__('telephone.history.timeFormat'));
       const user = entry.user ?
-        this.client.fetchUser(entry.user).then(u => `**${u.username}**#${u.discriminator}`) :
+        await this.client.fetchUser(entry.user).then(u => `**${u.username}**#${u.discriminator}`) :
         null;
 
       entries.push(`\`${time}\` ${this.getIcon(entry.action)} ${context.__(`telephone.history.action.${entry.action}`, { number: entry.number.map(n => `**${n}**`).join(', '), user })}`);
