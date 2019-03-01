@@ -881,6 +881,7 @@
   "telephone.history.action.TEXT_RECEIVED": "Received SMS from {{{ number }}}",
   "telephone.history.action.INCOMING_SINGLE": "Incoming call from {{{ number }}}",
   "telephone.history.action.INCOMING_GROUP": "Incoming group call from {{{ number }}}",
+  "telephone.history.empty": "There is no history for this subscription.",
   "telephone.history.footer": "Page {{{ pageCount }}} - {{{ total }}} total entries",
   "telephone.change.success": "You have successfully changed your number to `{{{ number }}}`.",
   "telephone.change.alreadyExists": "A subscription already exists with the number `{{{ number }}}`.",

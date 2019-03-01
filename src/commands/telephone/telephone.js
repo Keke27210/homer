@@ -1,4 +1,5 @@
 const Command = require('../../structures/Command');
+const moment = require('moment');
 const { RichEmbed } = require('discord.js');
 
 class TelephoneCommand extends Command {
@@ -14,6 +15,7 @@ class TelephoneCommand extends Command {
         new TextSubcommand(client),
         new ChangeSubcommand(client),
         new RulesSubcommand(client),
+        new HistorySubcommand(client),
       ],
       category: 'telephone',
       dm: true,
@@ -350,6 +352,49 @@ class ChangeSubcommand extends Command {
 
     await this.client.database.updateDocument('telephone', subscription.id, { number });
     context.replySuccess(context.__('telephone.change.success', { number }));
+  }
+}
+
+class HistorySubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'history',
+      aliases: ['log'],
+      category: 'telephone',
+      dm: true,
+    });
+  }
+
+  async execute(context) {
+    const subscription = await this.client.database.getDocument('telephone', context.message.channel.id);
+    if (!subscription) return context.replyWarning(context.__('telephone.noSubscription', { command: `${this.client.prefix}telephone subscribe` }));
+    if (!subscription.history || subscription.history.length === 0) return context.replyError(context.__('telephone.history.empty'));
+
+    const pageCount = Math.ceil(subscription.history.length / 10);
+    const pages = [];
+    for (let i = 0; i < pageCount; i += 1) {
+      pages.push(context.__('telephone.history.footer', { pageCount: `${i + 1}/${pageCount}`, total: subscription.history.length }));
+    }
+
+    const entries = [];
+    for (const entry of subscription.history) {
+      const time = moment(entry.time)
+        .locale(context.settings.misc.locale)
+        .tz(context.settings.misc.timezone)
+        .format(`${context.settings.misc.dateFormat} ${context.settings.misc.timeFormat}`);
+
+      entries.push(`\`[${time}]\` ${this.getIcon(entry.action)} ${context.__(`telephone.history.action.${entry.action}`)}`);
+    }
+
+    this.client.menu.createMenu(
+      context.message.channel.id,
+      context.message.author.id,
+      context.message.id,
+      context.settings.misc.locale,
+      context.__('telephone.history.main', { name: context.message.guild ? `**#${context.message.channel.name}**` : `**${context.__('global.dm')}**` }),
+      pages,
+      entries,
+    );
   }
 }
 
