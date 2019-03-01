@@ -398,7 +398,7 @@ class HistorySubcommand extends Command {
   }
 
   getIcon(action) {
-    return this.client.constants.historyIcon[action] || '❔';
+    return this.client.constants.historyIcons[action] || '❔';
   }
 }
 
