@@ -373,7 +373,10 @@ class HistorySubcommand extends Command {
     const pageCount = Math.ceil(subscription.history.length / 10);
     const pages = [];
     for (let i = 0; i < pageCount; i += 1) {
-      pages.push(context.__('telephone.history.footer', { pageCount: `${i + 1}/${pageCount}`, total: subscription.history.length }));
+      pages.push({
+        title: ' ',
+        footer: context.__('telephone.history.footer', { pageCount: `${i + 1}/${pageCount}`, total: subscription.history.length }),
+      });
     }
 
     const entries = [];
@@ -381,9 +384,9 @@ class HistorySubcommand extends Command {
       const time = moment(entry.time)
         .locale(context.settings.misc.locale)
         .tz(context.settings.misc.timezone)
-        .format(`${context.settings.misc.dateFormat} ${context.settings.misc.timeFormat}`);
+        .format(context.__('telephone.history.timeFormat'));
 
-      entries.push(`\`[${time}]\` ${this.getIcon(entry.action)} ${context.__(`telephone.history.action.${entry.action}`)}`);
+      entries.push(`\`${time}\` ${this.getIcon(entry.action)} ${context.__(`telephone.history.action.${entry.action}`, { number: entry.number.map(n => `**${n}**`).join(', ') })}`);
     }
 
     this.client.menu.createMenu(

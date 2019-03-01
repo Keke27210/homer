@@ -883,6 +883,7 @@
   "telephone.history.action.INCOMING_GROUP": "Incoming group call from {{{ number }}}",
   "telephone.history.empty": "There is no history for this subscription.",
   "telephone.history.footer": "Page {{{ pageCount }}} - {{{ total }}} total entries",
+  "telephone.history.timeFormat": "DD/MM HH:mm",
   "telephone.change.success": "You have successfully changed your number to `{{{ number }}}`.",
   "telephone.change.alreadyExists": "A subscription already exists with the number `{{{ number }}}`.",
   "telephone.change.wrongFormat": "Wrong format, the number must be like `XXX-XXX` with only alphanumeric characters (excluding underscores).",
