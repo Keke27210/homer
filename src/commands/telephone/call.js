@@ -65,7 +65,7 @@ class CallCommand extends Command {
       this.client.telephone.addHistory(
         correspondent.id,
         'INCOMING_SINGLE',
-        context.message.author.id,
+        null,
         [subscription.number],
       );
 
@@ -115,7 +115,7 @@ class CallCommand extends Command {
         this.client.telephone.addHistory(
           correspondent.id,
           'INCOMING_GROUP',
-          context.message.author.id,
+          null,
           [subscription.number],
         );
 
