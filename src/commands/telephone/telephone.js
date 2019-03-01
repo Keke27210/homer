@@ -396,6 +396,10 @@ class HistorySubcommand extends Command {
       entries,
     );
   }
+
+  thisIcon(action) {
+    return this.client.constants.historyIcon[action] || '❔';
+  }
 }
 
 module.exports = TelephoneCommand;
