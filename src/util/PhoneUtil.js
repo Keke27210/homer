@@ -46,7 +46,7 @@ class PhoneUtil extends Util {
 
       const destination = call.sender.id === message.channel.id ? 'receiver' : 'sender';
       const destSettings = await this.client.database.getDocument('settings', call[destination].settings);
-      if (destSettings && destSettings.ignored.includes(message.author.id)) return;
+      if (destSettings && destSettings.ignored && destSettings.ignored.includes(message.author.id)) return;
 
       // Removing link auto-embed
       let content = message.cleanContent;
