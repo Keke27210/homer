@@ -19,7 +19,6 @@ class PhoneUtil extends Util {
     const subscription = this.client.database.getDocument('telephone', channel);
     if (!subscription) return;
 
-    if (!subscription.history) subscription.history = [];
     subscription.history.push({
       action,
       user,
@@ -27,7 +26,7 @@ class PhoneUtil extends Util {
       time: Date.now(),
     });
 
-    return this.client.database.updateDocument('telephone', channel, { history: subscription.history });
+    return this.client.database.insertDocument('telephone', subscription, { conflict: 'update' });
   }
 
   async handleMessage(message) {

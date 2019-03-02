@@ -144,6 +144,7 @@ class SubscribeSubcommand extends Command {
                   textable: true,
                   blacklist: [],
                   contacts: [],
+                  history: [],
                   message: {
                     incoming: false,
                     missed: false,
