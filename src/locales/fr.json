@@ -852,7 +852,7 @@
   "telephone.text.enabled":"Vous recevrez à nouveau les SMS. Vous pourrez également en envoyer à nouveau.",
   "telephone.text.disabled":"Vous ne recevrez plus les SMS. Vous ne pourrez plus envoyer de SMS également.",
   "telephone.text.mustEnable":"Vous devez accepter de recevoir des messages pour pouvoir en envoyer.",
-  "telephone.history.main": "🔖 Historique pour {{{ name }}}:",
+  "telephone.history.main": "📒 Historique pour {{{ name }}}:",
   "telephone.history.action.OUTGOING_SINGLE": "Appel sortant vers {{{ number }}} par {{{ user }}}",
   "telephone.history.action.OUTGOING_GROUP": "Appel groupé sortant vers {{{ number }}} par {{{ user }}}",
   "telephone.history.action.TEXT_SENT": "SMS envoyé à {{{ number }}} par {{{ user }}}",

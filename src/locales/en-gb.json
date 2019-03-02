@@ -874,7 +874,7 @@
   "telephone.text.enabled": "You can now receive text messages from other people.",
   "telephone.text.disabled": "You will no longer receive text messages from other people.",
   "telephone.text.mustEnable": "You must enable receiving text messages to be able to send one.",
-  "telephone.history.main": "🔖 History for {{{ name }}}:",
+  "telephone.history.main": "📒 History for {{{ name }}}:",
   "telephone.history.action.OUTGOING_SINGLE": "Outgoing call to {{{ number }}} by {{{ user }}}",
   "telephone.history.action.OUTGOING_GROUP": "Outgoing group call to {{{ number }}} by {{{ user }}}",
   "telephone.history.action.TEXT_SENT": "Sent SMS to {{{ number }}} by {{{ user }}}",
