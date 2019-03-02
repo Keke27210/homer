@@ -16,7 +16,7 @@ class PhoneUtil extends Util {
   }
 
   async addHistory(channel, action, user, number) {
-    const subscription = this.client.database.getDocument('telephone', channel);
+    const subscription = await this.client.database.getDocument('telephone', channel);
     if (!subscription) return;
 
     subscription.history.push({
