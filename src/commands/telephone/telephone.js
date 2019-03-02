@@ -381,7 +381,7 @@ class HistorySubcommand extends Command {
     }
 
     const entries = [];
-    for (const entry of subscription.history) {
+    for (const entry of subscription.history.sort((a, b) => b - a)) {
       const time = moment(entry.time)
         .locale(context.settings.misc.locale)
         .tz(context.settings.misc.timezone)
