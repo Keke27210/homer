@@ -76,7 +76,7 @@ class ShazamCommand extends Command {
       let data = Buffer.from([]);
 
       receiver.on('pcm', (speaker, buffer) => {
-        if (speaker.id !== user) return;
+        //if (speaker.id !== user) return;
         data = Buffer.concat([data, buffer]);
       });
 
