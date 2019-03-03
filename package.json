@@ -22,6 +22,7 @@
     "playlist-parser": "github:nickdesaulniers/javascript-playlist-parser",
     "rethinkdbdash": "^2.3.31",
     "rss-parser": "^3.6.0",
+    "sodium": "^3.0.2",
     "superagent": "^3.8.3",
     "uws": "^99.0.0",
     "xregexp": "^4.2.0"
