@@ -36,7 +36,7 @@ class ShazamCommand extends Command {
     this.client.shazamWork.push(context.message.guild.id);
     const m = await context.replyLoading(context.__('shazam.recording', { user: `**${user.username}**#${user.discriminator}` }));
 
-    this.recordMusic(context.message.guild.voiceConnection, user.id)
+    this.recordMusic(context.message.guild.voiceConnection, user)
       .then(async (data) => {
         await m.edit(`${this.client.constants.emotes.loading} ${context.__('shazam.sending')}`);
         const form = new FormData();
@@ -71,29 +71,21 @@ class ShazamCommand extends Command {
 
   recordMusic(voiceConnection, user) {
     return new Promise((resolve, reject) => {
-      console.log('HERE WE BEGIN')
+      console.log('Debug - Before creating receiver and stream')
       const receiver = voiceConnection.createReceiver();
       const stream = receiver.createPCMStream(user);
-      let data = Buffer.from([]);
-      let i = 0;
-
-      receiver.on('pcm', (speaker, buffer) => {
-        //if (speaker.id !== user) return;
-        data = Buffer.concat([data, buffer]);
-        i += 1;
-      });
+      stream.on('data', () => console.log('Data is being received'));
 
       receiver.on('warn', (reason, msg) => {
-        if (reason === 'decrypt') console.log(`[SHAZAM DECRYPTION] ${msg}`);
-        else console.log(`[SHAZAM DECODING] ${msg}`);
-        reject('ERROR');
+        console.log(`Warn (${reason}): ${msg}`);
       });
 
       this.client.setTimeout(() => {
+        stream.destroy();
         receiver.destroy();
-        console.log(data)
-        console.log(i);
-        return resolve(data);
+        console.log('Destroyed receiver - 10s elapsed');
+        //return resolve(data);
+        resolve();
       }, 10000);
     });
   }
