@@ -1,6 +1,7 @@
 const Command = require('../../structures/Command');
 const expression = /title: "(.*?)",/;
 const request = require('superagent');
+const FormData = require('form-data');
 
 class ShazamCommand extends Command {
   constructor(client) {
