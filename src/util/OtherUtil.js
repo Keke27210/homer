@@ -120,7 +120,19 @@ class OtherUtil extends Util {
   recordMusic(voiceConnection, user, time = 10) {
     return new Promise(async (resolve, reject) => {
       const receiver = voiceConnection.createReceiver();
-      let data;
+      let started = false;
+      let stream;
+      let data = '';
+
+      voiceConnection.on('speaking', async (speaker, speaking) => {
+        if (user.id !== speaker.id || !speaking || started) return;
+        started = true;
+
+        const receiver = voiceConnection.createReceiver();
+        stream = receiver.createPCMStream();
+        stream.on('data', chunk => data += chunk);
+        stream.on('end', () => resolve(data));
+      });
 
       // Mute and unmute the target user, otherwise it doesn't receive voice data
       const member = voiceConnection.channel.guild.members.get(user.id);
@@ -131,20 +143,12 @@ class OtherUtil extends Util {
         reject({ reason: 'PERMISSIONS', message: 'MUTE_MEMBERS' });
       }
 
-      receiver.on('pcm', (speaker, buffer) => {
-        if (user.id !== speaker.id) return;
-        data = data ? Buffer.concat([data, buffer]) : buffer;
-      });
-
       receiver.on('warn', (reason, message) => {
         console.log(`Warn (${reason}): ${message}`);
         reject({ reason, message });
       });
 
-      this.client.setTimeout(() => {
-        receiver.destroy();
-        return resolve(data);
-      }, time * 1000);
+      this.client.setTimeout(() => stream ? stream.destroy() : resolve(Buffer.from([])), time * 1000);
     });
   }
 }
