@@ -46,7 +46,7 @@ class IncomingSubcommand extends Command {
 
     const text = context.args.join(' ');
     if (!text) return context.replyError(context.__('phmessage.noText'));
-    if (text.length > 64) return context.replyWarning(context.__('phmessage.textTooLong'));
+    if (text.length > 128) return context.replyWarning(context.__('phmessage.textTooLong'));
 
     await this.client.database.updateDocument('telephone', context.message.channel.id, {
       message: {
@@ -74,7 +74,7 @@ class MissedSubcommand extends Command {
 
     const text = context.args.join(' ');
     if (!text) return context.replyError(context.__('phmessage.noText'));
-    if (text.length > 64) return context.replyWarning(context.__('phmessage.textTooLong'));
+    if (text.length > 128) return context.replyWarning(context.__('phmessage.textTooLong'));
 
     await this.client.database.updateDocument('telephone', context.message.channel.id, {
       message: {

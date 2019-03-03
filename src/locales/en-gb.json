@@ -450,7 +450,7 @@
   "phmessage.embed.incoming": "Incoming-call message",
   "phmessage.embed.missed": "Missed-call message",
   "phmessage.noText": "You must provide a text to update!",
-  "phmessage.textTooLong": "The text length must be fewer than 64 characters.",
+  "phmessage.textTooLong": "The text length must be fewer than 128 characters.",
   "phmessage.incoming.updated": "The incoming-call message has been updated successfully!",
   "phmessage.missed.updated": "The missed-call message has been updated successfully!",
 

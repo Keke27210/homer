@@ -439,7 +439,7 @@
   "phmessage.embed.incoming":"Appel entrant",
   "phmessage.embed.missed":"Appel manqué",
   "phmessage.noText":"Vous devez fournir un texte à utiliser !",
-  "phmessage.textTooLong":"La longueur du texte ne doit excéder 64 caractères.",
+  "phmessage.textTooLong":"La longueur du texte ne doit excéder 128 caractères.",
   "phmessage.incoming.updated":"Le message d'appel entrant a été mis à jour !",
   "phmessage.missed.updated":"Le message d'appel manqué a été mis à jour !",
 
