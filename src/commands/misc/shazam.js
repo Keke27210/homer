@@ -73,6 +73,7 @@ class ShazamCommand extends Command {
     return new Promise((resolve, reject) => {
       console.log('HERE WE BEGIN')
       const receiver = voiceConnection.createReceiver();
+      const stream = receiver.createPCMStream(user);
       let data = Buffer.from([]);
 
       receiver.on('pcm', (speaker, buffer) => {
