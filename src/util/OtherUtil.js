@@ -142,7 +142,6 @@ class OtherUtil extends Util {
       });
 
       this.client.setTimeout(() => {
-        stream.destroy();
         receiver.destroy();
         return resolve(data);
       }, time * 1000);
