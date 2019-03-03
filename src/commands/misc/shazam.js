@@ -42,7 +42,7 @@ class ShazamCommand extends Command {
         await m.edit(`${this.client.constants.emotes.loading} ${context.__('shazam.sending')}`);
         const form = new FormData();
         form.append('ajax', '1');
-        form.append('song', data);
+        form.append('song', Buffer.from(data));
         request
           .post('https://qiiqoo.abdelhafidh.com/ajax/ajax.php')
           .send(form)
@@ -74,15 +74,13 @@ class ShazamCommand extends Command {
     return new Promise((resolve, reject) => {
       console.log('HERE WE BEGIN')
       const receiver = voiceConnection.createReceiver();
-      console.log(receiver);
-      let data;
+      let data = '';
 
-      receiver.on('opus', (speaker, buff) => {
-        console.log(`Data: ${data}`)
-        console.log(`Buff: ${buff}`)
-        if (speaker.id !== user) return;
-        if (data) data = data.concat(buff);
-        else data = buff;
+      const stream = receiver.createPCMStream(user);
+      stream.on('data', chunk => data += chunk);
+      stream.on('end', () => {
+        receiver.destroy();
+        return resolve(data);
       });
 
       receiver.on('warn', (reason, msg) => {
@@ -91,11 +89,7 @@ class ShazamCommand extends Command {
         reject('ERROR');
       });
 
-      this.client.setTimeout(() => {
-        receiver.destroy();
-        console.log('HERE WE END')
-        return resolve(data);
-      }, 10000);
+      this.client.setTimeout(() => stream.destroy(), 10000);
     });
   }
 }
