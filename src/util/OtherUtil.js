@@ -119,19 +119,20 @@ class OtherUtil extends Util {
 
   recordMusic(voiceConnection, user, time = 10) {
     return new Promise(async (resolve, reject) => {
-      const receiver = voiceConnection.createReceiver();
-      let started = false;
-      let stream;
-      let data = '';
-
       voiceConnection.on('speaking', async (speaker, speaking) => {
-        if (user.id !== speaker.id || !speaking || started) return;
-        started = true;
+        if (speaker.id !== user.id || !speaking) return;
 
         const receiver = voiceConnection.createReceiver();
-        stream = receiver.createPCMStream(speaker);
-        stream.on('data', chunk => data += chunk);
-        stream.on('end', () => resolve(data));
+        const stream = receiver.createPCMStream(speaker);
+        let data;
+        stream.on('data', chunk => data ? data += chunk : chunk);
+        stream.on('end', () => resolve(Buffer.from(data)));
+        this.client.setTimeout(() => stream.end(), time * 1000);
+
+        receiver.on('warn', (reason, message) => {
+          console.log(`Warn (${reason}): ${message}`);
+          reject({ reason, message });
+        });
       });
 
       // Mute and unmute the target user, otherwise it doesn't receive voice data
@@ -144,13 +145,6 @@ class OtherUtil extends Util {
       } catch (e) {
         reject({ reason: 'PERMISSIONS', message: 'MUTE_MEMBERS' });
       }
-
-      receiver.on('warn', (reason, message) => {
-        console.log(`Warn (${reason}): ${message}`);
-        reject({ reason, message });
-      });
-
-      this.client.setTimeout(() => stream ? stream.destroy() : resolve(Buffer.from([])), time * 1000);
     });
   }
 }
