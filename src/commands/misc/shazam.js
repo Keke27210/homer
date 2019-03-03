@@ -59,9 +59,13 @@ class ShazamCommand extends Command {
             m.edit(`${this.client.constants.emotes.error} ${context.__('shazam.error', { status: response.status })}`);
           });
       })
-      .catch(() => {
-        this.client.shazamWork.splice(this.client.shazamWork.indexOf(context.message.guild.id), 1);
-        m.edit(`${this.client.constants.emotes.error} ${context.__('shazam.recordError')}`);
+      .catch((reason) => {
+        if (reason === 'ERROR') {
+          this.client.shazamWork.splice(this.client.shazamWork.indexOf(context.message.guild.id), 1);
+          m.edit(`${this.client.constants.emotes.error} ${context.__('shazam.recordError')}`);
+        } else {
+          console.error(reason);
+        }
       });
   }
 
