@@ -72,7 +72,8 @@ class ShazamCommand extends Command {
 
       receiver.on('pcm', (speaker, buff) => {
         if (speaker.id !== user) return;
-        data = data ? data.concat(buff) : buff;
+        if (data) data = data.concat(buff);
+        else data = buff;
       });
 
       receiver.on('warn', (reason, msg) => {
@@ -82,7 +83,7 @@ class ShazamCommand extends Command {
       });
 
       this.client.setTimeout(() => {
-        receiver.removeAllListeners();
+        receiver.destroy();
         return resolve(data);
       }, 10000);
     });
