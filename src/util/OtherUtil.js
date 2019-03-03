@@ -129,7 +129,7 @@ class OtherUtil extends Util {
         started = true;
 
         const receiver = voiceConnection.createReceiver();
-        stream = receiver.createPCMStream();
+        stream = receiver.createPCMStream(speaker);
         stream.on('data', chunk => data += chunk);
         stream.on('end', () => resolve(data));
       });
