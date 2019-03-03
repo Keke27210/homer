@@ -71,11 +71,13 @@ class ShazamCommand extends Command {
   }
 
   recordMusic(voiceConnection, user) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const receiver = voiceConnection.createReceiver();
       let data;
 
       receiver.on('opus', (speaker, buff) => {
+        console.log(`Data: ${data}`)
+        console.log(`Buff: ${buff}`)
         if (speaker.id !== user) return;
         if (data) data = data.concat(buff);
         else data = buff;
