@@ -770,6 +770,15 @@
   "settings.reset.deleted": "The settings have been restored to the defaults",
   "settings.reset.cancelled": "The settings have not been restored to the defaults",
 
+  "shazam.userNotInVc": "You must be in a voice channel to run a music recognition.",
+  "shazam.alreadyWorking": "I'm already working on this server, please wait until my work is done.",
+  "shazam.cantMove": "I am serving people in other channels of this server, you can't use me here.",
+  "shazam.recording": "Recording audio from {{{ user }}} for 10 seconds...",
+  "shazam.sending": "Sending audio sample to QiiQuoo...",
+  "shazam.success": "Recognized song: {{{ song }}}",
+  "shazam.error": "An error has occured during music recognition! Status code: `{{{ status }}}`.",
+  "shazam.unknown": "No song could have been recognized from the recorded audio sample.",
+  
   "stats.title": "📊 Statistics about **{{{ name }}}**:",
   "stats.embed.shards": "Shards",
   "stats.embed.servers": "Servers",

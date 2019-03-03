@@ -31,6 +31,7 @@ class DiscordClient extends Client {
     this.constants = Constants;
     this.cooldown = {};
     this.events = [];
+    this.shazamWork = [];
     this.ready = false;
     this.maintenance = false;
     this.debug = this.config.discord.debug ? true : false;
