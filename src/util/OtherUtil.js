@@ -120,15 +120,19 @@ class OtherUtil extends Util {
   recordMusic(voiceConnection, user, time = 10) {
     return new Promise(async (resolve, reject) => {
       voiceConnection.on('speaking', async (speaker, speaking) => {
-        if (speaker.id !== user.id || !speaking) return;
+        if (!speaking) return;
 
         const receiver = voiceConnection.createReceiver();
         const stream = receiver.createPCMStream(speaker);
-        let data;
-        stream.on('data', () => console.log('Im receiving fucking data'));
-        stream.on('end', () => stream.emit('close'));
-        stream.on('close', () => resolve(data));
-        this.client.setTimeout(() => stream.destroy(), time * 1000);
+        let data = '';
+        stream.on('data', (data) => {
+          console.log('Im receiving fucking data');
+        });
+        this.client.setTimeout(() => {
+          stream.destroy();
+          receiver.destroy();
+          return resolve(data);
+        }, time * 1000);
 
         receiver.on('warn', (reason, message) => {
           console.log(`Warn (${reason}): ${message}`);
