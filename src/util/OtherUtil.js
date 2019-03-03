@@ -123,7 +123,7 @@ class OtherUtil extends Util {
       let data;
 
       // Mute and unmute the target user, otherwise it doesn't receive voice data
-      const member = voiceConnection.guild.members.get(user.id);
+      const member = voiceConnection.channel.guild.members.get(user.id);
       try {
         await member.setMute(true, 'HOMER VOICE RECORDER (most likely Shazam command)');
         await member.setMute(false, 'HOMER VOICE RECORDER (most likely Shazam command)');
