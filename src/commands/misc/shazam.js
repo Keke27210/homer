@@ -37,7 +37,7 @@ class ShazamCommand extends Command {
     const m = await context.replyLoading(context.__('shazam.recording', { user: `**${user.username}**#${user.discriminator}` }));
 
     this.recordMusic(context.message.guild.voiceConnection, user.id)
-      .then((data) => {
+      .then(async (data) => {
         await m.edit(`${this.client.constants.emotes.loading} ${context.__('shazam.sending')}`);
         const form = new FormData();
         form.append('ajax', '1');
