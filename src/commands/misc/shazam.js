@@ -60,8 +60,8 @@ class ShazamCommand extends Command {
           });
       })
       .catch((reason) => {
+        this.client.shazamWork.splice(this.client.shazamWork.indexOf(context.message.guild.id), 1);
         if (reason === 'ERROR') {
-          this.client.shazamWork.splice(this.client.shazamWork.indexOf(context.message.guild.id), 1);
           m.edit(`${this.client.constants.emotes.error} ${context.__('shazam.recordError')}`);
         } else {
           console.error(reason);
@@ -74,7 +74,7 @@ class ShazamCommand extends Command {
       const receiver = voiceConnection.createReceiver();
       let data;
 
-      receiver.on('pcm', (speaker, buff) => {
+      receiver.on('opus', (speaker, buff) => {
         if (speaker.id !== user) return;
         if (data) data = data.concat(buff);
         else data = buff;
