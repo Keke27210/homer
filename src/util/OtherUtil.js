@@ -125,7 +125,7 @@ class OtherUtil extends Util {
         const receiver = voiceConnection.createReceiver();
         const stream = receiver.createPCMStream(speaker);
         let data;
-        stream.on('data', () => console.log('Im receiving fucking data')));
+        stream.on('data', () => console.log('Im receiving fucking data'));
         stream.on('end', () => stream.emit('close'));
         stream.on('close', () => resolve(data));
         this.client.setTimeout(() => stream.destroy(), time * 1000);
