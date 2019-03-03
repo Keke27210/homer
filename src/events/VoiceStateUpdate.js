@@ -17,7 +17,7 @@ class VoiceStateUpdate extends Event {
     }
 
     // Prevent bot to be moved to a non-radio channel
-    if (!this.client.shazamWork.includes(context.message.guild.id) && newMember.id === this.client.user.id) {
+    if (!this.client.shazamWork.includes(newMember.guild.id) && newMember.id === this.client.user.id) {
       if (newMember.voiceChannel && (newMember.voiceChannel.id !== settings.radio.channel)) {
         newMember.voiceChannel.leave();
       }
