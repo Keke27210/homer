@@ -774,6 +774,7 @@
   "shazam.alreadyWorking": "I'm already working on this server, please wait until my work is done.",
   "shazam.cantMove": "I am serving people in other channels of this server, you can't use me here.",
   "shazam.recording": "Recording audio from {{{ user }}} for 10 seconds...",
+  "shazam.recordError": "A fatal error has occured while recording the audio sample.",
   "shazam.sending": "Sending audio sample to QiiQuoo...",
   "shazam.success": "Recognized song: {{{ song }}}",
   "shazam.error": "An error has occured during music recognition! Status code: `{{{ status }}}`.",

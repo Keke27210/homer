@@ -35,39 +35,50 @@ class ShazamCommand extends Command {
     await channel.join();
     this.client.shazamWork.push(context.message.guild.id);
     const m = await context.replyLoading(context.__('shazam.recording', { user: `**${user.username}**#${user.discriminator}` }));
-    const data = await this.recordMusic(context.message.guild.voiceConnection, user.id);
-    console.log(data)
 
-    await m.edit(`${this.client.constants.emotes.loading} ${context.__('shazam.sending')}`);
-    const form = new FormData();
-    form.append('ajax', '1');
-    form.append('song', Buffer.from(data));
-    request
-      .post('https://qiiqoo.abdelhafidh.com/ajax/ajax.php')
-      .send(form)
-      .then((response) => {
-        this.client.shazamWork.splice(this.client.shazamWork.indexOf(context.message.guild.id), 1);
-        const matches = (response.text || '').match(expression);
-        if (!matches || matches.length === 0) return m.edit(`${this.client.constants.emotes.warning} ${context.__('shazam.unknown')}`);
+    this.recordMusic(context.message.guild.voiceConnection, user.id)
+      .then((data) => {
+        await m.edit(`${this.client.constants.emotes.loading} ${context.__('shazam.sending')}`);
+        const form = new FormData();
+        form.append('ajax', '1');
+        form.append('song', Buffer.from(data));
+        request
+          .post('https://qiiqoo.abdelhafidh.com/ajax/ajax.php')
+          .send(form)
+          .then((response) => {
+            this.client.shazamWork.splice(this.client.shazamWork.indexOf(context.message.guild.id), 1);
+            const matches = (response.text || '').match(expression);
+            if (!matches || matches.length === 0) return m.edit(`${this.client.constants.emotes.warning} ${context.__('shazam.unknown')}`);
 
-        const song = expression.exec(expression);
-        expression.lastIndex = 0;
-        m.edit(`${this.client.constants.emotes.success} ${context.__('shazam.success', { song: song[0] })}`);
+            const song = expression.exec(expression);
+            expression.lastIndex = 0;
+            m.edit(`${this.client.constants.emotes.success} ${context.__('shazam.success', { song: song[0] })}`);
+          })
+          .catch((response) => {
+            this.client.shazamWork.splice(this.client.shazamWork.indexOf(context.message.guild.id), 1);
+            m.edit(`${this.client.constants.emotes.error} ${context.__('shazam.error', { status: response.status })}`);
+          });
       })
-      .catch((response) => {
+      .catch(() => {
         this.client.shazamWork.splice(this.client.shazamWork.indexOf(context.message.guild.id), 1);
-        m.edit(`${this.client.constants.emotes.error} ${context.__('shazam.error', { status: response.status })}`);
+        m.edit(`${this.client.constants.emotes.error} ${context.__('shazam.recordError')}`);
       });
   }
 
   recordMusic(voiceConnection, user) {
-    return new Promise(async (resolve) => {
+    return new Promise(async (resolve, reject) => {
       const receiver = voiceConnection.createReceiver();
       let data;
 
       receiver.on('pcm', (speaker, buff) => {
         if (speaker.id !== user) return;
         data = data ? data.concat(buff) : buff;
+      });
+
+      receiver.on('warn', (reason, msg) => {
+        if (reason === 'decrypt') console.warn(`[SHAZAM DECRYPTION] ${msg}`);
+        else console.warn(`[SHAZAM DECODING] ${msg}`);
+        reject('ERROR');
       });
 
       this.client.setTimeout(() => {
