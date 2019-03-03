@@ -38,9 +38,7 @@ class ShazamCommand extends Command {
 
     this.recordMusic(context.message.guild.voiceConnection, user.id)
       .then(async (data) => {
-        console.log(data);
         await m.edit(`${this.client.constants.emotes.loading} ${context.__('shazam.sending')}`);
-        console.log(Buffer.from(data))
         const form = new FormData();
         form.append('ajax', '1');
         form.append('song', Buffer.from(data));
@@ -57,7 +55,6 @@ class ShazamCommand extends Command {
             m.edit(`${this.client.constants.emotes.success} ${context.__('shazam.success', { song: song[0] })}`);
           })
           .catch((response) => {
-            console.log(response)
             this.client.shazamWork.splice(this.client.shazamWork.indexOf(context.message.guild.id), 1);
             m.edit(`${this.client.constants.emotes.error} ${context.__('shazam.error', { status: response.status })}`);
           });
@@ -76,13 +73,11 @@ class ShazamCommand extends Command {
     return new Promise((resolve, reject) => {
       console.log('HERE WE BEGIN')
       const receiver = voiceConnection.createReceiver();
-      let data = '';
+      let data = Buffer.from([]);
 
-      const stream = receiver.createPCMStream(user);
-      stream.on('data', chunk => data += chunk);
-      stream.on('end', () => {
-        receiver.destroy();
-        return resolve(data);
+      receiver.on('pcm', (speaker, buffer) => {
+        if (speaker.id !== user) return;
+        data = Buffer.concat([data, buffer]);
       });
 
       receiver.on('warn', (reason, msg) => {
@@ -91,7 +86,10 @@ class ShazamCommand extends Command {
         reject('ERROR');
       });
 
-      this.client.setTimeout(() => stream.destroy(), 10000);
+      this.client.setTimeout(() => {
+        receiver.destroy();
+        return resolve(data);
+      }, 10000);
     });
   }
 }
