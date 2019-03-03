@@ -1015,6 +1015,7 @@
   "weather.uv.veryHigh": "Very high",
   "weather.uv.extreme": "Extreme",
   "weather.uv.na": "Not available",
+  "weather.wind":"**{{{ direction }}}** - **{{{ speedKph }}}**kph (**{{{ speedMph }}}**mph) with gusts up to **{{{ gustKph }}}**kph (**{{{ gustMph }}}**mph)",
   "weather.wind.0": "N",
   "weather.wind.1": "NNE",
   "weather.wind.2": "NE",

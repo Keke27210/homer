@@ -982,6 +982,7 @@
   "weather.uv.veryHigh":"Très élevé",
   "weather.uv.extreme":"Extrême",
   "weather.uv.na":"Indisponible",
+  "weather.wind":"**{{{ direction }}}** - **{{{ speedKph }}}**km/h (**{{{ speedMph }}}**mph) avec des rafales allant jusqu'à **{{{ gustKph }}}**km/h (**{{{ gustMph }}}**mph)",
   "weather.wind.0":"N",
   "weather.wind.1":"NNE",
   "weather.wind.2":"NE",
