@@ -77,6 +77,7 @@ class ShazamCommand extends Command {
 
       receiver.on('pcm', (speaker, buffer) => {
         //if (speaker.id !== user) return;
+        console.log('PCM EVENT')
         data = Buffer.concat([data, buffer]);
       });
 
