@@ -82,8 +82,8 @@ class ShazamCommand extends Command {
       });
 
       receiver.on('warn', (reason, msg) => {
-        if (reason === 'decrypt') console.warn(`[SHAZAM DECRYPTION] ${msg}`);
-        else console.warn(`[SHAZAM DECODING] ${msg}`);
+        if (reason === 'decrypt') console.log(`[SHAZAM DECRYPTION] ${msg}`);
+        else console.log(`[SHAZAM DECODING] ${msg}`);
         reject('ERROR');
       });
 
