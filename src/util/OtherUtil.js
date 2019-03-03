@@ -126,8 +126,8 @@ class OtherUtil extends Util {
         const stream = receiver.createPCMStream(speaker);
         let data;
         stream.on('data', chunk => data ? data += chunk : chunk);
-        stream.on('end', () => resolve(Buffer.from(data)));
-        this.client.setTimeout(() => stream.end(), time * 1000);
+        stream.on('close', () => resolve(Buffer.from(data)));
+        this.client.setTimeout(() => stream.destroy(), time * 1000);
 
         receiver.on('warn', (reason, message) => {
           console.log(`Warn (${reason}): ${message}`);
