@@ -116,6 +116,38 @@ class OtherUtil extends Util {
     if (match && match[1]) return match[1];
     return data;
   }
+
+  recordMusic(voiceConnection, user, time = 10) {
+    return new Promise((resolve, reject) => {
+      const receiver = voiceConnection.createReceiver();
+      let data;
+
+      // Mute and unmute the target user, otherwise it doesn't receive voice data
+      const member = voiceConnection.guild.members.get(user.id);
+      try {
+        await member.setMute(true);
+        await member.setMute(false);
+      } catch (e) {
+        reject({ reason: 'PERMISSIONS', message: 'MUTE_MEMBERS' });
+      }
+
+      receiver.on('pcm', (speaker, buffer) => {
+        if (user.id !== speaker.id) return;
+        data = data ? Buffer.concat([data, buffer]) : buffer;
+      });
+
+      receiver.on('warn', (reason, message) => {
+        console.log(`Warn (${reason}): ${message}`);
+        reject({ reason, message });
+      });
+
+      this.client.setTimeout(() => {
+        stream.destroy();
+        receiver.destroy();
+        return resolve(data);
+      }, time * 1000);
+    });
+  }
 }
 
 module.exports = OtherUtil;

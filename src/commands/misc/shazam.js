@@ -36,12 +36,12 @@ class ShazamCommand extends Command {
     this.client.shazamWork.push(context.message.guild.id);
     const m = await context.replyLoading(context.__('shazam.recording', { user: `**${user.username}**#${user.discriminator}` }));
 
-    this.recordMusic(context.message.guild.voiceConnection, user)
+    this.client.other.recordMusic(context.message.guild.voiceConnection, user)
       .then(async (data) => {
         await m.edit(`${this.client.constants.emotes.loading} ${context.__('shazam.sending')}`);
         const form = new FormData();
         form.append('ajax', '1');
-        form.append('song', Buffer.from(data));
+        form.append('song', data);
         request
           .post('https://qiiqoo.abdelhafidh.com/ajax/ajax.php')
           .send(form)
@@ -67,27 +67,6 @@ class ShazamCommand extends Command {
           console.error(reason);
         }
       });
-  }
-
-  recordMusic(voiceConnection, user) {
-    return new Promise((resolve, reject) => {
-      console.log('Debug - Before creating receiver and stream')
-      const receiver = voiceConnection.createReceiver();
-      const stream = receiver.createPCMStream(user);
-      stream.on('data', () => console.log('Data is being received'));
-
-      receiver.on('warn', (reason, msg) => {
-        console.log(`Warn (${reason}): ${msg}`);
-      });
-
-      this.client.setTimeout(() => {
-        stream.destroy();
-        receiver.destroy();
-        console.log('Destroyed receiver - 10s elapsed');
-        //return resolve(data);
-        resolve();
-      }, 10000);
-    });
   }
 }
 
