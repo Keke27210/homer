@@ -75,11 +75,12 @@ class ShazamCommand extends Command {
       const receiver = voiceConnection.createReceiver();
       const stream = receiver.createPCMStream(user);
       let data = Buffer.from([]);
+      let i = 0;
 
       receiver.on('pcm', (speaker, buffer) => {
         //if (speaker.id !== user) return;
-        console.log('PCM EVENT')
         data = Buffer.concat([data, buffer]);
+        i += 1;
       });
 
       receiver.on('warn', (reason, msg) => {
@@ -91,6 +92,7 @@ class ShazamCommand extends Command {
       this.client.setTimeout(() => {
         receiver.destroy();
         console.log(data)
+        console.log(i);
         return resolve(data);
       }, 10000);
     });
