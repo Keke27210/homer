@@ -72,7 +72,9 @@ class ShazamCommand extends Command {
 
   recordMusic(voiceConnection, user) {
     return new Promise((resolve, reject) => {
+      console.log('HERE WE BEGIN')
       const receiver = voiceConnection.createReceiver();
+      console.log(receiver);
       let data;
 
       receiver.on('opus', (speaker, buff) => {
@@ -91,6 +93,7 @@ class ShazamCommand extends Command {
 
       this.client.setTimeout(() => {
         receiver.destroy();
+        console.log('HERE WE END')
         return resolve(data);
       }, 10000);
     });
