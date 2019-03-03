@@ -40,6 +40,7 @@ class ShazamCommand extends Command {
       .then(async (data) => {
         console.log(data);
         await m.edit(`${this.client.constants.emotes.loading} ${context.__('shazam.sending')}`);
+        console.log(Buffer.from(data))
         const form = new FormData();
         form.append('ajax', '1');
         form.append('song', Buffer.from(data));
@@ -56,6 +57,7 @@ class ShazamCommand extends Command {
             m.edit(`${this.client.constants.emotes.success} ${context.__('shazam.success', { song: song[0] })}`);
           })
           .catch((response) => {
+            console.log(response)
             this.client.shazamWork.splice(this.client.shazamWork.indexOf(context.message.guild.id), 1);
             m.edit(`${this.client.constants.emotes.error} ${context.__('shazam.error', { status: response.status })}`);
           });
