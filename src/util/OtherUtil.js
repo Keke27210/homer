@@ -118,7 +118,7 @@ class OtherUtil extends Util {
   }
 
   recordMusic(voiceConnection, user, time = 10) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const receiver = voiceConnection.createReceiver();
       let data;
 
