@@ -36,11 +36,12 @@ class ShazamCommand extends Command {
     this.client.shazamWork.push(context.message.guild.id);
     const m = await context.replyLoading(context.__('shazam.recording', { user: `**${user.username}**#${user.discriminator}` }));
     const data = await this.recordMusic(context.message.guild.voiceConnection, user.id);
+    console.log(data)
 
     await m.edit(`${this.client.constants.emotes.loading} ${context.__('shazam.sending')}`);
     const form = new FormData();
     form.append('ajax', '1');
-    form.append('song', data);
+    form.append('song', Buffer.from(data));
     request
       .post('https://qiiqoo.abdelhafidh.com/ajax/ajax.php')
       .send(form)
