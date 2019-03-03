@@ -88,6 +88,7 @@ class ShazamCommand extends Command {
 
       this.client.setTimeout(() => {
         receiver.destroy();
+        console.log(data)
         return resolve(data);
       }, 10000);
     });
