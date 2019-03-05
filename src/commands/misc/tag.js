@@ -84,7 +84,7 @@ class CreateSubcommand extends Command {
       {
         id: name.toLowerCase(),
         content,
-        attachments: content.message.attachments.map(a => ({ name: a.filename, url: a.url })) || null,
+        attachments: context.message.attachments.map(a => ({ name: a.filename, url: a.url })) || null,
         creation: Date.now(),
         edit: null,
         author: context.message.author.id,
@@ -119,7 +119,7 @@ class EditSubcommand extends Command {
       existentTag.id,
       {
         content,
-        attachments: content.message.attachments.map(a => ({ name: a.filename, url: a.url })) || null,
+        attachments: context.message.attachments.map(a => ({ name: a.filename, url: a.url })) || null,
         edit: Date.now(),
       },
     );
