@@ -43,7 +43,7 @@ class TagCommand extends Command {
     }
 
     let processed = false;
-    const m = await context.replyLoading(context.__('global.loading'));
+    const m = await context.replyLoading(context.__('global.loading'), { files: tag.attachments });
     setTimeout(() => {
       if (!processed) m.edit(`${this.client.constants.emotes.warning} ${context.__('tag.execError')}`);
     }, 10000);
@@ -52,7 +52,6 @@ class TagCommand extends Command {
     processed = true;
     m.edit(parsed.content ? parsed.content.replace('@everyone', '!EVERYONE').replace('@here', '!HERE') : '', {
       embed: parsed.embed,
-      files: tag.attachments,
     });
 
     for (const reaction of parsed.reactions) await m.react(reaction).catch(() => null);
