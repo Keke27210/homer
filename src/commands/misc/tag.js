@@ -52,7 +52,7 @@ class TagCommand extends Command {
     processed = true;
     m.edit(parsed.content ? parsed.content.replace('@everyone', '!EVERYONE').replace('@here', '!HERE') : '', {
       embed: parsed.embed,
-      files: (tag.attachments || []).map(a => new Attachment(a)),
+      files: tag.attachments,
     });
 
     for (const reaction of parsed.reactions) await m.react(reaction).catch(() => null);
@@ -84,7 +84,7 @@ class CreateSubcommand extends Command {
       {
         id: name.toLowerCase(),
         content,
-        attachments: context.message.attachments.map(a => ({ name: a.filename, url: a.url })) || null,
+        attachments: context.message.attachments.map(a => ({ name: a.filename, attachment: a.url })) || null,
         creation: Date.now(),
         edit: null,
         author: context.message.author.id,
