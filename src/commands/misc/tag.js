@@ -119,7 +119,7 @@ class EditSubcommand extends Command {
       existentTag.id,
       {
         content,
-        attachments: context.message.attachments.map(a => ({ name: a.filename, url: a.url })) || null,
+        attachments: context.message.attachments.map(a => ({ name: a.filename, attachment: a.url })) || null,
         edit: Date.now(),
       },
     );
