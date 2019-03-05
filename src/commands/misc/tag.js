@@ -52,7 +52,7 @@ class TagCommand extends Command {
     processed = true;
     m.edit(parsed.content ? parsed.content.replace('@everyone', '!EVERYONE').replace('@here', '!HERE') : '', {
       embed: parsed.embed,
-      attachments: (tag.attachments || []).map(a => new Attachment(a)),
+      files: (tag.attachments || []).map(a => new Attachment(a)),
     });
 
     for (const reaction of parsed.reactions) await m.react(reaction).catch(() => null);
