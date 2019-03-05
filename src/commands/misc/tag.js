@@ -50,7 +50,10 @@ class TagCommand extends Command {
 
     const parsed = await this.client.lisa.parseString(context, tag.content, 'tag', args);
     processed = true;
-    m.edit(parsed.content ? parsed.content.replace('@everyone', '!EVERYONE').replace('@here', '!HERE') : '', { embed: parsed.embed });
+    m.edit(parsed.content ? parsed.content.replace('@everyone', '!EVERYONE').replace('@here', '!HERE') : '', {
+      embed: parsed.embed,
+      attachments: (tag.attachments || []).map(a => new Attachment(a)),
+    });
 
     for (const reaction of parsed.reactions) await m.react(reaction).catch(() => null);
   }
@@ -81,6 +84,7 @@ class CreateSubcommand extends Command {
       {
         id: name.toLowerCase(),
         content,
+        attachments: content.message.attachments.map(a => ({ name: a.filename, url: a.url })) || null,
         creation: Date.now(),
         edit: null,
         author: context.message.author.id,
@@ -115,6 +119,7 @@ class EditSubcommand extends Command {
       existentTag.id,
       {
         content,
+        attachments: content.message.attachments.map(a => ({ name: a.filename, url: a.url })) || null,
         edit: Date.now(),
       },
     );
