@@ -38,6 +38,7 @@ class ShazamCommand extends Command {
 
     this.client.other.recordSound(context.message.guild.voiceConnection, user)
       .then(async (data) => {
+        console.log(data + '\n\n\n')
         if (!data) return m.edit(`${this.client.constants.emotes.error} ${context.__('shazam.error', { status: '500' })}`);
         await m.edit(`${this.client.constants.emotes.loading} ${context.__('shazam.sending')}`);
         const form = new FormData();
