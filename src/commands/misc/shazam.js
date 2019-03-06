@@ -36,7 +36,7 @@ class ShazamCommand extends Command {
     this.client.shazamWork.push(context.message.guild.id);
     const m = await context.replyLoading(context.__('shazam.recording', { user: `**${user.username}**#${user.discriminator}` }));
 
-    this.client.other.recordMusic(context.message.guild.voiceConnection, user)
+    this.client.other.recordSound(context.message.guild.voiceConnection, user)
       .then(async (data) => {
         if (!data) return m.edit(`${this.client.constants.emotes.error} ${context.__('shazam.error', { status: '500' })}`);
         await m.edit(`${this.client.constants.emotes.loading} ${context.__('shazam.sending')}`);
