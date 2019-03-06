@@ -117,28 +117,25 @@ class OtherUtil extends Util {
     return data;
   }
 
-  recordMusic(voiceConnection, user, time = 10) {
+  recordSound(voiceConnection, user, time = 10) {
     return new Promise(async (resolve, reject) => {
-      voiceConnection.on('speaking', async (speaker, speaking) => {
-        if (!speaking) return;
+      const receiver = voiceConnection.createReceiver();
+      let data;
 
-        const receiver = voiceConnection.createReceiver();
-        const stream = receiver.createPCMStream(speaker);
-        let data = '';
-        stream.on('data', (data) => {
-          console.log('Im receiving fucking data');
-        });
-        this.client.setTimeout(() => {
-          stream.destroy();
-          receiver.destroy();
-          return resolve(data);
-        }, time * 1000);
-
-        receiver.on('warn', (reason, message) => {
-          console.log(`Warn (${reason}): ${message}`);
-          reject({ reason, message });
-        });
+      receiver.on('pcm', (speaker, buffer) => {
+        if (speaker.id !== user.id) return;
+        data = data ? Buffer.concat([data, buffer]) : buffer;
       });
+
+      receiver.on('warn', (reason, message) => {
+        console.log(`Warn (${reason}): ${message}`);
+        reject({ reason, message });
+      });
+
+      this.client.setTimeout(() => {
+        receiver.destroy();
+        return resolve(data || null);
+      }, time * 1000);
 
       // Mute and unmute the target user, otherwise it doesn't receive voice data
       const member = voiceConnection.channel.guild.members.get(user.id);
