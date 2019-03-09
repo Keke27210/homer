@@ -156,6 +156,8 @@
   "format.time.noFormat":"Vous devez fournir un format de l'heure à définir.",
   "format.time.tooLong":"La longueur du format de l'heure ne doit excéder 64 caractères.",
   "format.time.set":"Le format de l'heure est paramétrée sur `{{{ format }}}`.",
+  "format.link.enabled": "Le mot de liaison entre la date et l'heure apparaîtra.",
+  "format.link.disabled": "Le mot de liaison entre la date et l'heure n'apparaîtra plus.",
 
   "finderUtil.general.left":"et **{{{ count }}}** encore...",
   "finderUtil.findMembers.zeroResult":"Personne trouvé correspondant à `{{{ search }}}`",
@@ -228,6 +230,7 @@
   "helpUtil.format":"Modifier les formats de la date et de l'heure",
   "helpUtil.format.date":"Changer le format de la date",
   "helpUtil.format.time":"Changer le format de l'heure",
+  "helpUtil.format.link":"Afficher ou non le \"à\" entre la date et l'heure",
   "helpUtil.game":"Obtenir des infos sur le jeu d'un membre",
   "helpUtil.google":"Rechercher du contenu sur Google",
   "helpUtil.hangup":"Raccrocher un appel en cours",

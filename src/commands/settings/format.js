@@ -6,7 +6,7 @@ class FormatCommand extends Command {
     super(client, {
       name: 'format',
       userPermissions: ['MANAGE_GUILD'],
-      children: [new DateSubcommand(client), new TimeSubcommand(client)],
+      children: [new DateSubcommand(client), new TimeSubcommand(client), new LinkSubcommand(client)],
       category: 'settings',
       dm: true,
     });
@@ -18,6 +18,7 @@ class FormatCommand extends Command {
       '',
       `${this.dot} ${context.__('format.embed.date')}: **${context.settings.misc.dateFormat}**`,
       `${this.dot} ${context.__('format.embed.time')}: **${context.settings.misc.timeFormat}**`,
+      `${this.dot} ${context.__('format.embed.link')}: **${context.__(`global.${context.settings.misc.dateTimeLink ? 'yes' : 'no'}`)}**`,
       '',
       `${this.dot} ${context.__('format.embed.example')}: **${context.formatDate(Date.now())}**`,
       `${this.dot} ${context.__('format.embed.documentation')}: **[moment.js](https://momentjs.com/docs/#/displaying/format/)**`,
@@ -74,6 +75,29 @@ class TimeSubcommand extends Command {
     context.settings.misc.timeFormat = format;
     await context.saveSettings();
     context.replySuccess(context.__('format.time.set', { format }));
+  }
+}
+
+class LinkSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'link',
+      userPermissions: ['MANAGE_GUILD'],
+      category: 'settings',
+      dm: true,
+    });
+  }
+
+  async execute(context) {
+    if (context.settings.misc.dateTimeLink) {
+      context.settings.misc.dateTimeLink = false;
+      context.replySucces(context.__('format.link.disabled'));
+    } else {
+      context.settings.misc.dateTimeLink = true;
+      context.replySuccess(context.__('format.link.enabled'));
+    }
+
+    context.saveSettings();
   }
 }
 

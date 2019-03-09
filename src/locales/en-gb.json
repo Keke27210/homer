@@ -166,6 +166,8 @@
   "format.time.noFormat": "You must provide a time format to set",
   "format.time.tooLong": "The length of the time format must be fewer than 64 characters",
   "format.time.set": "The time format has been set to `{{{ format }}}`",
+  "format.link.enabled": "The date and time link word will now appear.",
+  "format.link.disabled": "The date and time link word will no longer appear.",
 
   "finderUtil.general.left": "and **{{{ count }}}** more...",
   "finderUtil.findMembers.zeroResult": "No-one found matching `{{{ search }}}`",
@@ -239,6 +241,7 @@
   "helpUtil.format": "Manage the date and time formats",
   "helpUtil.format.date": "Set the date format",
   "helpUtil.format.time": "Set the time format",
+  "helpUtil.format.link": "Whether or not enable the \"at\" between date and time",
   "helpUtil.game": "Get information about someone's game",
   "helpUtil.google": "Search for content on Google",
   "helpUtil.hangup": "Hangup an ongoing call",
