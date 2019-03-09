@@ -25,6 +25,7 @@ exports.defaultGuildSettings = id => ({
     locale: 'en-gb',
     dateFormat: 'DD/MM/YYYY',
     timeFormat: 'HH:mm:ss',
+    dateTimeLink: true,
   },
 });
 
@@ -39,6 +40,7 @@ exports.defaultUserSettings = id => ({
     locale: 'en-gb',
     dateFormat: 'DD/MM/YYYY',
     timeFormat: 'HH:mm:ss',
+    dateTimeLink: true,
   },
 });
 
