@@ -33,7 +33,7 @@ class Command {
       if (missing.length > 0) {
         return context.message.author.send(`${this.client.constants.emotes.error} ${context.__(
           'commandHandler.missingBotPermissions',
-          { permissions: missing.map(p => `\`${p}\``).join(', ') },
+          { permissions: this.client.other.humanizePermissions(missing, context.settings.misc.locale) },
         )}`);
       }
     }
