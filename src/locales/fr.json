@@ -148,6 +148,7 @@
   "format.embed.explanation":"Cette commande vous permet de personnaliser l'affichage de la date et de l'heure.\nVous pouvez modifier ces paramètres avec `{{{ prefix }}}format date` et `{{{ prefix }}}format time`.\nRenseignez-vous avec la documentation juste au-dessous pour obtenir les paramètres utilisables.",
   "format.embed.date":"Format de la date",
   "format.embed.time":"Format de l'heure",
+  "format.embed.link":"Liaison entre date et heure",
   "format.embed.example":"Exemple",
   "format.embed.documentation":"Documentation",
   "format.date.noFormat":"Vous devez fournir un format de date à définir.",
