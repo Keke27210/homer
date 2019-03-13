@@ -17,7 +17,7 @@ scheduleJob({ second: 10 }, async () => {
   if (!client.ready) return;
 
   for (const routine of client.routines) {
-    routine();
+    routine.handle();
   }
 });
 
