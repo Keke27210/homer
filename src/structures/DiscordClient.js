@@ -113,7 +113,7 @@ class DiscordClient extends Client {
     for (const routineFile of routineFiles) {
       const routine = new (require(`../routines/${routineFile}`))(this);
       if (!sandbox) {
-        this.events.push(routine);
+        this.routines.push(routine);
       }
       this.clearCache(`../routines/${routineFile}`);
     }
