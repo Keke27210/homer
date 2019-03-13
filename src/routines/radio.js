@@ -1,6 +1,6 @@
 const Routine = require('../structures/Routine');
 
-class InactivityRoutine extends Routine {
+class RadioRoutine extends Routine {
   constructor(client) {
     super(client);
   }
@@ -19,4 +19,4 @@ class InactivityRoutine extends Routine {
   }
 }
 
-module.exports = InactivityRoutine;
+module.exports = RadioRoutine;
