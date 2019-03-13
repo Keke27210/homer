@@ -24,9 +24,7 @@ class RestartCommand extends Command {
 
     await wait(2500);
 
-    // Closing RethinkDB and connection to Discord
-    await this.client.database.provider.getPoolMaster().drain();
-    await this.client.destroy();
+    // Sending graceful stop instruction to the sharder
     await this.client.shard.send({ type: 'shutdown', message: `${context.message.channel.id}|${message.id}|true` });
   }
 }

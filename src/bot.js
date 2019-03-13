@@ -36,7 +36,7 @@ process.on('unhandledRejection', (err) => {
 
 // Shutdown handling
 process.on('SIGTERM', async () => {
-  if (client.shard.id === 0) await client.other.ilAFreeIlAToutCompris('HOMER - S°0 Extinction par commande terminal');
+  if (client.shard.id === 0) await client.other.ilAFreeIlAToutCompris('HOMER - Extinction par commande terminal');
   await client.database.provider.getPoolMaster().drain();
   await client.destroy();
   client.logger.info(`Shutting down shard ID ${client.shard.id}`);

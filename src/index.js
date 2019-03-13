@@ -52,6 +52,19 @@ sharder.on('message', async (shard, mail) => {
   }
 });
 
+// Shutdown handling
+process.on('SIGTERM', async () => {
+  console.log('SHUTDOWN - Shutting down...');
+  for (let i = 0; i < shards.length; i += 1) {
+    const shard = shards[i];
+    shard.process.kill('SIGTERM');
+  }
+
+  await wait(2500);
+  console.log('SHUTDOWN - Exiting process');
+  process.exit();
+});
+
 function editMessage(channel, message, content) {
   return request
     .patch(`https://discordapp.com/api/channels/${channel}/messages/${message}`)
