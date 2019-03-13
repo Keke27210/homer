@@ -111,11 +111,11 @@ class DiscordClient extends Client {
   async loadRoutines(sandbox = false) {
     const routineFiles = await readdir('./src/routines');
     for (const routineFile of routineFiles) {
-      const routine = new (require(`../events/${routineFile}`))(this);
+      const routine = new (require(`../routines/${routineFile}`))(this);
       if (!sandbox) {
         this.events.push(routine);
       }
-      this.clearCache(`../events/${eventFile}`);
+      this.clearCache(`../routines/${eventFile}`);
     }
   }
 
