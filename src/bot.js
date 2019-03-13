@@ -30,13 +30,13 @@ process.on('unhandledRejection', (err) => {
     message: err.stack,
   });
 
-  client.other.ilAFreeIlAToutCompris(`HOMER - Une erreur est survenue à ${moment().tz('Europe/Paris').format('HH:mm:ss')}`);
+  client.other.ilAFreeIlAToutCompris(`HOMER - S°${client.shard.id} Une erreur est survenue à ${moment().tz('Europe/Paris').format('HH:mm:ss')}`);
   client.logger.error(`Unhandled rejection:\r\n${err.stack}`);
 });
 
 // Shutdown handling
 process.on('SIGTERM', async () => {
-  await client.other.ilAFreeIlAToutCompris('HOMER - Extinction par commande terminal');
+  if (client.shard.id === 0) await client.other.ilAFreeIlAToutCompris('HOMER - S°0 Extinction par commande terminal');
   await client.database.provider.getPoolMaster().drain();
   await client.destroy();
   client.logger.info(`Shutting down shard ID ${client.shard.id}`);
