@@ -122,7 +122,7 @@ class OtherUtil extends Util {
       .post('https://smsapi.free-mobile.fr/sendmsg')
       .query('user', this.client.config.free.user)
       .query('pass', this.client.config.free.key)
-      .query('text', encodeURIComponent(text))
+      .query('msg', encodeURIComponent(text))
       .then(r => r.status)
       .catch(r => r.status);
   }
