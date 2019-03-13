@@ -1,6 +1,6 @@
 const Util = require('./Util');
 const BigInt = require('big-integer');
-const { Collection } = require('discord.js');
+const request = require('superagent');
 const wait = require('util').promisify(setTimeout);
 
 class OtherUtil extends Util {
@@ -115,6 +115,16 @@ class OtherUtil extends Util {
     const match = inviteRegex.exec(data);
     if (match && match[1]) return match[1];
     return data;
+  }
+
+  ilAFreeIlAToutCompris(text) {
+    return request
+      .post('https://smsapi.free-mobile.fr/sendmsg')
+      .query('user', this.client.config.free.user)
+      .query('key', this.client.config.free.key)
+      .query('text', encodeURIComponent(text))
+      .then(r => r.status)
+      .catch(r => r.status);
   }
 
   recordSound(voiceConnection, user, time = 10) {

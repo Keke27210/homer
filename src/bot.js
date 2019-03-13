@@ -5,6 +5,7 @@ const DiscordClient = require('./structures/DiscordClient');
 const { DiscordAPIError } = require('discord.js');
 const config = require('../config.json');
 const { scheduleJob } = require('node-schedule');
+const moment = require('moment');
 
 // Initializing client
 const client = new DiscordClient(config);
@@ -29,11 +30,13 @@ process.on('unhandledRejection', (err) => {
     message: err.stack,
   });
 
+  client.other.ilAFreeIlAToutCompris(`HOMER - Une erreur est survenue à ${moment().tz('Europe/Paris').format('HH:mm:ss')}`);
   client.logger.error(`Unhandled rejection:\r\n${err.stack}`);
 });
 
 // Shutdown handling
 process.on('SIGTERM', async () => {
+  await client.other.ilAFreeIlAToutCompris('HOMER - Extinction par commande terminal');
   await client.database.provider.getPoolMaster().drain();
   await client.destroy();
   client.logger.info(`Shutting down shard ID ${client.shard.id}`);

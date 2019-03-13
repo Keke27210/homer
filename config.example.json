@@ -20,6 +20,10 @@
     "token": "",
     "debug": false
   },
+  "free": {
+    "key": "",
+    "user": ""
+  },
   "localization": {
     "directory": "../locales"
   },
