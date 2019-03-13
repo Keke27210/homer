@@ -19,12 +19,13 @@ class ReloadCommand extends Command {
       await this.client.commands.reloadCommands(true);
       await this.client.localization.reloadLocales(true);
       await this.client.lisa.reloadMethods(true);
+      await this.client.reloadRoutines(true);
     } catch (e) {
       return context.replyError(`Error during execution of the reload!\n\`\`\`js\n${e.stack}\`\`\``);
     }
 
     const message = await context.replyWarning('Local reload has complete successfully! Asking to all shards to proceed...');
-    this.client.shard.broadcastEval('this.reloadEvents(); this.commands.reloadCommands(); this.localization.reloadLocales(); this.lisa.reloadMethods();')
+    this.client.shard.broadcastEval('this.reloadEvents(); this.commands.reloadCommands(); this.localization.reloadLocales(); this.lisa.reloadMethods(); this.reloadRoutines();')
       .then(() => message.edit(`${this.client.constants.emotes.success} Reload has complete successfully!`))
       .catch(e => message.edit(`${this.client.constants.emotes.error} Error during execution of the reload!\n\`\`\`${e.stack}\`\`\``));
   }

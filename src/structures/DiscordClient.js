@@ -31,6 +31,7 @@ class DiscordClient extends Client {
     this.constants = Constants;
     this.cooldown = {};
     this.events = [];
+    this.routines = [];
     this.shazamWork = [];
     this.ready = false;
     this.maintenance = false;
@@ -57,6 +58,7 @@ class DiscordClient extends Client {
 
     // Load events and commands
     this.loadEvents();
+    this.loadRoutines();
     this.commands.loadCommands();
   }
 
@@ -104,6 +106,22 @@ class DiscordClient extends Client {
       this.events = [];
     }
     await this.loadEvents(sandbox);
+  }
+
+  async loadRoutines(sandbox = false) {
+    const routineFiles = await readdir('./src/routines');
+    for (const routineFile of routineFiles) {
+      const routine = new (require(`../events/${routineFile}`))(this);
+      if (!sandbox) {
+        this.events.push(routine);
+      }
+      this.clearCache(`../events/${eventFile}`);
+    }
+  }
+
+  async reloadRoutines(sandbox = false) {
+    if (!sandbox) this.routines = [];
+    await this.loadRoutines(sandbox);
   }
 
   clearCache(moduleId) {
