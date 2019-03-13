@@ -119,7 +119,7 @@ class OtherUtil extends Util {
 
   ilAFreeIlAToutCompris(text) {
     return request
-      .post('https://smsapi.free-mobile.fr/sendmsg')
+      .get('https://smsapi.free-mobile.fr/sendmsg')
       .query('user', this.client.config.free.user)
       .query('pass', this.client.config.free.key)
       .query('msg', encodeURIComponent(text))
