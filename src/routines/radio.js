@@ -5,7 +5,7 @@ class RadioRoutine extends Routine {
     super(client);
   }
 
-  handle() {
+  async handle() {
     const inactives = Object.entries(this.client.radio.inactivity)
       .filter(([id, time]) => (Date.now() - time) > 300000)
       .map(([id]) => id);

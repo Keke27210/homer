@@ -5,7 +5,7 @@ class JobsRoutine extends Routine {
     super(client);
   }
 
-  handle() {
+  async handle() {
     const calls = await this.client.database.getDocuments('calls', true);
 
     // Inactive phone calls

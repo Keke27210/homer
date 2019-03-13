@@ -5,7 +5,7 @@ class MiscRoutine extends Routine {
     super(client);
   }
 
-  handle() {
+  async handle() {
     // RSS feeds
     if (this.client.shard.id === 0 && new Date().getMinutes() === 15) {
       this.client.other.processRSS();
