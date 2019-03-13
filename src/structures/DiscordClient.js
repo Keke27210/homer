@@ -115,7 +115,7 @@ class DiscordClient extends Client {
       if (!sandbox) {
         this.events.push(routine);
       }
-      this.clearCache(`../routines/${eventFile}`);
+      this.clearCache(`../routines/${routineFile}`);
     }
   }
 
