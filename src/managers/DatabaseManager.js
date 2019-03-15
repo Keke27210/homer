@@ -38,6 +38,7 @@ class DatabaseManager extends Manager {
   }
 
   async findDocuments(table, predicate, fetch = false) {
+    if (!this.client.ready) return;
     if (!fetch && !noCache.includes(table)) {
       const found = [];
       const properties = Object.entries(predicate);
@@ -66,6 +67,7 @@ class DatabaseManager extends Manager {
   }
 
   async getDocument(table, key, fetch = false) {
+    if (!this.client.ready) return;
     const cache = this.cache[table].find(item => item ? item.id === key : false);
     if (!fetch && !noCache.includes(table) && cache) return cache;
 
@@ -86,6 +88,7 @@ class DatabaseManager extends Manager {
   }
 
   async getDocuments(table, fetch = false) {
+    if (!this.client.ready) return;
     if (!fetch && !noCache.includes(table) && Object.keys(this.cache[table]).length > 0) return this.cache[table];
 
     const data = await this.provider
@@ -97,6 +100,7 @@ class DatabaseManager extends Manager {
   }
 
   insertDocument(table, data, options) {
+    if (!this.client.ready) return;
     if (!noCache.includes(table)) {
       const index = this.cache[table].findIndex(item => item ? item.id === data.id : false);
       if (index !== -1) {
@@ -115,6 +119,7 @@ class DatabaseManager extends Manager {
   }
 
   updateDocument(table, key, data) {
+    if (!this.client.ready) return;
     if (!noCache.includes(table)) {
       const index = this.cache[table].findIndex(item => item ? item.id === key : false);
       for (const [k, v] of Object.entries(data)) {
@@ -130,6 +135,7 @@ class DatabaseManager extends Manager {
   }
 
   deleteDocument(table, key) {
+    if (!this.client.ready) return;
     if (!noCache.includes(table)) {
       this.cache[table].splice(
         this.cache[table].findIndex(item => item ? item.id === key : false),

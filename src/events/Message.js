@@ -7,6 +7,8 @@ class MessageEvent extends Event {
   }
 
   async handle(message) {
+    if (!this.client.ready) return;
+
     // Command handling
     this.client.commands.handleCommand(message);
 

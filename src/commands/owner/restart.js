@@ -25,7 +25,7 @@ class RestartCommand extends Command {
     await wait(2500);
 
     // Sending graceful stop instruction to the sharder
-    await this.client.shard.send({ type: 'shutdown', message: `${context.message.channel.id}|${message.id}|true` });
+    this.client.shard.send({ type: 'shutdown', message: `${context.message.channel.id}|${message.id}|true` });
   }
 }
 
