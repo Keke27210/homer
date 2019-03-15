@@ -7,6 +7,7 @@ const wait = require('util').promisify(setTimeout);
 class OtherUtil extends Util {
   constructor(client) {
     super(client);
+    this.smsDelta = 0;
   }
 
   getShardID(id) {
@@ -119,6 +120,7 @@ class OtherUtil extends Util {
   }
 
   ilAFreeIlAToutCompris(text) {
+    if (Date.now() - this.smsDelta < 3000) return;
     const msg = [`Homer S${this.client.shard.id} | ${moment().format('DD/MM/YYYY HH:mm:ss')} UTC`, text].join('\n');
     return request
       .post('https://smsapi.free-mobile.fr/sendmsg')
@@ -127,7 +129,10 @@ class OtherUtil extends Util {
         pass: this.client.config.free.key,
         msg,
       })
-      .then(r => r.status)
+      .then((r) => {
+        this.smsDelta = Date.now();
+        return r.status;
+      })
       .catch(r => r.status);
   }
 
