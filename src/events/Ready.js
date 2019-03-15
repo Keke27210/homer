@@ -17,6 +17,9 @@ class ReadyEvent extends Event {
     if (reboot) {
       this.client.updateMessage(reboot[0], reboot[1], `${this.client.constants.emotes.success} Successfully restarted all shards!`);
       this.client.database.updateDocument('bot', 'settings', { reboot: null });
+      this.client.other.ilAFreeIlAToutCompris('This shard has restarted successfully');
+    } else {
+      this.client.other.ilAFreeIlAToutCompris('This shard has started successfully');
     }
 
     // Resume audio sessions

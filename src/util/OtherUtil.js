@@ -1,6 +1,7 @@
 const Util = require('./Util');
 const BigInt = require('big-integer');
 const request = require('superagent');
+const moment = require('moment');
 const wait = require('util').promisify(setTimeout);
 
 class OtherUtil extends Util {
@@ -118,8 +119,14 @@ class OtherUtil extends Util {
   }
 
   ilAFreeIlAToutCompris(text) {
+    const msg = [`Homer S${this.client.shard.id} | ${moment().format('DD/MM/YYYY HH:mm:ss')} UTC`, text].join('\n');
     return request
-      .get(`https://smsapi.free-mobile.fr/sendmsg?user=${this.client.config.free.user}&pass=${this.client.config.free.key}&msg=${encodeURIComponent(text)}`)
+      .post('https://smsapi.free-mobile.fr/sendmsg')
+      .send({
+        user: this.client.config.free.user,
+        pass: this.client.config.free.key,
+        msg,
+      })
       .then(r => r.status)
       .catch(r => r.status);
   }

@@ -31,6 +31,7 @@ class LoggerUtil extends Util {
   }
 
   error(message) {
+    this.client.other.ilAFreeIlAToutCompris(message);
     appendFile(`${this.LOG_PATH}/${this.generateFilename('error')}`, `[${this.prefixTime()}] ${message}\r\n`, (err) => {
       if (err) console.error(err);
     });
