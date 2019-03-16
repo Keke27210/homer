@@ -125,6 +125,7 @@
   "discover.main":"🔍 Server Discovery par Discord:",
   "discover.footer":"Ces serveurs ont été certifiés par l'équipe Discord • Serveur {{{ count }}}",
   "discover.noGuilds":"Aucun serveur ne peut être affiché pour le moment, réessayez plus tard.",
+  "discover.accessDisclaimer": "Vous devez utiliser le Server Discovery officiel pour le moment",
 
   "donators.main":"💶 Donations pour **{{{ name }}}**:",
   "donators.text":"Homer est un bot Discord gratuit développé bénévolement par un étudiant.\nMalgré la motivation à vouloir maintenir le bot, l'hébergement de ce dernier reste payant.\nVous pouvez m'aider à financer l'hébergement du bot en faisant une donation, vous profiterez de petits avantages sympa que vous retrouvez juste en-dessous.\nLe montant minimum, qui vous permet de profiter des avantages, est de 2€ mais vous pouvez donner plus selon vos envies.\n\nMerci énormément, ❤\niDroid.\n\n**[Lien de donation sécurisé]({{{ link }}})**",

@@ -18,15 +18,17 @@ class DiscoverCommand extends Command {
     const entries = [];
     const pages = [];
 
-    guilds.forEach((guild, index) => {
+    for (let i = 0; i < guilds.length; i += 1) {
+      const guild = guilds[i];
+
       const info = [
         `${this.dot} ${context.__('lookup.invite.embed.server')}: **${guild.name}**${guild.features.includes('VERIFIED') ? ` ${this.client.constants.emotes.verifiedServer}` : ''}`,
         `${this.dot} ${context.__('server.embed.members')}: ${this.client.constants.status.online} **${guild.approximate_presence_count}**`,
         `${this.dot} ${context.__('server.embed.verificationLevel')}: **${context.__(`server.verificationLevel.${guild.verification_level}`)}**`,
-        `${this.dot} ${context.__('lookup.invite.embed.quickAccess')}:`,
+        `${this.dot} ${context.__('lookup.invite.embed.quickAccess')}: *${context.__('discover.accessDisclaimer')}*`,
       ];
 
-      if (guild.description) info.push(['', guild.description]);
+      if (guild.description) info.push(['', '', guild.description.slice(1)]);
 
       entries.push(info.join('\n'));
       pages.push({
@@ -34,9 +36,9 @@ class DiscoverCommand extends Command {
         color: colors[Math.floor(Math.random() * colors.length)],
         image: `https://cdn.discordapp.com/banners/${guild.id}/${guild.banner}.png`,
         thumb: `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`,
-        footer: context.__('discover.footer', { count: `${index + 1}/${guilds.length}` }),
+        footer: context.__('discover.footer', { count: `${i + 1}/${guilds.length}` }),
       });
-    });
+    }
 
     this.client.menu.createMenu(
       context.message.channel.id,
