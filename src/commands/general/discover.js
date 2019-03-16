@@ -20,10 +20,10 @@ class DiscoverCommand extends Command {
 
     guilds.forEach((guild, index) => {
       const info = [
-        `${this.dot} ${context.__('lookup.invite.embed.server')}: **${guild.name}**${invite.guild.features.includes('VERIFIED') ? ` ${this.client.constants.emotes.verifiedServer}` : ''}`,
+        `${this.dot} ${context.__('lookup.invite.embed.server')}: **${guild.name}**${guild.features.includes('VERIFIED') ? ` ${this.client.constants.emotes.verifiedServer}` : ''}`,
         `${this.dot} ${context.__('server.embed.members')}: ${this.client.constants.status.online} **${guild.approximate_presence_count}**`,
         `${this.dot} ${context.__('server.embed.verificationLevel')}: **${context.__(`server.verificationLevel.${guild.verification_level}`)}**`
-        `${this.dot} ${context.__('lookup.invite.embed.quickAccess')}:`
+        `${this.dot} ${context.__('lookup.invite.embed.quickAccess')}:`,
       ];
 
       if (guild.description) info.push(['', guild.description]);
