@@ -34,7 +34,7 @@ process.on('unhandledRejection', (err) => {
 
 // Shutdown handling
 process.on('SIGTERM', async () => {
-  if (client.shard.id === 0) await client.other.ilAFreeIlAToutCompris('Arrêt par contrôle externe');
+  if (client.shard.id === 0) await client.other.ilAFreeIlAToutCompris('Shutdown controlled by the sharder');
   client.ready = false;
   await client.database.provider.getPoolMaster().drain();
   await client.destroy();
