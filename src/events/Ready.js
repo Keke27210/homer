@@ -25,23 +25,6 @@ class ReadyEvent extends Event {
     // Resume audio sessions
     //this.client.radio.resumeSessions();
 
-    // Update game & bot list count
-    this.client.update.updateGame();
-    this.client.update.updateBotList();
-
-    if (!this.client.firstStart) {
-      this.client.setInterval(() => {
-        if (!this.client.ready) return;
-        this.client.update.updateBotList();
-      }, 30000);
-
-      this.client.setInterval(() => {
-        if (!this.client.ready) return;
-        this.client.update.updateGame();
-      }, 10000);
-    }
-
-    this.client.firstStart = true;
     this.client.ready = true;
   }
 }

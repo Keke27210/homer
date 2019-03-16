@@ -16,7 +16,6 @@ const APIManager = require('../managers/APIManager');
 
 // Util
 const Constants = require('../util/Constants');
-const UpdateUtil = require('../util/UpdateUtil');
 const FinderUtil = require('../util/FinderUtil');
 const TimeUtil = require('../util/TimeUtil');
 const HandlerUtil = require('../util/HandlerUtil');
@@ -48,7 +47,6 @@ class DiscordClient extends Client {
 
     this.finder = new FinderUtil(this);
     this.time = new TimeUtil(this);
-    this.update = new UpdateUtil(this);
     this.handler = new HandlerUtil(this);
     this.logger = new LoggerUtil(this);
     this.telephone = new PhoneUtil(this);

@@ -21,6 +21,20 @@ class MiscRoutine extends Routine {
       stats.guilds.push({ time, count: this.client.guilds.size });
       this.client.database.updateDocument('bot', 'stats', stats);
     }
+
+    // Game update
+    const game = await this.client.database.getDocument('bot', 'settings')
+      .then(settings => settings.customGame) || 'Type {prefix}help! On {servers} servers on shard {shard}.';
+
+    this.client.user.setActivity(
+      game
+        .replace(/{prefix}/g, this.client.prefix)
+        .replace(/{servers}/g, this.client.guilds.size)
+        .replace(/{users}/g, this.client.users.size)
+        .replace(/{shard}/g, this.client.shard.id)
+        .replace(/{shards}/g, this.client.config.sharder.totalShards),
+      { type: 'PLAYING' },
+    );
   }
 }
 
