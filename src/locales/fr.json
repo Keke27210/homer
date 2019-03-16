@@ -122,6 +122,10 @@
   "contacts.delete.doesntExist":"Aucun contact trouvé avec le numéro fourni.",
   "contacts.delete.deleted":"Ce contact a été supprimé avec succès !",
 
+  "discover.main":"🔍 Server Discovery par Discord:",
+  "discover.footer":"Ces serveurs ont été certifiés par l'équipe Discord • Serveur {{{ count }}}",
+  "discover.noGuilds":"Aucun serveur ne peut être affiché pour le moment, réessayez plus tard.",
+
   "donators.main":"💶 Donations pour **{{{ name }}}**:",
   "donators.text":"Homer est un bot Discord gratuit développé bénévolement par un étudiant.\nMalgré la motivation à vouloir maintenir le bot, l'hébergement de ce dernier reste payant.\nVous pouvez m'aider à financer l'hébergement du bot en faisant une donation, vous profiterez de petits avantages sympa que vous retrouvez juste en-dessous.\nLe montant minimum, qui vous permet de profiter des avantages, est de 2€ mais vous pouvez donner plus selon vos envies.\n\nMerci énormément, ❤\niDroid.\n\n**[Lien de donation sécurisé]({{{ link }}})**",
   "donators.donators":"👥 Donateurs",
@@ -215,7 +219,7 @@
   "helpUtil.antighost.enable":"Activer l'anti-ghost ping",
   "helpUtil.antighost.disable":"Désactiver l'anti-ghost ping",
   "helpUtil.antighost.info":"Informations sur l'anti-ghost ping",
-  "helpUtil.archive": "Archiver tous les messages d'un salon",
+  "helpUtil.archive":"Archiver tous les messages d'un salon",
   "helpUtil.avatar":"Obtenir l'avatar d'un membre",
   "helpUtil.baninfo":"Obtenir des infos sur le bannissement d'un utilisateur",
   "helpUtil.call":"Appeler un numéro avec le téléphone",
@@ -226,6 +230,7 @@
   "helpUtil.contacts":"Rechercher des personnes sur l'annuaire téléphonique",
   "helpUtil.contacts.add":"Ajouter quelqu'un à vos contacts",
   "helpUtil.contacts.delete":"Retirer quelqu'un de vos contacts",
+  "helpUtil.discover":"Intégration du Server Discovery de Discord sur Homer",
   "helpUtil.donators":"Informations sur les donations",
   "helpUtil.emote":"Obtenir des infos sur une emote",
   "helpUtil.format":"Modifier les formats de la date et de l'heure",

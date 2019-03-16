@@ -130,6 +130,10 @@
   "contacts.delete.noNumber": "You must provide a number to delete.",
   "contacts.delete.doesntExist": "No contact entry found matching the given number.",
   "contacts.delete.deleted": "This contact has been deleted successfully!",
+
+  "discover.main": "🔍 Server Discovery by Discord:",
+  "discover.footer": "These servers are certified by the Discord team • Server {{{ count }}}",
+  "discover.noGuilds": "No guilds can be showed for the moment, please try again later.",
   
   "donators.main": "💶 Donations for **{{{ name }}}**:",
   "donators.text": "Homer is a free Discord bot developed by a student on a voluntary basis.\nDespite the motivation to maintain the bot, the hosting of the bot remains paid.\nYou can help me finance the hosting of the bot by making a donation, you will enjoy some nice little benefits that you find just below.\nThe minimum amount, which allows you to take advantage of the advantages, is 2€ but you can give more according to your desires.\n\nThank you very much, ❤\niDroid.\n\n**[Secured donation link]({{{ link }}})**",
@@ -237,6 +241,7 @@
   "helpUtil.contacts": "Search for people in your contacts book",
   "helpUtil.contacts.add": "Add someone to your contacts",
   "helpUtil.contacts.delete": "Remove someone from your contacts",
+  "helpUtil.discover": "Discord's Server Discovery integration on Homer",
   "helpUtil.donators": "Information about donations",
   "helpUtil.emote": "Get information about an emote",
   "helpUtil.format": "Manage the date and time formats",
