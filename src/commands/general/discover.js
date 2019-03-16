@@ -28,7 +28,7 @@ class DiscoverCommand extends Command {
         `${this.dot} ${context.__('lookup.invite.embed.quickAccess')}: *${context.__('discover.accessDisclaimer')}*`,
       ];
 
-      if (guild.description) info.push(['', '', guild.description.slice(1)]);
+      if (guild.description) info.push(['', '', guild.description].join('\n'));
 
       entries.push(info.join('\n'));
       pages.push({
