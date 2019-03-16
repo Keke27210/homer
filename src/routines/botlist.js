@@ -51,7 +51,7 @@ class BotlistRoutine extends Routine {
       .catch(r => this.client.logger.error(`Unable to update botlist "discordbots.org" (${r.status})`));
 
     // Listcord
-    request
+    /*request
       .post(`https://listcord.com/api/bot/${this.client.user.id}/guilds`)
       .set('Authorization', keys.listcord)
       .set('Content-Type', 'application/json')
@@ -60,7 +60,7 @@ class BotlistRoutine extends Routine {
         guilds: this.client.guilds.size,
       })
       .then(() => this.client.logger.info('Updated botlist "listcord.com"'))
-      .catch(r => this.client.logger.error(`Unable to update botlist "listcord.com" (${r.status})`));
+      .catch(r => this.client.logger.error(`Unable to update botlist "listcord.com" (${r.status})`));*/
 
     // SHARD 0 ONLY
     if (this.client.shard.id === 0) {
