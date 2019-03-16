@@ -11,7 +11,7 @@ class DiscoverCommand extends Command {
   }
 
   async execute(context) {
-    const guilds = await this.client.rest.makeRequest('/guilds/discoverable')
+    const guilds = await this.client.rest.makeRequest('get', '/guilds/discoverable', true)
       .then(list => shuffle(list));
     if (guilds.length === 0) return context.replyError(context.__('discover.noGuilds'));
 
@@ -23,6 +23,7 @@ class DiscoverCommand extends Command {
         `${this.dot} ${context.__('lookup.invite.embed.server')}: **${guild.name}**${invite.guild.features.includes('VERIFIED') ? ` ${this.client.constants.emotes.verifiedServer}` : ''}`,
         `${this.dot} ${context.__('server.embed.members')}: ${this.client.constants.status.online} **${guild.approximate_presence_count}**`,
         `${this.dot} ${context.__('server.embed.verificationLevel')}: **${context.__(`server.verificationLevel.${guild.verification_level}`)}**`
+        `${this.dot} ${context.__('lookup.invite.embed.quickAccess')}:`
       ];
 
       if (guild.description) info.push(['', guild.description]);
