@@ -13,7 +13,7 @@ class BotlistRoutine extends Routine {
     // DiscordBotList.com
     request
       .post(`https://discordbotlist.com/api/bots/${this.client.user.id}/stats`)
-      .set('Authorization', keys.discordBotsCom)
+      .set('Authorization', keys.discordBotsListCom)
       .set('Content-Type', 'application/json')
       .send({
         shard_id: this.client.shard.id,
@@ -22,7 +22,7 @@ class BotlistRoutine extends Routine {
         voice_connections: this.client.voiceConnections.size,
       })
       .then(() => this.client.logger.info('Updated botlist "discordbotlist.com"'))
-      .catch(r => this.client.logger.error(`Unable to update botlist "discordbotlist.com" (${r.status})`));
+      .catch(r => this.client.logger.error(`Unable to update botlist "discordbotlist.com" (${r.status || '?'})`));
 
     // Discord Bots
     request
@@ -35,7 +35,7 @@ class BotlistRoutine extends Routine {
         guildCount: this.client.guilds.size,
       })
       .then(() => this.client.logger.info('Updated botlist "discord.bots.gg"'))
-      .catch(r => this.client.logger.error(`Unable to update botlist "discord.bots.gg" (${r.status})`));
+      .catch(r => this.client.logger.error(`Unable to update botlist "discord.bots.gg" (${r.status || '?'})`));
 
     // Discordbots.org
     request
@@ -48,7 +48,7 @@ class BotlistRoutine extends Routine {
         server_count: this.client.guilds.size,
       })
       .then(() => this.client.logger.info('Updated botlist "discordbots.org"'))
-      .catch(r => this.client.logger.error(`Unable to update botlist "discordbots.org" (${r.status})`));
+      .catch(r => this.client.logger.error(`Unable to update botlist "discordbots.org" (${r.status || '?'})`));
 
     // Listcord
     request
@@ -60,7 +60,7 @@ class BotlistRoutine extends Routine {
         guilds: this.client.guilds.size,
       })
       .then(() => this.client.logger.info('Updated botlist "listcord.com"'))
-      .catch(r => this.client.logger.error(`Unable to update botlist "listcord.com" (${r.status})`));
+      .catch(r => this.client.logger.error(`Unable to update botlist "listcord.com" (${r.status || '?'})`));
 
     // SHARD 0 ONLY
     if (this.client.shard.id === 0) {
@@ -78,7 +78,7 @@ class BotlistRoutine extends Routine {
           count: total,
         })
         .then(() => this.client.logger.info('Updated botlist "discordbots.group"'))
-        .catch(r => this.client.logger.error(`Unable to update botlist "discordbots.group" (${r.status})`));
+        .catch(r => this.client.logger.error(`Unable to update botlist "discordbots.group" (${r.status || '?'})`));
 
       // BotsForDiscord.com
       request
@@ -89,7 +89,7 @@ class BotlistRoutine extends Routine {
           server_count: total,
         })
         .then(() => this.client.logger.info('Updated botlist "botsfordiscord.com"'))
-        .catch(r => this.client.logger.error(`Unable to update botlist "botsfordiscord.com" (${r.status})`));
+        .catch(r => this.client.logger.error(`Unable to update botlist "botsfordiscord.com" (${r.status || '?'})`));
     }
   }
 }
