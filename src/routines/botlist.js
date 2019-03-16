@@ -13,7 +13,7 @@ class BotlistRoutine extends Routine {
     // DiscordBotList.com
     request
       .post(`https://discordbotlist.com/api/bots/${this.client.user.id}/stats`)
-      .set('Authorization', keys.discordBotsCom)
+      .set('Authorization', `Bot ${keys.discordBotsCom}`)
       .set('Content-Type', 'application/json')
       .send({
         shard_id: this.client.shard.id,
