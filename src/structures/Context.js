@@ -74,10 +74,14 @@ class Context {
   }
 
   formatDate(date, format) {
-    return mtz(date)
-      .tz(this.settings.misc.timezone)
-      .locale(this.settings.misc.locale)
-      .format(format || `${this.settings.misc.dateFormat}${this.settings.misc.dateTimeLink ? ` ${this.__('global.at')} ` : ' '}${this.settings.misc.timeFormat}`);
+    const time = mtz(date).tz(this.settings.misc.timezone).locale(this.settings.locale);
+    if (format) return time.format(format);
+ 
+    if (this.settings.misc.dateTimeLink) {
+      return `${time.format(this.settings.misc.dateFormat)} ${this.__('global.at')} ${time.format(this.settings.misc.timeFormat)}`;
+    } else {
+      return time.format(`${this.settings.misc.dateFormat} ${this.settings.misc.timeFormat}`);
+    }
   }
 
   parseOptions() {
