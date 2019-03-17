@@ -75,8 +75,10 @@ class Context {
 
   formatDate(date, format) {
     const time = mtz(date).tz(this.settings.misc.timezone).locale(this.settings.locale);
-    if (format) return time.format(format);
-    return time.format(`${this.settings.misc.dateFormat}${this.settings.misc.dateTimeLink ? ` [${this.__('global.at')}] `: ' '}${this.settings.misc.timeFormat}`);
+    return mtz(date)
+      .tz(this.settings.misc.timezone)
+      .locale(this.settings.locale)
+      .format(format || `${this.settings.misc.dateFormat}${this.settings.misc.dateTimeLink ? ` [${this.__('global.at')}] `: ' '}${this.settings.misc.timeFormat}`);
   }
 
   parseOptions() {
