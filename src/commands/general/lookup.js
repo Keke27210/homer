@@ -138,10 +138,10 @@ class LookupCommand extends Command {
           .catch(() => ({}));
 
         const members = guildObject.online ? [
-          `${this.client.constants.status.online} **${guildObject.online}**`,
-          `${this.client.constants.status.idle} **${guildObject.idle}**`,
-          `${this.client.constants.status.dnd} **${guildObject.dnd}**`,
-          `${this.client.constants.status.offline} **${guildObject.offline}**`,
+          `${this.client.constants.status.online} **${guildObject.online || 0}**`,
+          `${this.client.constants.status.idle} **${guildObject.idle || 0}**`,
+          `${this.client.constants.status.dnd} **${guildObject.dnd || 0}**`,
+          `${this.client.constants.status.offline} **${guildObject.offline || 0}**`,
         ] : null;
 
         const inviteInformation = [
