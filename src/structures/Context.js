@@ -1,4 +1,4 @@
-const mtz = require('moment-timezone');
+const mtz = require('moment');
 
 class Context {
   constructor(client, message) {
@@ -77,7 +77,7 @@ class Context {
     return mtz(date)
       .tz(this.settings.misc.timezone)
       .locale(this.settings.misc.locale)
-      .format(format || `${this.settings.misc.dateFormat}${this.settings.misc.dateTimeLink ? ` ${this.__('global.at')} ` : ' '}${this.settings.misc.timeFormat}`);
+      .format(format || `${this.settings.misc.dateFormat}${this.settings.misc.dateTimeLink ? ` [${this.__('global.at')}] `: ' '}${this.settings.misc.timeFormat}`);
   }
 
   parseOptions() {

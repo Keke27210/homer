@@ -65,7 +65,7 @@ class RemoveSubcommand extends Command {
   }
 
   async execute(context) {
-    const prefix = context.args[0];
+    const prefix = context.args.join(' ');
     if (!prefix) return context.replyError(context.__('prefix.remove.noPrefix'));
 
     if (!context.settings.prefixes.includes(prefix.toLowerCase())) {
