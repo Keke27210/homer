@@ -826,7 +826,7 @@
   "tag.privatize.notFound": "Aucun tag trouvé correspondant à \"{{{ tag }}}\".",
   "tag.privatize.notOwner": "Vous n'êtes pas l'auteur du tag \"{{{ tag }}}\".",
   "tag.privatize.open": "La source du tag \"{{{ tag }}}\" est maintenant publique.",
-  "tag.privatize.close": "La source du tag \"{{{ tag }}}\" est maintenant privée.",
+  "tag.privatize.closed": "La source du tag \"{{{ tag }}}\" est maintenant privée.",
 
   "telephone.unassignedNumber": "Le numéro de téléphone fourni (`{{{ number }}}`) n'est pas assigné.",
   "telephone.noSubscription": "Ce salon n'a aucun abonnement. Souscrivez avec `h:telephone subscribe`.",  

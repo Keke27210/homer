@@ -543,7 +543,7 @@ class PrivatizeSubcommand extends Command {
   constructor(client) {
     super(client, {
       name: 'privatize',
-      aliases: ['close'],
+      aliases: ['private'],
       category: 'misc',
       dm: true,
     });
