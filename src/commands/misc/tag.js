@@ -25,6 +25,7 @@ class TagCommand extends Command {
         new UnoverrideSubcommand(client),
         new SearchSubcommand(client),
         new DomainsSubcommand(client),
+        new PrivatizeSubcommand(client),
       ],
       dm: true,
     });
@@ -203,6 +204,7 @@ class RawSubcommand extends Command {
 
     const existentTag = context.settings.tagOverrides.find(t => t.name === name.toLowerCase()) || await this.client.database.getDocument('tags', name.toLowerCase());
     if (!existentTag || !existentTag.content) return context.replyWarning(context.__('tag.notFound', { name }));
+    if (existentTag.private && context.message.author.id !== existentTag.author) return context.replyError(context.__('tag.private', { tag: existentTag.id }));
 
     context.reply(existentTag.content.replace('@everyone', '!EVERYONE').replace('@here', '!HERE'));
   }
@@ -224,6 +226,7 @@ class RawtwoSubcommand extends Command {
 
     const existentTag = context.settings.tagOverrides.find(t => t.name === name.toLowerCase()) || await this.client.database.getDocument('tags', name.toLowerCase());
     if (!existentTag || !existentTag.content) return context.replyWarning(context.__('tag.notFound', { name }));
+    if (existentTag.private && context.message.author.id !== existentTag.author) return context.replyError(context.__('tag.private', { tag: existentTag.id }));
 
     context.reply(existentTag.content, { code: 'js' });
   }
@@ -533,6 +536,34 @@ class RemoveDomainSubcommand extends Command {
     this.client.database.updateDocument('bot', 'settings', { domainWhitelist: whitelist });
 
     context.replySuccess(`The domain \`${domain}\` has been removed from the whitelist successfully!`);
+  }
+}
+
+class PrivatizeSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'privatize',
+      aliases: ['close'],
+      category: 'misc',
+      dm: true,
+    });
+  }
+
+  async execute(context) {
+    const tag = context.args[0];
+    if (!tag) return context.replyError(context.__('tag.privatize.noTag'));
+
+    const document = await this.client.database.getDocument('tags', tag);
+    if (!document) return context.replyWarning(context.__('tag.privatize.notFound', { tag }));
+    if (document.author !== context.message.author.id) return context.replyError(context.__('tag.privatize.notOwner', { tag: document.id }));
+
+    if (document.private) {
+      await this.client.database.updateDocument('tags', document.id, { private: false });
+      context.replySuccess(context.__('tag.privatize.open', { tag: document.id }));
+    } else {
+      await this.client.database.updateDocument('tags', document.id, { private: true });
+      context.replySuccess(context.__('tag.privatize.closed', { tag: document.id }));
+    }
   }
 }
 

@@ -328,6 +328,7 @@
   "helpUtil.tag.unoverride": "Delete tag overrides",
   "helpUtil.tag.search": "Search for tags",
   "helpUtil.tag.domains": "Get the list of whitelisted domains for the `http` method",
+  "helpUtil.tag.privatize": "Make the source of a tag public or private",
   "helpUtil.telephone": "Manage your telephone subscription",
   "helpUtil.telephone.subscribe": "Subscribe to the telephone",
   "helpUtil.telephone.terminate": "Terminate your telephone subscription",
@@ -810,6 +811,7 @@
 
   "tag.noName": "You must provide the name of a tag",
   "tag.execError": "An error occured during the execution of the tag!",
+  "tag.private": "The source of the tag \"{{{ tag }}}\" is private.",
   "tag.notFound": "No tag found matching \"{{{ name }}}\"",
   "tag.unknownTag": "No tag found matching \"{{{ name }}}\"",
   "tag.nsfwAlert": "You can't run a NSFW-marked tag in a non-NSFW channel.",
@@ -852,6 +854,11 @@
   "tag.domains.main": "🖥 Whitelisted domains:",
   "tag.domains.footer": "Join the support server to ask for a domain to be added.",
   "tag.domains.whitelistEmpty": "There are no whitelisted websites for the moment.",
+  "tag.privatize.noTag": "You must provide a tag to privatize.",
+  "tag.privatize.notFound": "No tag found matching \"{{{ tag }}}\".",
+  "tag.privatize.notOwner": "You are not owner of the tag \"{{{ tag }}}\".",
+  "tag.privatize.open": "The source of the tag \"{{{ tag }}}\" is now public.",
+  "tag.privatize.close": "The source of the tag \"{{{ tag }}}\" is now private.",
 
   "telephone.unassignedNumber": "The phone number provided (`{{{ number }}}`) is not assigned.",
   "telephone.noSubscription": "This channel does not have a subscription. Subscribe with `h:telephone subscribe`.",  

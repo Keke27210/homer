@@ -317,6 +317,7 @@
   "helpUtil.tag.unoverride":"Supprimer une exception de tag",
   "helpUtil.tag.search":"Rechercher des tags",
   "helpUtil.tag.domains":"Obtenir la liste des domaines autorisés pour la fonction `http`",
+  "helpUtil.tag.privatize":"Rend la source d'un tag publique ou privée.",
   "helpUtil.telephone":"Gérer l'abonnement téléphonique",
   "helpUtil.telephone.subscribe":"S'abonner au service téléphonique d'Homer",
   "helpUtil.telephone.terminate":"Résillier un abonnement téléphonique",
@@ -778,6 +779,7 @@
 
   "tag.noName":"Vous devez fournir le nom d'un tag.",
   "tag.execError":"Une erreur est survenue lors de l'exécution du tag !",
+  "tag.private":"La source du tag \"{{{ tag }}}\" est privée.",
   "tag.notFound":"Aucun tag trouvé avec le nom \"{{{ name }}}\".",
   "tag.unknownTag":"Aucun tag trouvé avec le nom \"{{{ name }}}\".",
   "tag.nsfwAlert":"Vous ne pouvez pas exécuter un tag NSFW dans un salon non-NSFW.",
@@ -820,6 +822,11 @@
   "tag.domains.main":"🖥 Domaines autorisés:",
   "tag.domains.footer":"Rejoignez le serveur d'assistance pour demander l'autorisation d'un domaine.",
   "tag.domains.whitelistEmpty":"Il n'y a aucun domaine autorisé pour le moment.",
+  "tag.privatize.noTag": "Vous devez fournir un tag à privatiser.",
+  "tag.privatize.notFound": "Aucun tag trouvé correspondant à \"{{{ tag }}}\".",
+  "tag.privatize.notOwner": "Vous n'êtes pas l'auteur du tag \"{{{ tag }}}\".",
+  "tag.privatize.open": "La source du tag \"{{{ tag }}}\" est maintenant publique.",
+  "tag.privatize.close": "La source du tag \"{{{ tag }}}\" est maintenant privée.",
 
   "telephone.unassignedNumber": "Le numéro de téléphone fourni (`{{{ number }}}`) n'est pas assigné.",
   "telephone.noSubscription": "Ce salon n'a aucun abonnement. Souscrivez avec `h:telephone subscribe`.",  
