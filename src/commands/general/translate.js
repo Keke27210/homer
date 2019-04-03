@@ -1,4 +1,4 @@
-const translator = require('google-translate-api');
+const translator = require('translatte');
 const { RichEmbed } = require('discord.js');
 const Command = require('../../structures/Command');
 

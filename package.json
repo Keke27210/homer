@@ -14,7 +14,6 @@
     "discord.js": "github:iDroid27/discord.js#stable",
     "erlpack": "github:hammerandchisel/erlpack",
     "form-data": "^2.3.3",
-    "google-translate-api": "^2.3.0",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.17",
     "node-opus": "^0.3.0",
@@ -24,6 +23,7 @@
     "rss-parser": "^3.6.0",
     "sodium": "^3.0.2",
     "superagent": "^3.8.3",
+    "translatte": "github:iDroid27/translatte",
     "uws": "^99.0.0",
     "xregexp": "^4.2.0"
   }
