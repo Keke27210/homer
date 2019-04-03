@@ -41,6 +41,7 @@ class StatsCommand extends Command {
       `${this.dot} ${context.__('stats.embed.commands')}: ${context.__('stats.embed.commandsValue', {
         count: commandsRan,
         date: moment(1527811200000) // June 1st 2018 00:00:00 UTC
+          .tz('UTC')
           .locale(context.settings.misc.locale)
           .format(context.settings.misc.dateFormat),
       })}`,

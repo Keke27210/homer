@@ -9,12 +9,11 @@ class LoggerUtil extends Util {
   }
 
   prefixTime() {
-    const date = new Date();
-    return `${date.getUTCHours()}:${date.getUTCMinutes()}:${date.getUTCSeconds()}.${date.getUTCMilliseconds()}`;
+    return moment().tz('UTC').format('HH:mm:ss.SSS');
   }
 
   generateFilename(type) {
-    const date = moment().format('DD-MM-YYYY');
+    const date = moment().tz('UTC').format('DD-MM-YYYY');
     return `${type}/${this.client.shard.id}_${date}`;
   }
 
