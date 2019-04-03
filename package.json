@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "iDroid27",
-  "license": "GPL-3.0-only",
+  "license": "GPL-3.0-or-later",
   "dependencies": {
     "big-integer": "^1.6.31",
     "discord.js": "github:iDroid27/discord.js#stable",
