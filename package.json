@@ -23,7 +23,7 @@
     "rss-parser": "^3.6.0",
     "sodium": "^3.0.2",
     "superagent": "^3.8.3",
-    "translatte": "^1.0.5",
+    "translatte": "github:iDroid27/translatte",
     "uws": "^99.0.0",
     "xregexp": "^4.2.0"
   }
