@@ -121,7 +121,7 @@ class OtherUtil extends Util {
 
   ilAFreeIlAToutCompris(text) {
     if (Date.now() - this.smsDelta < 3000) return;
-    const msg = [`Homer S${this.client.shard.id} | ${moment().format('DD/MM/YYYY HH:mm:ss')} UTC`, text].join('\n');
+    const msg = [`Homer S${this.client.shard.id} | ${moment().tz('UTC').format('DD/MM/YYYY HH:mm:ss')} UTC`, text].join('\n');
     return request
       .post('https://smsapi.free-mobile.fr/sendmsg')
       .send({
