@@ -176,6 +176,13 @@ module.exports = [
     null,
     (env, params) => bigInteger(params[0], params[1]).toString(params[2]),
   ),
+
+  // pi
+  new Method(
+    'pi',
+    () => Math.PI.toString(),
+    null,
+  ),
 ];
 
 function evaluateMath(statement) {
