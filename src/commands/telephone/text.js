@@ -26,7 +26,7 @@ class TextCommand extends Command {
 
     const status = await this.client.database.getDocument('bot', 'settings').then(s => s.telephone);
     const toSend = await this.client.database.findDocuments('telephone', { number }).then(a => a[0]);
-    if (!toSend) return context.replyWarning(context.__('telephone.notAssigned', { number }));
+    if (!toSend) return context.replyWarning(context.__('telephone.unassignedNumber', { number }));
     if (toSend.blacklist.find(b => b.channel === context.message.channel.id) || !status || !toSend.textable) {
       return context.replyWarning(context.__('text.cannotSend'));
     }
