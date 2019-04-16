@@ -54,7 +54,10 @@ class MenuManager extends Manager {
   }
 
   async _cleanReactions(i) {
-    const message = await this.client.channels.get(i.channel).fetchMessage(i.message);
+    const channel = this.client.channels.get(i.channel);
+    if (!channel) return;
+
+    const message = await channel.fetchMessage(i.message);
     message.reactions
       .filter(r => r.me)
       .forEach(r => r.remove());
