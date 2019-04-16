@@ -114,11 +114,19 @@ class DatabaseManager extends Manager {
       .run();
   }
 
-  updateDocument(table, key, data) {
+  async updateDocument(table, key, data) {
     if (!noCache.includes(table)) {
-      const index = this.cache[table].findIndex(item => item ? item.id === key : false);
-      for (const [k, v] of Object.entries(data)) {
-        this.cache[table][index][k] = v;
+      let index = this.cache[table].findIndex(item => item ? item.id === key : false);
+      if (!index) {
+        await this.getDocument(table, key, true);
+        index = this.cache[table].findIndex(item => item ? item.id === key : false);
+      }
+ 
+      // Forcing * 1000 if it doesn't pass here
+      if (index) {
+        for (const [k, v] of Object.entries(data)) {
+          this.cache[table][index][k] = v;
+        }
       }
     }
 
