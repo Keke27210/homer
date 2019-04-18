@@ -64,18 +64,18 @@ class BotlistRoutine extends Routine {
 
     // SHARD 0 ONLY
     if (this.client.shard.id === 0) {
-      const total = await this.client.shard.fetchClientValues('guilds.size')
-        .then(a => a.reduce((prev, val) => prev + val, 0))
+      const shardCount = await this.client.shard.fetchClientValues('guilds.size')
         .catch(() => null);
-      if (!total) return;
+      if (!shardCount) return;
+      const total = shardCount ? shardCount.reduce((prev, val) => prev + val, 0) : 0;
 
       // DiscordBots.group
       request
-        .post(`https://discordbots.group/api/bot/${this.client.user.id}`)
+        .post(`https://api.discordbots.group/v1/bot/${this.client.user.id}`)
         .set('Authorization', keys.discordbotsGroup)
         .set('Content-Type', 'application/json')
         .send({
-          count: total,
+          shards: shardCount,
         })
         .then(() => this.client.logger.info('Updated botlist "discordbots.group"'))
         .catch(r => this.client.logger.error(`Unable to update botlist "discordbots.group" (${r.status || '?'})`));
