@@ -213,7 +213,7 @@
   "hangup.group.receivers": "📞 The call instantiater terminated the group call.",
   "hangup.group.receiver": "📞 {{{ identity }}} hung up the phone.",
   
-  "help.main": "📚 Commandes d'{{{ name }}}:",
+  "help.main": "📚 {{{ name }}} commands:",
   "help.category.bot": "Bot",
   "help.category.general": "General",
   "help.category.misc": "Misc",
