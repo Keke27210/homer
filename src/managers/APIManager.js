@@ -41,7 +41,7 @@ class APIManager extends Manager {
       .catch(r => r.status || 0);
   }
 
-  // Google
+  // Google Search
   getGoogle(query, options = {}) {
     return request
       .get(`https://www.googleapis.com/customsearch/v1`)
@@ -57,6 +57,34 @@ class APIManager extends Manager {
       })
       .then(r => r.body)
       .catch(r => r.status || 0);
+  }
+
+  // Google Translation
+  getTranslation(text, langCode) {
+    return request
+      .get('https://translate.googleapis.com/translate_a/single')
+      .query({
+        client: 'gtx',
+        sl: 'auto',
+        tl: langCode,
+        dt: 't',
+        q: text,
+      })
+      .then(r => r.body[0][0][0])
+      .catch(r => r.status);
+  }
+
+  getLanguage(lang) {
+    if (!lang) return null;
+    lang = lang.toLowerCase();
+    if (this.client.constants.languages[lang]) return lang;
+
+    const keys = Object.keys(this.client.constants.languages).filter((key) => {
+      if (typeof this.client.constants.languages[key] !== 'string') return null;
+      return this.client.constants.languages[key].toLowerCase() === lang;
+    });
+
+    return keys[0] || null;
   }
 
   // Radio.net
