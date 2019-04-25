@@ -96,15 +96,18 @@ class DatabaseManager extends Manager {
     return data;
   }
 
-  insertDocument(table, data, options) {
-    if (!noCache.includes(table)) {
-      const index = this.cache[table].findIndex(item => item ? item.id === data.id : false);
-      if (index !== -1) {
-        for (const [k, v] of Object.entries(data)) {
-          this.cache[table][index][k] = v;
+  async insertDocument(table, data, options) {
+    // Data with no "ID" property are not cacheable
+    if (data.id) {
+      if (!noCache.includes(table)) {
+        const index = this.cache[table].findIndex(item => item ? item.id === data.id : false);
+        if (index !== -1) {
+          for (const [k, v] of Object.entries(data)) {
+            this.cache[table][index][k] = v;
+          }
+        } else {
+          this.cache[table].push(data);
         }
-      } else {
-        this.cache[table].push(data);
       }
     }
 
