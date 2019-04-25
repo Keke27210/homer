@@ -6,7 +6,7 @@ class JobsRoutine extends Routine {
   }
 
   async handle() {
-    const jobs = await this.client.database.getDocuments('jobs')
+    const jobs = await this.client.database.getDocuments('jobs', true)
       .then(jobs => jobs.filter(job => job.end - Date.now() < 0));
   
     for (const job of jobs) {

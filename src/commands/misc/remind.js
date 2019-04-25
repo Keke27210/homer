@@ -60,7 +60,7 @@ class ListSubcommand extends Command {
   }
 
   async execute(context) {
-    const jobs = await this.client.database.findDocuments('jobs', { type: 'remind', user: context.message.author.id });
+    const jobs = await this.client.database.findDocuments('jobs', { type: 'remind', user: context.message.author.id }, true);
     if (jobs.length === 0) return context.replyWarning(context.__('remind.list.noActiveRemind'));
 
     const listInformation = jobs
@@ -96,7 +96,7 @@ class DeleteSubcommand extends Command {
     const id = context.args[0];
     if (!id) return context.replyError(context.__('remind.delete.noID'));
 
-    const job = await this.client.database.findDocuments('jobs', { type: 'remind', user: context.message.author.id })
+    const job = await this.client.database.findDocuments('jobs', { type: 'remind', user: context.message.author.id }, true)
       .then(jobs => jobs.sort((a, b) => a.time - b.time)[id - 1]);
     if (!job) return context.replyWarning(context.__('remind.delete.notFound', { id }));
 
