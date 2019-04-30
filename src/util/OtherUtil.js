@@ -186,10 +186,11 @@ class OtherUtil extends Util {
         if (reactions.first().emoji.identifier === this.client.constants.emotes.successID) {
           context.settings.ageVerification = true;
           context.saveSettings();
+          message.delete();
           return true;
         }
 
-        message.edit(`${this.client.emotes.error} ${context.__('porn.cannotAccess')}`);
+        message.edit(`${this.client.constants.emotes.error} ${context.__('porn.cannotAccess')}`);
         return false;
       });
   }
