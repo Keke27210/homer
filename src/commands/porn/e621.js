@@ -24,7 +24,7 @@ class E621Command extends Command {
     if (!search || search.toLowerCase() === 'random') {
       const data = await request
         .get('https://e621.net/post/index.json?limit=100')
-        .then(r => r.body)
+        .then(r => r.body.filter(d => d.tags.includes('cub')))
         .catch(() => null);
       if (!data) return message.edit(`${this.client.constants.emotes.warning} ${context.__('porn.fetchError')}`);
 
@@ -68,7 +68,7 @@ class E621Command extends Command {
       // With search
       const data = await request
         .get(`https://e621.net/post/index.json?limit=100&tags=${encodeURIComponent(search)}`)
-        .then(r => r.body)
+        .then(r => r.body.filter(d => d.tags.includes('cub')))
         .catch(() => null);
       if (!data) return message.edit(`${this.client.constants.emotes.warning} ${context.__('porn.fetchError')}`);
 
