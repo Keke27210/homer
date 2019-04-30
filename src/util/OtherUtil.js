@@ -188,7 +188,8 @@ class OtherUtil extends Util {
           context.saveSettings();
           return true;
         }
-      
+
+        message.edit(`${this.client.emotes.error} ${context.__('porn.cannotAccess')}`);
         return false;
       });
   }
