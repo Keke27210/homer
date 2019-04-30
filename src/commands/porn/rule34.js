@@ -47,9 +47,9 @@ class Rule34Command extends Command {
 
         message.delete();
         this.client.menu.createMenu(
-          context.message.channel,
+          context.message.channel.id,
           context.message.author.id,
-          context.message,
+          context.message.id,
           context.settings.misc.locale,
           context.__('rule34.titleAll'),
           pages,
