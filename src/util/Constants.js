@@ -158,6 +158,7 @@ exports.categoryEmotes = {
   misc: '🎮',
   settings: '🔧',
   telephone: '📞',
+  porn: '🚫',
 };
 
 exports.categoryColors = {
@@ -166,6 +167,7 @@ exports.categoryColors = {
   misc: 'ORANGE',
   settings: 'GREY',
   telephone: 'RED',
+  porn: 'PINK',
 };
 
 exports.profileFields = [
