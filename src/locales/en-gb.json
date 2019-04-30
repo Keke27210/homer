@@ -492,6 +492,7 @@
   "porn.fetchError": "An unknown error has occured while calling rule34 API. Please try again later.",
   "porn.source": "Image source",
   "porn.searchTooLong": "The search length may not exceed 128 characters.",
+  "porn.author": "Author: {{{ author }}}",
   
   "prefix.list": "Prefixes for {{{ name }}}:",
   "prefix.noPrefix": "There is no custom prefix set for {{{ name }}}.",
