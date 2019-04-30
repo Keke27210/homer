@@ -34,7 +34,9 @@ class Rule34Command extends Command {
       // List them all
       if (!search) {
         const pages = [];
+        const entries = [];
         for (const item of data) {
+          entries.push('');
           pages.push({
             title: context.__('rule34.source'),
             url: item._source,
@@ -51,7 +53,7 @@ class Rule34Command extends Command {
           context.settings.misc.locale,
           context.__('rule34.titleAll'),
           pages,
-          [],
+          entries,
           { entriesPerPage: 1 },
         );
       } else {
