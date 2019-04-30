@@ -483,6 +483,7 @@
   "poll.footer": "The poll will expire",
 
   "porn.nonNsfw": "You must either be in DMs or in a NSFW-marked channel to use this command.",
+  "porn.ageVerification": "Please confirm you are aged 18+ to access this content.",
   
   "prefix.list": "Prefixes for {{{ name }}}:",
   "prefix.noPrefix": "There is no custom prefix set for {{{ name }}}.",
