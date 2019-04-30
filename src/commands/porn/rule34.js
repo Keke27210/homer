@@ -8,6 +8,7 @@ class Rule34Command extends Command {
     super(client, {
       name: 'rule34',
       aliases: ['r34'],
+      usage: '[search or "random"]',
       category: 'porn',
       dm: true,
     });

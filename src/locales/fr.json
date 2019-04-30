@@ -137,6 +137,10 @@
   "donators.perk.4": "⬅ Votre nom à gauche",
   "donators.perk.5": "Toute ma reconnaissance ❤",
 
+  "e621.titleAll": "🐺 Accueil de e621:",
+  "e621.titleRandom": "🐺 Item aléatoire de e621:",
+  "e621.titleSearch": "🐺 Résultats de recherche pour \"{{{ search }}}\":",
+  
   "emote.title":"Informations sur **{{{ name }}}**:",
   "emote.embed.id":"Discord ID",
   "emote.embed.guild":"Serveur",
@@ -233,6 +237,7 @@
   "helpUtil.contacts.delete":"Retirer quelqu'un de vos contacts",
   "helpUtil.discover":"Intégration du Server Discovery de Discord sur Homer",
   "helpUtil.donators":"Informations sur les donations",
+  "helpUtil.e621": "**-18** - Rechercher du contenu sur e621",
   "helpUtil.emote":"Obtenir des infos sur une emote",
   "helpUtil.format":"Modifier les formats de la date et de l'heure",
   "helpUtil.format.date":"Changer le format de la date",
@@ -293,6 +298,7 @@
   "helpUtil.rss.list": "Liste de tous les fils RSS actifs sur un salon",
   "helpUtil.rss.add": "Ajouter un fil RSS à un salon",
   "helpUtil.rss.remove": "Supprimer un fil RSS d'un salon",
+  "helpUtil.rule34": "**-18** - Rechercher du contenu sur rule34",
   "helpUtil.say":"Répéter ce que vous avez dit",
   "helpUtil.server":"Obtenir des infos sur le serveur",
   "helpUtil.server.staff":"Tout le staff connecté sur le serveur",
@@ -470,6 +476,14 @@
   "poll.noTitle":"Vous devez fournir un titre pour le sondage.",
   "poll.titleTooLong":"La longueur du titre ne doit excéder 64 caractères.",
   "poll.footer":"Le sondage expire",
+
+  "porn.nonNsfw": "Vous devez être en DMs ou dans un salon NSFW pour utiliser cette commande.",
+  "porn.ageVerification": "Veuillez confirmer que vous avez plus de 18 ans pour accéder à ce contenu.",
+  "porn.cannotAccess": "Vous ne pouvez pas accéder à ce contenu car vous avez moins de 18 ans.",
+  "porn.fetchError": "Une erreur est survenue lors de la récupération des données, réessayez plus tard.",
+  "porn.source": "Source de l'image",
+  "porn.searchTooLong": "La longueur de la recherche ne doit pas excéder 128 caractères.",
+  "porn.author": "Auteur: {{{ author }}}",
 
   "prefix.list":"Préfixes pour {{{ name }}}:",
   "prefix.noPrefix":"Il n'y a pas de préfixe additionnel pour {{{ name }}}.",
@@ -701,6 +715,10 @@
   "rss.update.noContent": "Aucun contenu à afficher.",
   "rss.update.error": "Une erreur est survenue lors de la récupération du fil **{{{ name }}}**.",
 
+  "rule34.titleRandom": "🍆 Item aléatoire de rule34:",
+  "rule34.titleAll": "🍆 Accueil de rule34:",
+  "rule34.titleSearch": "🍆 Résultats de recherche pour \"{{{ search }}}\":",
+  
   "say.includesEveryone":"Votre message contient une mention **@everyone** ou **@here**.",
   "say.includesMention":"Votre message contient une mention de **membre** ou de **rôle**.",
   "say.noText":"Vous devez fournir un texte à répéter !",

@@ -6,6 +6,7 @@ class E621Command extends Command {
   constructor(client) {
     super(client, {
       name: 'e621',
+      usage: '[search or "random"]',
       category: 'porn',
       dm: true,
     });
