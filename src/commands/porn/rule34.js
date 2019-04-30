@@ -67,6 +67,36 @@ class Rule34Command extends Command {
         message.edit(context.__('rule34.titleRandom'), { embed });
       }
     } else {
+      // With search
+      const data = await request
+        .get(`https://rule34.xxx/index.php?page=dapi&s=post&q=index&tags=${encodeURIComponent(search)}`)
+        .then(r => parser.parse(r.text, { attributeNamePrefix: '_', ignoreAttributes: false }).posts.post)
+        .catch(() => null);
+      if (!data) return message.edit(`${this.client.constants.emotes.warning} ${context.__('rule34.fetchError')}`);
+
+      const pages = [];
+      const entries = [];
+      for (const item of data) {
+        entries.push('');
+        pages.push({
+          title: context.__('rule34.source'),
+          url: item._source,
+          image: item._file_url,
+          time: new Date(item._created_at),
+        });
+      }
+
+      message.delete();
+      this.client.menu.createMenu(
+        context.message.channel.id,
+        context.message.author.id,
+        context.message.id,
+        context.settings.misc.locale,
+        context.__('rule34.titleSearch', { search }),
+        pages,
+        entries,
+        { entriesPerPage: 1 },
+      );
     }
   }
 }
