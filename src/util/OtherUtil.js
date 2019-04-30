@@ -168,6 +168,30 @@ class OtherUtil extends Util {
       }
     });
   }
+
+  async ageVerification(context) {
+    // User already claimed they were 18+ so just return true
+    if (context.settings.ageVerification) return true;
+
+    // They haven't, so we ask.
+    const message = await context.replyWarning(context.__('porn.ageVerification'));
+    await message.react(this.client.constants.emotes.successID);
+    await message.react(this.client.constants.emotes.errorID);
+
+    return message.awaitReactions(
+      (reaction, user) => [this.client.constants.emotes.successID, this.client.constants.emotes.errorID].includes(reaction.emoji.identifier) && user.id === context.message.author.id,
+      { max: 1 },
+    )
+      .then((reactions) => {
+        if (reactions.first().emoji.identifier === this.client.constants.emotes.successID) {
+          context.settings.ageVerification = true;
+          context.saveSettings();
+          return true;
+        }
+      
+        return false;
+      });
+  }
 }
 
 module.exports = OtherUtil;

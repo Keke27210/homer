@@ -139,6 +139,7 @@ class MenuManager extends Manager {
     const embed = new RichEmbed()
       .setTitle(pages[currentPage] && pages[currentPage].title ? pages[currentPage].title : this.__(lang, 'global.page', { num: (currentPage + 1) }))
       .setDescription(instance.entries[currentPage])
+      .setImage(pages[currentPage] && pages[currentPage].image ? pages[currentPage].image : undefined)
       .setFooter(pages[currentPage] && pages[currentPage].footer ?
         pages[currentPage].footer :
         (instance.options.footer || this.__(lang, 'global.page', { num: `${currentPage + 1}/${instance.entries.length}` })))

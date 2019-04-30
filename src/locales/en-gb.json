@@ -481,6 +481,8 @@
   "poll.noTitle": "You must provide a title for the poll.",
   "poll.titleTooLong": "The title length must be fewer than 64 characters.",
   "poll.footer": "The poll will expire",
+
+  "porn.nonNsfw": "You must either be in DMs or in a NSFW-marked channel to use this command.",
   
   "prefix.list": "Prefixes for {{{ name }}}:",
   "prefix.noPrefix": "There is no custom prefix set for {{{ name }}}.",
@@ -723,6 +725,13 @@
   "rss.update.noContent": "No content to display.",
   "rss.update.error": "An error has occured while trying to retrieve RSS feed of **{{{ name }}}**.",
   
+  "rule34.titleRandom": "🍆 Random item from rule34:",
+  "rule34.titleAll": "🍆 Homepage of rule34:",
+  "rule34.titleSearch": "🍆 Search results for \"{{{ search }}}\":",
+  "rule34.fetchError": "An unknown error has occured while calling rule34 API. Please try again later.",
+  "rule34.source": "Image source",
+  "rule34.searchTooLong": "The search length may not exceed 128 characters.",
+
   "say.includesEveryone": "Your message includes an **@everyone** or **@here** mention.",
   "say.includesMention": "Your message includes a **member** or **role** mention.",
   "say.noText": "You must provide a text to repeat!",
