@@ -17,7 +17,7 @@ class Rule34Command extends Command {
   async execute(context) {
     if (context.message.guild && !context.message.channel.nsfw) return context.replyError(context.__('porn.nonNsfw'));
     if (!context.settings.ageVerification) {
-      const age = await this.client.other.pornVerification(context);
+      const age = await this.client.other.ageVerification(context);
       if (!age) return; // Timeout or ❌ => Stop here
     }
 
