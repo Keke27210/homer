@@ -1,13 +1,11 @@
 const Command = require('../../structures/Command');
 const { RichEmbed } = require('discord.js');
 const request = require('superagent');
-const parser = require('fast-xml-parser');
 
-class Rule34Command extends Command {
+class E621Command extends Command {
   constructor(client) {
     super(client, {
-      name: 'rule34',
-      aliases: ['r34'],
+      name: 'e621',
       category: 'porn',
       dm: true,
     });
@@ -25,8 +23,8 @@ class Rule34Command extends Command {
     if (search.length > 128) return context.replyWarning(context.__('porn.searchTooLong'));
     if (!search || search.toLowerCase() === 'random') {
       const data = await request
-        .get('https://rule34.xxx/index.php?page=dapi&s=post&q=index')
-        .then(r => parser.parse(r.text, { attributeNamePrefix: '_', ignoreAttributes: false }).posts.post)
+        .get('https://e621.net/post/index.json?limit=100')
+        .then(r => r.body)
         .catch(() => null);
       if (!data) return message.edit(`${this.client.constants.emotes.warning} ${context.__('porn.fetchError')}`);
 
@@ -38,9 +36,10 @@ class Rule34Command extends Command {
           entries.push('');
           pages.push({
             title: context.__('porn.source'),
-            url: item._source,
-            image: item._file_url,
-            time: new Date(item._created_at),
+            url: item.source || `https://e621.net/post/show/${item.id}`,
+            image: item.file_url,
+            time: new Date(item.created_at.s * 1000),
+            footer: context.__('porn.author', { author: item.author }),
           });
         }
 
@@ -50,7 +49,7 @@ class Rule34Command extends Command {
           context.message.author.id,
           context.message.id,
           context.settings.misc.locale,
-          context.__('rule34.titleAll'),
+          context.__('e621.titleAll'),
           pages,
           entries,
           { entriesPerPage: 1 },
@@ -59,17 +58,17 @@ class Rule34Command extends Command {
         // Random item
         const random = data[Math.floor(Math.random() * data.length)];
         const embed = new RichEmbed()
-          .setTitle(context.__('rule34.source'))
-          .setImage(random._file_url)
-          .setURL(random._source)
-          .setTimestamp(new Date(random._created_at));
-        message.edit(context.__('rule34.titleRandom'), { embed });
+          .setTitle(context.__('e621.source'))
+          .setImage(random.file_url)
+          .setURL(random.source || `https://e621.net/post/show/${random.id}`)
+          .setTimestamp(new Date(random.created_at.s * 1000));
+        message.edit(context.__('e621.titleRandom'), { embed });
       }
     } else {
       // With search
       const data = await request
-        .get(`https://rule34.xxx/index.php?page=dapi&s=post&q=index&tags=${encodeURIComponent(search)}`)
-        .then(r => parser.parse(r.text, { attributeNamePrefix: '_', ignoreAttributes: false }).posts.post)
+        .get(`https://e621.net/post/index.json?limit=100&tags=${encodeURIComponent(search)}`)
+        .then(r => r.body)
         .catch(() => null);
       if (!data) return message.edit(`${this.client.constants.emotes.warning} ${context.__('porn.fetchError')}`);
 
@@ -79,9 +78,9 @@ class Rule34Command extends Command {
         entries.push('');
         pages.push({
           title: context.__('porn.source'),
-          url: item._source,
-          image: item._file_url,
-          time: new Date(item._created_at),
+          url: item.source || `https://e621.net/post/show/${item.id}`,
+          image: item.file_url,
+          time: new Date(item.created_at.s * 1000),
         });
       }
 
@@ -91,7 +90,7 @@ class Rule34Command extends Command {
         context.message.author.id,
         context.message.id,
         context.settings.misc.locale,
-        context.__('rule34.titleSearch', { search }),
+        context.__('e621.titleSearch', { search }),
         pages,
         entries,
         { entriesPerPage: 1 },
@@ -100,4 +99,4 @@ class Rule34Command extends Command {
   }
 }
 
-module.exports = Rule34Command;
+module.exports = E621Command;
