@@ -147,6 +147,10 @@
   "donators.perk.5": "⬅ Your name at the left",
   "donators.perk.6": "All my grattitude ❤",
 
+  "e621.titleAll": "🐺 Homepage of e621:",
+  "e621.titleRandom": "🐺 Random item from e621:",
+  "e621.titleSearch": "🐺 Search results for \"{{{ search }}}\":",
+
   "emote.title": "Information about **{{{ name }}}**:",
   "emote.embed.id": "Discord ID",
   "emote.embed.guild": "Guild",
