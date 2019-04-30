@@ -20,6 +20,10 @@ class SettingsCommand extends Command {
         `${this.dot} ${context.__('settings.embed.welcome')}: ${(context.settings.welcome.message && context.settings.welcome.channel) ? `<#${context.settings.welcome.channel}>: ${context.settings.welcome.message}` : context.__('global.none')}`,
         `${this.dot} ${context.__('settings.embed.leave')}: ${(context.settings.leave.message && context.settings.leave.channel) ? `<#${context.settings.leave.channel}>: ${context.settings.leave.message}` : context.__('global.none')}`,
       );
+    } else {
+      description.push(`${this.dot} ${context.__('settings.embed.ageVerification')}: ${context.settings.ageVerification ?
+      `${this.client.constants.emotes.success} **${context.__('global.yes')}**` :
+      `${this.client.constants.emotes.error} **${context.__('global.no')}**`}`);
     }
 
     description.push(

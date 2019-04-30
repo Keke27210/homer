@@ -785,6 +785,7 @@
   "settings.embed.locale": "Language",
   "settings.embed.welcome": "Welcome",
   "settings.embed.leave": "Leave",
+  "settings.embed.ageVerification": "Age verification",
   "settings.embed.timezone": "Timezone",
   "settings.embed.dateFormat": "Date format",
   "settings.embed.timeFormat": "Time format",
