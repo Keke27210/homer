@@ -265,6 +265,7 @@
   "helpUtil.pickup":"Répond à un appel entrant",
   "helpUtil.ping":"Pong !",
   "helpUtil.poll":"Lancer un sondage avec les options fournies",
+  "helpUtil.pornhub": "**-18** - Rechercher du contenu sur PornHub",
   "helpUtil.prefix":"Ajouter ou supprimer des préfixes",
   "helpUtil.profile":"Afficher le profil d'un utilisateur",
   "helpUtil.profile.set":"Définir une entrée sur votre profile",
@@ -483,8 +484,12 @@
   "porn.cannotAccess": "Vous ne pouvez pas accéder à ce contenu car vous avez moins de 18 ans.",
   "porn.fetchError": "Une erreur est survenue lors de la récupération des données, réessayez plus tard.",
   "porn.source": "Source de l'image",
+  "porn.noSearch": "Vous devez fournir un contenu à rechercher.",
   "porn.searchTooLong": "La longueur de la recherche ne doit pas excéder 128 caractères.",
+  "porn.noResult": "Aucun contenu trouvé correspondant à \"{{{ search }}}\".",
   "porn.author": "Auteur: {{{ author }}}",
+
+  "pornhub.title": "{{{ emote }}} **\"{{{ title }}}\"\n{{{ url }}}",
 
   "prefix.list":"Préfixes pour {{{ name }}}:",
   "prefix.noPrefix":"Il n'y a pas de préfixe additionnel pour {{{ name }}}.",

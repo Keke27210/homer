@@ -30,7 +30,7 @@ class PornhubCommand extends Command {
     if (data.length === 0) return context.replyWarning(context.__('porn.noResult', { search }));
 
     context.reply(context.__('pornhub.result', {
-      emote: this.client.constants.services.pornhub,
+      emote: this.client.constants.emotes.pornhub,
       title: data[0].title,
       url: data[0].url,
     }));
