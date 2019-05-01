@@ -24,7 +24,7 @@ class PornhubCommand extends Command {
 
     const message = await context.replyLoading(context.__('global.loading'));
     const data = await request
-      .get(`http://www.pornhub.com/webmasters/search?query=${encodeURIComponent(search)}`)
+      .get(`http://www.pornhub.com/webmasters/search?search=${encodeURIComponent(search)}`)
       .then(r => r.body.videos)
       .catch(() => null);
     if (!data) return message.edit(`${this.client.constants.emotes.warning} ${context.__('porn.fetchError')}`);
