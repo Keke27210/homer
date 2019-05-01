@@ -29,7 +29,7 @@ class PornhubCommand extends Command {
     if (!data) return context.replyWarning(context.__('porn.fetchError'));
     if (data.length === 0) return context.replyWarning(context.__('porn.noResult', { search }));
 
-    context.reply(context.__('pornhub.result', {
+    context.reply(context.__('pornhub.title', {
       emote: this.client.constants.emotes.pornhub,
       title: data[0].title,
       url: data[0].url,
