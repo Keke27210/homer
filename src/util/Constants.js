@@ -67,6 +67,7 @@ exports.emotes = {
   rss: '<:rss:529596823275307019>',
   translate: '<:translate:420659720727298054>',
   verifiedServer: '<:verified:452764762699464724>',
+  pornhub: '<:ph:573072628772765697>',
 };
 
 exports.historyIcons = {

@@ -494,8 +494,12 @@
   "porn.cannotAccess": "You cannot access this content if you are below 18.",
   "porn.fetchError": "An unknown error has occured while calling rule34 API. Please try again later.",
   "porn.source": "Image source",
+  "porn.noSearch": "You must provide something to search.",
   "porn.searchTooLong": "The search length may not exceed 128 characters.",
+  "porn.noResult": "No content found matching \"{{{ search }}}\".",
   "porn.author": "Author: {{{ author }}}",
+
+  "pornhub.title": "{{{ emote }}} **\"{{{ title }}}\"**\n{{{ url }}}",
   
   "prefix.list": "Prefixes for {{{ name }}}:",
   "prefix.noPrefix": "There is no custom prefix set for {{{ name }}}.",
