@@ -500,7 +500,7 @@
   "porn.noResult": "No content found matching \"{{{ search }}}\".",
   "porn.author": "Author: {{{ author }}}",
 
-  "pornhub.title": "{{{ emote }}} **\"{{{ title }}}\"**\n{{{ url }}}",
+  "pornhub.title": "{{{ emote }}} **{{{ title }}}**\n{{{ url }}}",
   
   "prefix.list": "Prefixes for {{{ name }}}:",
   "prefix.noPrefix": "There is no custom prefix set for {{{ name }}}.",

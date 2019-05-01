@@ -489,7 +489,7 @@
   "porn.noResult": "Aucun contenu trouvé correspondant à \"{{{ search }}}\".",
   "porn.author": "Auteur: {{{ author }}}",
 
-  "pornhub.title": "{{{ emote }}} **\"{{{ title }}}\"\n{{{ url }}}",
+  "pornhub.title": "{{{ emote }}} **{{{ title }}}**\n{{{ url }}}",
 
   "prefix.list":"Préfixes pour {{{ name }}}:",
   "prefix.noPrefix":"Il n'y a pas de préfixe additionnel pour {{{ name }}}.",
