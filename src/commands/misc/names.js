@@ -24,8 +24,9 @@ class NamesCommand extends Command {
     const data = await this.client.database.getDocument('names', user.id);
     if (!data) return context.replyWarning(context.__('names.noPreviousNames', { name: `**${user.username}**#${user.discriminator}` }));
 
-    const namesInformation = [];
-    for (const name of data.names) {
+    const namesInformation = [`${this.dot} ${user.username} - ${context.__('names.current')}`];
+    for (let i = (data.names.length - 1); i > 0; i -= 1) {
+      const name = data.names[i];
       if (typeof name === 'object') {
         namesInformation.push(`${this.dot} ${name.name} - ${context.__('global.until', {
           time: context.formatDate(name.time),

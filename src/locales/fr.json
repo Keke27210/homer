@@ -413,8 +413,9 @@
   "lookup.gift.usable.no":"Inutilisable",
   "lookup.nothingFound":"Aucun serveur, utilisateur, invitation ou code cadeau trouvé correspondant à `{{{ search }}}`.",
 
-  "names.title":"✏ Anciens noms pour {{{ name }}}:",
+  "names.title":"✏ Historique des noms de {{{ name }}}:",
   "names.noPreviousNames":"Aucun ancien nom détecté pour {{{ name }}}.",
+  "names.current": "Nom actuel",
   "names.footer": "Des informations peuvent être manquantes, ceci ne se base sur aucun service officiel.",
   "names.track.enabledNoTracking": "Vos changements de nom ne seront plus enregistrés par le bot.",
   "names.track.disabledNoTracking": "Vos changements de nom seront enregistrés par le bot.",

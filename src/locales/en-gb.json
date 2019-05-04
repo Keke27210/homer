@@ -423,8 +423,9 @@
   "lookup.gift.usable.no": "Unusable",
   "lookup.nothingFound": "No guild, user, invite or gift code found matching `{{{ search }}}`.",
 
-  "names.title": "✏ Previous names for {{{ name }}}:",
+  "names.title": "✏ Names history of {{{ name }}}:",
   "names.noPreviousNames": "No previous names recorded for {{{ name }}}",
+  "names.current": "Current name",
   "names.footer": "Some information may be missing, this does not rely on any official service.",
   "names.track.enabledNoTracking": "Your name changes won't be tracked anymore by the bot.",
   "names.track.disabledNoTracking": "Your name changes will be tracked by the bot.",
