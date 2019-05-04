@@ -5,6 +5,7 @@ class NamesCommand extends Command {
     super(client, {
       name: 'names',
       aliases: ['previousnames'],
+      children: [new DoNotTrackSubcommand(client)],
       usage: '[user]',
       dm: true,
     });
@@ -20,13 +21,52 @@ class NamesCommand extends Command {
       else if (foundMembers.length > 1) return context.replyWarning(this.client.finder.formatMembers(foundMembers, context.settings.misc.locale));
     }
 
-    const names = await this.client.database.getDocument('names', user.id);
-    if (!names) return context.replyWarning(context.__('names.noPreviousNames', { name: `**${user.username}**#${user.discriminator}` }));
+    const data = await this.client.database.getDocument('names', user.id);
+    if (!data) return context.replyWarning(context.__('names.noPreviousNames', { name: `**${user.username}**#${user.discriminator}` }));
 
-    context.replySuccess([
+    const namesInformation = [];
+    for (const name of data.names) {
+      if (typeof name === 'object') {
+        namesInformation.push(`${this.dot} ${name.name} - ${context.__('global.until', {
+          time: context.formatDate(name.time),
+        })}`)
+      } else {
+        namesInformation.push(`${this.dot} ${name}`);
+      }
+    }
+
+    this.client.menu.createMenu(
+      context.message.channel.id,
+      context.message.author.id,
+      context.message.id,
+      context.settings.misc.locale,
       context.__('names.title', { name: `**${user.username}**#${user.discriminator}` }),
-      names.names.join(', '),
-    ].join('\n'));
+      [],
+      namesInformation,
+      { footer: context.__('names.footer') },
+    );
+  }
+}
+
+class DoNotTrackSubcommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'track',
+      aliases: ['untrack', 'donottrack'],
+      dm: true,
+    });
+  }
+
+  async execute(context) {
+    if (context.settings.misc.doNotTrackNames) {
+      context.settings.misc.doNotTrackNames = false;
+      context.saveSettings();
+      context.replySuccess(context.__('names.track.disabledNoTracking'));
+    } else {
+      context.settings.misc.doNotTrackNames = true;
+      context.saveSettings();
+      context.replySuccess(context.__('names.track.enabledNoTracking'));
+    }
   }
 }
 

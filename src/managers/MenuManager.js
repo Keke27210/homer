@@ -82,10 +82,12 @@ class MenuManager extends Manager {
     const generatedEmbed = this.generateEmbed(instance);
     const sentMessage = await (this.client.channels.get(instance.channel) || await this.client.fetchUser(instance.author)).send(content, { embed: generatedEmbed });
 
-    (async function () {
-      const reactions = Object.keys(emotes);
-      for (let i = 0; i < reactions.length; i += 1) await sentMessage.react(reactions[i]);
-    })();
+    if (instance.entries.length > 1) {
+      (async function () {
+        const reactions = Object.keys(emotes);
+        for (let i = 0; i < reactions.length; i += 1) await sentMessage.react(reactions[i]);
+      })();
+    }
 
     instance.message = sentMessage.id;
     this.instances.push(instance);

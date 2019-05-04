@@ -19,6 +19,7 @@
   "global.groupDm": "Group DM",
   "global.page": "Page {{{ num }}}",
   "global.donatorsOnly": "This feature is reserved to donators only.",
+  "global.until": "until {{{ time }}}",
 
   "about.title": "{{{ emote }}} Information about {{{ name }}}:",
   "about.embed.text": "Hello!\nI am a general purpose bot for all Discord communities.\nI provide you necessary tools to meet your needs, from utility to fun features you can fully enjoy me.\nYou can get below some useful information about me.",
@@ -270,6 +271,8 @@
   "helpUtil.leave.channel": "Set the leave channel",
   "helpUtil.leave.clear": "Clear the leave message (disable the feature)",
   "helpUtil.lookup": "Get information on user IDs, guild IDs and invites",
+  "helpUtil.names": "Get someone's previous names (may not be accurate)",
+  "helpUtil.names.track": "Choose whether or not to be tracked by the bot",
   "helpUtil.phblacklist": "Manage blacklist for the current phone subscription",
   "helpUtil.phmessage": "Manage messages used by the telephone",
   "helpUtil.phonebook": "Browse through the Homer telephone book",
@@ -422,6 +425,9 @@
 
   "names.title": "Previous names for {{{ name }}}:",
   "names.noPreviousNames": "No previous names recorded for {{{ name }}}",
+  "names.footer": "Some information may be missing, this does not rely on any official service.",
+  "names.track.enabledNoTracking": "Your name changes won't be tracked anymore by the bot.",
+  "names.track.disabledNoTracking": "Your name changes will be tracked by the bot.",
 
   "permission.ADMINISTRATOR": "Administrator",
   "permission.CREATE_INSTANT_INVITE": "Create Instant Invite",

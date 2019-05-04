@@ -15,7 +15,7 @@ class UserUpdateEvent extends Event {
         names: [],
       });
 
-      namesObject.names.push(oldUser.username);
+      namesObject.names.push({ name: oldUser.username, time: Date.now() });
       this.client.database.insertDocument('names', namesObject, { conflict: 'update' });
     }
   }

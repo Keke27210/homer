@@ -19,6 +19,7 @@
   "global.groupDm":"Conversation de groupe",
   "global.page":"Page {{{ num }}}",
   "global.donatorsOnly": "Cette fonctionnalité est réservée uniquement aux donateurs.",
+  "global.until": "jusqu'au {{{ time }}}",
 
   "about.title":"{{{ emote }}} Informations à propos d'{{{ name }}}:",
   "about.embed.text":"Hello!\nI am a general purpose bot for all Discord communities.\nI provide you necessary tools to meet your needs, from utility to fun features you can fully enjoy me.\nYou can get below some useful information about me.",
@@ -260,6 +261,8 @@
   "helpUtil.leave.channel":"Modifier le salon de départ",
   "helpUtil.leave.clear":"Supprime le message de départ (désactive la fonctionnalité)",
   "helpUtil.lookup":"Infos sur un ID, un code cadeau ou une invitation",
+  "helpUtil.names": "Obtenir les anciens noms de quelqu'un (des informations peuvent manquer)",
+  "helpUtil.names.track": "Choisir d'être ou non pisté par le bot",
   "helpUtil.phblacklist":"Gérer la liste noire d'un abonnement téléphonique",
   "helpUtil.phmessage":"Gérer les messages automatiques d'un abonnement",
   "helpUtil.phonebook":"Ouvre l'annuaire téléphonique d'Homer",
@@ -412,6 +415,9 @@
 
   "names.title":"Anciens noms pour {{{ name }}}:",
   "names.noPreviousNames":"Aucun ancien nom détecté pour {{{ name }}}.",
+  "names.footer": "Des informations peuvent être manquantes, ceci ne se base sur aucun service officiel.",
+  "names.track.enabledNoTracking": "Vos changements de nom ne seront plus enregistrés par le bot.",
+  "names.track.disabledNoTracking": "Vos changements de nom seront enregistrés par le bot.",
 
   "permission.ADMINISTRATOR":"Administrateur",
   "permission.CREATE_INSTANT_INVITE":"Créer une invitation",
