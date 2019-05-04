@@ -10,6 +10,9 @@ class UserUpdateEvent extends Event {
 
     // Update names
     if (oldUser.username !== newUser.username) {
+      const settings = await this.client.database.getDocument('settings', newUser.id);
+      if (settings && settings.misc.doNotTrackNames) return;
+
       const namesObject = await this.client.database.getDocument('names', newUser.id) || ({
         id: newUser.id,
         names: [],
