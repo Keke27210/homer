@@ -24,15 +24,15 @@ class NamesCommand extends Command {
     const data = await this.client.database.getDocument('names', user.id);
     if (!data) return context.replyWarning(context.__('names.noPreviousNames', { name: `**${user.username}**#${user.discriminator}` }));
 
-    const namesInformation = [`${this.dot} ${user.username} - ${context.__('names.current')}`];
+    const namesInformation = [`${this.dot} **${unMarkdown(user.username)}** - ${context.__('names.current')}`];
     for (let i = (data.names.length - 1); i > 0; i -= 1) {
       const name = data.names[i];
       if (typeof name === 'object') {
-        namesInformation.push(`${this.dot} ${name.name} - ${context.__('global.until', {
+        namesInformation.push(`${this.dot} **${unMarkdown(name.name)}** - ${context.__('global.until', {
           time: context.formatDate(name.time),
         })}`)
       } else {
-        namesInformation.push(`${this.dot} ${name}`);
+        namesInformation.push(`${this.dot} **${unMarkdown(name)}**`);
       }
     }
 
@@ -69,6 +69,12 @@ class DoNotTrackSubcommand extends Command {
       context.replySuccess(context.__('names.track.enabledNoTracking'));
     }
   }
+}
+
+function unMarkdown(text) {
+  return text
+    .replace(/_/g, '\\_')
+    .replace(/\*/g, '\\*');
 }
 
 module.exports = NamesCommand;
