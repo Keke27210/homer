@@ -68,7 +68,7 @@ class APIManager extends Manager {
         sl: 'auto',
         tl: langCode,
         dt: 't',
-        q: text,
+        q: encodeURIComponent(text),
       })
       .then(r => r.body[0][0][0])
       .catch(r => r.status);
