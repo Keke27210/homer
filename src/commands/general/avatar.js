@@ -23,7 +23,7 @@ class AvatarCommand extends Command {
 
     const embed = new RichEmbed()
       .setImage(user.avatar
-        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}`
+        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=512`
         : this.getDefaultAvatar(user.discriminator));
 
     context.reply(
@@ -36,7 +36,7 @@ class AvatarCommand extends Command {
 
   getDefaultAvatar(discriminator) {
     const defaultAvatarID = discriminator % 5;
-    return `https://cdn.discordapp.com/embed/avatars/${defaultAvatarID}.png`;
+    return `https://cdn.discordapp.com/embed/avatars/${defaultAvatarID}.png?size=512`;
   }
 }
 
