@@ -68,6 +68,8 @@ class APIManager extends Manager {
         sl: 'auto',
         tl: langCode,
         dt: 't',
+        ie: 'UTF-8',
+        oe: 'UTF-8',
         q: text,
       })
       .then(r => r.body[0][0][0])

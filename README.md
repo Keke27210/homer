@@ -1,4 +1,4 @@
-![Homer avatar](https://cdn.discordapp.com/avatars/305277118105911296/83edde7cf67d195b5828b731fb9ff9a4.png)
+![Homer avatar](https://cdn.discordapp.com/avatars/305277118105911296/c4ec60c0a110ea4ac268f8aaf9c657da.png)
 
 # Main features
 • **General purpose** - Tons of useful commands for communities •  
