@@ -101,6 +101,7 @@ exports.regionFlags = {
   'eu-west': ':flag_eu:',
   frankfurt: ':flag_de:',
   hongkong: ':flag_hk:',
+  india: ':flag_in:',
   japan: ':flag_jp:',
   london: ':flag_gb:',
   russia: ':flag_ru:',
