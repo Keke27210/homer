@@ -46,10 +46,12 @@ class ServerCommand extends Command {
       `${this.dot} ${context.__('server.embed.region')}: ${this.client.constants.regionFlags[region]} **${context.__(`server.region.${region}`)}${guild.region.startsWith('vip-') ? ' (VIP)' : ''}**`,
       `${this.dot} ${context.__('server.embed.channels')}: ${channels}`,
       `${this.dot} ${context.__('server.embed.members')}: ${members}`,
+      `${this.dot} ${context.__('server.embed.systemChannel')}: ${guild.systemChannel ? `**#${guild.systemChannel.name}** (${context.__('server.systemChannel.1')})` : context.__('global.none')}`,
       `${this.dot} ${context.__('server.embed.verificationLevel')}: **${context.__(`server.verificationLevel.${guild.verificationLevel}`)}**`,
       `${this.dot} ${context.__('server.embed.explicitContentFilter')}: **${context.__(`server.explicitContentFilter.${guild.explicitContentFilter}`)}**`,
       `${this.dot} ${context.__('server.embed.mfaRequired')}: **${guild.mfaLevel === 1 ? context.__('global.yes') : context.__('global.no')}**`,
       `${this.dot} ${context.__('server.embed.defaultMessageNotifications')}: **${context.__(`server.defaultMessageNotifications.${guild.defaultMessageNotifications}`)}**`,
+      `${this.dot} ${context.__('server.embed.features')}: ${guild.features.map(f => `**${context.__(`server.feature.${f}`)}**`).join(', ') || context.__('global.none')}`,
       `${this.dot} ${context.__('server.embed.creation')}: **${context.formatDate(guild.createdTimestamp)}**`,
     ].join('\n');
 
