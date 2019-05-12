@@ -343,6 +343,7 @@
   "helpUtil.timezone":"Changer le fuseau horaire",
   "helpUtil.timezone.search":"Rechercher des fuseaux horaires",
   "helpUtil.translate":"Traduire le texte donné dans la langue spécifiée",
+  "helpUtil.translate.list": "Obtenir la liste des langues cible supportées",
   "helpUtil.user":"Obtenir des infos sur un membre",
   "helpUtil.vip":"Lister tous les VIPs",
   "helpUtil.weather":"Voir les prévisions météorologiques du lieu donné",

@@ -353,6 +353,7 @@
   "helpUtil.timezone": "Set the server timezone",
   "helpUtil.timezone.search": "Search for timezones",
   "helpUtil.translate": "Translate the given text into the specified language",
+  "helpUtil.translate.list": "Get a list of supported target languages",
   "helpUtil.user": "Get information about a member",
   "helpUtil.vip": "Get the list of VIPs on Homer",
   "helpUtil.weather": "Get current weather for the specified location",
