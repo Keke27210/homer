@@ -801,7 +801,7 @@
   "server.region.southafrica": "South Africa",
   "server.region.sydney": "Sydney",
   "server.systemChannel.1": "Welcome messages",
-  "server.feature.VIP_REGION": "VIP Region",
+  "server.feature.VIP_REGIONS": "VIP Regions",
   "server.feature.VANITY_URL": "Vanity URL",
   "server.feature.INVITE_SPLASH": "Invite splash",
   "server.feature.VERIFIED": "Verified",
