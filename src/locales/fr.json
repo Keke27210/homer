@@ -984,12 +984,14 @@
   "timezone.search.results":"🕐 Fuseaux horaires trouvés correspondant à `{{{ search }}}`:\n{{{ found }}}",
 
   "translate.noTargetLanguage":"Vous devez fournir une langue cible (norme ISO 639-1).",
-  "translate.invalidTarget":"La langue cible spécifiée n'est pas valide.",
+  "translate.invalidTarget":"La langue cible spécifiée n'est pas valide. Entrez `{{{ command }}}` pour voir la liste des langues compatibles.",
   "translate.noText":"Vous devez fournir un texte à traduire.",
   "translate.textTooLong":"La longueur du texte doit être inférieure à 512 caractères.",
   "translate.title":"Texte traduit (`{{{ targetLanguage }}}`):",
   "translate.error":"Une erreur est survenue lors de la traduction !",
   "translate.footer":"Traduction fournie par l'API Google Traduction.",
+  "translate.list": "{{{ emote }}} Langues cible compatibles:",
+  "translate.list.footer": "Traduisez avec la syntaxe suivante: {{{ command }}}",
 
   "user.title":"{{{ emote }}} Informations sur {{{ name }}}:",
   "user.embed.id":"Discord ID",

@@ -1016,12 +1016,14 @@
   "timezone.search.results": "🕐 Timezones found matching `{{{ search }}}`:\n{{{ found }}}",
   
   "translate.noTargetLanguage": "You must provide a target language (ISO 639-1 format)",
-  "translate.invalidTarget": "The specified target language is not valid",
+  "translate.invalidTarget": "The specified target language is not valid. Run `{{{ command }}}` to get the list of supported languages.",
   "translate.noText": "You must provide a text to translate",
   "translate.textTooLong": "The text length must be fewer than 512 characters",
   "translate.title": "Translated text (`{{{ targetLanguage }}}`):",
   "translate.error": "An error occured during the translation! Please check if you use a correct target language code",
   "translate.footer": "Translation provided by Google Translate API",
+  "translate.list": "{{{ emote }}} Compatible target languages:",
+  "translate.list.footer": "Translate using the following syntax: {{{ command }}}",
   
   "user.title": "{{{ emote }}} Information about {{{ name }}}:",
   "user.embed.id": "Discord ID",
