@@ -53,7 +53,7 @@ class OtherUtil extends Util {
     for (const feed of feeds) {
       const language = await this.client.database.getDocument('settings', feed.settings).then(s => s ? s.misc.locale : 'en-gb');
       const parsed = await this.client.rss.parseURL(feed.url).catch(() => null);
-      if (!parsed) return this.client.sendMessage(feed.channel, `${this.client.constants.emotes.warning} ${client.__(language, 'rss.update.error', { name: feed.name })}`);
+      if (!parsed) return this.client.sendMessage(feed.channel, `${this.client.constants.emotes.warning} ${this.client.__(language, 'rss.update.error', { name: feed.name })}`);
 
       const pages = [];
       const entries = [];
