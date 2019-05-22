@@ -41,7 +41,7 @@ class ServerCommand extends Command {
     ].join(' - ');
 
     const serverInformation = [
-      `${this.dot} ${context.__('server.embed.id')}: **${guild.id}**${guild.verified ? ` ${this.client.constants.emotes.verifiedServer}` : ''}`,
+      `${this.dot} ${context.__('server.embed.id')}: **${guild.id}**${guild.verified ? ` ${this.client.constants.emotes.verifiedServer}` : ''}${guild.features.includes('PARTNERED') ? ` ${this.client.constants.emotes.partner}` : ''}`,
       `${this.dot} ${context.__('server.embed.owner')}: **${guildOwner.username}**#${guildOwner.discriminator} (ID:${guild.ownerID})`,
       `${this.dot} ${context.__('server.embed.region')}: ${this.client.constants.regionFlags[region]} **${context.__(`server.region.${region}`)}${guild.region.startsWith('vip-') ? ' (VIP)' : ''}**`,
       `${this.dot} ${context.__('server.embed.channels')}: ${channels}`,
