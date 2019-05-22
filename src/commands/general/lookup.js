@@ -70,8 +70,19 @@ class LookupCommand extends Command {
             icon: `https://cdn.discordapp.com/icons/${guildObject.id}/${i.guild.icon}.png`,
             memberCount: i.approximate_member_count,
             verified: i.guild.features.includes('VERIFIED'),
+            partnered: i.guild.features.includes('PARTNERED'),
           }))
-          .catch(() => ({}));
+          .catch(() => {
+            const guild = this.client.guilds.get(guildObject.id);
+            if (!guild) return null;
+
+            return ({
+              icon: `https://cdn.discordapp.com/icons/${guildObject.id}/${guild.icon}.png`,
+              memberCount: guild.memberCount,
+              verified: guild.features.includes('VERIFIED'),
+              partnered: guild.features.includes('PARTNERED'),
+            });
+          });
 
         let counts = {};
         for (let i = 0; i < guildObject.members.length; i += 1) {
@@ -89,7 +100,7 @@ class LookupCommand extends Command {
         if (metadata.memberCount) members.push(`${this.client.constants.status.offline} **${metadata.memberCount - guildObject.members.length}**`);
 
         const guildInformation = [
-          `${this.dot} ${context.__('server.embed.id')}: **${guildObject.id}**${metadata.verified ? `${this.client.constants.emotes.verifiedServer}` : ''}`,
+          `${this.dot} ${context.__('server.embed.id')}: **${guildObject.id}**${metadata.verified ? `${this.client.constants.emotes.verifiedServer}` : ''}${metadata.partnered ? `${this.client.constants.emotes.partner}` : ''}`,
           `${this.dot} ${context.__('server.embed.members')}: ${members.join(' - ')}`,
           `${this.dot} ${context.__('server.embed.channels')}: **${guildObject.channels.length}** ${context.__('channel.type.voice')}`,
           `${this.dot} ${context.__('server.embed.invite')}: ${inviteCode ? `**[${inviteCode}](https://discord.gg/${inviteCode})**` : context.__('global.none')}`,
