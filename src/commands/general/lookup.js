@@ -100,7 +100,7 @@ class LookupCommand extends Command {
         if (metadata.memberCount) members.push(`${this.client.constants.status.offline} **${metadata.memberCount - guildObject.members.length}**`);
 
         const guildInformation = [
-          `${this.dot} ${context.__('server.embed.id')}: **${guildObject.id}**${metadata.verified ? `${this.client.constants.emotes.verifiedServer}` : ''}${metadata.partnered ? `${this.client.constants.emotes.partner}` : ''}`,
+          `${this.dot} ${context.__('server.embed.id')}: **${guildObject.id}**${metadata.verified ? ` ${this.client.constants.emotes.verifiedServer}` : ''}${metadata.partnered ? ` ${this.client.constants.emotes.partner}` : ''}`,
           `${this.dot} ${context.__('server.embed.members')}: ${members.join(' - ')}`,
           `${this.dot} ${context.__('server.embed.channels')}: **${guildObject.channels.length}** ${context.__('channel.type.voice')}`,
           `${this.dot} ${context.__('server.embed.invite')}: ${inviteCode ? `**[${inviteCode}](https://discord.gg/${inviteCode})**` : context.__('global.none')}`,
