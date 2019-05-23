@@ -19,7 +19,7 @@ class BaninfoCommand extends Command {
     const search = context.args.join(' ');
     let user = null;
     if (search) {
-      const foundUsers = this.client.finder.findUsers(bans, search);
+      const foundUsers = this.client.finder.findUsers(bans.map(b => b.user), search);
       if (!foundUsers || foundUsers.length === 0) return context.replyError(context.__('finderUtil.findUsers.zeroResult', { search }));
       else if (foundUsers.length === 1) user = foundUsers[0];
       else return context.replyWarning(this.client.finder.formatUsers(foundUsers, context.settings.misc.locale));
