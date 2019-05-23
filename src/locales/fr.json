@@ -123,11 +123,6 @@
   "contacts.delete.doesntExist":"Aucun contact trouvé avec le numéro fourni.",
   "contacts.delete.deleted":"Ce contact a été supprimé avec succès !",
 
-  "discover.main":"🔍 Server Discovery par Discord:",
-  "discover.footer":"Ces serveurs ont été certifiés par l'équipe Discord • Serveur {{{ count }}}",
-  "discover.noGuilds":"Aucun serveur ne peut être affiché pour le moment, réessayez plus tard.",
-  "discover.accessDisclaimer": "Vous devez utiliser le Server Discovery officiel pour le moment",
-
   "donators.main":"💶 Donations pour **{{{ name }}}**:",
   "donators.text":"Homer est un bot Discord gratuit développé bénévolement par un étudiant.\nMalgré la motivation à vouloir maintenir le bot, l'hébergement de ce dernier reste payant.\nVous pouvez m'aider à financer l'hébergement du bot en faisant une donation, vous profiterez de petits avantages sympa que vous retrouvez juste en-dessous.\nLe montant minimum, qui vous permet de profiter des avantages, est de 2€ mais vous pouvez donner plus selon vos envies.\n\nMerci énormément, ❤\niDroid.\n\n**[Lien de donation sécurisé]({{{ link }}})**",
   "donators.donators":"👥 Donateurs",
@@ -138,10 +133,6 @@
   "donators.perk.4": "Appels groupés sur le téléphone",
   "donators.perk.5": "⬅ Votre nom à gauche",
   "donators.perk.6": "Toute ma reconnaissance ❤",
-
-  "e621.titleAll": "🐺 Accueil de e621:",
-  "e621.titleRandom": "🐺 Item aléatoire de e621:",
-  "e621.titleSearch": "🐺 Résultats de recherche pour \"{{{ search }}}\":",
   
   "emote.title":"Informations sur **{{{ name }}}**:",
   "emote.embed.id":"Discord ID",
@@ -215,7 +206,6 @@
   "help.category.misc":"Divers",
   "help.category.settings":"Paramétrage",
   "help.category.telephone":"Téléphone",
-  "help.category.nsfw":"NSFW",
   "help.category.more": "Plus d'aide",
   "help.more": "Si vous avez plus de questions ou rencontrez un problème avec Homer, rejoignez-nous sur le **[serveur d'assistance](https://discord.gg/{{{ invite }}})** où vous pourrez rapidement être aidé !\nVous pouvez également effectuer une donation pour aider au développement d'Homer et avoir accès à des fonctionnalités réservées aux donateurs (tel qu'un numéro de téléphone personnalisable).",
   "help.footer":"Ajoutez \"help\" à la fin de la commande pour obtenir une aide avancée.",
@@ -238,9 +228,7 @@
   "helpUtil.contacts":"Rechercher des personnes sur l'annuaire téléphonique",
   "helpUtil.contacts.add":"Ajouter quelqu'un à vos contacts",
   "helpUtil.contacts.delete":"Retirer quelqu'un de vos contacts",
-  "helpUtil.discover":"Intégration du Server Discovery de Discord sur Homer",
   "helpUtil.donators":"Informations sur les donations",
-  "helpUtil.e621": "**-18** - Rechercher du contenu sur e621",
   "helpUtil.emote":"Obtenir des infos sur une emote",
   "helpUtil.format":"Modifier les formats de la date et de l'heure",
   "helpUtil.format.date":"Changer le format de la date",
@@ -269,7 +257,6 @@
   "helpUtil.pickup":"Répond à un appel entrant",
   "helpUtil.ping":"Pong !",
   "helpUtil.poll":"Lancer un sondage avec les options fournies",
-  "helpUtil.pornhub": "**-18** - Rechercher du contenu sur PornHub",
   "helpUtil.prefix":"Ajouter ou supprimer des préfixes",
   "helpUtil.profile":"Afficher le profil d'un utilisateur",
   "helpUtil.profile.set":"Définir une entrée sur votre profile",
@@ -304,7 +291,6 @@
   "helpUtil.rss.list": "Liste de tous les fils RSS actifs sur un salon",
   "helpUtil.rss.add": "Ajouter un fil RSS à un salon",
   "helpUtil.rss.remove": "Supprimer un fil RSS d'un salon",
-  "helpUtil.rule34": "**-18** - Rechercher du contenu sur rule34",
   "helpUtil.say":"Répéter ce que vous avez dit",
   "helpUtil.server":"Obtenir des infos sur le serveur",
   "helpUtil.server.staff":"Tout le staff connecté sur le serveur",
@@ -487,18 +473,6 @@
   "poll.noTitle":"Vous devez fournir un titre pour le sondage.",
   "poll.titleTooLong":"La longueur du titre ne doit excéder 64 caractères.",
   "poll.footer":"Le sondage expire",
-
-  "porn.nonNsfw": "Vous devez être en DMs ou dans un salon NSFW pour utiliser cette commande.",
-  "porn.ageVerification": "Veuillez confirmer que vous avez plus de 18 ans pour accéder à ce contenu.",
-  "porn.cannotAccess": "Vous ne pouvez pas accéder à ce contenu car vous avez moins de 18 ans.",
-  "porn.fetchError": "Une erreur est survenue lors de la récupération des données, réessayez plus tard.",
-  "porn.source": "Source de l'image",
-  "porn.noSearch": "Vous devez fournir un contenu à rechercher.",
-  "porn.searchTooLong": "La longueur de la recherche ne doit pas excéder 128 caractères.",
-  "porn.noResult": "Aucun contenu trouvé correspondant à \"{{{ search }}}\".",
-  "porn.author": "Auteur: {{{ author }}}",
-
-  "pornhub.title": "{{{ emote }}} **{{{ title }}}**\n{{{ url }}}",
 
   "prefix.list":"Préfixes pour {{{ name }}}:",
   "prefix.noPrefix":"Il n'y a pas de préfixe additionnel pour {{{ name }}}.",
@@ -729,10 +703,6 @@
   "rss.update.footer": "Contenu {{{ i }}}/{{{ total }}} | Date de publication",
   "rss.update.noContent": "Aucun contenu à afficher.",
   "rss.update.error": "Une erreur est survenue lors de la récupération du fil **{{{ name }}}**.",
-
-  "rule34.titleRandom": "🍆 Item aléatoire de rule34:",
-  "rule34.titleAll": "🍆 Accueil de rule34:",
-  "rule34.titleSearch": "🍆 Résultats de recherche pour \"{{{ search }}}\":",
   
   "say.includesEveryone":"Votre message contient une mention **@everyone** ou **@here**.",
   "say.includesMention":"Votre message contient une mention de **membre** ou de **rôle**.",

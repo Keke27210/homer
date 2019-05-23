@@ -135,65 +135,6 @@ class OtherUtil extends Util {
       })
       .catch(r => r.status);
   }
-
-  recordSound(voiceConnection, user, time = 10) {
-    return new Promise(async (resolve, reject) => {
-      const receiver = voiceConnection.createReceiver();
-      let data;
-
-      receiver.on('pcm', (speaker, buffer) => {
-        if (speaker.id !== user.id) return;
-        data = data ? Buffer.concat([data, buffer]) : buffer;
-      });
-
-      receiver.on('warn', (reason, message) => {
-        console.log(`Warn (${reason}): ${message}`);
-        reject({ reason, message });
-      });
-
-      this.client.setTimeout(() => {
-        receiver.destroy();
-        return resolve(data || null);
-      }, time * 1000);
-
-      // Mute and unmute the target user, otherwise it doesn't receive voice data
-      const member = voiceConnection.channel.guild.members.get(user.id);
-      try {
-        await wait(500);
-        await member.setMute(true, 'HOMER VOICE RECORDER (most likely Shazam command)');
-        await wait(500);
-        await member.setMute(false, 'HOMER VOICE RECORDER (most likely Shazam command)');
-      } catch (e) {
-        reject({ reason: 'PERMISSIONS', message: 'MUTE_MEMBERS' });
-      }
-    });
-  }
-
-  async ageVerification(context) {
-    // User already claimed they were 18+ so just return true
-    if (context.settings.ageVerification) return true;
-
-    // They haven't, so we ask.
-    const message = await context.replyWarning(context.__('porn.ageVerification'));
-    await message.react(this.client.constants.emotes.successID);
-    await message.react(this.client.constants.emotes.errorID);
-
-    return message.awaitReactions(
-      (reaction, user) => [this.client.constants.emotes.successID, this.client.constants.emotes.errorID].includes(reaction.emoji.identifier) && user.id === context.message.author.id,
-      { max: 1 },
-    )
-      .then((reactions) => {
-        if (reactions.first().emoji.identifier === this.client.constants.emotes.successID) {
-          context.settings.ageVerification = true;
-          context.saveSettings();
-          message.delete();
-          return true;
-        }
-
-        message.edit(`${this.client.constants.emotes.error} ${context.__('porn.cannotAccess')}`);
-        return false;
-      });
-  }
 }
 
 module.exports = OtherUtil;

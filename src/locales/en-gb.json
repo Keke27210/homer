@@ -131,11 +131,6 @@
   "contacts.delete.noNumber": "You must provide a number to delete.",
   "contacts.delete.doesntExist": "No contact entry found matching the given number.",
   "contacts.delete.deleted": "This contact has been deleted successfully!",
-
-  "discover.main": "🔍 Server Discovery by Discord:",
-  "discover.footer": "These servers are certified by the Discord team • Server {{{ count }}}",
-  "discover.noGuilds": "No guilds can be showed for the moment, please try again later.",
-  "discover.accessDisclaimer": "You must go through the official Server Discovery for the moment",
   
   "donators.main": "💶 Donations for **{{{ name }}}**:",
   "donators.text": "Homer is a free Discord bot developed by a student on a voluntary basis.\nDespite the motivation to maintain the bot, the hosting of the bot remains paid.\nYou can help me finance the hosting of the bot by making a donation, you will enjoy some nice little benefits that you find just below.\nThe minimum amount, which allows you to take advantage of the advantages, is 2€ but you can give more according to your desires.\n\nThank you very much, ❤\niDroid.\n\n**[Secured donation link]({{{ link }}})**",
@@ -147,10 +142,6 @@
   "donators.perk.4": "Group calls on the telephone",
   "donators.perk.5": "⬅ Your name at the left",
   "donators.perk.6": "All my grattitude ❤",
-
-  "e621.titleAll": "🐺 Homepage of e621:",
-  "e621.titleRandom": "🐺 Random item from e621:",
-  "e621.titleSearch": "🐺 Search results for \"{{{ search }}}\":",
 
   "emote.title": "Information about **{{{ name }}}**:",
   "emote.embed.id": "Discord ID",
@@ -224,7 +215,6 @@
   "help.category.misc": "Misc",
   "help.category.settings": "Settings",
   "help.category.telephone": "Telephone",
-  "help.category.porn": "NSFW",
   "help.category.more": "More help",
   "help.more": "If you have more questions about a feature or cannot troubleshoot a problem encountered with Homer, feel free to join our **[support server](https://discord.gg/{{{ invite }}})** where you can be helped quickly!\nYou can also make a donation to support Homer's development and have access to some cool donator perks (such as customizable telephone number, etc).",
   "help.footer": "Add \"help\" at the end of the command to get advanced help.",
@@ -248,9 +238,7 @@
   "helpUtil.contacts": "Search for people in your contacts book",
   "helpUtil.contacts.add": "Add someone to your contacts",
   "helpUtil.contacts.delete": "Remove someone from your contacts",
-  "helpUtil.discover": "Discord's Server Discovery integration on Homer",
   "helpUtil.donators": "Information about donations",
-  "helpUtil.e621": "**PORN** - Search for content on e621",
   "helpUtil.emote": "Get information about an emote",
   "helpUtil.format": "Manage the date and time formats",
   "helpUtil.format.date": "Set the date format",
@@ -279,7 +267,6 @@
   "helpUtil.pickup": "Pickup an incoming call",
   "helpUtil.ping": "Pong!",
   "helpUtil.poll": "Run advanced polls with desired options",
-  "helpUtil.pornhub": "**PORN** - Search for content on PornHub",
   "helpUtil.prefix": "Add or remove server prefixes",
   "helpUtil.profile": "Get the profile of a user",
   "helpUtil.profile.set": "Set a profile field",
@@ -314,7 +301,6 @@
   "helpUtil.rss.list": "List all active RSS feeds in a channel",
   "helpUtil.rss.add": "Add an RSS feed to a channel",
   "helpUtil.rss.remove": "Remove an RSS feed from a channel",
-  "helpUtil.rule34": "**PORN** - Search for content on rule34",
   "helpUtil.say": "Repeat what you just said",
   "helpUtil.server": "Get information about the server",
   "helpUtil.server.staff": "All online staff on the server",
@@ -497,18 +483,6 @@
   "poll.noTitle": "You must provide a title for the poll.",
   "poll.titleTooLong": "The title length must be fewer than 64 characters.",
   "poll.footer": "The poll will expire",
-
-  "porn.nonNsfw": "You must either be in DMs or in a NSFW-marked channel to use this command.",
-  "porn.ageVerification": "Please confirm you are aged 18+ to access this content.",
-  "porn.cannotAccess": "You cannot access this content if you are below 18.",
-  "porn.fetchError": "An unknown error has occured while calling rule34 API. Please try again later.",
-  "porn.source": "Image source",
-  "porn.noSearch": "You must provide something to search.",
-  "porn.searchTooLong": "The search length may not exceed 128 characters.",
-  "porn.noResult": "No content found matching \"{{{ search }}}\".",
-  "porn.author": "Author: {{{ author }}}",
-
-  "pornhub.title": "{{{ emote }}} **{{{ title }}}**\n{{{ url }}}",
   
   "prefix.list": "Prefixes for {{{ name }}}:",
   "prefix.noPrefix": "There is no custom prefix set for {{{ name }}}.",
@@ -750,10 +724,6 @@
   "rss.update.footer": "Content {{{ i }}}/{{{ total }}} | Publish date",
   "rss.update.noContent": "No content to display.",
   "rss.update.error": "An error has occured while trying to retrieve RSS feed of **{{{ name }}}**.",
-  
-  "rule34.titleRandom": "🍆 Random item from rule34:",
-  "rule34.titleAll": "🍆 Homepage of rule34:",
-  "rule34.titleSearch": "🍆 Search results for \"{{{ search }}}\":",
 
   "say.includesEveryone": "Your message includes an **@everyone** or **@here** mention.",
   "say.includesMention": "Your message includes a **member** or **role** mention.",
@@ -825,16 +795,6 @@
   "settings.reset.awaitReaction": "All your settings will be lost! Are you sure?",
   "settings.reset.deleted": "The settings have been restored to the defaults",
   "settings.reset.cancelled": "The settings have not been restored to the defaults",
-
-  "shazam.userNotInVc": "You must be in a voice channel to run a music recognition.",
-  "shazam.alreadyWorking": "I'm already working on this server, please wait until my work is done.",
-  "shazam.cantMove": "I am serving people in other channels of this server, you can't use me here.",
-  "shazam.recording": "Recording audio from {{{ user }}} for 10 seconds...",
-  "shazam.recordError": "A fatal error has occured while recording the audio sample.",
-  "shazam.sending": "Sending audio sample to QiiQuoo...",
-  "shazam.success": "Recognized song: {{{ song }}}",
-  "shazam.error": "An error has occured during music recognition! Status code: `{{{ status }}}`.",
-  "shazam.unknown": "No song could have been recognized from the recorded audio sample.",
   
   "stats.title": "📊 Statistics about **{{{ name }}}**:",
   "stats.embed.shards": "Shards",
