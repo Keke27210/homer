@@ -66,8 +66,9 @@ exports.emotes = {
   // Services
   rss: '<:rss:529596823275307019>',
   translate: '<:translate:420659720727298054>',
-  verifiedServer: '<:verified:452764762699464724>',
-  pornhub: '<:ph:573072628772765697>',
+
+  // Discord badges
+  verified: '<:verified:452764762699464724>',
   partner: '<:partner:580730423785816064>',
 };
 
@@ -161,7 +162,6 @@ exports.categoryEmotes = {
   misc: '🎮',
   settings: '🔧',
   telephone: '📞',
-  porn: '🚫',
 };
 
 exports.categoryColors = {
@@ -170,7 +170,6 @@ exports.categoryColors = {
   misc: 'ORANGE',
   settings: 'GREY',
   telephone: 'RED',
-  porn: 'PINK',
 };
 
 exports.profileFields = [
