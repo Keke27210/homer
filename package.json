@@ -12,7 +12,6 @@
   "dependencies": {
     "big-integer": "^1.6.31",
     "discord.js": "^11.5.0",
-    "erlpack": "github:hammerandchisel/erlpack",
     "fast-xml-parser": "^3.12.16",
     "form-data": "^2.3.3",
     "moment": "^2.22.2",
