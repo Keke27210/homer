@@ -12,6 +12,7 @@
   "dependencies": {
     "big-integer": "^1.6.31",
     "discord.js": "^11.5.0",
+    "erlpack": "erlpack@discordapp/erlpack",
     "fast-xml-parser": "^3.12.16",
     "form-data": "^2.3.3",
     "moment": "^2.22.2",
@@ -24,6 +25,7 @@
     "sodium": "^3.0.2",
     "superagent": "^3.8.3",
     "translatte": "^1.0.5",
+    "uws": "@discordjs/uws@^10.149.0",
     "xregexp": "^4.2.0"
   }
 }
