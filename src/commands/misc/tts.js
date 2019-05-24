@@ -23,7 +23,7 @@ class TtsCommand extends Command {
     if (!langCode) return context.replyWarning(context.__('tts.invalidLang', { command: `${this.client.prefix}translate list` }));
 
     const link = await TTS(text, langCode);
-    context.replySuccess({ embed: { description: context.__('tts.result', { link }) } });
+    context.reply({ embed: { description: context.__('tts.result', { link }) } });
   }
 }
 
