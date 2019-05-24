@@ -752,7 +752,7 @@
   "server.explicitContentFilter.0": "Disabled",
   "server.explicitContentFilter.1": "Members without roles",
   "server.explicitContentFilter.2": "All members",
-  "server.defaultMessageNotifications.EVERYTHING": "All messages",
+  "server.defaultMessageNotifications.ALL": "All messages",
   "server.defaultMessageNotifications.MENTIONS": "Mentions only",
   "server.defaultMessageNotifications.NOTHING": "Nothing",
   "server.region.amsterdam": "Amsterdam",
