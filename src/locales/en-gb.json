@@ -781,7 +781,7 @@
   "server.feature.ANIMATED_ICON": "Animated icon",
   "server.feature.BANNER": "Banner",
   "server.tier.level": "Tier {{{ n }}}",
-  "server.tier.count": "**{{{ n }}}** boosts",
+  "server.tier.boosts": "**{{{ n }}}** boosts",
   "server.staff.title": "🛠 Online staff on **{{{ name }}}**:",
   "server.emotes.title": "Emotes on **{{{ name }}}**:",
   "server.emotes.noEmote": "No emotes found on **{{{ name }}}**.",

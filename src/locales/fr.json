@@ -760,7 +760,7 @@
   "server.feature.ANIMATED_ICON": "Icône animée",
   "server.feature.BANNER": "Bannière",
   "server.tier.level": "Tier {{{ n }}}",
-  "server.tier.count": "**{{{ n }}}** boosts",
+  "server.tier.boosts": "**{{{ n }}}** boosts",
   "server.staff.title":"🛠 Staff en ligne sur **{{{ name }}}**:",
   "server.emotes.title":"Emotes sur **{{{ name }}}**:",
   "server.emotes.noEmote":"Aucun emote sur **{{{ name }}}**.",
