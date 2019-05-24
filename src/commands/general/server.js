@@ -15,6 +15,10 @@ class ServerCommand extends Command {
     const guild = context.message.guild;
     const guildOwner = guild.owner ? guild.owner.user : await this.client.fetchUser(guild.ownerID);
 
+    // Nitro tier info
+    const tierInfo = await this.client.rest.makeReqiest('get', `/guilds/${context.message.guild.id}`, true)
+      .then(a => ({ tier: a.premium_tier, count: a.premium_subscription_count }));
+
     const channels = [
       `**${context.message.guild.channels.filter(c => c.type === 'text').size}** ${context.__('channel.type.text')}`,
       `**${context.message.guild.channels.filter(c => c.type === 'voice').size}** ${context.__('channel.type.voice')}`,
@@ -44,6 +48,7 @@ class ServerCommand extends Command {
       `${this.dot} ${context.__('server.embed.id')}: **${guild.id}**${guild.verified ? ` ${this.client.constants.emotes.verified}` : ''}${guild.features.includes('PARTNERED') ? ` ${this.client.constants.emotes.partner}` : ''}`,
       `${this.dot} ${context.__('server.embed.owner')}: **${guildOwner.username}**#${guildOwner.discriminator} (ID:${guild.ownerID})`,
       `${this.dot} ${context.__('server.embed.region')}: ${this.client.constants.regionFlags[region]} **${context.__(`server.region.${region}`)}${guild.region.startsWith('vip-') ? ' (VIP)' : ''}**`,
+      `${this.dot} ${context.__('server.embed.nitro')}: ${tierInfo.tier > 0 ? `${this.client.constants.tierEmotes[tierInfo.tier]} **${context.__('server.tier.level', { n: tierInfo.tier })}** (${context.__('server.tier.boosts', { n: tierInfo.count || 0 })})` : context.__('global.none')}`,
       `${this.dot} ${context.__('server.embed.channels')}: ${channels}`,
       `${this.dot} ${context.__('server.embed.members')}: ${members}`,
       `${this.dot} ${context.__('server.embed.systemChannel')}: ${guild.systemChannel ? `**#${guild.systemChannel.name}** (${context.__('server.systemChannel.1')})` : context.__('global.none')}`,
@@ -58,7 +63,7 @@ class ServerCommand extends Command {
     const embed = new RichEmbed()
       .setDescription(serverInformation)
       .setThumbnail(guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` : undefined)
-      .setImage(guild.splash ? `https://cdn.discordapp.com/splashes/${invite.guild.id}/${invite.guild.splash}.png?size=512` : undefined);
+      .setImage(guild.splash ? `https://cdn.discordapp.com/splashes/${guild.id}/${guild.splash}.png?size=512` : undefined);
 
     context.reply(
       context.__('server.title', {
