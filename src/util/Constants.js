@@ -72,6 +72,13 @@ exports.emotes = {
   partner: '<:partner:580730423785816064>',
 };
 
+exports.tierEmotes = {
+  1: '<:boost_tier1:581519569227874305>',
+  2: '<:boost_tier2:581519568363716618>',
+  3: '<:boost_tier3:581519568502259742>',
+  4: '<:boost_tier4:581519568594534425>',
+}
+
 exports.historyIcons = {
   INCOMING_SINGLE: '<:incomingcall:551099247945056256>',
   INCOMING_GROUP: '<:groupcall:551099330421981184>',
