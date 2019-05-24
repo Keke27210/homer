@@ -19,7 +19,7 @@ class TtsCommand extends Command {
     if (!text) return context.replyError(context.__('tts.noText'));
     if (text.length > 200) return context.replyWarning(context.__('tts.textLength'));
 
-    const langCode = this.client.api.getLanguage(targetLanguage);
+    const langCode = this.client.api.getLanguage(lang);
     if (!langCode) return context.replyWarning(context.__('tts.invalidLang', { command: `${this.client.prefix}translate list` }));
 
     const link = await TTS(text, langCode);
