@@ -340,6 +340,7 @@
   "helpUtil.timezone.search": "Search for timezones",
   "helpUtil.translate": "Translate the given text into the specified language",
   "helpUtil.translate.list": "Get a list of supported target languages",
+  "helpUtil.tts": "Generate TTS samples with Google TTS service",
   "helpUtil.user": "Get information about a member",
   "helpUtil.vip": "Get the list of VIPs on Homer",
   "helpUtil.weather": "Get current weather for the specified location",
@@ -988,6 +989,12 @@
   "translate.footer": "Translation provided by Google Translate API",
   "translate.list": "{{{ emote }}} Compatible target languages:",
   "translate.list.footer": "Translate using the following syntax: {{{ command }}}",
+  
+  "tts.noLang": "You must provide a speech language to use.",
+  "tts.noText": "You must provide a text to process.",
+  "tts.textLength": "The text length must be fewer than 200 characters.",
+  "tts.invalidLang": "The provided speech language is invalid, check valid languages with `{{{ command }}}`.",
+  "tts.result": "**[Click on this link to listen to your sample]({{{ link }}})**",
   
   "user.title": "{{{ emote }}} Information about {{{ name }}}:",
   "user.embed.id": "Discord ID",
