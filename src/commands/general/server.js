@@ -16,7 +16,7 @@ class ServerCommand extends Command {
     const guildOwner = guild.owner ? guild.owner.user : await this.client.fetchUser(guild.ownerID);
 
     // Nitro tier info
-    const tierInfo = await this.client.rest.makeReqiest('get', `/guilds/${context.message.guild.id}`, true)
+    const tierInfo = await this.client.rest.makeRequest('get', `/guilds/${context.message.guild.id}`, true)
       .then(a => ({ tier: a.premium_tier, count: a.premium_subscription_count }));
 
     const channels = [
