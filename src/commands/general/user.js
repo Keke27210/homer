@@ -31,8 +31,8 @@ class UserCommand extends Command {
       presence += ` (${context.__(`user.gameType.${gameType}`)} ${gameType === 1 ? `[${user.presence.game.name}](${user.presence.game.url})` : `*${user.presence.game.name}*`})`;
     }
 
-    const premium = await this.client.rest.makeRequest('get', `/guilds/${context.message.guild.id}/members/${member.id}`, true)
-      .then(m => m.premium_since);
+    const premium = context.message.guild ? (await this.client.rest.makeRequest('get', `/guilds/${context.message.guild.id}/members/${member.id}`, true)
+      .then(m => m.premium_since)) : null;
     let badges = (await this.client.other.getBadges(user.id));
     if (premium) badges = badges + ` ${this.client.constants.tierEmotes[3]}`;
 
