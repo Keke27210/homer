@@ -61,7 +61,7 @@ class ServerCommand extends Command {
     ];
 
     if (guild.splash) {
-      serverInformation.push('', `${this.dot} ${context.__('server.embed.splash')}: **[${context.__('global.image')}](https://cdn.discordapp.com/splashs/${guild.id}/${guild.splash}.png)**`);
+      serverInformation.push('', `${this.dot} ${context.__('server.embed.splash')}: **[${context.__('global.image')}](https://cdn.discordapp.com/splashes/${guild.id}/${guild.splash}.png)**`);
     }
 
     const embed = new RichEmbed()
