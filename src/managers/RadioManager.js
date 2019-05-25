@@ -48,7 +48,7 @@ class RadioManager extends Manager {
     broadcast.name = radio.name;
     broadcast.radio = radio.id;
     const url = await parseURL(radio.url);
-    broadcast.playStream(url, { bitrate: 96 });
+    broadcast.playStream(url, { bitrate: 128 });
     broadcast.started = true;
     this.broadcasts.push(broadcast);
     return broadcast;
