@@ -972,6 +972,7 @@
   "user.embed.id":"Discord ID",
   "user.embed.nickname":"Pseudo",
   "user.embed.status":"Status",
+  "user.embed.booster": "Booster depuis",
   "user.embed.roles":"Rôles",
   "user.embed.lastactive":"Dernière activité",
   "user.embed.creation":"Création du compte",

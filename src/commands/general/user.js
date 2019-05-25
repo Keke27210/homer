@@ -31,7 +31,10 @@ class UserCommand extends Command {
       presence += ` (${context.__(`user.gameType.${gameType}`)} ${gameType === 1 ? `[${user.presence.game.name}](${user.presence.game.url})` : `*${user.presence.game.name}*`})`;
     }
 
-    const badges = (await this.client.other.getBadges(user.id));
+    const premium = await this.client.rest.makeRequest('get', `/guilds/${context.message.guild.id}/members/${member.id}`, true)
+      .then(m => m.premium_since);
+    let badges = (await this.client.other.getBadges(user.id));
+    if (premium) badges = badges + ` ${this.client.constants.tierEmotes[2]}`;
 
     const lastactive = await this.client.database.getDocument('lastactive', user.id)
       .then((lastactiveObject) => {
@@ -47,6 +50,7 @@ class UserCommand extends Command {
     userInformation.push(`${this.dot} ${context.__('user.embed.status')}: ${presence}`);
 
     if (context.message.guild) {
+      if (premium) userInformation.push(`${this.dot} ${context.__('user.embed.booster')}: **${context.formatDate(premium)}**`);
       userInformation.push(`${this.dot} ${context.__('user.embed.roles')}: ${member.roles.filter(r => r.id !== context.message.guild.id).sort((a, b) => b.position - a.position).map(r => r.toString()).join(', ') || context.__('global.none')}`);
     }
 

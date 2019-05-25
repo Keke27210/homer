@@ -1001,6 +1001,7 @@
   "user.embed.id": "Discord ID",
   "user.embed.nickname": "Nickname",
   "user.embed.status": "Status",
+  "user.embed.booster": "Boosting since",
   "user.embed.roles": "Roles",
   "user.embed.lastactive": "Last active",
   "user.embed.creation": "Account creation date",
