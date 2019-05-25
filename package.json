@@ -26,7 +26,7 @@
     "sodium": "^3.0.2",
     "superagent": "^3.8.3",
     "translatte": "^1.0.5",
-    "uws": "@discordjs/uws@^10.149.0",
+    "uws": "@discordjs/uws",
     "xregexp": "^4.2.0"
   }
 }
