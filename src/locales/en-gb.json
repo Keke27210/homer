@@ -745,6 +745,7 @@
   "server.embed.defaultMessageNotifications": "Default message notifications",
   "server.embed.features": "Features",
   "server.embed.creation": "Server creation date",
+  "server.embed.splash": "Splash",
   "server.verificationLevel.0": "None",
   "server.verificationLevel.1": "Low",
   "server.verificationLevel.2": "Medium",

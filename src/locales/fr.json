@@ -723,6 +723,7 @@
   "server.embed.defaultMessageNotifications":"Notifications par défaut",
   "server.embed.features": "Extras",
   "server.embed.creation":"Création du serveur",
+  "server.embed.splash": "Bannière",
   "server.verificationLevel.0":"Aucun",
   "server.verificationLevel.1":"Faible",
   "server.verificationLevel.2":"Moyen",

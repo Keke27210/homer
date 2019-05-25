@@ -58,12 +58,15 @@ class ServerCommand extends Command {
       `${this.dot} ${context.__('server.embed.defaultMessageNotifications')}: **${context.__(`server.defaultMessageNotifications.${guild.defaultMessageNotifications}`)}**`,
       `${this.dot} ${context.__('server.embed.features')}: ${guild.features.map(f => `**${context.__(`server.feature.${f}`)}**`).join(', ') || context.__('global.none')}`,
       `${this.dot} ${context.__('server.embed.creation')}: **${context.formatDate(guild.createdTimestamp)}**`,
-    ].join('\n');
+    ];
+
+    if (guild.splash) {
+      serverInformation.push('', `${this.dot} ${context.__('server.embed.splash')}: **[${context.__('global.image')}](https://cdn.discordapp.com/splashs/${guild.id}/${guild.splash}.png)**`);
+    }
 
     const embed = new RichEmbed()
-      .setDescription(serverInformation)
-      .setThumbnail(guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` : undefined)
-      .setImage(guild.splash ? `https://cdn.discordapp.com/splashes/${guild.id}/${guild.splash}.png?size=512` : undefined);
+      .setDescription(serverInformation.join('\n'))
+      .setThumbnail(guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` : undefined);
 
     context.reply(
       context.__('server.title', {
