@@ -34,7 +34,7 @@ class UserCommand extends Command {
     const premium = await this.client.rest.makeRequest('get', `/guilds/${context.message.guild.id}/members/${member.id}`, true)
       .then(m => m.premium_since);
     let badges = (await this.client.other.getBadges(user.id));
-    if (premium) badges = badges + ` ${this.client.constants.tierEmotes[2]}`;
+    if (premium) badges = badges + ` ${this.client.constants.tierEmotes[3]}`;
 
     const lastactive = await this.client.database.getDocument('lastactive', user.id)
       .then((lastactiveObject) => {
