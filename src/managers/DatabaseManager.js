@@ -128,7 +128,7 @@ class DatabaseManager extends Manager {
       // Forcing * 1000 if it doesn't pass here
       if (index) {
         for (const [k, v] of Object.entries(data)) {
-          this.cache[table][index][k] = v;
+          try { this.cache[table][index][k] = v; } catch(e) {}
         }
       }
     }
