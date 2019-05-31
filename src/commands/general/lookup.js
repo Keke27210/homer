@@ -74,7 +74,7 @@ class LookupCommand extends Command {
           }))
           .catch(() => {
             const guild = this.client.guilds.get(guildObject.id);
-            if (!guild) return null;
+            if (!guild) return ({});
 
             return ({
               icon: `https://cdn.discordapp.com/icons/${guildObject.id}/${guild.icon}.png`,
