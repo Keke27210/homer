@@ -26,7 +26,7 @@ class GameCommand extends Command {
       else if (foundMembers.length > 1) return context.replyWarning(this.client.finder.formatMembers(foundMembers, context.settings.misc.locale));
     }
 
-    const presence = this.client.presences.get(user.id);
+    const presence = user.presence;
     if (!presence || !presence.game) return context.replyWarning(context.__('game.noActiveGame', { user: `**${user.username}**#${user.discriminator}` }));
 
     let embed;
