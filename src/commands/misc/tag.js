@@ -53,7 +53,8 @@ class TagCommand extends Command {
     processed = true;
     m.edit(parsed.content ? parsed.content.replace('@everyone', '!EVERYONE').replace('@here', '!HERE') : '', {
       embed: parsed.embed,
-    });
+    })
+      .catch(e => this.client.logger.error(e));
 
     for (const reaction of parsed.reactions) await m.react(reaction).catch(() => null);
   }
