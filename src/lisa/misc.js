@@ -47,48 +47,47 @@ module.exports = [
 
       const title = params.find(p => p.startsWith('title:'));
       if (title && title.length < 262) embed.setTitle(title.substring(6));
- console.log('debug1')
+
       const description = params.find(p => p.startsWith('desc:'));
       if (description && description.length < 2053) embed.setDescription(description.substring(5));
- console.log('debug2')
+
       const fields = params.filter(p => p.startsWith('field:'));
       for (const field of fields) {
-         console.log('debug2-bis')
         const [name, value, inline] = field.substring(6).split('§');
         if (!value || name.length > 256 || value.length > 1024) continue;
         embed.addField(name, value, inline === 'true' ? true : false);
       }
- console.log('debug3')
+
       const image = params.find(p => p.startsWith('image:'));
       if (image) try { embed.setImage(image.substring(6)); } catch (e) {}
- console.log('debug4')
+
       const thumbnail = params.find(p => p.startsWith('thumb:'));
       if (thumbnail) try { embed.setThumbnail(thumbnail.substring(6)); } catch (e) {}
- console.log('debug5')
+
       const url = params.find(p => p.startsWith('url:'));
       if (url) try { embed.setURL(url.substring(4)); } catch (e) {}
- console.log('debug6')
+
       const color = params.find(p => p.startsWith('color:'));
       if (color) embed.setColor(color.substring(6).toUpperCase());
- console.log('debug7')
+
       const footer = params.find(p => p.startsWith('footer:'));
       if (footer) {
         const [text, icon] = footer.substring(7).split('§');
         if (text && text.length < 2048) embed.setFooter(text, icon || null);
       }
- console.log('debug8')
+
       const author = params.find(p => p.startsWith('author:'));
       if (author) {
         const [text, icon] = author.substring(7).split('§');
         if (text && text.length < 256) embed.setAuthor(text, icon || null);
       }
- console.log('debug9')
-      const timestamp = params.find(p => p.startsWith('timestamp:'));
+
+      /*const timestamp = params.find(p => p.startsWith('timestamp:'));
       if (timestamp) {
         const parsed = Date.parse(timestamp.substring(10));
         try { embed.setTimestamp(parsed); } catch (e) { console.log(e); }
-      }
- console.log('debug10')
+      }*/
+
       return `|||[|||${env.embedCode}:${JSON.stringify(embed)}|||]|||`;
     },
   ),
