@@ -85,7 +85,7 @@ module.exports = [
       const timestamp = params.find(p => p.startsWith('timestamp:'));
       if (timestamp) {
         const parsed = Date.parse(timestamp.substring(10));
-        try { embed.setTimestamp(new Date(parsed)); } catch (e) { console.log(e); }
+        try { embed.setTimestamp(parsed)); } catch (e) { console.log(e); }
       }
 
       return `|||[|||${env.embedCode}:${JSON.stringify(embed)}|||]|||`;
