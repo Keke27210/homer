@@ -95,7 +95,7 @@ class TuneSubcommand extends Command {
     if (!broadcast) return message.edit(context.__('radio.tune.noProgramme', { frequency }));
   
     const dispatcher = await connection.playBroadcast(broadcast, {
-      bitrate: this.client.other.isDonator(context.message.author.id) ? 128 : 64,
+      bitrate: this.client.other.isDonator(context.message.author.id) ? 'auto' : 64,
       volume: context.settings.radio.volume || 0.5,
     });
 
