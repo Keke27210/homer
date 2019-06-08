@@ -46,10 +46,17 @@ class GameCommand extends Command {
       emote: this.emotes[presence.game.type],
       user: `**${user.username}**#${user.discriminator}`,
       action: context.__(`game.type.${presence.game.type}`),
-      game: presence.game.type === 1 ? `**${presence.game.name}** (<${presence.game.url}>)` : `**${presence.game.name}**`,
+      game: presence.game.type === 1 ? `**${escape(presence.game.name)}** (<${presence.game.url}>)` : `**${escape(presence.game.name)}**`,
       time: (presence.game.timestamps && presence.game.timestamps.start) ? this.client.time.timeSince(presence.game.timestamps.start.getYear() === 70 ? (presence.game.timestamps.start * 1000) : presence.game.timestamps.start, context.settings.misc.locale) : null,
     }), { embed });
   }
+}
+
+function escape(game) {
+  return game
+    .replace(/<@(\d{17,19})>/g, 'UID:$1')
+    .replace(/<@&(\d{17,19})>/g, 'RID:$1')
+    .replace(/@everyone|@here/g, 'AT_EVERYONE');
 }
 
 module.exports = GameCommand;
