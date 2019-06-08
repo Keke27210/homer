@@ -206,9 +206,11 @@ class ChannelSubcommand extends Command {
     context.replySuccess(context.__('radio.channel.set', { name: channel.name }));
 
     if (context.message.guild.voiceConnection) {
-      const currentRadio = this.client.radio.broadcasts
-        .find(b => b.dispatchers.find(d => d.player.voiceConnection.channel.id === context.message.guild.voiceConnection.channel.id))
-        .radio;
+      const broadcast = this.client.radio.broadcasts
+        .find(b => b.dispatchers.find(d => d.player.voiceConnection.channel.id === context.message.guild.voiceConnection.channel.id));
+      if (!broadcast) return;
+  
+      const currentRadio = broadcast.radio;
       await context.message.guild.voiceConnection.disconnect();
 
       const connection = await channel.join();
