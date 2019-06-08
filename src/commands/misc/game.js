@@ -54,7 +54,7 @@ class GameCommand extends Command {
 
 function escape(game) {
   return game
-    .replace(/<@(\d{17,19})>/g, 'UID:$1')
+    .replace(/<@!?(\d{17,19})>/g, 'UID:$1')
     .replace(/<@&(\d{17,19})>/g, 'RID:$1')
     .replace(/@everyone|@here/g, 'AT_EVERYONE');
 }
