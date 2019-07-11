@@ -9,8 +9,8 @@
 • **Advanced tags** - With Lisa, enhance your tags with dynamic features •  
 
 # Donations
-If you enjoy Homer, please consider donating. I (iDroid) am a French student who develops Homer during my free time but unfortunately I cannot afford a 100% reliable and powerful hosting.  
-Even if I can always find a way to keep Homer alive, it doesn't remain a stable solution. $5 every month could allow me to rent a powerful enough machine for Homer's prosperity.  
+If you enjoy Homer, please consider donating. I (iDroid) am a French student who develops Homer during my free time but unfortunately I cannot afford 100% reliable and powerful hosting.  
+Even if I can always find a way to keep Homer alive, it is not a stable solution. Just $5 a month would help me to rent a powerful machine for Homer's prosperity.  
 Donators get cool perks such as higher audio quality, customizable telephone numbers and much more: if you are interested, just send `h:donate` to Homer in DMs and follow instructions.
 
 # Support place
