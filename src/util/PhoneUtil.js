@@ -54,7 +54,7 @@ class PhoneUtil extends Util {
 
       const msg = [`📞 **${message.author.username}**#${message.author.discriminator}: ${content}`];
       if (message.attachments.size > 0) {
-        msg.push('', this.client.__(destSettings.misc.locale, 'telephone.attachments'));
+        msg.push('', this.client.__(destSettings ? destSettings.misc.locale : this.client.localization.defaultLocale, 'telephone.attachments'));
         message.attachments.forEach(a => msg.push(`- **${a.filename}** - <${a.url}>`));
       }
 
@@ -82,7 +82,7 @@ class PhoneUtil extends Util {
 
         const msg = [`📞 **${message.author.username}**#${message.author.discriminator} (${identity}): ${content}`];
         if (message.attachments.size > 0) {
-          msg.push('', this.client.__(destSettings.misc.locale, 'telephone.attachments'), attachments.join('\n'));
+          msg.push('', this.client.__(destSettings ? destSettings.misc.locale : this.client.localization.defaultLocale, 'telephone.attachments'), attachments.join('\n'));
         }
 
         this.client.sendMessage(destination.id, msg.join('\n'));
