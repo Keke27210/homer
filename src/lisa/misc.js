@@ -134,7 +134,7 @@ module.exports = [
         const param = params[i];
         if (param.includes('{') || param.includes('}')) {
           params[0] = params[0] + '|' + param;
-          params.splice(params[i], 1);
+          params.splice(i, 1);
         }
       }
       console.log(params);
