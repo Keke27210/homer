@@ -23,7 +23,7 @@ scheduleJob({ second: 10 }, async () => {
 
 // Error handling
 process.on('unhandledRejection', (err) => {
-  if (err instanceof DiscordAPIError) return; // Ignore permissions, connection, etc errors
+  if (err instanceof DiscordAPIError && !client.debug) return; // Ignore permissions, connection, etc errors
   client.shard.send({
     type: 'error',
     message: err.stack,
