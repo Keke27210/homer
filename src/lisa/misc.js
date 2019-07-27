@@ -128,7 +128,6 @@ module.exports = [
     'json',
     null,
     (env, params) => {
-      console.log(params);
       // Check if params after the first one contains }, if yes it means JSON is not finished to put them back with params[0]
       for (let i = 1; i < params.length; i += 1) {
         const param = params[i];
@@ -137,7 +136,6 @@ module.exports = [
           params.splice(i, 1);
         }
       }
-      console.log(params);
 
       let json = null;
       try { json = JSON.parse(params[0]); }
