@@ -133,8 +133,8 @@ module.exports = [
       for (let i = 1; i < params.length; i += 1) {
         const param = params[i];
         if (param.includes('{') || param.includes('}')) {
-          params.splice(params[i], 1);
           params[0] = params[0] + '|' + param;
+          params.splice(params[i], 1);
         }
       }
       console.log(params);
