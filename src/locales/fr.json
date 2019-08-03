@@ -361,7 +361,7 @@
 
   "language.noLanguage":"Vous devez fournir le code d'une langue à paramétrer !\nLa liste des langues est disponible avec `{{{ command }}}`.",
   "language.invalidLanguage":"La langue demandée n'existe pas !\nLa liste des langues est disponible avec `{{{ command }}}`.",
-  "language.setLanguage":"{{{ flag }}} Langue paramétrée sur **{{{ name }}}**!",
+  "language.setLanguage":"{{{ flag }}} La langue d'affichage est désormais **{{{ name }}}**.",
   "language.list.title":"📃 Languages disponibles sur **{{{ name }}}**:",
   "language.list.authors":"par {{{ authors }}}",
   "language.list.footer":"Pour changer de langue, utilisez {{{ command }}}",

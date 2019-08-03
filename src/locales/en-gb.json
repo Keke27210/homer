@@ -361,7 +361,7 @@
 
   "language.noLanguage": "You must provide a language code to set!\nGet the list of available languages using `{{{ command }}}`",
   "language.invalidLanguage": "The language you have entered is invalid!\nGet the list of available languages using `{{{ command }}}`",
-  "language.setLanguage": "{{{ flag }}} Language set to **{{{ name }}}**!",
+  "language.setLanguage": "{{{ flag }}} The display language is now **{{{ name }}}**.",
   "language.list.title": "📃 Available languages on **{{{ name }}}**:",
   "language.list.authors": "by {{{ authors }}}",
   "language.list.footer": "To set a language, run {{{ command }}}",
