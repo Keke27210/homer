@@ -71,7 +71,7 @@ class GiveSubcommand extends Command {
   }
 
   async execute(context) {
-    const [roleSearch, userSearch] = context.args.join(' ').split(' to ');
+    const [roleSearch, userSearch] = context.args.join(' ').split(new RegExp(` to | ${context.__('role.give.keyword')} `));
     if (!roleSearch || !userSearch) return context.replyError(context.__('role.give.missingParameters', { prefix: this.client.prefix }));
 
     let role = null;
@@ -122,7 +122,7 @@ class TakeSubcommand extends Command {
   }
 
   async execute(context) {
-    const [roleSearch, userSearch] = context.args.join(' ').split(' from ');
+    const [roleSearch, userSearch] = context.args.join(' ').split(new RegExp(` from | ${context.__('role.take.keyword')} `));
     if (!roleSearch || !userSearch) return context.replyError(context.__('role.take.missingParameters', { prefix: this.client.prefix }));
 
     let role = null;

@@ -1,40 +1,20 @@
 const Manager = require('../structures/Manager');
 const rethinkdb = require('rethinkdbdash');
 
-const tables = [
-  'afk',
-  'archives',
-  'blacklist',
-  'bot',
-  'calls',
-  'commandStats',
-  'cooldown',
-  'donators',
-  'jobs',
-  'lastactive',
-  'names',
-  'phoneLog',
-  'profiles',
-  'radios',
-  'radioFeatured',
-  'radioStats',
-  'reports',
-  'rss',
-  'settings',
-  'suggestions',
-  'tags',
-  'telephone',
-  'vip',
-];
-
 const noCache = ['lastactive', 'names'];
 
 class DatabaseManager extends Manager {
   constructor(client) {
     super(client);
     this.provider = rethinkdb(this.client.config.database);
+
+    // Preparing tables cache
     this.cache = {};
-    for (const table of tables) this.cache[table] = [];
+    this.provider.tableList()
+      .then((tables) => {
+        for (const table of tables) this.cache[table] = [];
+      })
+      .catch(() => this.client.logger.error('Unable to prepare tables cache (database tableList error)'));
   }
 
   async findDocuments(table, predicate, fetch = false) {
@@ -125,7 +105,7 @@ class DatabaseManager extends Manager {
         index = this.cache[table].findIndex(item => item ? item.id === key : false);
       }
  
-      // Forcing * 1000 if it doesn't pass here
+      // C'est vraiment de la mauvaise foi si on en arrive là, on force quand même
       if (index) {
         for (const [k, v] of Object.entries(data)) {
           try { this.cache[table][index][k] = v; } catch(e) {}

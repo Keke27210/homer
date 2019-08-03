@@ -1,6 +1,6 @@
+const Manager = require('../structures/Manager');
 const { isAbsolute, resolve } = require('path');
 const readdir = require('util').promisify(require('fs').readdir);
-const Manager = require('../structures/Manager');
 
 const MUSTACHE_SYNTAX = /\{\{\{\s*([\w\.]+)\s*\}\}\}/g;
 

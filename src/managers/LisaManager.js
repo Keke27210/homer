@@ -1,6 +1,6 @@
-const readdir = require('util').promisify(require('fs').readdir);
-const Environment = require('../structures/Environment');
 const Manager = require('../structures/Manager');
+const Environment = require('../structures/Environment');
+const readdir = require('util').promisify(require('fs').readdir);
 
 /** ****************************************************************
  * Lisa scripting language                                        *
