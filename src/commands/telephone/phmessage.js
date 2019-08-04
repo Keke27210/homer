@@ -8,7 +8,6 @@ class PhmessageCommand extends Command {
       userPermissions: ['MANAGE_GUILD'],
       category: 'telephone',
       children: [new IncomingSubcommand(client), new MissedSubcommand(client)],
-      private: true, // Disable it until I rebuild a correct system for that
       dm: true,
     });
   }
@@ -17,9 +16,10 @@ class PhmessageCommand extends Command {
     const subscription = await this.client.database.getDocument('telephone', context.message.channel.id);
     if (!subscription) return context.replyWarning(context.__('telephone.noSubscription', { command: `${this.client.prefix}telephone subscribe` }));
 
+    if (!subscription.messages) subscription.messages = {}; // Patch to avoid crash
     const messageInformation = [
-      `${this.dot} **${context.__('phmessage.embed.incoming')}**: ${subscription.message.incoming || context.__('global.none')}`,
-      `${this.dot} **${context.__('phmessage.embed.missed')}**: ${subscription.message.missed || context.__('global.none')}`,
+      `${this.dot} **${context.__('phmessage.embed.incoming')}**: ${subscription.messages.incoming || context.__('global.none')}`,
+      `${this.dot} **${context.__('phmessage.embed.missed')}**: ${subscription.messages.missed || context.__('global.none')}`,
     ].join('\n');
 
     const embed = new RichEmbed().setDescription(messageInformation);

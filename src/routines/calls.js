@@ -32,7 +32,10 @@ class JobsRoutine extends Routine {
           // Sender
           const senderContact = call.sender.contacts.find(c => c.number === call.receiver.number);
           const senderIdentity = senderContact ? `**${senderContact.description}** (**${senderContact.number}**)` : `**${call.receiver.number}**`;
-          this.client.updateMessage(call.sender.id, call.sender.message, this.client.__(call.sender.locale, 'telephone.outgoingTimeout', { identity: senderIdentity }));
+          let senderMsg = this.client.__(call.sender.locale, 'telephone.outgoingTimeout', { identity: senderIdentity });
+          if (call.receiver.messages && call.receiver.messages.missed) senderMsg += `\n${call.receiver.messages.missed}`;
+
+          this.client.updateMessage(call.sender.id, call.sender.message, senderMsg);
 
           // Receiver
           const receiverContact = call.receiver.contacts.find(c => c.number === call.sender.number);
@@ -51,9 +54,12 @@ class JobsRoutine extends Routine {
               // Main
               const mainContact = main.contacts.find(c => c.number === receiver.number);
               const mainIdentity = mainContact ? `**${mainContact.description}** (\`${mainContact.number}\`)` : `\`${receiver.number}\``;
+              let mainMsg = this.client.__(main.locale, 'telephone.outgoingGroupTimeout', { identity: mainIdentity });
+              if (receiver.messages && receiver.messages.missed) mainMsg += `\n${receiver.messages.missed}`;
+      
               this.client.sendMessage(
                 main.id,
-                this.client.__(main.locale, 'telephone.outgoingGroupTimeout', { identity: mainIdentity }),
+                mainMsg,
               );
 
               // Receiver
