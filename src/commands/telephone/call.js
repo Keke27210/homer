@@ -50,9 +50,12 @@ class CallCommand extends Command {
       ).then(m => m.id);
 
       correspondent.locale = correspondentLanguage;
+      let correspondentStr = this.client.__(correspondentLanguage, 'telephone.incoming', { identity });
+      if (correspondent.messages && correspondent.messages.incoming) correspondentStr += `\n${correspondent.messages.incoming}`;
+
       correspondent.message = await this.client.sendMessage(
         correspondent.id,
-        this.client.__(correspondentLanguage, 'telephone.incoming', { identity }),
+        correspondentStr,
       ).then(m => m.id);
 
       this.client.telephone.addHistory(
@@ -107,9 +110,12 @@ class CallCommand extends Command {
         correspondent.start = Date.now();
         correspondent.state = 0;
         correspondent.locale = await this.client.database.getDocument('settings', correspondent.settings).then(a => a ? a.misc.locale : this.client.localization.defaultLocale);
+        let correspondentStr = this.client.__(correspondent.locale, 'telephone.incomingGroup', { identity });
+        if (correspondent.messages && correspondent.messages.incoming) correspondentStr += `\n${correspondent.messages.incoming}`;
+
         correspondent.message = await this.client.sendMessage(
           correspondent.id,
-          this.client.__(correspondent.locale, 'telephone.incomingGroup', { identity }),
+          correspondentStr,
         ).then(m => m.id);
 
         this.client.telephone.addHistory(

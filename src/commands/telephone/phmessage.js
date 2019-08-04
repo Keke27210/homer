@@ -8,6 +8,7 @@ class PhmessageCommand extends Command {
       userPermissions: ['MANAGE_GUILD'],
       category: 'telephone',
       children: [new IncomingSubcommand(client), new MissedSubcommand(client)],
+      private: true, // Disable it until I rebuild a correct system for that
       dm: true,
     });
   }
@@ -48,7 +49,8 @@ class IncomingSubcommand extends Command {
     if (!text) return context.replyError(context.__('phmessage.noText'));
     if (text.length > 128) return context.replyWarning(context.__('phmessage.textTooLong'));
 
-    subscription.message.incoming = (text === 'clear') ? false : text;
+    if (!subscription.messages) subscription.messages = {};
+    subscription.messages.incoming = (text === 'clear') ? false : text;
     await this.client.database.insertDocument('telephone', subscription, { conflict: 'update' });
 
     context.replySuccess(context.__('phmessage.incoming.updated'));
@@ -74,7 +76,8 @@ class MissedSubcommand extends Command {
     if (!text) return context.replyError(context.__('phmessage.noText'));
     if (text.length > 128) return context.replyWarning(context.__('phmessage.textTooLong'));
 
-    subscription.message.missed = (text === 'clear') ? false : text;
+    if (!subscription.messages) subscription.messages = {};
+    subscription.messages.missed = (text === 'clear') ? false : text;
     await this.client.database.insertDocument('telephone', subscription, { conflict: 'update' });
 
     context.replySuccess(context.__('phmessage.missed.updated'));
