@@ -48,11 +48,9 @@ class IncomingSubcommand extends Command {
     if (!text) return context.replyError(context.__('phmessage.noText'));
     if (text.length > 128) return context.replyWarning(context.__('phmessage.textTooLong'));
 
-    await this.client.database.updateDocument('telephone', context.message.channel.id, {
-      message: {
-        incoming: text === 'clear' ? false : text,
-      },
-    });
+    subscription.message.incoming = (text === 'clear') ? false : text;
+    await this.client.database.insertDocument('telephone', subscription, { conflict: 'update' });
+
     context.replySuccess(context.__('phmessage.incoming.updated'));
   }
 }
@@ -76,11 +74,9 @@ class MissedSubcommand extends Command {
     if (!text) return context.replyError(context.__('phmessage.noText'));
     if (text.length > 128) return context.replyWarning(context.__('phmessage.textTooLong'));
 
-    await this.client.database.updateDocument('telephone', context.message.channel.id, {
-      message: {
-        missed: text === 'clear' ? false : text,
-      },
-    });
+    subscription.message.missed = (text === 'clear') ? false : text;
+    await this.client.database.insertDocument('telephone', subscription, { conflict: 'update' });
+
     context.replySuccess(context.__('phmessage.missed.updated'));
   }
 }
