@@ -794,6 +794,7 @@
   "tag.noName": "You must provide the name of a tag",
   "tag.execError": "An error occured during the execution of the tag!",
   "tag.private": "The source of the tag \"{{{ tag }}}\" is private.",
+  "tag.apiError": "There was an API error when sending the processed tag! Please check if embed fields are correct (well-formed image URLs, etc).",
   "tag.notFound": "No tag found matching \"{{{ name }}}\"",
   "tag.unknownTag": "No tag found matching \"{{{ name }}}\"",
   "tag.nsfwAlert": "You can't run a NSFW-marked tag in a non-NSFW channel.",

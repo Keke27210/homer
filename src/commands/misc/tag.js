@@ -54,7 +54,10 @@ class TagCommand extends Command {
     m.edit(parsed.content ? parsed.content.replace('@everyone', '!EVERYONE').replace('@here', '!HERE') : '', {
       embed: parsed.embed,
     })
-      .catch(e => this.client.logger.error(e));
+      .catch((e) => {
+        m.edit(`${this.client.constants.emotes.warning} ${context.__('tag.apiError')}`);
+        this.client.logger.warn(e);
+      });
 
     for (const reaction of parsed.reactions) await m.react(reaction).catch(() => null);
   }
@@ -341,7 +344,11 @@ class ExecSubcommand extends Command {
 
     const parsed = await this.client.lisa.parseString(context, content, 'tag');
     processed = true;
-    m.edit(parsed.content ? parsed.content.replace('@everyone', '!EVERYONE').replace('@here', '!HERE') : '', { embed: parsed.embed });
+    m.edit(parsed.content ? parsed.content.replace('@everyone', '!EVERYONE').replace('@here', '!HERE') : '', { embed: parsed.embed })
+      .catch((e) => {
+        m.edit(`${this.client.constants.emotes.warning} ${context.__('tag.apiError')}`);
+        this.client.logger.warn(e);
+      });
   }
 }
 
