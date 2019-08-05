@@ -55,8 +55,7 @@ class TagCommand extends Command {
       embed: parsed.embed,
     })
       .catch((e) => {
-        m.edit(`${this.client.constants.emotes.warning} ${context.__('tag.apiError')}`);
-        this.client.logger.warn(e);
+        m.edit(`${this.client.constants.emotes.warning} ${context.__('tag.apiError', { msg: e.message })}`);
       });
 
     for (const reaction of parsed.reactions) await m.react(reaction).catch(() => null);
@@ -346,8 +345,7 @@ class ExecSubcommand extends Command {
     processed = true;
     m.edit(parsed.content ? parsed.content.replace('@everyone', '!EVERYONE').replace('@here', '!HERE') : '', { embed: parsed.embed })
       .catch((e) => {
-        m.edit(`${this.client.constants.emotes.warning} ${context.__('tag.apiError')}`);
-        this.client.logger.warn(e);
+        m.edit(`${this.client.constants.emotes.warning} ${context.__('tag.apiError', { msg: e.message })}`);
       });
   }
 }

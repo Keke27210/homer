@@ -794,7 +794,7 @@
   "tag.noName":"Vous devez fournir le nom d'un tag.",
   "tag.execError":"Une erreur est survenue lors de l'exécution du tag !",
   "tag.private":"La source du tag \"{{{ tag }}}\" est privée.",
-  "tag.apiError": "Une erreur API s'est produite lors de l'envoi du tag traité ! Veuillez vérifier que l'embed est valide (URLs d'images conformes, etc).",
+  "tag.apiError": "Une erreur API s'est produite lors de l'envoi du tag traité ! Veuillez vérifier que l'embed est valide (URLs conformes, etc).\n```{{{ msg }}}```",
   "tag.notFound":"Aucun tag trouvé avec le nom \"{{{ name }}}\".",
   "tag.unknownTag":"Aucun tag trouvé avec le nom \"{{{ name }}}\".",
   "tag.nsfwAlert":"Vous ne pouvez pas exécuter un tag NSFW dans un salon non-NSFW.",
