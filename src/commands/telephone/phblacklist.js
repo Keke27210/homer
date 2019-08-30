@@ -45,7 +45,7 @@ class AddSubcommand extends Command {
     const subscription = await this.client.database.getDocument('telephone', context.message.channel.id);
     if (!subscription) return context.replyWarning(context.__('telephone.noSubscription', { command: `${this.client.prefix}telephone subscribe` }));
 
-    const number = context.args[0];
+    const number = context.args[0].trim().toUpperCase();
     if (!number) return context.replyError(context.__('phblacklist.add.noNumber'));
     if (number === subscription.number) return context.replyError(context.__('phblacklist.add.cannotAddThis'));
 
@@ -83,7 +83,7 @@ class RemoveSubcommand extends Command {
     const subscription = await this.client.database.getDocument('telephone', context.message.channel.id);
     if (!subscription) return context.replyWarning(context.__('telephone.noSubscription', { command: `${this.client.prefix}telephone subscribe` }));
 
-    const number = context.args[0];
+    const number = context.args[0].trim().toUpperCase();
     if (!number) return context.replyError(context.__('phblacklist.remove.noNumber'));
 
     const blacklistEntry = subscription.blacklist.find(b => b.number === number);
