@@ -73,7 +73,7 @@
   "call.noNumber": "Vous devez fournir un ou plusieurs numéros à appeler.",
   "call.manyNumbers": "Vous ne pouvez pas initier un appel groupé avec plus de 4 autres personnes.",
   "call.busyCorrespondent": "Votre correspondant (`{{{ number }}}`) est occupé en ce moment.",
-  "call.blacklisted": "Votre correspondant (`{{{ identity }}}`) vous a placé sur sa liste noire.",
+  "call.blacklisted": "Votre correspondant ({{{ identity }}}) vous a placé sur sa liste noire.",
   "call.notGroup": "Vous devez être l'initieur de l'appel groupé pour inviter ou expulser des personnes.",
   "call.add.noNumber": "Vous devez fournir le numéro du correspondant à inviter.",
   "call.add.adding": "📞 Invitation de {{{ identity }}} dans l'appel groupé...",
