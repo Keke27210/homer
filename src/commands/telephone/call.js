@@ -22,7 +22,7 @@ class CallCommand extends Command {
     const currentStatus = await this.client.telephone.getStatus(context.message.channel.id);
     if (currentStatus !== 0) return context.replyWarning(context.__('call.inCall'));
 
-    const numbers = context.args.map(a => a.toUpperCase());
+    const numbers = context.args.map(a => a.trim().toUpperCase());
     console.log(numbers)
     if (numbers.length === 0) return context.replyError(context.__('call.noNumber'));
     if (numbers.find(n => n === subscription.number)) return context.replyError(context.__('call.self'));
