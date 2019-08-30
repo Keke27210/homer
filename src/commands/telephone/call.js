@@ -38,7 +38,7 @@ class CallCommand extends Command {
       const blacklistStatus = correspondent.blacklist.find(b => b.channel === subscription.id || b.number === subscription.number);
       if (blacklistStatus) {
         const blacklistContact = subscription.contacts.find(c => c.number === correspondent.number);
-        const blacklistIdentity = blacklistContact ? `**${blacklistContact.description}** (**${blacklistContact.number}**)` : `**${blacklistContact.number}**`;
+        const blacklistIdentity = blacklistContact ? `**${blacklistContact.description}** (**${blacklistContact.number}**)` : `**${correspondent.number}**`;
         return context.replyError(context.__('call.blacklisted', { identity: blacklistIdentity }));
       }
 
@@ -109,7 +109,7 @@ class CallCommand extends Command {
         const blacklistStatus = correspondent.blacklist.find(b => b.channel === subscription.id || b.number === subscription.number);
         if (blacklistStatus) {
           const blacklistContact = subscription.contacts.find(c => c.number === correspondent.number);
-          const blacklistIdentity = blacklistContact ? `**${blacklistContact.description}** (**${blacklistContact.number}**)` : `**${blacklistContact.number}**`;
+          const blacklistIdentity = blacklistContact ? `**${blacklistContact.description}** (**${blacklistContact.number}**)` : `**${correspondent.number}**`;
           return context.replyError(context.__('call.blacklisted', { identity: blacklistIdentity }));
         }
 
