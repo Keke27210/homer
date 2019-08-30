@@ -45,9 +45,11 @@ class TextCommand extends Command {
       [subscription.number],
     );
 
+    const toLang = await this.client.database.getDocument('settings', toSend.settings)
+      .then(s => s ? s.misc.locale : null);
     this.client.sendMessage(
       toSend.id,
-      context.__('text.title', {
+      this.client.__(toLang, 'text.title', {
         user: `**${context.message.author.username}**#${context.message.author.discriminator}`,
         identity: toSend.contacts.find(c => c.number === subscription.number) ?
         `**${toSend.contacts.find(c => c.number === subscription.number).description}** (**${subscription.number}**)` :
@@ -56,7 +58,7 @@ class TextCommand extends Command {
       {
         embed: {
           description: text,
-          footer: { text: context.__('text.footer', { command: `${this.client.prefix}text ${subscription.number} <message>`}) },
+          footer: { text: this.client.__(toLang, 'text.footer', { command: `${this.client.prefix}text ${subscription.number} <message>`}) },
         },
       }
     );
