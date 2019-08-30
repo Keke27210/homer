@@ -36,7 +36,11 @@ class CallCommand extends Command {
       if (correspondentStatus !== 0) return context.replyWarning(context.__('call.busyCorrespondent', { number: numbers[0] }));
 
       const blacklistStatus = correspondent.blacklist.find(b => b.channel === subscription.id || b.number === subscription.number);
-      if (blacklistStatus) return context.replyError(context.__('call.blacklisted'));
+      if (blacklistStatus) {
+        const blacklistContact = subscription.contacts.find(c => c.number === correspondent.number);
+        const blacklistIdentity = blacklistContact ? `**${blacklistContact.description}** (**${blacklistContact.number}**)` : `**${blacklistContact.number}**`;
+        return context.replyError(context.__('call.blacklisted', { identity: blacklistIdentity }));
+      }
 
       const contact = correspondent.contacts.find(c => c.number === subscription.number);
       const identity = contact ? `**${contact.description}** (**${contact.number}**)` : `**${subscription.number}**`;
@@ -103,7 +107,11 @@ class CallCommand extends Command {
         if (correspondentStatus !== 0) return context.replyWarning(context.__('call.busyCorrespondent', { number }));
 
         const blacklistStatus = correspondent.blacklist.find(b => b.channel === subscription.id || b.number === subscription.number);
-        if (blacklistStatus) return context.replyError(context.__('call.blacklisted', { number }));
+        if (blacklistStatus) {
+          const blacklistContact = subscription.contacts.find(c => c.number === correspondent.number);
+          const blacklistIdentity = blacklistContact ? `**${blacklistContact.description}** (**${blacklistContact.number}**)` : `**${blacklistContact.number}**`;
+          return context.replyError(context.__('call.blacklisted', { identity: blacklistIdentity }));
+        }
 
         const contact = correspondent.contacts.find(c => c.number === subscription.number);
         const identity = contact ? `**${contact.description}** (**${contact.number}**)` : `**${subscription.number}**`;
