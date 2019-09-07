@@ -6,7 +6,7 @@ class APIManager extends Manager {
     super(client);
 
     this.keys = {};
-    this._getKeys();
+    this.client.setTimeout(() => this._getKeys(), 1500);
   }
 
   async _getKeys() {
