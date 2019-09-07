@@ -54,7 +54,15 @@ class PhoneUtil extends Util {
 
       // Removing invites
       const inviteTest = content.match(/discord(?:app\.com\/invite|\.gg(?:\/invite)?)\/([\w-]{2,255})/igm);
-      for (const invite of inviteTest || []) content = content.replace(invite, `*INVITE*`);
+      for (const invite of inviteTest || []) content = content.replace(invite, '*INVITE*');
+
+      // Checking for possible isolated invite codes
+      const codeTest = contact.match(/([\w\d]{16}|[\w\d]{7})/igm); // This is not the most reliable regex but I guess it'll filter most of the shit
+      for (const code of codeTest || []) {
+        const isInvite = await this.client.fetchInvite(code)
+          .catch(() => null);
+        if (isInvite) content = content.replace(code, '*INVITE*');
+      }
 
       const msg = [`📞 **${message.author.username}**#${message.author.discriminator}: ${content}`];
       if (message.attachments.size > 0) {
