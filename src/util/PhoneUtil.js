@@ -52,6 +52,10 @@ class PhoneUtil extends Util {
       const linkTest = content.match(/(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm);
       for (const link of linkTest || []) content = content.replace(link, `<${link}>`);
 
+      // Removing invites
+      const inviteTest = content.match(/discord(?:app\.com\/invite|\.gg(?:\/invite)?)\/([\w-]{2,255})/igm);
+      for (const invite of inviteTest || []) content = content.replace(invite, `*INVITE*`);
+
       const msg = [`📞 **${message.author.username}**#${message.author.discriminator}: ${content}`];
       if (message.attachments.size > 0) {
         msg.push('', this.client.__(destSettings ? destSettings.misc.locale : this.client.localization.defaultLocale, 'telephone.attachments'));
@@ -69,6 +73,10 @@ class PhoneUtil extends Util {
       const linkTest = content.match(/(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm);
       for (const link of linkTest || []) content = content.replace(link, `<${link}>`);
       const attachments = message.attachments.map(a => `- **${a.filename}** - <${a.url}>`);
+
+      // Removing invites
+      const inviteTest = content.match(/discord(?:app\.com\/invite|\.gg(?:\/invite)?)\/([\w-]{2,255})/igm);
+      for (const invite of inviteTest || []) content = content.replace(invite, `*INVITE*`);
 
       for (let i = 0; i < destinations.length; i += 1) {
         const destination = destinations[i];
