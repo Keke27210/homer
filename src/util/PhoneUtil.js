@@ -57,12 +57,13 @@ class PhoneUtil extends Util {
       for (const invite of inviteTest || []) content = content.replace(invite, '*INVITE*');
 
       // Checking for possible isolated invite codes
-      const codeTest = content.match(/([\w\d]{16}|[\w\d]{7})/igm); // This is not the most reliable regex but I guess it'll filter most of the shit
+      /*const codeTest = content.match(/([\w\d]{16}|[\w\d]{7})/igm); // This is not the most reliable regex but I guess it'll filter most of the shit
       for (const code of codeTest || []) {
         const isInvite = await this.client.fetchInvite(code)
           .catch(() => null);
         if (isInvite) content = content.replace(code, '*INVITE*');
-      }
+      }*/
+      // This is not the smartest idea
 
       const msg = [`📞 **${message.author.username}**#${message.author.discriminator}: ${content}`];
       if (message.attachments.size > 0) {
@@ -87,12 +88,13 @@ class PhoneUtil extends Util {
       for (const invite of inviteTest || []) content = content.replace(invite, `*INVITE*`);
 
       // Checking for possible isolated invite codes
-      const codeTest = content.match(/([\w\d]{16}|[\w\d]{7})/igm); // This is not the most reliable regex but I guess it'll filter most of the shit
+      /*const codeTest = content.match(/([\w\d]{16}|[\w\d]{7})/igm); // This is not the most reliable regex but I guess it'll filter most of the shit
       for (const code of codeTest || []) {
         const isInvite = await this.client.fetchInvite(code)
           .catch(() => null);
         if (isInvite) content = content.replace(code, '*INVITE*');
-      }
+      }*/
+      // This is not the smartest idea
 
       for (let i = 0; i < destinations.length; i += 1) {
         const destination = destinations[i];
