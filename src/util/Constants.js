@@ -102,6 +102,7 @@ exports.status = {
 exports.regionFlags = {
   amsterdam: ':flag_nl:',
   brazil: ':flag_br:',
+  europe: ':flag_eu:',
   'eu-central': ':flag_eu:',
   'eu-west': ':flag_eu:',
   frankfurt: ':flag_de:',
