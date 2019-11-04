@@ -737,6 +737,7 @@
   "server.defaultMessageNotifications.NOTHING": "Nothing",
   "server.region.amsterdam": "Amsterdam",
   "server.region.brazil": "Brazil",
+  "server.region.europe": "Europe",
   "server.region.eu-central": "Central Europe",
   "server.region.eu-west": "Western Europe",
   "server.region.fankfurt": "Frankfurt",
