@@ -59,7 +59,7 @@ class QuoteCommand extends Command {
           embed.addField(
             context.__('quote.attachments'),
             message.attachments
-              .map(a => `${this.dot} **[${a.filename}](${a.url})** (${(a.filesize / 1024 / 1024).toFixed(2)}MB)`)
+              .map(a => `${this.dot} **[${a.filename}](${a.url})** (${(a.filesize / 1024).toFixed(2)}KB)`)
               .join('\n'),
           );
         }
