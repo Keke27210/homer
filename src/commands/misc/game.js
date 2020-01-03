@@ -45,10 +45,8 @@ class GameCommand extends Command {
     context.reply(context.__(`game.normalPlaying.${Boolean(presence.game.timestamps)}`, {
       emote: this.emotes[presence.game.type],
       user: `**${user.username}**#${user.discriminator}`,
-      action: context.__(`game.type.${presence.game.type === 4 ? '' : presence.game.type}`), // assuming custom status isn't a kind of game
-      game: presence.game.type === 4 ?
-        `**${escape(presence.game.state)}**`
-        : (presence.game.type === 1 ? `**${escape(presence.game.name)}** (<${presence.game.url}>)` : `**${escape(presence.game.name)}**`),
+      action: context.__(`game.type.${presence.game.type}`), // assuming custom status isn't a kind of game
+      game: (presence.game.type === 1 ? `**${escape(presence.game.name)}** (<${presence.game.url}>)` : `**${escape(presence.game.name)}**`),
       time: (presence.game.timestamps && presence.game.timestamps.start) ? this.client.time.timeSince(presence.game.timestamps.start.getYear() === 70 ? (presence.game.timestamps.start * 1000) : presence.game.timestamps.start, context.settings.misc.locale) : null,
     }), { embed });
   }

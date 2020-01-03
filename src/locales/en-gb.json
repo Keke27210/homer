@@ -183,7 +183,7 @@
   "game.type.1": "streaming",
   "game.type.2": "listening to",
   "game.type.3": "watching",
-  "game.type.4": "doing",
+  "game.type.4": "saying",
   "game.embed.ends": "{{{ time }}} left",
 
   "google.noSearch": "You must provide something to search on Google.",
