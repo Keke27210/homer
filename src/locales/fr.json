@@ -183,6 +183,7 @@
   "game.type.1":"diffuse",
   "game.type.2":"écoute",
   "game.type.3":"regarde",
+  "game.type.4":"fait",
   "game.embed.ends":"{{{ time }}} restantes",
 
   "google.noSearch":"Vous devez fournir un contenu à rechercher sur Google.",
