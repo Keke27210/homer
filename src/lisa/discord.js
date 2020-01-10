@@ -251,13 +251,14 @@ module.exports = [
       // Timestamp
       const timestamp = params.find((p) => p.startsWith('timestamp:'));
       if (timestamp) {
-        let time = Date.now();
+        let time;
 
         const number = Number(timestamp);
-        if (isNaN(number)) time = moment(timestamp).valueOf();
-        else time = moment(number).valueOf();
+        if (isNaN(number)) time = moment(timestamp).toISOString();
+        else time = moment(number).toISOString();
 
-        embed.setTimestamp(isNaN(time) ? Date.now() : time);
+        if (!time) time = moment().toISOString();
+        embed.setTimestamp(time);
       }
 
       return `|||[|||${env.embedCode}:${JSON.stringify(embed)}|||]|||`;
