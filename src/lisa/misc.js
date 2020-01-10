@@ -67,7 +67,8 @@ module.exports = [
     'json',
     null,
     (env, params) => {
-      // Check if params after the first one contains }, if yes it means JSON is not finished to put them back with params[0]
+      // Check if params after the first one contains },
+      // if yes it means JSON is not finished to put them back with params[0]
       for (let i = 1; i < params.length; i += 1) {
         const param = params[i];
         if (param.includes('{') || param.includes('}')) {
@@ -121,7 +122,7 @@ module.exports = [
 
             const properties = property[1].split('.');
             let item2 = item;
-            for (let i = 0; i < properties.length; i += 1) item2 = item[properties[i]];
+            for (let k = 0; k < properties.length; k += 1) item2 = item[properties[k]];
             str = str.replace(property[0], typeof item2 === 'object' ? JSON.stringify(item2) : String(item2));
           }
 
