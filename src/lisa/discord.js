@@ -255,7 +255,7 @@ module.exports = [
 
         const number = Number(timestamp);
         if (isNaN(number)) time = moment(timestamp).valueOf();
-        else time = moment(timestamp).valueOf();
+        else time = moment(number).valueOf();
 
         embed.setTimestamp(isNaN(time) ? Date.now() : time);
       }
