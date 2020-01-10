@@ -1,5 +1,5 @@
-const Manager = require('../structures/Manager');
 const rethinkdb = require('rethinkdbdash');
+const Manager = require('../structures/Manager');
 
 const noCache = ['lastactive', 'names'];
 
@@ -12,7 +12,9 @@ class DatabaseManager extends Manager {
     this.cache = {};
     this.provider.tableList()
       .then((tables) => {
-        for (const table of tables) this.cache[table] = [];
+        tables.forEach((table) => {
+          this.cache[table] = [];
+        });
       })
       .catch(() => this.client.logger.error('Unable to prepare tables cache (database tableList error)'));
   }
@@ -24,13 +26,14 @@ class DatabaseManager extends Manager {
 
       for (let i = 0; i < this.cache[table].length; i += 1) {
         const item = this.cache[table][i];
-        if (!item) continue;
 
-        let valid = true;
-        for (const [k, v] of properties) {
-          if (item[k] !== v) valid = false;
+        if (item) {
+          let valid = true;
+          properties.forEach(([k, v]) => {
+            if (item[k] !== v) valid = false;
+          });
+          if (valid) found.push(item);
         }
-        if (valid) found.push(item);
       }
 
       if (found.length > 0) return found;
@@ -41,12 +44,12 @@ class DatabaseManager extends Manager {
       .filter(predicate)
       .run();
 
-    for (const d of data) this.cache[table].push(d);
+    data.forEach((d) => this.cache[table].push(d));
     return data;
   }
 
   async getDocument(table, key, fetch = false) {
-    const cache = this.cache[table].find(item => item ? item.id === key : false);
+    const cache = this.cache[table].find((item) => (item ? item.id === key : false));
     if (!fetch && !noCache.includes(table) && cache) return cache;
 
     const data = await this.provider
@@ -55,9 +58,9 @@ class DatabaseManager extends Manager {
       .run();
 
     if (data) {
-      if (!this.cache[table].find(a => a.id === data.id)) this.cache[table].push(data);
+      if (!this.cache[table].find((a) => a.id === data.id)) this.cache[table].push(data);
       else {
-        this.cache[table].splice(this.cache[table].findIndex(a => a.id === data.id), 1);
+        this.cache[table].splice(this.cache[table].findIndex((a) => a.id === data.id), 1);
         this.cache[table].push(data);
       }
     }
@@ -66,13 +69,16 @@ class DatabaseManager extends Manager {
   }
 
   async getDocuments(table, fetch = false) {
-    if (!fetch && !noCache.includes(table) && Object.keys(this.cache[table]).length > 0) return this.cache[table];
+    if (!fetch && !noCache.includes(table)
+      && Object.keys(this.cache[table]).length > 0) return this.cache[table];
 
     const data = await this.provider
       .table(table)
       .run();
 
-    for (const d of data) if (!this.cache[table].find(a => a.id === d.id)) this.cache[table].push(d);
+    data.forEach((d) => {
+      if (!this.cache[table].find((a) => a.id === d.id)) this.cache[table].push(d);
+    });
     return data;
   }
 
@@ -80,11 +86,13 @@ class DatabaseManager extends Manager {
     // Data with no "ID" property are not cacheable
     if (data.id) {
       if (!noCache.includes(table)) {
-        const index = this.cache[table].findIndex(item => item ? item.id === data.id : false);
+        const index = this.cache[table].findIndex((item) => (item ? item.id === data.id : false));
         if (index !== -1) {
-          for (const [k, v] of Object.entries(data)) {
-            this.cache[table][index][k] = v;
-          }
+          Object
+            .entries(data)
+            .forEach(([k, v]) => {
+              this.cache[table][index][k] = v;
+            });
         } else {
           this.cache[table].push(data);
         }
@@ -99,17 +107,23 @@ class DatabaseManager extends Manager {
 
   async updateDocument(table, key, data) {
     if (!noCache.includes(table)) {
-      let index = this.cache[table].findIndex(item => item ? item.id === key : false);
+      let index = this.cache[table].findIndex((item) => (item ? item.id === key : false));
       if (!index) {
         await this.getDocument(table, key, true);
-        index = this.cache[table].findIndex(item => item ? item.id === key : false);
+        index = this.cache[table].findIndex((item) => (item ? item.id === key : false));
       }
- 
+
       // C'est vraiment de la mauvaise foi si on en arrive là, on force quand même
       if (index) {
-        for (const [k, v] of Object.entries(data)) {
-          try { this.cache[table][index][k] = v; } catch(e) {}
-        }
+        Object
+          .entries(data)
+          .forEach(([k, v]) => {
+            try {
+              this.cache[table][index][k] = v;
+            } catch (e) {
+              this.client.logger.warn('[Database] Weird behaviour suspected!');
+            }
+          });
       }
     }
 
@@ -123,7 +137,7 @@ class DatabaseManager extends Manager {
   deleteDocument(table, key) {
     if (!noCache.includes(table)) {
       this.cache[table].splice(
-        this.cache[table].findIndex(item => item ? item.id === key : false),
+        this.cache[table].findIndex((item) => (item ? item.id === key : false)),
         1,
       );
     }

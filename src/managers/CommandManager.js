@@ -10,7 +10,8 @@ class CommandManager extends Manager {
   }
 
   async loadCommands(sandbox = false) {
-    for (const category of this.categories) {
+    for (let i = 0; i < this.categories.length; i++) {
+      const category = this.categories[i];
       const commandList = await readdir(`./src/commands/${category}`)
         .then(files => files.filter(f => f.split('.')[1] === 'js'));
 
@@ -62,7 +63,9 @@ class CommandManager extends Manager {
   }
 
   getCommand(name) {
-    return this.commands.find(c => c.name === name.toLowerCase() || c.aliases.includes(name.toLowerCase())) || null;
+    return this.commands.find(
+      (c) => c.name === name.toLowerCase() || c.aliases.includes(name.toLowerCase())
+    ) || null;
   }
 
   async getSettings(id = '0') {

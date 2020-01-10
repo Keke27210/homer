@@ -22,11 +22,11 @@ class LisaManager extends Manager {
 
   async loadMethods(sandbox = false) {
     const files = await readdir('./src/lisa');
-    for (const file of files) {
+    files.forEach((file) => {
       const methodFile = require(`../lisa/${file}`);
       if (!sandbox) methodFile.forEach(method => this.methods.push(method));
       this.client.clearCache(`../lisa/${file}`);
-    }
+    });
   }
 
   async reloadMethods(sandbox = false) {
@@ -54,7 +54,7 @@ class LisaManager extends Manager {
         const split = content.indexOf(':');
         if (split === -1) {
           const name = content.trim().toLowerCase();
-          const method = this.methods.find(m => m.name === name);
+          const method = this.methods.find((m) => m.name === name);
 
           if (method) {
             try { result = await method.parseSimple(env); }
@@ -62,15 +62,15 @@ class LisaManager extends Manager {
           }
         } else {
           const name = content.substring(0, split).toLowerCase();
-          const method = this.methods.find(m => m.name === name);
+          const method = this.methods.find((m) => m.name === name);
           const splitter = (method && method.split.length > 0) ?
-            new RegExp(method.split.map(s => `\\${s}`).join('|')) :
+            new RegExp(method.split.map((s) => `\\${s}`).join('|')) :
             '|';
 
           const params = content
             .substring(split + 1)
             .split(splitter)
-            .map(a => this.defilterAll(a));
+            .map((a) => this.defilterAll(a));
 
           if (method) {
             if (method.name === 'repeat') {
@@ -98,7 +98,9 @@ class LisaManager extends Manager {
 
         if (split !== -1) {
           const name = content.substring(0, split).toLowerCase();
-          const value = (name === env.embedCode) ? this.defilterAll(content.substring(split + 1)) : undefined;
+          const value = (name === env.embedCode)
+            ? this.defilterAll(content.substring(split + 1))
+            : undefined;
 
           try { env.embed = JSON.parse(value); }
           catch (e) {}
