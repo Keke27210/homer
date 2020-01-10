@@ -228,7 +228,7 @@ module.exports = [
 
       // URL
       const url = params.find((p) => p.startsWith('url:'));
-      if (url) embed.setURL(url);
+      if (url) embed.setURL(url.substring(4));
 
       // Color
       const color = params.find((p) => p.startsWith('color:'));
