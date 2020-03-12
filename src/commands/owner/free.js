@@ -5,13 +5,12 @@ class FreeCommand extends Command {
     super(client, {
       name: 'free',
       category: 'owner',
-      private: true,
       dm: true,
     });
   }
 
   async execute(context) {
-    const text = context.args.join(' ');
+    /*const text = context.args.join(' ');
     if (!text) return context.replyError('You must provide a text to send.');
 
     const status = await this.client.other.ilAFreeIlAToutCompris(text);
@@ -19,7 +18,8 @@ class FreeCommand extends Command {
       context.replySuccess('You have successfully sent a SMS to +3368844.. I won\'t give you my full number lmao');
     } else {
       context.replyError(this.errors[status] || this.errors.UNKNOWN)
-    }
+    }*/
+    context.replyWarning('il est passé chez sosh askip');
   }
 
   get errors() {
