@@ -94,8 +94,8 @@ class SubscribeSubcommand extends Command {
       { max: 1 },
     )
       .then(async (reactions) => {
+      console.log(reactions.size);
         if (reactions.first().emoji.identifier !== this.client.constants.emotes.successID) {
-          
           return context.replyWarning(context.__('telephone.setup.cancelled'));
         }
         message.delete();
