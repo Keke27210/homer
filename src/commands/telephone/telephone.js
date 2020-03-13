@@ -90,11 +90,10 @@ class SubscribeSubcommand extends Command {
     await message.react(this.client.constants.emotes.errorID);
 
     message.awaitReactions(
-      (reaction, user) => [this.client.constants.emotes.successID, this.client.constants.emotes.errorID].includes(reaction.emoji.identifier) && user.id === context.message.author.id,
+      //(reaction, user) => [this.client.constants.emotes.successID, this.client.constants.emotes.errorID].includes(reaction.emoji.identifier) && user.id === context.message.author.id,
       { max: 1 },
     )
       .then(async (reactions) => {
-      console.log(reactions.map(r => r.emoji));
         if (reactions.first().emoji.identifier !== this.client.constants.emotes.successID) {
           
           return context.replyWarning(context.__('telephone.setup.cancelled'));
