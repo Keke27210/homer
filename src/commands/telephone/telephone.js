@@ -90,8 +90,7 @@ class SubscribeSubcommand extends Command {
     await message.react(this.client.constants.emotes.errorID);
 
     message.awaitReactions(
-      //(reaction, user) => [this.client.constants.emotes.successID, this.client.constants.emotes.errorID].includes(reaction.emoji.identifier) && user.id === context.message.author.id,
-      () => true,
+      (reaction, user) => user.id === context.message.author.id && [this.client.constants.emotes.successID, this.client.constants.emotes.errorID].includes(reaction.emoji.identifier),
       { max: 1 },
     )
       .then(async (reactions) => {
