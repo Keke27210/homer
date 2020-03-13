@@ -89,20 +89,12 @@ class SubscribeSubcommand extends Command {
     await message.react(this.client.constants.emotes.successID);
     await message.react(this.client.constants.emotes.errorID);
 
-    let decision = false;
     message.awaitReactions(
-      (reaction, user) => {
-        if (user.id !== context.message.author.id) return false;
-        if (reaction.emoji.identifier === this.client.constants.emotes.successID) {
-          decision = true;
-          return true;
-        }
-        return false;
-      },
+      (reaction, user) => user.id === context.message.author.id && [this.client.constants.emotes.successID, this.client.constants.emotes.errorID].includes(reaction.emoji.identifier),
       { max: 1 },
     )
       .then(async (reactions) => {
-        if (!decision) {
+        if (reactions.first().emoji.identifier !== this.client.constants.emotes.successID) {
           return context.replyWarning(context.__('telephone.setup.cancelled'));
         }
         message.delete();
