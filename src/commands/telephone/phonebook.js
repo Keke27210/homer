@@ -35,7 +35,7 @@ class PhonebookCommand extends Command {
       context.settings.misc.locale,
       context.__('phonebook.title'),
       null,
-      numbers.map(e => `${this.dot} `${e.number}` ${e.phonebook}`),
+      numbers.map(e => `${this.dot} \`${e.number}\` ${e.phonebook}`),
     );
   }
 }
