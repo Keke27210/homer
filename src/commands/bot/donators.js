@@ -19,7 +19,7 @@ class DonatorsCommand extends Command {
       const user = await this.client.fetchUser(donatorList[i].id)
         .catch(() => null);
       if (!user) continue;
-      donators.push(`${this.dot} **${m.user.username}**#${m.user.discriminator}`);
+      donators.push(`${this.dot} **${user.username}**#${user.discriminator}`);
     }
 
     const perks = Object.keys(this.client.localization.locales['en-gb'])
