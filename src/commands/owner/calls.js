@@ -21,7 +21,7 @@ class CallsCommand extends Command {
       context.settings.misc.locale,
       '📞 Ongoing telephone calls:',
       null,
-      calls.map(call => `${this.dot} Sender: **${call.sender.number}** - Receiver: **${call.receiver.number}** - Created ${this.client.time.timeSince(call.time, 'en-gb', true, true)}`),
+      calls.map(call => `${this.dot} Sender: **${call.sender.number}** - Receiver: **${call.receiver.number}** - Created ${this.client.time.timeSince(call.start, 'en-gb', true, true)} - Last activity: ${this.client.time.timeSince(call.active, 'en-gb', true, true)}`),
     );
   }
 }
