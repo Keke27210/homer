@@ -12,14 +12,18 @@ class DonatorsCommand extends Command {
   }
 
   async execute(context) {
-    const donators = this.client
-      .guilds.get('382951433378594817')
-      .roles.get('382967473135288320')
-      .members
-        .filter(m => this.client.config.owner !== m.user.id)
-        .sort((a, b) => a > b)
-        .map(m => `${this.dot} **${m.user.username}**#${m.user.discriminator}`)
-        .join('\n');
+    
+    const donatorList = await this.client.database.getDocuments('donators', true);
+    const donators = [];
+    for (let i = 0; i < donatorList; i += 1) {
+      const user = this.client.fetchUser(donatorList[i].id)
+        .catch(() => null);
+      if (!user) {
+        donators.push(`${this.dot} **?**#?`);
+        continue;
+      }
+      donators.push(`${this.dot} **${m.user.username}**#${m.user.discriminator}`);
+    }
 
     const perks = Object.keys(this.client.localization.locales['en-gb'])
       .filter(key => key.startsWith('donators.perk.'))
@@ -28,7 +32,7 @@ class DonatorsCommand extends Command {
 
     const embed = new RichEmbed()
       .setDescription(context.__('donators.text', { link: this.client.constants.donationLink(context.message.author.id) }))
-      .addField(context.__('donators.donators'), donators || context.__('global.none'), true)
+      .addField(context.__('donators.donators'), donators.sort((a, b) => a.localeCompare(b)).join('\n') || context.__('global.none'), true)
       .addField(context.__('donators.perks'), perks || context.__('global.none'), true);
 
     context.reply(context.__('donators.main', { name: this.client.user.username }), { embed });
