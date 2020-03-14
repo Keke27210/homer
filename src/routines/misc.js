@@ -12,9 +12,14 @@ class MiscRoutine extends Routine {
     }
 
     // Update donators list
+    const g = this.client.guilds.get('382951433378594817');
+    if (g) {
+      g.roles.get('382967473135288320').members.forEach(m => this.client.database.insertDocument('donators', { id: m.user.id }));
+    }
+
     this.client.database.getDocuments('donators', true)
       .then((donators) => {
-        this.client.donators = donators;
+        this.client.donators = donators.map(d => d.id);
       });
 
     // Statistics logging
