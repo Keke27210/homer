@@ -11,6 +11,12 @@ class MiscRoutine extends Routine {
       this.client.other.processRSS();
     }
 
+    // Update donators list
+    this.client.database.getDocuments('donators', true)
+      .then((donators) => {
+        this.client.donators = donators;
+      });
+
     // Statistics logging
     if (new Date().getHours() === 12 && this.client.shard.id === 0) {
       const stats = await this.client.database.getDocument('bot', 'stats');
