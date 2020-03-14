@@ -15,7 +15,7 @@ class DonatorsCommand extends Command {
     
     const donatorList = await this.client.database.getDocuments('donators', true);
     const donators = [];
-    for (let i = 0; i < donatorList; i += 1) {
+    for (let i = 0; i < donatorList.length; i += 1) {
       const user = await this.client.fetchUser(donatorList[i].id)
         .catch(() => null);
       if (!user) continue;
