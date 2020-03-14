@@ -18,10 +18,7 @@ class OtherUtil extends Util {
   }
 
   isDonator(id) {
-    return this.client
-      .guilds.get('382951433378594817')
-      .roles.get('382967473135288320')
-      .members.has(id);
+    return this.client.donators.includes(id);
   }
 
   async getBadges(id) {
