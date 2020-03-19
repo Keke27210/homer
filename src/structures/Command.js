@@ -107,7 +107,7 @@ class Command {
     }
 
     // Blacklist
-    const blacklistEntry = await this.client.database.getDocument('blacklist', context.message.author.id);
+    const blacklistEntry = await this.client.database.getDocument('blacklist', context.message.author.id, true);
     if (blacklistEntry && this.category !== 'owner') {
       const embed = new RichEmbed()
         .setDescription([
