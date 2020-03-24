@@ -27,7 +27,7 @@ class BroadcastCommand extends Command {
     for (const emote of this.emotes) await m.react(emote);
 
     m.awaitReactions(
-      (reaction, user) => this.emotes.includes(reaction.emoji.id) && user.id === context.message.author.id,
+      (reaction, user) => this.emotes.includes(reaction.emoji.identifier) && user.id === context.message.author.id,
       { max: 1 },
     ).then(async (reactions) => {
       const emoji = reactions.first().emoji.identifier;
