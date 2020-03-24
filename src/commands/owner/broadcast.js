@@ -33,20 +33,14 @@ class BroadcastCommand extends Command {
       const emoji = reactions.first().emoji.identifier;
       if (emoji === this.emotes[0]) {
         for (const subscription of subscriptions) {
-          const lang = await this.client.database.getDocument('settings', subscription.settings)
-            .then(s => s ? s.misc.locale : this.client.localization.defaultLocale);
-    
           this.client.sendMessage(
             subscription.id,
-            this.client.__(lang, 'broadcast.announcement'),
+            this.client.__(this.client.localization.defaultLocale, 'broadcast.announcement'),
             { embed },
           );
         }
     
-        m.edit(
-          '📡 You have sent the announcement to Homer subscriptions.',
-          { embed },
-        );
+        m.edit('📡 You have sent the announcement to ' + subscriptions.length + ' Homer subscriptions.');
       } else {
         m.edit('📡 You have not sent the announcement to Homer subscriptions.');
       }
