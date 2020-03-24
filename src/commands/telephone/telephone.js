@@ -129,7 +129,7 @@ class SubscribeSubcommand extends Command {
             const emoji = reactions.first().emoji.identifier;
 
             if (context.message.guild && context.message.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) {
-              message.clearReactions();
+              message2.clearReactions();
             }
 
             if (emoji === this.client.constants.emotes.successID) {
@@ -156,9 +156,9 @@ class SubscribeSubcommand extends Command {
                 },
               );
 
-              message.edit(`${this.client.constants.emotes.success} ${context.__('telephone.setup.done')}`);
+              message2.edit(`${this.client.constants.emotes.success} ${context.__('telephone.setup.done')}`);
             } else {
-              message.edit(`${this.client.constants.emotes.success} ${context.__('telephone.setup.cancelled')}`);
+              message2.edit(`${this.client.constants.emotes.success} ${context.__('telephone.setup.cancelled')}`);
             }
           });
       });
