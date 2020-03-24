@@ -133,7 +133,7 @@ class SubscribeSubcommand extends Command {
             }
 
             if (emoji === this.client.constants.emotes.successID) {
-              await this.client.database.insertDocument(
+              this.client.database.insertDocument(
                 'telephone',
                 {
                   id: context.message.channel.id,
