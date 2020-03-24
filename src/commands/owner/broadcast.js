@@ -24,9 +24,7 @@ class BroadcastCommand extends Command {
       .setTimestamp(new Date());
 
     const m = await context.reply('📡 Are you sure you want to send this message?', { embed });
-    (async function () {
-      for (const emote of this.emotes) await m.react(emote);
-    })();
+    for (const emote of this.emotes) await m.react(emote);
 
     m.awaitReactions(
       (reaction, user) => this.emotes.includes(reaction.emoji.id) && user.id === context.message.author.id,
