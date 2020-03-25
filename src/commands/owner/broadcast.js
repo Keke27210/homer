@@ -32,15 +32,16 @@ class BroadcastCommand extends Command {
     ).then(async (reactions) => {
       const emoji = reactions.first().emoji.identifier;
       if (emoji === this.emotes[0]) {
-        for (const subscription of subscriptions) {
-          this.client.sendMessage(
-            subscription.id,
-            this.client.__(this.client.localization.defaultLocale, 'broadcast.announcement'),
-            { embed },
-          );
+        m.edit ('📡 Sending messages...');
+        let i = 0;
+        while (i < subscriptions.length) {
+          const channel = this.client.channels.get(subscriptions[i].id);
+          i += 1;
+          if (!channel) continue;
+          await channel.send(this.client.__(this.client.localization.defaultLocale, 'broadcast.announcement'), { embed })
+            .catch(console.error);
         }
-    
-        m.edit('📡 You have sent the announcement to ' + subscriptions.length + ' Homer subscriptions.');
+        m.edit(`📡 Sent message to ${i} telephone lines`);
       } else {
         m.edit('📡 You have not sent the announcement to Homer subscriptions.');
       }
