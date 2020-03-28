@@ -333,6 +333,7 @@ class ChangeSubcommand extends Command {
       name: 'change',
       aliases: ['changenumber'],
       category: 'telephone',
+      private: true,
       dm: true,
     });
   }
