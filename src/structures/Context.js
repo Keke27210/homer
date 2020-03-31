@@ -4,6 +4,7 @@ class Context {
   constructor(client, message) {
     Object.defineProperty(this, 'client', { value: client, enumerable: false });
     Object.defineProperty(this, 'message', { value: message, enumerable: false });
+    this.time = Date.now();
     this.args = this.message.content.split(/ +/g);
     this.prefix = null;
     this.settings = message.guild
