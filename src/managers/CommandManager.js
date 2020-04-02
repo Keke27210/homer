@@ -32,7 +32,7 @@ class CommandManager extends Manager {
     if (message.author.bot || !message.content) return;
 
     const context = new Context(this.client, message);
-    if (message.content.includes('nosettlol')) await context.getSettings();
+    await context.getSettings();
 
     const prefixes = this.client.config.discord.prefixes.concat(context.settings.prefixes);
     const prefix = prefixes.find((p) => {
