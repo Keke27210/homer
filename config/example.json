@@ -1,0 +1,11 @@
+{
+  "token": "",
+  "clientOptions": {
+  },
+  "databaseCredentials": {
+    "host": "",
+    "user": "",
+    "password": "",
+    "database": ""
+  }
+}

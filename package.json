@@ -1,0 +1,29 @@
+{
+  "name": "homer",
+  "version": "1.0.0",
+  "description": "A true Swiss knife for your Discord server",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["discord", "bot", "homer"],
+  "author": "Keke27210",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@discordjs/opus": "^0.1.0",
+    "bufferutil": "^4.0.1",
+    "discord.js": "^12.1.1",
+    "erlpack": "github:discordapp/erlpack",
+    "moment-timezone": "^0.5.28",
+    "pg": "^8.0.0",
+    "sodium": "^3.0.2",
+    "utf-8-validate": "^5.0.2",
+    "zlib-sync": "^0.1.6"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
+  }
+}
