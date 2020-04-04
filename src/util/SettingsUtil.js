@@ -36,13 +36,14 @@ class SettingsUtil extends Util {
       locale: data ? data[1] : this.client.localeManager.defaultLocale,
       timezone: data ? data[2] : 'UTC',
       ignored: data ? JSON.parse(data[3]) : [],
+      prefixes: data ? JSON.parse(data[4]) : [],
       radio: {
-        channel: data ? data[4] : null,
-        volume: data ? (data[5] / 100) : 0.5,
+        channel: data ? data[5] : null,
+        volume: data ? (data[6] / 100) : 0.5,
       },
       formats: {
-        date: data ? data[6] : 'DD/MM/YYYY',
-        time: data ? data[7] : 'HH:mm:ss',
+        date: data ? data[7] : 'DD/MM/YYYY',
+        time: data ? data[8] : 'HH:mm:ss',
       },
     });
 

@@ -27,6 +27,14 @@ class CommandManager extends Manager {
   }
 
   /**
+   * Default command prefixes
+   * @type {string[]}
+   */
+  get prefixes() {
+    return [`<@${this.client.user.id}>`, `<@!${this.client.user.id}>`, 'hb:'];
+  }
+
+  /**
    * Registers all available commands into the client
    * @returns {number} Number of registered commands
    */
@@ -65,7 +73,13 @@ class CommandManager extends Manager {
     if (message.author.bot || !message.content) return;
     await message.fetchSettings();
 
-    const args = message.content.split(/ +/g);
+    const prefix = this.prefixes
+      .concat(message.settings.prefixes)
+      .find((p) => message.content.startsWith(p));
+    if (!prefix) return;
+
+    const parse = message.content.substring(prefix.length).trim();
+    const args = parse.split(/ +/g);
     const command = args.shift();
 
     const instance = this.searchCommand(command);
