@@ -7,12 +7,17 @@
     "start": "node src/index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["discord", "bot", "homer"],
+  "keywords": [
+    "discord",
+    "bot",
+    "homer"
+  ],
   "author": "Keke27210",
   "license": "Apache-2.0",
   "dependencies": {
     "@discordjs/opus": "^0.1.0",
     "bufferutil": "^4.0.1",
+    "colors": "^1.4.0",
     "discord.js": "^12.1.1",
     "erlpack": "github:discordapp/erlpack",
     "moment-timezone": "^0.5.28",
