@@ -7,6 +7,7 @@ class AboutCommand extends Command {
   constructor(client) {
     super(client, {
       name: 'about',
+      dm: true,
     });
   }
 

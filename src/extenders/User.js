@@ -9,6 +9,22 @@ Structures.extend('User', (User) => {
     get tag() {
       return `**${this.username}**#${this.discriminator}`;
     }
+
+    /**
+     * Cached settings
+     * @type {?Settings}
+     */
+    get settings() {
+      return this.client.settingsUtil.cache.find((c) => c.id === this.id);
+    }
+
+    /**
+     * Fetches settings from the database
+     * @returns {Promise<Settings>}
+     */
+    fetchSettings() {
+      return this.client.settingsUtil.fetchSettings(this.id);
+    }
   }
 
   return CustomUser;

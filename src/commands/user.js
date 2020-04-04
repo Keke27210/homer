@@ -5,6 +5,7 @@ class UserCommand extends Command {
     super(client, {
       name: 'user',
       aliases: ['userinfo'],
+      dm: true,
     });
   }
 
@@ -12,8 +13,12 @@ class UserCommand extends Command {
     const search = args.join(' ');
     let { member } = message;
     let user = message.author;
-    if (search) {
-      this.find();
+    if (message.guild && search) {
+      const found = await this.client.finderUtil.findMembers(message, search);
+      if (found.length === 0) return message.error(message._('finder.members.zero', search));
+      if (found.length > 1) return this.client.finderUtil.formatMembers(message, found, search);
+      member = found[0];
+      user = member.user;
     }
 
     const description = [
@@ -27,7 +32,7 @@ class UserCommand extends Command {
       .setThumbnail(user.avatarURL({ size: 256, dynamic: true }));
     if (member) embed.setColor(member.displayHexColor);
 
-    message.channel.send(message._('user.title', user.tag), embed);
+    return message.channel.send(message._('user.title', user.tag), embed);
   }
 }
 

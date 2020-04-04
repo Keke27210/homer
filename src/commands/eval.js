@@ -1,33 +1,33 @@
 /* eslint-disable class-methods-use-this */
+const { inspect } = require('util');
+
 const Command = require('../structures/Command');
 
 class EvalCommand extends Command {
   constructor(client) {
     super(client, {
       name: 'eval',
+      dm: true,
       private: true,
     });
   }
 
   async main(message, args) {
     const code = args.join(' ');
-    if (!code) {
-      message.channel.send('❌ You must provide code to execute.');
-      return 0;
+
+    let result;
+    try {
+      // eslint-disable-next-line no-eval
+      result = await eval(code);
+    } catch (e) {
+      result = e;
     }
 
-    const result = await eval(code);
-    if (result) {
-      if (result.length > 1990) {
-        message.channel.send('⚠️ Output too long!');
-      } else {
-        message.channel.send(require('util').format(result), { code: true });
-      }
-    } else {
-      message.channel.send('⚠️ No output');
-    }
+    if (typeof result !== 'string') result = inspect(result);
+    result = result.replace(new RegExp(this.client.token, 'g'), '*TOKEN*');
 
-    return 0;
+    message.send(result, { code: 'js' })
+      .catch((error) => message.send(error, { code: 'js' }));
   }
 }
 

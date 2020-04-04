@@ -10,6 +10,7 @@ const EventManager = require('../managers/EventManager');
 const LocaleManager = require('../managers/LocaleManager');
 
 // Utils
+const FinderUtil = require('../util/FinderUtil');
 const SettingsUtil = require('../util/SettingsUtil');
 
 class DiscordClient extends Client {
@@ -51,6 +52,12 @@ class DiscordClient extends Client {
      * @type {LocaleManager}
      */
     this.localeManager = new LocaleManager(this);
+
+    /**
+     * Finder util for this client
+     * @type {FinderUtil}
+     */
+    this.finderUtil = new FinderUtil(this);
 
     /**
      * Settings util for this client

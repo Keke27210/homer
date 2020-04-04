@@ -7,6 +7,16 @@ module.exports = {
     authors: ['205427654042583040'],
   },
 
+  /* HANDLERS */
+  // Command handler
+  command: {
+    error: 'An error occured during the execution of this command. Please try again or join the support server.',
+    noDm: 'This command cannot be ran in a DM environment.',
+    userPermissions: (permissions) => `You need the following permissions to run this command: ${permissions}.`,
+    botPermissions: (permissions) => `I need the following permissions to run this command: ${permissions}.`,
+  },
+
+  /* COMMANDS */
   // About command
   about: {
     title: (emote, name) => `${emote} Information about **${name}**:`,

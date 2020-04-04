@@ -86,6 +86,15 @@ Structures.extend('Message', (Message) => {
     }
 
     /**
+     * Calls TextChannel#send
+     * @param {string} content The content to send
+     * @param {?object} options The options to provide
+     */
+    send(content, options) {
+      return this.channel.send(content, options);
+    }
+
+    /**
      * Calls TextChannel#send with a :success: before content
      * @param {string} content The content to send
      * @param {?object} options The options to provide
@@ -124,7 +133,7 @@ Structures.extend('Message', (Message) => {
      */
     getEmbed() {
       return new MessageEmbed()
-        .setColor(this.guild.me.displayHexColor);
+        .setColor(this.guild ? this.guild.me.displayHexColor : '#FED90F');
     }
 
     /**
@@ -136,7 +145,15 @@ Structures.extend('Message', (Message) => {
       return moment(time)
         .tz(this.settings.timezone)
         .locale(this.locale)
-        .format('DD/MM/YYYY @ HH:mm:ss');
+        .format(`${this.settings.formats.date} ${this.settings.formats.time}`);
+    }
+
+    /**
+     * Fetches settings for the guild or user
+     * @returns {Promise<Settings>}
+     */
+    fetchSettings() {
+      return this.guild ? this.guild.fetchSettings() : this.author.fetchSettings();
     }
   }
 

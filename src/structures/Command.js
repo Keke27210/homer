@@ -55,7 +55,7 @@ class Command {
    * Performs the required checks then performs the command
    * @param {Message} message Message that triggered the command
    */
-  run(message, args) {
+  async run(message, args) {
     const children = args[0];
     if (children) {
       const subcommand = this.children
@@ -70,33 +70,38 @@ class Command {
     if (this.private && !this.client.owners.includes(message.author.id)) return;
 
     if (!message.guild && !this.dm) {
-      message.channel.send('❌ You can\'t execute this command in a DM environment.');
+      message.error(message._('command.noDm'));
       return;
     }
 
     if (message.guild) {
       const missingUser = message.member.permissions.missing(this.userPermissions);
       if (missingUser.length) {
-        message.channel.send(`⚠️ You need the following permissions to run this command: ${missingUser.map((p) => `\`${p}\``).join(', ')}.`);
+        message.warn(message._('command.userPermissions', missingUser.map((p) => `\`${p}\``).join(', ')));
         return;
       }
 
       const missingBot = message.guild.me.permissions.missing(this.botPermissions);
       if (missingBot.length) {
-        message.channel.send(`⚠️ I need the following permissions to run this command: ${missingBot.map((p) => `\`${p}\``).join(', ')}.`);
+        message.warn(message._('command.botPermissions', missingBot.map((p) => `\`${p}\``).join(', ')));
         return;
       }
     }
 
-    this.main(message, args);
+    try {
+      await this.main(message, args);
+    } catch (e) {
+      message.error(message._('command.error', e));
+      this.client.logger.error(`[command->${this.name}] content: ${message.content} - author: ${message.author.id} - guild: ${message.guild ? message.guild.id : 'none'}`, e);
+    }
   }
 
   /**
    * Default main entry point for the command (should be replaced)
    * @param {Message} message Message that triggered the command
-   * @returns {number} Error code
+   * @returns {?number} Error code
    */
-  main() {
+  async main() {
     this.client.logger.warn(`[command->${this.name}] no custom main function`);
   }
 }

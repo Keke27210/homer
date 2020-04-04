@@ -12,7 +12,7 @@ Structures.extend('Guild', (Guild) => {
 
     /**
      * Fetches settings from the database
-     * @returns {Promise<boolean>} Were the settings fetched correctly
+     * @returns {Promise<Settings>}
      */
     fetchSettings() {
       return this.client.settingsUtil.fetchSettings(this.id);

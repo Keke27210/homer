@@ -63,7 +63,7 @@ class CommandManager extends Manager {
    */
   async handleMessage(message) {
     if (message.author.bot || !message.content) return;
-    await message.guild.fetchSettings();
+    await message.fetchSettings();
 
     const args = message.content.split(/ +/g);
     const command = args.shift();

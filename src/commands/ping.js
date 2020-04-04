@@ -4,6 +4,7 @@ class PingCommand extends Command {
   constructor(client) {
     super(client, {
       name: 'ping',
+      dm: true,
     });
   }
 
