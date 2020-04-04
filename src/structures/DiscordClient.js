@@ -54,14 +54,39 @@ class DiscordClient extends Client {
    * Synchronously initializes all dynamic components
    */
   async initialize() {
+    this.logger.log('[client] Connecting to the database...');
     await this.database.connect()
       .catch(() => {
-        this.logger.warn('[database] Running in no-database mode');
+        this.logger.warn('[database] Unable to connect - Running in no-database mode');
       });
 
+    this.logger.log('[client] Registering components...');
     this.commandManager.registerCommands();
     this.eventManager.registerEvents();
     this.localeManager.registerLocales();
+  }
+
+  /**
+   * Gracefully shutdown the process with the given exit code
+   * @param {number} code Exit code
+   */
+  async shutdown(code = 0) {
+    this.logger.log('[client] Unregistering components...');
+    this.commandManager.unregisterCommands();
+    this.eventManager.unregisterEvents();
+    this.localeManager.unregisterLocales();
+
+    this.logger.log('[client] Ending connection with database...');
+    await this.database.end()
+      .catch(() => {
+        this.logger.error('[database] Unable to end database connection');
+      });
+
+    this.logger.log('[client] Logging out Discord gateway...');
+    this.destroy();
+
+    this.logger.log(`[client] Exiting process with exit code ${code}`);
+    process.exit(code);
   }
 }
 

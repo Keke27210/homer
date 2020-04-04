@@ -42,11 +42,18 @@ class LocaleManager extends Manager {
   }
 
   /**
-   * Unregisters locales then calls registerLocales
+   * Unregisters locales loaded in memory
+   */
+  unregisterLocales() {
+    while (this.locales.length) this.locales.pop();
+  }
+
+  /**
+   * Calls unregisterLocales() then registerLocales()
    * @returns {number} Number of registered locales
    */
   reloadLocales() {
-    while (this.locales.length) this.locales.pop();
+    this.unregisterLocales();
     return this.registerLocales();
   }
 

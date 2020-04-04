@@ -27,8 +27,8 @@ class CommandManager extends Manager {
   }
 
   /**
-   * Registers all available events into the Discord client
-   * @returns {number} Number of registered events
+   * Registers all available commands into the client
+   * @returns {number} Number of registered commands
    */
   registerCommands() {
     let i = 0;
@@ -42,11 +42,18 @@ class CommandManager extends Manager {
   }
 
   /**
-   * Unregisters events then calls registerEvents
-   * @returns {number} Number of registered events
+   * Unregisters commands loaded in memory
+   */
+  unregisterCommands() {
+    while (this.commands.length) this.commands.pop();
+  }
+
+  /**
+   * Calls unregisterCommands() then registerCommands()
+   * @returns {number} Number of registered commands
    */
   reloadCommands() {
-    while (this.commands.length) this.commands.pop();
+    this.unregisterCommands();
     return this.registerCommands();
   }
 

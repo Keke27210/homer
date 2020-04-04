@@ -21,7 +21,7 @@ class EventManager extends Manager {
   }
 
   /**
-   * Registers all available events into the Discord client
+   * Registers all available events into the client
    * @returns {number} Number of registered events
    */
   registerEvents() {
@@ -37,12 +37,19 @@ class EventManager extends Manager {
   }
 
   /**
-   * Unregisters events then calls registerEvents
+   * Unregisters events loaded in memory
+   */
+  unregisterEvents() {
+    this.client.removeAllListeners();
+    while (this.events.length) this.events.pop();
+  }
+
+  /**
+   * Calls unregisterEvents() then registerEvents()
    * @returns {number} Number of registered events
    */
   reloadEvents() {
-    this.client.removeAllListeners();
-    while (this.events.length) this.events.pop();
+    this.unregisterEvents();
     return this.registerEvents();
   }
 }

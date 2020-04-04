@@ -24,3 +24,6 @@ client.initialize()
       .catch(client.logger.error);
   })
   .catch(client.logger.error);
+
+process.on('SIGINT', client.shutdown.bind(client));
+process.on('SIGHUP', client.shutdown.bind(client));
