@@ -64,6 +64,31 @@ class Logger {
   }
 
   /**
+   * Generates a valid path for log files using YYYY/MM/DD architecture
+   * @returns {string}
+   */
+  genPath() {
+    const now = new Date();
+
+    let path = resolve(this.baseDirectory, now.getUTCFullYear().toString());
+    if (!existsSync(path) || !statSync(path).isDirectory()) {
+      mkdirSync(path);
+    }
+
+    path = resolve(path, (now.getUTCMonth() + 1).toString());
+    if (!existsSync(path) || !statSync(path).isDirectory()) {
+      mkdirSync(path);
+    }
+
+    path = resolve(path, now.getUTCDate().toString());
+    if (!existsSync(path) || !statSync(path).isDirectory()) {
+      mkdirSync(path);
+    }
+
+    return path;
+  }
+
+  /**
    * Writes into console
    * @param {string} time Log time
    * @param {string} content Log content
@@ -110,31 +135,6 @@ class Logger {
     const time = this.genTime(now);
     this.writeConsole(time, format(content), severity);
     this.writeFile(time, format(content), severity);
-  }
-
-  /**
-   * Generates a valid path for log files using YYYY/MM/DD architecture
-   * @returns {string}
-   */
-  genPath() {
-    const now = new Date();
-
-    let path = resolve(this.baseDirectory, now.getUTCFullYear().toString());
-    if (!existsSync(path) || !statSync(path).isDirectory()) {
-      mkdirSync(path);
-    }
-
-    path = resolve(path, (now.getUTCMonth() + 1).toString());
-    if (!existsSync(path) || !statSync(path).isDirectory()) {
-      mkdirSync(path);
-    }
-
-    path = resolve(path, now.getUTCDate().toString());
-    if (!existsSync(path) || !statSync(path).isDirectory()) {
-      mkdirSync(path);
-    }
-
-    return path;
   }
 
   /**

@@ -47,7 +47,7 @@ class CommandManager extends Manager {
   registerCommands() {
     let i = 0;
     for (let j = 0; j < this.categories.length; j += 1) {
-      const categoryPath = resolve(this.commandDirectory, this.categories[i]);
+      const categoryPath = resolve(this.commandDirectory, this.categories[j]);
       const dirContent = readdirSync(categoryPath);
       for (let k = 0; k < dirContent.length; k += 1) {
         const command = new (require(resolve(categoryPath, dirContent[k])))(this.client);
