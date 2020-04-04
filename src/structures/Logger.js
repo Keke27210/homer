@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 const {
   appendFileSync,
   existsSync,
