@@ -13,6 +13,7 @@ module.exports = {
     at: 'at',
     yes: 'Yes',
     no: 'No',
+    unknown: 'Unknown',
   },
 
   /* UTILS */
@@ -85,6 +86,36 @@ module.exports = {
     searching: 'Searching...',
     noResults: (search) => `No search results matching \`${search}\`.`,
     error: 'An error occured while querying Google. We apologize for this.',
+  },
+
+  // Lookup command
+  lookup: {
+    noSearch: 'You must provide something to look for.',
+    looking: 'Looking...',
+    noResults: (search) => `No Discord entity found matching \`${search}\`.`,
+    invite: {
+      title: (code) => `📧 Information about invitation **${code}**:`,
+      server: 'Server',
+      inviter: 'Inviter',
+      channel: 'Channel',
+      members: 'Members',
+      creation: 'Server creation date',
+      memberDesc: (total, online, emote) => `**${total}** including ${emote} **${online}**`,
+    },
+    server: {
+      widgetDisabled: (id) => `Server found matching ID \`${id}\` but no further information available.`,
+      title: (name) => `🖥️ Information about server **${name}**:`,
+      id: 'Discord ID',
+      members: 'Members',
+      channels: 'Channels',
+      invite: 'Invite',
+      creation: 'Creation date',
+    },
+    user: {
+      title: (emote, name) => `${emote} Information about ${name}:`,
+      id: 'Discord ID',
+      creation: 'Creation date',
+    },
   },
 
   // Ping command
