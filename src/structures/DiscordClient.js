@@ -93,17 +93,17 @@ class DiscordClient extends Client {
     this.localeManager.unregisterLocales();
 
     if (this.database.connection.stream.readyState !== 'closed') {
-      this.logger.log('[client] Ending connection with database...');
+      this.logger.log('[database] Ending connection with database...');
       await this.database.end()
         .catch(() => {
           this.logger.error('[database] Unable to end database connection');
         });
     }
 
-    this.logger.log('[client] Logging out Discord gateway...');
+    this.logger.log('[gateway] Logging out Discord gateway...');
     this.destroy();
 
-    this.logger.log(`[client] Exiting process with exit code ${code}`);
+    this.logger.log(`[process] Exiting process with exit code ${code}`);
     process.exit(code);
   }
 }
