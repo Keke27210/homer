@@ -11,6 +11,8 @@ module.exports = {
   global: {
     none: 'None',
     at: 'at',
+    yes: 'Yes',
+    no: 'No',
   },
 
   /* UTILS */
@@ -22,8 +24,13 @@ module.exports = {
     members: {
       zero: (search) => `No members found matching \`${search}\`.`,
     },
+    roles: {
+      zero: (search) => `No roles found matching \`${search}\`.`,
+    },
     format: {
+      channels: (size, search) => `**${size}** channels found matching \`${search}\`:`,
       members: (size, search) => `**${size}** members found matching \`${search}\`:`,
+      roles: (size, search) => `**${size}** roles found matching \`${search}\`:`,
     },
   },
 
@@ -74,6 +81,20 @@ module.exports = {
   // Ping command
   ping: {
     pong: (ws) => `🏓 Pong with **${ws}** milliseconds!`,
+  },
+
+  // Role command
+  role: {
+    title: (name) => `🎭 Information about role **${name}**:`,
+    id: 'Discord ID',
+    color: 'Color',
+    position: 'Position',
+    memberCount: 'Member count',
+    managed: 'Managed',
+    mentionable: 'Mentionable',
+    hoisted: 'Hoisted',
+    permissions: 'Permissions',
+    creation: 'Creation date',
   },
 
   // Server command

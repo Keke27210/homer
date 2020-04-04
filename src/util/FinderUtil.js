@@ -105,6 +105,49 @@ class FinderUtil extends Util {
     }
     return str;
   }
+
+  findRoles(message, query) {
+    // 1- Testing mentions
+    const mentions = MENTION.exec(query);
+    MENTION.lastIndex = 0;
+
+    if (mentions) {
+      const role = message.guild.roles.resolve(mentions[2]);
+      if (role && role.id !== message.guild.id) return [role];
+    }
+
+    // 2- Testing IDs
+    const ids = ID.exec(query);
+    ID.lastIndex = 0;
+
+    if (ids) {
+      const role = message.guild.roles.resolve(ids[1]);
+      if (role) return [role];
+    }
+
+    // 3- Querying by search
+    const search = query.toLowerCase();
+    const role = message.guild.roles.cache.find((r) => r.name.toLowerCase() === search);
+    if (role && role.id !== message.guild.id) return [role];
+    const roles = message.guild.roles.cache.filter(
+      (r) => r.id !== message.guild.id
+        && (r.name.toLowerCase().startsWith(search)
+        || r.name.toLowerCase().includes(search)),
+    );
+    if (roles.size) return roles.array();
+
+    // X- Return an empty array
+    return null;
+  }
+
+  formatRoles(message, list, query) {
+    let str = message._('finder.format.roles', list.length, query);
+    for (let i = 0; i < list.length; i += 1) {
+      const role = list[i];
+      str += `\n${message.dot} **${role.name}** (${role.id})`;
+    }
+    return str;
+  }
 }
 
 module.exports = FinderUtil;

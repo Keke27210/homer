@@ -10,7 +10,7 @@ class ChannelCommand extends Command {
   async main(message, args) {
     const search = args.join(' ');
     let { channel } = message;
-    if (message.guild && search) {
+    if (search) {
       const found = this.client.finderUtil.findChannels(message, search);
       if (!found) {
         message.error(message._('finder.channels.zero', search));
