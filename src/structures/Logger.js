@@ -1,5 +1,10 @@
 /* eslint-disable no-useless-escape */
-const { existsSync, mkdirSync, statSync } = require('fs');
+const {
+  appendFileSync,
+  existsSync,
+  mkdirSync,
+  statSync,
+} = require('fs');
 const { resolve } = require('path');
 const { format } = require('util');
 const moment = require('moment-timezone');
@@ -30,11 +35,13 @@ class Logger {
      * @type {function[][]}
      */
     this.colors = [
-      [(str) => str.bgCyan, (str) => str.cyan, 'DEBUG'],
-      [(str) => str.bgBlack.white, (str) => str.bgBlack.white, 'LOG  '],
-      [(str) => str.bgYellow.black, (str) => str.bgBlack.yellow, 'WARN '],
-      [(str) => str.bgRed.black, (str) => str.bgBlack.red, 'ERROR'],
+      [(str) => str.bgCyan, (str) => str.cyan, 'DEBUG', 'debug'],
+      [(str) => str.bgBlack.white, (str) => str.bgBlack.white, 'LOG  ', 'log'],
+      [(str) => str.bgYellow.black, (str) => str.bgBlack.yellow, 'WARN ', 'warn'],
+      [(str) => str.bgRed.black, (str) => str.bgBlack.red, 'ERROR', 'error'],
     ];
+
+    this.checkBase();
   }
 
   /**
@@ -58,7 +65,7 @@ class Logger {
   }
 
   /**
-   * Write console
+   * Writes into console
    * @param {string} time Log time
    * @param {string} content Log content
    * @param {number} severity Log severity
@@ -66,10 +73,22 @@ class Logger {
   writeConsole(time, content, severity) {
     if (severity === 0 && !this.debugEnabled) return;
     const str = this.useColors
-      ? `${this.colors[severity][0](time)} ${this.colors[severity][1](format(content))}`
+      ? `${this.colors[severity][0](time)} ${this.colors[severity][1](content)}`
       : `${time} ${this.colors[severity][2]} ${content}`;
     const output = severity >= 2 ? process.stderr : process.stdout;
     output.write(`${str}\n`);
+  }
+
+  /**
+   * Writes into a file
+   * @param {string} time Log time
+   * @param {string} content Log content
+   * @param {number} severity Log severity
+   */
+  writeFile(time, content, severity) {
+    const path = this.genPath();
+    const str = `${time} ${content}\n`;
+    appendFileSync(resolve(path, `${this.colors[severity][3]}.log`), str);
   }
 
   /**
@@ -90,7 +109,29 @@ class Logger {
   genLog(severity, content) {
     const now = moment();
     const time = this.genTime(now);
-    this.writeConsole(time, content, severity);
+    this.writeConsole(time, format(content), severity);
+    this.writeFile(time, format(content), severity);
+  }
+
+  genPath() {
+    const now = new Date();
+
+    let path = resolve(this.baseDirectory, now.getUTCFullYear().toString());
+    if (!existsSync(path) || !statSync(path).isDirectory()) {
+      mkdirSync(path);
+    }
+
+    path = resolve(path, (now.getUTCMonth() + 1).toString());
+    if (!existsSync(path) || !statSync(path).isDirectory()) {
+      mkdirSync(path);
+    }
+
+    path = resolve(path, now.getUTCDate().toString());
+    if (!existsSync(path) || !statSync(path).isDirectory()) {
+      mkdirSync(path);
+    }
+
+    return path;
   }
 
   /**
