@@ -77,7 +77,7 @@ class DiscordClient extends Client {
 
   /**
    * Gracefully shutdown the process with the given exit code
-   * @param {number} code Exit code
+   * @param {?number} code Exit code (default: 0)
    */
   async shutdown(code = 0) {
     this.logger.log('[client] Unregistering components...');
@@ -85,11 +85,13 @@ class DiscordClient extends Client {
     this.eventManager.unregisterEvents();
     this.localeManager.unregisterLocales();
 
-    this.logger.log('[client] Ending connection with database...');
-    await this.database.end()
-      .catch(() => {
-        this.logger.error('[database] Unable to end database connection');
-      });
+    if (this.database.connection.stream.readyState !== 'closed') {
+      this.logger.log('[client] Ending connection with database...');
+      await this.database.end()
+        .catch(() => {
+          this.logger.error('[database] Unable to end database connection');
+        });
+    }
 
     this.logger.log('[client] Logging out Discord gateway...');
     this.destroy();
