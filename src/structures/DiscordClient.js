@@ -9,6 +9,9 @@ const CommandManager = require('../managers/CommandManager');
 const EventManager = require('../managers/EventManager');
 const LocaleManager = require('../managers/LocaleManager');
 
+// Utils
+const SettingsUtil = require('../util/SettingsUtil');
+
 class DiscordClient extends Client {
   constructor(clientOptions, databaseCredentials) {
     super(clientOptions);
@@ -48,6 +51,12 @@ class DiscordClient extends Client {
      * @type {LocaleManager}
      */
     this.localeManager = new LocaleManager(this);
+
+    /**
+     * Settings util for this client
+     * @type {SettingsUtil}
+     */
+    this.settingsUtil = new SettingsUtil(this);
   }
 
   /**

@@ -2,14 +2,12 @@ const { Structures } = require('discord.js');
 
 Structures.extend('Guild', (Guild) => {
   class CustomGuild extends Guild {
-    constructor(client, data) {
-      super(client, data);
-
-      /**
-       * Settings for this guild
-       * @type {?GuildSettings}
-       */
-      this.settings = null;
+    /**
+     * Cached settings
+     * @type {?Settings}
+     */
+    get settings() {
+      return this.client.settingsUtil.cache.find((c) => c.id === this.id);
     }
 
     /**
@@ -17,29 +15,7 @@ Structures.extend('Guild', (Guild) => {
      * @returns {Promise<boolean>} Were the settings fetched correctly
      */
     fetchSettings() {
-      if (this.settings) return this.settings;
-      if (!this.client.database.ready) {
-        this.settings = this.generateSettings();
-        return this.settings;
-      }
-
-      return this.client.database.query(`SELECT * FROM settings WHERE id = '${this.id}'`)
-        .then((res) => {
-          let settings = res[0];
-          if (!settings) settings = this.generateSettings();
-          this.settings = {
-            id: this.id,
-            locale: res[1],
-            timezone: res[2],
-            creation: res[3],
-            edit: res[4],
-          };
-          return settings;
-        })
-        .catch((error) => {
-          this.client.logger.error(`[guild ${this.id}] Error while fetching guild settings`, error);
-          return false;
-        });
+      return this.client.settingsUtil.fetchSettings(this.id);
     }
 
     /**
@@ -90,12 +66,3 @@ Structures.extend('Guild', (Guild) => {
 
   return CustomGuild;
 });
-
-/**
- * @typedef GuildSettings
- * @property {string} id Guild ID
- * @property {string} language Display language
- * @property {string} timezone Display timezone
- * @property {?number} creation Creation timestamp (null if default)
- * @property {?number} edit Last edit timestamp (null if never edited)
- */
