@@ -20,6 +20,12 @@ class CommandManager extends Manager {
     this.basePermissions = ['SEND_MESSAGES', 'EMBED_LINKS'];
 
     /**
+     * Command categories
+     * @type {string[]}
+     */
+    this.categories = ['bot', 'general', 'owner'];
+
+    /**
      * Registered commands
      * @type {Command[]}
      */
@@ -40,11 +46,14 @@ class CommandManager extends Manager {
    */
   registerCommands() {
     let i = 0;
-    const dirContent = readdirSync(this.commandDirectory);
-    while (i < dirContent.length) {
-      const command = new (require(resolve(this.commandDirectory, dirContent[i])))(this.client);
-      this.commands.push(command);
-      i += 1;
+    for (let j = 0; j < this.categories.length; j += 1) {
+      const categoryPath = resolve(this.commandDirectory, this.categories[i]);
+      const dirContent = readdirSync(categoryPath);
+      for (let k = 0; k < dirContent.length; k += 1) {
+        const command = new (require(resolve(categoryPath, dirContent[k])))(this.client);
+        this.commands.push(command);
+        i += 1;
+      }
     }
     return i;
   }

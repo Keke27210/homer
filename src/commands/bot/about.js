@@ -1,7 +1,7 @@
 const { version: djs } = require('discord.js');
-const { version } = require('../../package.json');
+const { version } = require('../../../package.json');
 
-const Command = require('../structures/Command');
+const Command = require('../../structures/Command');
 
 class AboutCommand extends Command {
   constructor(client) {

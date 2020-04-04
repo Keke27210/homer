@@ -1,6 +1,7 @@
-const Command = require('../structures/Command');
-const { resolveInviteCode } = require('../../node_modules/discord.js/src/util/DataResolver');
-const { deconstruct } = require('../../node_modules/discord.js/src/util/Snowflake');
+const { resolveInviteCode } = require('discord.js/src/util/DataResolver');
+const { deconstruct } = require('discord.js/src/util/Snowflake');
+
+const Command = require('../../structures/Command');
 
 class LookupCommand extends Command {
   constructor(client) {

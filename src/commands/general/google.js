@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-const Command = require('../structures/Command');
+const Command = require('../../structures/Command');
 
 class GoogleCommand extends Command {
   constructor(client) {
