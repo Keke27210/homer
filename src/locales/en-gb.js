@@ -16,6 +16,9 @@ module.exports = {
   /* UTILS */
   // Finder
   finder: {
+    channels: {
+      zero: (search) => `No channels found matching \`${search}\`.`,
+    },
     members: {
       zero: (search) => `No members found matching \`${search}\`.`,
     },
@@ -46,6 +49,26 @@ module.exports = {
   // Avatar command
   avatar: {
     title: (name) => `🖼️ ${name}'s avatar:`,
+  },
+
+  // Channel command
+  channel: {
+    title: (name, type) => `🗺️ Information about **${type === 'text' ? '#' : ''}${name}**:`,
+    id: 'Discord ID',
+    type: 'Type',
+    position: 'Position',
+    users: 'Users',
+    slowdown: 'Slowdown',
+    bitrate: 'Bitrate',
+    creation: 'Creation date',
+    topic: 'Topic',
+    types: {
+      category: 'Category',
+      text: 'Text',
+      voice: 'Voice',
+      news: 'News',
+      store: 'Store',
+    },
   },
 
   // Ping command

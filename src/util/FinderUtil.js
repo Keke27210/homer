@@ -63,6 +63,48 @@ class FinderUtil extends Util {
     }
     return str;
   }
+
+  findChannels(message, query) {
+    // 1- Testing mentions
+    const mentions = MENTION.exec(query);
+    MENTION.lastIndex = 0;
+
+    if (mentions) {
+      const channel = message.guild.channels.resolve(mentions[2]);
+      if (channel) return [channel];
+    }
+
+    // 2- Testing IDs
+    const ids = ID.exec(query);
+    ID.lastIndex = 0;
+
+    if (ids) {
+      const channel = message.guild.channels.resolve(ids[1]);
+      if (channel) return [channel];
+    }
+
+    // 3- Querying by search
+    const search = query.toLowerCase();
+    const channel = message.guild.channels.cache.find((c) => c.name.toLowerCase() === search);
+    if (channel) return [channel];
+    const channels = message.guild.channels.cache.filter(
+      (c) => c.name.toLowerCase().startsWith(search)
+        || c.name.toLowerCase().includes(search),
+    );
+    if (channels.size) return channels.array();
+
+    // X- Return an empty array
+    return null;
+  }
+
+  formatChannels(message, list, query) {
+    let str = message._('finder.format.channels', list.length, query);
+    for (let i = 0; i < list.length; i += 1) {
+      const channel = list[i];
+      str += `\n${message.dot} **${channel.type === 'text' ? '#' : ''}${channel.name}** (${channel.id})`;
+    }
+    return str;
+  }
 }
 
 module.exports = FinderUtil;
