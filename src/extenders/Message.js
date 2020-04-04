@@ -52,6 +52,24 @@ Structures.extend('Message', (Message) => {
        * @type {string}
        */
       this.eError = '<:error:695722118976897085>';
+
+      /**
+       * Placeholder emote used by Homer
+       * @type {string}
+       */
+      this.ePlaceholder = '<:placeholder:695983847061323797>';
+
+      /**
+       * Owner emote used by Homer
+       * @type {string}
+       */
+      this.eOwner = '<:owner:695975441516855337>';
+
+      /**
+       * Nitro emote used by Homer
+       * @type {string}
+       */
+      this.eNitro = '<:nitro:695977635666198570>';
     }
 
     /**
@@ -142,10 +160,10 @@ Structures.extend('Message', (Message) => {
      * @returns {string}
      */
     getMoment(time = Date.now()) {
-      return moment(time)
+      const m = moment(time)
         .tz(this.settings.timezone)
-        .locale(this.locale)
-        .format(`${this.settings.formats.date} ${this.settings.formats.time}`);
+        .locale(this.locale);
+      return `**${m.format(this.settings.formats.date)}** ${this._('global.at')} **${m.format(this.settings.formats.time)}**`;
     }
 
     /**

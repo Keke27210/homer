@@ -15,24 +15,94 @@ class UserCommand extends Command {
     let user = message.author;
     if (message.guild && search) {
       const found = await this.client.finderUtil.findMembers(message, search);
-      if (!found.length) return message.error(message._('finder.members.zero', search));
-      if (found.length > 1) return this.client.finderUtil.formatMembers(message, found, search);
-      member = found[0];
+      if (!found) {
+        message.error(message._('finder.members.zero', search));
+        return 0;
+      }
+      if (found.length > 1) {
+        message.warn(this.client.finderUtil.formatMembers(message, found, search));
+        return 0;
+      }
+      [member] = found;
       user = member.user;
     }
 
-    const description = [
-      `${message.dot} ${message._('user.id')}: **${user.id}**`,
-      `${message.dot} ${message._('user.status')}: ${message.eStatus[user.presence.status]} **${message._(`user.statusDesc.${user.presence.status}`)}**`,
-      `${message.dot} ${message._('user.creation')}: **${message.getMoment(user.createdTimestamp)}**`,
-    ];
+    const honours = [];
+    if (message.guild && message.guild.ownerID === user.id) honours.push(message.eOwner);
+    if (user.avatar && user.avatar.startsWith('a_')) honours.push(message.eNitro);
+
+    const description = [`${message.dot} ${message._('user.id')}: **${user.id}**${honours.length ? ` ${honours.join(' ')}` : ''}`];
+
+    if (message.guild) {
+      description.push(`${message.dot} ${message._('user.nickname')}: ${member.nickname ? `**${member.nickname}**` : message._('global.none')}`);
+    }
+
+    description.push(`${message.dot} ${message._('user.status')}: ${message.eStatus[user.presence.status]} **${message._(`user.statusDesc.${user.presence.status}`)}**`);
+
+    if (user.presence.activities.length) {
+      // Priority: Custom Status > Streaming > Playing > Listening > Watching
+      const activity = user.presence.activities.find((a) => a.type === 'CUSTOM_STATUS' || a.type === 'STREAMING' || a.type === 'PLAYING' || a.type === 'LISTENING' || a.type === 'WATCHING');
+      let emote;
+      let detail;
+      switch (activity.type) {
+        case 'CUSTOM_STATUS':
+          if (activity.emoji) {
+            if (activity.emoji.id) {
+              const emoji = this.client.emojis.resolve(activity.emoji.id);
+              if (emoji) emote = emoji.toString();
+              else emote = '';
+            } else {
+              emote = activity.emoji.name;
+            }
+          } else {
+            emote = '';
+          }
+          detail = activity.state;
+          break;
+        case 'STREAMING':
+          emote = '📡';
+          detail = message._('user.activities.streaming', activity.name);
+          break;
+        case 'PLAYING':
+          emote = '🎮';
+          detail = message._('user.activities.playing', activity.name);
+          break;
+        case 'LISTENING':
+          emote = '🎵';
+          detail = message._('user.activities.listening', activity.details, activity.name);
+          break;
+        case 'WATCHING':
+          emote = '📺';
+          detail = message._('user.activities.watching', activity.name);
+          break;
+        default:
+          emote = message.ePlaceholder;
+      }
+      description.push(`${message.dot} ${message._('user.activity')}: ${emote} ${detail}`);
+    }
+
+    if (message.guild) {
+      const roles = member.roles.cache
+        .filter((r) => r.id !== message.guild.id)
+        .sort((a, b) => b.position - a.position)
+        .map((r) => r.toString())
+        .join(', ');
+      description.push(`${message.dot} ${message._('user.roles')}: ${roles || message._('global.none')}`);
+    }
+
+    description.push(`${message.dot} ${message._('user.creation')}: ${message.getMoment(user.createdTimestamp)}`);
+
+    if (message.guild) {
+      description.push(`${message.dot} ${message._('user.join')}: ${message.getMoment(member.joinedTimestamp)}`);
+    }
 
     const embed = message.getEmbed()
       .setDescription(description.join('\n'))
       .setThumbnail(user.avatarURL({ size: 256, dynamic: true }));
     if (member) embed.setColor(member.displayHexColor);
 
-    return message.channel.send(message._('user.title', user.tag), embed);
+    message.channel.send(message._('user.title', user.bot ? message.eBot : '👤', user.tag), embed);
+    return 0;
   }
 }
 

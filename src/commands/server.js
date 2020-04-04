@@ -51,7 +51,7 @@ class ServerCommand extends Command {
         message.eStatus.online,
         message.eBot,
       )}`,
-      `${message.dot} ${message._('server.creation')}: **${message.getMoment(guild.createdTimestamp)}**`,
+      `${message.dot} ${message._('server.creation')}: ${message.getMoment(guild.createdTimestamp)}`,
     ];
 
     const embed = message.getEmbed()

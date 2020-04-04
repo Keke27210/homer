@@ -1,5 +1,5 @@
 module.exports = {
-  // Information about this locale
+  /* LOCALE INFORMATION */
   _: {
     code: 'en-gb',
     name: 'English (United Kingdom)',
@@ -7,11 +7,20 @@ module.exports = {
     authors: ['205427654042583040'],
   },
 
+  /* GLOBAL */
+  global: {
+    none: 'None',
+    at: 'at',
+  },
+
   /* UTILS */
   // Finder
   finder: {
     members: {
       zero: (search) => `No members found matching \`${search}\`.`,
+    },
+    format: {
+      members: (size, search) => `**${size}** members found matching \`${search}\`:`,
     },
   },
 
@@ -74,10 +83,20 @@ module.exports = {
 
   // User command
   user: {
-    title: (name) => `👤 Information about ${name}:`,
+    title: (emote, name) => `${emote} Information about ${name}:`,
     id: 'Discord ID',
+    nickname: 'Nickname',
     status: 'Status',
+    activity: 'Activity',
+    roles: 'Roles',
     creation: 'Creation date',
+    join: 'Join date',
+    activities: {
+      streaming: (name) => `Streaming **${name}**`,
+      playing: (name) => `Playing **${name}**`,
+      listening: (details, name) => `Listening to **${details}** on ${name}`,
+      watching: (name) => `Watching **${name}**`,
+    },
     statusDesc: {
       online: 'Online',
       idle: 'Idle',
