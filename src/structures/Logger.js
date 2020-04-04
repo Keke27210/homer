@@ -113,6 +113,10 @@ class Logger {
     this.writeFile(time, format(content), severity);
   }
 
+  /**
+   * Generates a valid path for log files using YYYY/MM/DD architecture
+   * @returns {string}
+   */
   genPath() {
     const now = new Date();
 
