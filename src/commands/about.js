@@ -30,7 +30,7 @@ class AboutCommand extends Command {
       .setDescription(description)
       .setThumbnail(this.client.user.avatarURL({ size: 128 }));
 
-    message.channel.send(message._('about.title', message.eBot, this.client.user.username), embed);
+    message.send(message._('about.title', message.eBot, this.client.user.username), embed);
   }
 }
 

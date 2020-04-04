@@ -9,7 +9,7 @@ class PingCommand extends Command {
   }
 
   main(message) {
-    message.channel.send(message._('ping.pong', this.client.ws.ping));
+    message.send(message._('ping.pong', this.client.ws.ping));
   }
 }
 

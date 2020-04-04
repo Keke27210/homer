@@ -43,6 +43,11 @@ module.exports = {
     djs: 'discord.js',
   },
 
+  // Avatar command
+  avatar: {
+    title: (name) => `🖼️ ${name}'s avatar:`,
+  },
+
   // Ping command
   ping: {
     pong: (ws) => `🏓 Pong with **${ws}** milliseconds!`,

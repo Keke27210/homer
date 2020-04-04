@@ -60,7 +60,7 @@ class ServerCommand extends Command {
       .setDescription(description.join('\n'))
       .setThumbnail(guild.iconURL({ size: 256 }));
 
-    message.channel.send(message._('server.title', guild.name, guild.features.includes('PUBLIC')), embed);
+    message.send(message._('server.title', guild.name, guild.features.includes('PUBLIC')), embed);
     return 0;
   }
 }
