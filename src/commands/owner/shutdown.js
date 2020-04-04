@@ -4,6 +4,7 @@ class ShutdownCommand extends Command {
   constructor(client) {
     super(client, {
       name: 'shutdown',
+      dm: true,
       private: true,
     });
   }
