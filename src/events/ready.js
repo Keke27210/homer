@@ -6,7 +6,7 @@ class ReadyEvent extends Event {
   }
 
   handle() {
-    this.client.logger.info(`[ready] Bot initialized successfully - Serving as ${this.client.user.tag}`);
+    this.client.logger.log(`[ready] Bot initialized successfully - Serving as ${this.client.user.tag}`);
   }
 }
 

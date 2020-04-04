@@ -1,8 +1,9 @@
 /* eslint-disable no-useless-escape */
 const { existsSync, mkdirSync, statSync } = require('fs');
 const { resolve } = require('path');
+const { format } = require('util');
 const moment = require('moment-timezone');
-const colors = require('colors/safe');
+require('colors');
 
 class Logger {
   constructor() {
@@ -25,20 +26,14 @@ class Logger {
     this.useColors = true;
 
     /**
-     * Default colors
-     * @type {function[]}
-     */
-    this.defaultColors = [colors.reset, colors.reset];
-
-    /**
      * Colors for each log severity (background | foreground)
      * @type {function[][]}
      */
     this.colors = [
-      [colors.bgCyan, colors.cyan, 'DEBUG'],
-      [colors.bgBlack, colors.white, 'LOG  '],
-      [colors.bgYellow, colors.yellow, 'WARN '],
-      [colors.bgRed, colors.red, 'ERROR'],
+      [(str) => str.bgCyan, (str) => str.cyan, 'DEBUG'],
+      [(str) => str.bgBlack.white, (str) => str.bgBlack.white, 'LOG  '],
+      [(str) => str.bgYellow.black, (str) => str.bgBlack.yellow, 'WARN '],
+      [(str) => str.bgRed.black, (str) => str.bgBlack.red, 'ERROR'],
     ];
   }
 
@@ -71,7 +66,7 @@ class Logger {
   writeConsole(time, content, severity) {
     if (severity === 0 && !this.debugEnabled) return;
     const str = this.useColors
-      ? `${this.colors[severity][0]()}${time}${this.defaultColors[0]()} ${this.colors[severity][1]()}${content}${this.defaultColors[1]()}`
+      ? `${this.colors[severity][0](time)} ${this.colors[severity][1](format(content))}`
       : `${time} ${this.colors[severity][2]} ${content}`;
     const output = severity >= 2 ? process.stderr : process.stdout;
     output.write(`${str}\n`);
@@ -101,9 +96,15 @@ class Logger {
   /**
    * Treats the given information as an error
    * @param {string} str Message to log
+   * @param {?Error} error Error object
    */
-  error(str) {
-    this.genLog(3, str);
+  error(str, error) {
+    let errStr = str;
+    if (typeof error === 'object' && 'stack' in error) {
+      errStr += `\n${error.stack}`;
+    }
+
+    this.genLog(3, errStr);
   }
 
   /**

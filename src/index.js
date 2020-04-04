@@ -20,7 +20,7 @@ const client = new DiscordClient(
 client.initialize()
   .then(() => {
     client.login(config.token)
-      .then(() => client.logger.info('[gateway] Logged in'))
+      .then(() => client.logger.log('[gateway] Logged in'))
       .catch(client.logger.error);
   })
   .catch(client.logger.error);
