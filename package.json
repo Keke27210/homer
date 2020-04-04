@@ -21,6 +21,7 @@
     "discord.js": "^12.1.1",
     "erlpack": "github:discordapp/erlpack",
     "moment-timezone": "^0.5.28",
+    "node-fetch": "^2.6.0",
     "pg": "^8.0.0",
     "sodium": "^3.0.2",
     "utf-8-validate": "^5.0.2",

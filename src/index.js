@@ -15,6 +15,7 @@ const config = require('../config/production.json');
 const client = new DiscordClient(
   config.clientOptions,
   config.databaseCredentials,
+  config.apiKeys,
 );
 
 client.initialize()

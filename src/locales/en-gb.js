@@ -78,6 +78,15 @@ module.exports = {
     },
   },
 
+  // Google command
+  google: {
+    noSearch: 'You must provide something to search.',
+    unavailable: 'Google search is temporarily unavailable. We apologize for this.',
+    searching: 'Searching...',
+    noResults: (search) => `No search results matching \`${search}\`.`,
+    error: 'An error occured while querying Google. We apologize for this.',
+  },
+
   // Ping command
   ping: {
     pong: (ws) => `🏓 Pong with **${ws}** milliseconds!`,

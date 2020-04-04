@@ -36,6 +36,12 @@ Structures.extend('Message', (Message) => {
       };
 
       /**
+       * Loading emote used by Homer
+       * @type {string}
+       */
+      this.eLoading = '<a:loading:696020151727947866>';
+
+      /**
        * Success emote used by Homer
        * @type {string}
        */
@@ -113,6 +119,17 @@ Structures.extend('Message', (Message) => {
     }
 
     /**
+     * Calls TextChannel#send with a :loading: before content
+     * @param {string} content The content to send
+     * @param {?object} options The options to provide
+     * @returns {Promise<Message>}
+     */
+    loading(content, options) {
+      const str = `${this.eLoading} ${content}`;
+      return this.channel.send(str, options);
+    }
+
+    /**
      * Calls TextChannel#send with a :success: before content
      * @param {string} content The content to send
      * @param {?object} options The options to provide
@@ -143,6 +160,50 @@ Structures.extend('Message', (Message) => {
     error(content, options) {
       const str = `${this.eError} ${content}`;
       return this.channel.send(str, options);
+    }
+
+    /**
+     * Calls Message#edit with a :loading: before content
+     * @param {string} content The content to send
+     * @param {?object} options The options to provide
+     * @returns {Promise<Message>}
+     */
+    editLoading(content, options) {
+      const str = `${this.eLoading} ${content}`;
+      return this.edit(str, options);
+    }
+
+    /**
+     * Calls Message#edit with a :success: before content
+     * @param {string} content The content to send
+     * @param {?object} options The options to provide
+     * @returns {Promise<Message>}
+     */
+    editSuccess(content, options) {
+      const str = `${this.eSuccess} ${content}`;
+      return this.edit(str, options);
+    }
+
+    /**
+     * Calls Message#edit with a :warn: before content
+     * @param {string} content The content to send
+     * @param {?object} options The options to provide
+     * @returns {Promise<Message>}
+     */
+    editWarn(content, options) {
+      const str = `${this.eWarn} ${content}`;
+      return this.edit(str, options);
+    }
+
+    /**
+     * Calls Message#edit with a :error: before content
+     * @param {string} content The content to send
+     * @param {?object} options The options to provide
+     * @returns {Promise<Message>}
+     */
+    editError(content, options) {
+      const str = `${this.eError} ${content}`;
+      return this.edit(str, options);
     }
 
     /**

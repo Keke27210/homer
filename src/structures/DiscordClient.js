@@ -14,7 +14,7 @@ const FinderUtil = require('../util/FinderUtil');
 const SettingsUtil = require('../util/SettingsUtil');
 
 class DiscordClient extends Client {
-  constructor(clientOptions, databaseCredentials) {
+  constructor(clientOptions, databaseCredentials, apiKeys) {
     super(clientOptions);
 
     /**
@@ -22,6 +22,12 @@ class DiscordClient extends Client {
      * @type {string[]}
      */
     this.owners = clientOptions.owners || [];
+
+    /**
+     * API keys used by Homer
+     * @type {object}
+     */
+    this.apiKeys = apiKeys;
 
     /**
      * Database for this Discord client
