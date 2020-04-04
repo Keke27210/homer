@@ -1,8 +1,8 @@
 const Command = require('../../structures/Command');
 
 class ServerCommand extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(client, category) {
+    super(client, category, {
       name: 'server',
       aliases: ['guild', 'serverinfo'],
     });

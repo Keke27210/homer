@@ -20,8 +20,8 @@ class SettingsUtil extends Util {
     const cached = this.cache.find((c) => c.id === id);
     if (cached) return cached;
     if (!this.client.database.ready) return this.generateSettings(id);
-    return this.client.database.query('SELECT * FROM settings WHERE id=\'$1\'', id)
-      .then((res) => this.generateSettings(id, res[0]));
+    return this.client.database.query('SELECT * FROM settings WHERE id = $1', [id])
+      .then((res) => this.generateSettings(id, res.rows[0]));
   }
 
   /**

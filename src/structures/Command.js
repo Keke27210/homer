@@ -1,5 +1,5 @@
 class Command {
-  constructor(client, commandInfo) {
+  constructor(client, category, commandInfo) {
     /**
      * Client that instantied this command
      * @type {DiscordClient}
@@ -17,6 +17,12 @@ class Command {
      * @type {string[]}
      */
     this.aliases = commandInfo.aliases || [];
+
+    /**
+     * Category of the command
+     * @type {string}
+     */
+    this.category = category;
 
     /**
      * Children for this command
@@ -86,6 +92,11 @@ class Command {
         message.warn(message._('command.botPermissions', missingBot.map((p) => `\`${p}\``).join(', ')));
         return;
       }
+    }
+
+    if (this.category === 'telephone' && !this.client.database.ready) {
+      message.error(message._('database.notReady'));
+      return;
     }
 
     try {

@@ -14,14 +14,6 @@ class Database extends Client {
      */
     this.ready = false;
 
-    this.on('end', () => {
-      this.ready = false;
-    });
-
-    this.on('drain', () => {
-      this.ready = false;
-    });
-
     this.on('error', (error) => {
       this.ready = false;
       throw error;

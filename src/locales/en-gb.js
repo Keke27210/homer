@@ -16,6 +16,10 @@ module.exports = {
     unknown: 'Unknown',
   },
 
+  database: {
+    notReady: 'This feature relies on the database which is currently unavailable. We apologize for this.',
+  },
+
   /* UTILS */
   // Finder
   finder: {
@@ -178,6 +182,28 @@ module.exports = {
       'us-east': 'US East',
       'us-south': 'US South',
       'us-west': 'US West',
+    },
+  },
+
+  // Telephone command
+  telephone: {
+    welcome: (command) => `📞 Welcome to Homer's phone! To begin, run \`${command}\`.`,
+    subscribe: {
+      disclaimer: (name) => `Are you sure you want to apply for a contract for the channel **#${name}**?`,
+      eligibility: 'Checking eligibility...',
+      occupiedChannel: 'There is already an active subscription on this channel.',
+      applied: (id) => `Your subscription request has been sent successfully, you will receive an answer shortly. Note your contract number n°\`${id}\`.`,
+      aborted: 'The subscription request has been cancelled.',
+      error: {
+        guild: {
+          recent_contracts: 'At least two contracts have already been signed on this server in the last two weeks. You have to wait before you can sign them again.',
+          suspended_contracts: 'A line belonging to this server has been suspended by support. You must wait at least four weeks from the date of suspension to sign new contracts.',
+        },
+        user: {
+          recent_contracts: 'You\'ve already signed two contracts in the last two weeks. You have to wait before you can sign more.',
+          suspended_contracts: 'A line for which you are responsible has been suspended by the support. You must wait at least four weeks from the date of suspension to sign new contracts.',
+        },
+      },
     },
   },
 

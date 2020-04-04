@@ -148,7 +148,8 @@ class Logger {
       errStr += `\n${error.stack}`;
     }
 
-    this.genLog(3, errStr);
+    const self = this;
+    self.genLog(3, errStr);
   }
 
   /**

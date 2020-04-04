@@ -4,8 +4,8 @@ const { deconstruct } = require('discord.js/src/util/Snowflake');
 const Command = require('../../structures/Command');
 
 class LookupCommand extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(client, category) {
+    super(client, category, {
       name: 'lookup',
       dm: true,
     });

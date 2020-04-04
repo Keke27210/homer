@@ -3,8 +3,8 @@ const fetch = require('node-fetch');
 const Command = require('../../structures/Command');
 
 class GoogleCommand extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(client, category) {
+    super(client, category, {
       name: 'google',
       dm: true,
     });

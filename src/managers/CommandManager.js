@@ -23,7 +23,7 @@ class CommandManager extends Manager {
      * Command categories
      * @type {string[]}
      */
-    this.categories = ['bot', 'general', 'owner'];
+    this.categories = ['bot', 'general', 'owner', 'telephone'];
 
     /**
      * Registered commands
@@ -37,7 +37,7 @@ class CommandManager extends Manager {
    * @type {string[]}
    */
   get prefixes() {
-    return [`<@${this.client.user.id}>`, `<@!${this.client.user.id}>`, 'hb:'];
+    return ['hb:', `<@${this.client.user.id}>`, `<@!${this.client.user.id}>`];
   }
 
   /**
@@ -50,7 +50,8 @@ class CommandManager extends Manager {
       const categoryPath = resolve(this.commandDirectory, this.categories[j]);
       const dirContent = readdirSync(categoryPath);
       for (let k = 0; k < dirContent.length; k += 1) {
-        const command = new (require(resolve(categoryPath, dirContent[k])))(this.client);
+        // eslint-disable-next-line max-len
+        const command = new (require(resolve(categoryPath, dirContent[k])))(this.client, this.categories[j]);
         this.commands.push(command);
         i += 1;
       }

@@ -1,8 +1,8 @@
 const Command = require('../../structures/Command');
 
 class PingCommand extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(client, category) {
+    super(client, category, {
       name: 'ping',
       dm: true,
     });

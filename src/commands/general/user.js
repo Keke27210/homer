@@ -1,8 +1,8 @@
 const Command = require('../../structures/Command');
 
 class UserCommand extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(client, category) {
+    super(client, category, {
       name: 'user',
       aliases: ['userinfo'],
       dm: true,

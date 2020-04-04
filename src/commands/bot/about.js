@@ -4,8 +4,8 @@ const { version } = require('../../../package.json');
 const Command = require('../../structures/Command');
 
 class AboutCommand extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(client, category) {
+    super(client, category, {
       name: 'about',
       dm: true,
     });

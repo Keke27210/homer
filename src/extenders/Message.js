@@ -39,25 +39,25 @@ Structures.extend('Message', (Message) => {
        * Loading emote used by Homer
        * @type {string}
        */
-      this.eLoading = '<a:loading:696020151727947866>';
+      this.eLoadingID = '696020151727947866';
 
       /**
        * Success emote used by Homer
        * @type {string}
        */
-      this.eSuccess = '<:success:695722112823853066>';
+      this.eSuccessID = '695722112823853066';
 
       /**
        * Warn emote used by Homer
        * @type {string}
        */
-      this.eWarn = '<:warn:695722124395937862>';
+      this.eWarnID = '695722124395937862';
 
       /**
        * Error emote used by Homer
        * @type {string}
        */
-      this.eError = '<:error:695722118976897085>';
+      this.eErrorID = '695722118976897085';
 
       /**
        * Placeholder emote used by Homer
@@ -76,6 +76,22 @@ Structures.extend('Message', (Message) => {
        * @type {string}
        */
       this.eNitro = '<:nitro:695977635666198570>';
+    }
+
+    get eSuccess() {
+      return this.client.emojis.resolve(this.eSuccessID).toString();
+    }
+
+    get eWarn() {
+      return this.client.emojis.resolve(this.eWarnID).toString();
+    }
+
+    get eError() {
+      return this.client.emojis.resolve(this.eErrorID).toString();
+    }
+
+    get eLoading() {
+      return this.client.emojis.resolve(this.eLoadingID).toString();
     }
 
     /**
@@ -228,6 +244,30 @@ Structures.extend('Message', (Message) => {
         .tz(this.settings.timezone)
         .locale(this.locale);
       return `**${m.format(this.settings.formats.date)}** ${this._('global.at')} **${m.format(this.settings.formats.time)}**`;
+    }
+
+    async awaitUserApproval(id) {
+      const emotes = [
+        this.client.emojis.resolveIdentifier(this.eSuccessID),
+        this.client.emojis.resolveIdentifier(this.eErrorID),
+      ];
+      await this.react(emotes[0]);
+      await this.react(emotes[1]);
+      return this.awaitReactions(
+        (reaction, user) => emotes.includes(reaction.emoji.identifier)
+          && user.id === id,
+        { max: 1 },
+      )
+        .then((reactions) => {
+          if (reactions.first().emoji.identifier === emotes[0]) {
+            return true;
+          }
+          return false;
+        })
+        .catch((error) => {
+          this.client.logger.warn(`[message->${this.id}] Error while asking user approval`, error);
+          return false;
+        });
     }
 
     /**

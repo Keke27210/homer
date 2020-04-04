@@ -1,8 +1,8 @@
 const Command = require('../../structures/Command');
 
 class ShutdownCommand extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(client, category) {
+    super(client, category, {
       name: 'shutdown',
       dm: true,
       private: true,

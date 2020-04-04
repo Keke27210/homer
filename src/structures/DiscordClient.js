@@ -8,6 +8,7 @@ const Logger = require('./Logger');
 const CommandManager = require('../managers/CommandManager');
 const EventManager = require('../managers/EventManager');
 const LocaleManager = require('../managers/LocaleManager');
+const TelephoneManager = require('../managers/TelephoneManager');
 
 // Utils
 const FinderUtil = require('../util/FinderUtil');
@@ -60,6 +61,12 @@ class DiscordClient extends Client {
     this.localeManager = new LocaleManager(this);
 
     /**
+     * Telephone manager for this client
+     * @type {TelephoneManager}
+     */
+    this.telephoneManager = new TelephoneManager(this);
+
+    /**
      * Finder util for this client
      * @type {FinderUtil}
      */
@@ -76,8 +83,11 @@ class DiscordClient extends Client {
    * Synchronously initializes all dynamic components
    */
   async initialize() {
-    this.logger.log('[client] Connecting to the database...');
+    this.logger.log('[database] Connecting to the database...');
     await this.database.connect()
+      .then(() => {
+        this.logger.log('[database] Connected successfully');
+      })
       .catch(() => {
         this.logger.warn('[database] Unable to connect - Running in no-database mode');
       });
