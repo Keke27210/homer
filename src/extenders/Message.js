@@ -150,8 +150,11 @@ Structures.extend('Message', (Message) => {
      * @returns {MessageEmbed}
      */
     getEmbed() {
-      return new MessageEmbed()
-        .setColor(this.guild ? this.guild.me.displayHexColor : '#FED90F');
+      const embed = new MessageEmbed();
+      if (this.guild && this.guild.me.displayHexColor !== '#000000') {
+        embed.setColor(this.guild.me.displayHexColor);
+      }
+      return embed;
     }
 
     /**

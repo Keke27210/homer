@@ -41,8 +41,9 @@ class ServerCommand extends Command {
 
     const description = [
       `${message.dot} ${message._('server.id')}: **${guild.id}**`,
-      `${message.dot} ${message._('server.owner')}: ${guild.owner.user.tag}`,
+      `${message.dot} ${message._('server.owner')}: ${guild.owner.user.tag} (${guild.ownerID})`,
       `${message.dot} ${message._('server.region')}: ${this.region[guild.region]} **${message._(`server.regions.${guild.region}`)}**`,
+      `${message.dot} ${message._('server.boost')}: **${message._('server.boosts.level', guild.premiumTier)}** (${message._('server.boosts.count', guild.premiumSubscriptionCount)})`,
       `${message.dot} ${message._('server.members')}: ${message._(
         'server.memberDesc',
         guild.memberCount,
@@ -51,6 +52,7 @@ class ServerCommand extends Command {
         message.eStatus.online,
         message.eBot,
       )}`,
+      `${message.dot} ${message._('server.channels')}: ${['category', 'text', 'voice'].map((t) => `**${guild.channels.cache.filter((c) => c.type === t).size}** ${message._(`server.channel.${t}`)}`).join(', ')}`,
       `${message.dot} ${message._('server.creation')}: ${message.getMoment(guild.createdTimestamp)}`,
     ];
 
@@ -58,7 +60,8 @@ class ServerCommand extends Command {
       .setDescription(description.join('\n'))
       .setThumbnail(guild.iconURL({ size: 256 }));
 
-    message.channel.send(message._('server.title', guild.name), embed);
+    message.channel.send(message._('server.title', guild.name, guild.features.includes('PUBLIC')), embed);
+    return 0;
   }
 }
 

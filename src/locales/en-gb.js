@@ -50,13 +50,24 @@ module.exports = {
 
   // Server command
   server: {
-    title: (name) => `🖥️ Information about server **${name}**:`,
+    title: (name, pub) => `🖥️ Information about${pub ? ' public' : ''} server **${name}**:`,
     id: 'Discord ID',
     owner: 'Owner',
-    region: 'Voice region',
+    region: 'Region',
+    boost: 'Server boost',
     members: 'Members',
     memberDesc: (total, online, bots, eOnline, eBot) => `**${total}** including **${online}** ${eOnline} and **${bots}** ${eBot}`,
+    channels: 'Channels',
     creation: 'Creation date',
+    boosts: {
+      level: (level) => `Level ${level}`,
+      count: (count) => `${count} booster${count > 1 ? 's' : ''}`,
+    },
+    channel: {
+      category: 'Category',
+      text: 'Text',
+      voice: 'Voice',
+    },
     regions: {
       amsterdam: 'Amsterdam',
       brazil: 'Brazil',

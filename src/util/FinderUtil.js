@@ -39,12 +39,16 @@ class FinderUtil extends Util {
 
     // 3b- Query Discord
     const results = await message.guild.members.fetch({ query: search, limit: 20 })
-      .then((members) => {
-        if (!tags) return members;
-        return members.filter((m) => m.user.discriminator.startsWith(tags[2]));
-      })
       .catch(this.client.logger.error);
-    if (results && results.size) return results.array();
+    if (results && results.size) {
+      const found = results.find(
+        (m) => (m.nickname ? m.nickname.toLowerCase() === search.toLowerCase() : false)
+          || m.user.username.toLowerCase() === search.toLowerCase()
+          || (tags ? m.user.discriminator.startsWith(tags[2]) : false),
+      );
+      if (found) return [found];
+      return results.array();
+    }
 
 
     // X- Return an empty array
