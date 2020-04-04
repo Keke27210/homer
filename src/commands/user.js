@@ -15,7 +15,7 @@ class UserCommand extends Command {
     let user = message.author;
     if (message.guild && search) {
       const found = await this.client.finderUtil.findMembers(message, search);
-      if (found.length === 0) return message.error(message._('finder.members.zero', search));
+      if (!found.length) return message.error(message._('finder.members.zero', search));
       if (found.length > 1) return this.client.finderUtil.formatMembers(message, found, search);
       member = found[0];
       user = member.user;
