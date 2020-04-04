@@ -11,7 +11,7 @@ class FinderUtil extends Util {
     MENTION.lastIndex = 0;
 
     if (mentions) {
-      const member = await message.guild.members.fetch(mentions[2], { withPresences: true })
+      const member = await message.guild.members.fetch(mentions[2])
         .catch(() => null);
       if (member) return [member];
     }
@@ -21,7 +21,7 @@ class FinderUtil extends Util {
     ID.lastIndex = 0;
 
     if (ids) {
-      const member = await message.guild.members.fetch(ids[2], { withPresences: true })
+      const member = await message.guild.members.fetch(ids[1])
         .catch(() => null);
       if (member) return [member];
     }

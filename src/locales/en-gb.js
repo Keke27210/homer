@@ -7,6 +7,14 @@ module.exports = {
     authors: ['205427654042583040'],
   },
 
+  /* UTILS */
+  // Finder
+  finder: {
+    members: {
+      zero: (search) => `No members found matching \`${search}\`.`,
+    },
+  },
+
   /* HANDLERS */
   // Command handler
   command: {

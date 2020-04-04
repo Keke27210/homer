@@ -48,7 +48,7 @@ class ServerCommand extends Command {
         guild.memberCount,
         guild.members.cache.filter((m) => m.user.presence.status === 'online').size,
         guild.members.cache.filter((m) => m.user.bot).size,
-        message.eOnline,
+        message.eStatus.online,
         message.eBot,
       )}`,
       `${message.dot} ${message._('server.creation')}: **${message.getMoment(guild.createdTimestamp)}**`,
