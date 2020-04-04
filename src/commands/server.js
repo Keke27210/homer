@@ -43,7 +43,7 @@ class ServerCommand extends Command {
       `${message.dot} ${message._('server.id')}: **${guild.id}**`,
       `${message.dot} ${message._('server.owner')}: ${guild.owner.user.tag} (${guild.ownerID})`,
       `${message.dot} ${message._('server.region')}: ${this.region[guild.region]} **${message._(`server.regions.${guild.region}`)}**`,
-      `${message.dot} ${message._('server.boost')}: **${message._('server.boosts.level', guild.premiumTier)}** (${message._('server.boosts.count', guild.premiumSubscriptionCount)})`,
+      `${message.dot} ${message._('server.boost')}: ${guild.premiumTier === 0 ? message._('global.none') : `**${message._('server.boosts.level', guild.premiumTier)}** (${message._('server.boosts.count', guild.premiumSubscriptionCount)})`}`,
       `${message.dot} ${message._('server.members')}: ${message._(
         'server.memberDesc',
         guild.memberCount,
