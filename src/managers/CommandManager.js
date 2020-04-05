@@ -17,7 +17,7 @@ class CommandManager extends Manager {
      * Base permissions for the bot to behave correctly
      * @type {string[]}
      */
-    this.basePermissions = ['SEND_MESSAGES', 'EMBED_LINKS'];
+    this.basePermissions = ['SEND_MESSAGES', 'EMBED_LINKS', 'ADD_REACTIONS', 'MANAGE_MESSAGES'];
 
     /**
      * Command categories

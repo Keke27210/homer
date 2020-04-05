@@ -246,20 +246,27 @@ Structures.extend('Message', (Message) => {
       return `**${m.format(this.settings.formats.date)}** ${this._('global.at')} **${m.format(this.settings.formats.time)}**`;
     }
 
+    /**
+     * Waits for approval or denial from the specified user
+     * @param {string} id User ID
+     * @returns {Promise<boolean>} User's decision
+     */
     async awaitUserApproval(id) {
       const emotes = [
         this.client.emojis.resolveIdentifier(this.eSuccessID),
         this.client.emojis.resolveIdentifier(this.eErrorID),
       ];
-      await this.react(emotes[0]);
-      await this.react(emotes[1]);
+      await this.react(emotes[0]).catch(() => null);
+      await this.react(emotes[1]).catch(() => null);
       return this.awaitReactions(
         (reaction, user) => emotes.includes(reaction.emoji.identifier)
           && user.id === id,
         { max: 1 },
       )
         .then((reactions) => {
-          if (reactions.first().emoji.identifier === emotes[0]) {
+          if (this.guild) this.reactions.removeAll();
+          const r = reactions.first();
+          if (r.emoji.identifier === emotes[0]) {
             return true;
           }
           return false;

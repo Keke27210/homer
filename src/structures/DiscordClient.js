@@ -8,7 +8,7 @@ const Logger = require('./Logger');
 const CommandManager = require('../managers/CommandManager');
 const EventManager = require('../managers/EventManager');
 const LocaleManager = require('../managers/LocaleManager');
-const TelephoneManager = require('../managers/TelephoneManager');
+const { ContractManager } = require('../telephone');
 
 // Utils
 const FinderUtil = require('../util/FinderUtil');
@@ -62,9 +62,15 @@ class DiscordClient extends Client {
 
     /**
      * Telephone manager for this client
-     * @type {TelephoneManager}
+     * @type {object}
      */
-    this.telephoneManager = new TelephoneManager(this);
+    this.telephone = {
+      /**
+       * Contract manager for this telephone
+       * @type {ContractManager}
+       */
+      contractManager: new ContractManager(this),
+    };
 
     /**
      * Finder util for this client

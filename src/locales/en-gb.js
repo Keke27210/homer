@@ -187,23 +187,51 @@ module.exports = {
 
   // Telephone command
   telephone: {
-    welcome: (command) => `📞 Welcome to Homer's phone! To begin, run \`${command}\`.`,
+    welcome: (command) => `☎️ Welcome to Homer's phone! To begin, run \`${command}\`.`,
+    pending: '☎️ Your subscription request is being processed. You will receive the decision on this channel as soon as it is available.',
+    occupiedChannel: (id) => `The contract n°${id} is already active on this channel.`,
+    unusedChannel: 'There are no active subscription on this channel.',
+    notification: {
+      approved: (number, command) => `☎️ Your subscription request has been accepted! The number \`${number}\` has been assigned to your contract. Start calling with \`${command}\`!`,
+      denied: '☎️ Your subscription request has been rejected. You can contact the support server to find out why.',
+    },
+    contract: {
+      title: '☎️ Information about this channel\'s contract:',
+      id: 'Contract no.',
+      number: 'Number',
+      subscriber: 'Subscriber',
+      state: 'State',
+      textable: 'Textable',
+      date: 'Subscription date',
+      notAttributed: 'Not attributed yet',
+      states: {
+        0: 'Awaiting approval...',
+        1: 'Active',
+      },
+    },
     subscribe: {
       disclaimer: (name) => `Are you sure you want to apply for a contract for the channel **#${name}**?`,
       eligibility: 'Checking eligibility...',
-      occupiedChannel: 'There is already an active subscription on this channel.',
       applied: (id) => `Your subscription request has been sent successfully, you will receive an answer shortly. Note your contract number n°\`${id}\`.`,
       aborted: 'The subscription request has been cancelled.',
       error: {
         guild: {
+          too_many: (max) => `This server cannot have more than ${max} contracts active simultaneously.`,
           recent_contracts: 'At least two contracts have already been signed on this server in the last two weeks. You have to wait before you can sign them again.',
           suspended_contracts: 'A line belonging to this server has been suspended by support. You must wait at least four weeks from the date of suspension to sign new contracts.',
         },
         user: {
+          too_many: (max) => `You cannot have more than ${max} contracts active simultaneously.`,
           recent_contracts: 'You\'ve already signed two contracts in the last two weeks. You have to wait before you can sign more.',
           suspended_contracts: 'A line for which you are responsible has been suspended by the support. You must wait at least four weeks from the date of suspension to sign new contracts.',
         },
       },
+    },
+    terminate: {
+      disclaimer: 'Are you sure you want to break the contract thus ending your subscription? Keep in mind that you are limited to two signatures every two weeks.',
+      error: 'An error occurred during the termination of your contract.',
+      done: (id) => `Contract n°\`${id}\` has been terminated. The associated phone line is no longer available.`,
+      aborted: 'The request for termination of contract has been cancelled.',
     },
   },
 
