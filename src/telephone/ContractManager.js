@@ -141,6 +141,48 @@ class ContractManager extends Manager {
   }
 
   /**
+   * Finds a contract
+   * @param {string} number Line number
+   * @returns {Promise<?Contract>} Contract
+   */
+  findContract(number) {
+    const cached = this.contracts.find((c) => c.line === number);
+    if (cached) return cached;
+
+    return this.client.database.query('SELECT * FROM contracts WHERE line = $1', [number])
+      .then((res) => {
+        if (!res.rows[0]) return null;
+        this.contracts.push(res.rows[0]);
+        return res.rows[0];
+      })
+      .catch((error) => {
+        this.client.logger.error(`[contracts->findContract] Error while finding contract with number ${number}`, error);
+        throw new Error('[contracts->findContract] Unable to find active contract for this channel');
+      });
+  }
+
+  /**
+   * Finds contracts
+   * @param {string} context Context ID
+   * @param {?boolean} force Fetch even if state >= 2
+   * @returns {Promise<?Contract>} Contract
+   */
+  findContracts(context, force = false) {
+    return this.client.database.query(`SELECT * FROM contracts WHERE ${force ? '' : 'state < 2 AND '}context = $1`, [context])
+      .then((res) => {
+        const { rows } = res;
+        for (let i = 0; i < rows.length; i += 1) {
+          this.updateCache(rows[i].id);
+        }
+        return rows;
+      })
+      .catch((error) => {
+        this.client.logger.error(`[contracts->findContracts] Error while finding contract with context ${context}`, error);
+        throw new Error('[contracts->findContracts] Unable to find active contract for this channel');
+      });
+  }
+
+  /**
    * Fetches an active contract
    * @param {string} channel Channel ID
    * @param {?number} id Contract number
@@ -148,7 +190,7 @@ class ContractManager extends Manager {
    * @returns {Promise<?Contract>} Contract
    */
   fetchContract(channel, id, force = false) {
-    const cached = this.contracts.find((c) => (force ? c.true : c.state < 2)
+    const cached = this.contracts.find((c) => (force ? true : c.state < 2)
       && (c.channel === channel || c.id === id));
     if (cached) return cached;
 
@@ -337,6 +379,29 @@ class ContractManager extends Manager {
 
     const settings = await this.client.settingsUtil.fetchSettings(contract.context);
     return channel.send(this.client.localeManager.translate(settings.locale, key, ...args));
+  }
+
+  /**
+   * Handles the deletion of a guild (guildDelete event)
+   * @param {string} id Guild ID
+   */
+  async guildDeletion(id) {
+    const contracts = await this.findContracts(id);
+    for (let i = 0; i < contracts.length; i += 1) {
+      this.invalidateContract(contracts[i].id);
+    }
+  }
+
+  /**
+   * Handles the deletion of a channel (channelDelete event)
+   * @param {string} id Channel ID
+   */
+  channelDeletion(id) {
+    return this.fetchContract(id)
+      .then((contract) => {
+        if (!contract) return;
+        this.invalidateContract(contract.id);
+      });
   }
 
   /**
