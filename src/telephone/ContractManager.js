@@ -47,6 +47,12 @@ class ContractManager extends Manager {
      * @type {number}
      */
     this.suspensionDelay = 4 * 7 * 24 * 60 * 60 * 1000;
+
+    // Listening to channel deletions
+    this.client.on('channelDelete', (channel) => this.channelDeletion(channel.id));
+
+    // Listening to guild deletions
+    this.client.on('guildDelete', (guild) => this.guildDeletion(guild.id));
   }
 
   /**
