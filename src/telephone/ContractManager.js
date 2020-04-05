@@ -107,10 +107,17 @@ class ContractManager extends Manager {
 
     // Fetching contract no.
     return this.client.database.query(
-      'SELECT id FROM contracts WHERE context = $1 AND channel = $2 AND subscriber = $3 AND state = 0',
+      'SELECT id, channel FROM contracts WHERE context = $1 AND channel = $2 AND subscriber = $3 AND state = 0',
       [context, channel, subscriber],
     )
-      .then((res) => (res.rows[0] ? res.rows[0].id : null))
+      .then((res) => {
+        if (!res.rows[0]) return null;
+        const index = this.contracts.findIndex(
+          (c) => c.channel === res.rows[0].channel && c.state === 0,
+        );
+        if (index >= 0) this.contracts.splice(index, 1);
+        return res.rows[0];
+      })
       .catch((error) => {
         this.client.logger.error(`[contracts->createContrat] Error while fetching new contract no. (${context}/${channel}/${subscriber})`, error);
         throw new Error('[contracts->createContract] Unable to fetch contract no.');
@@ -151,7 +158,7 @@ class ContractManager extends Manager {
    * @param {string} number Line number
    * @returns {Promise<?Contract>} Contract
    */
-  findContract(number) {
+  async findContract(number) {
     const cached = this.contracts.find((c) => c.line === number);
     if (cached) return cached;
 
@@ -195,14 +202,20 @@ class ContractManager extends Manager {
    * @param {?boolean} force Fetch even if state >= 2
    * @returns {Promise<?Contract>} Contract
    */
-  fetchContract(channel, id, force = false) {
+  async fetchContract(channel, id, force = false) {
     const cached = this.contracts.find((c) => (force ? true : c.state < 2)
-      && (c.channel === channel || c.id === id));
-    if (cached) return cached;
+      && (c.id === id || c.channel === channel));
+    if (cached) {
+      if (cached.empty) return null;
+      return cached;
+    }
 
     return this.client.database.query(`SELECT * FROM contracts WHERE ${force ? '' : 'state < 2 AND '}(channel = $1 OR id = $2)`, [channel, id])
       .then((res) => {
-        if (!res.rows[0]) return null;
+        if (!res.rows[0]) {
+          this.contracts.push({ channel, empty: true });
+          return null;
+        }
         this.contracts.push(res.rows[0]);
         return res.rows[0];
       })

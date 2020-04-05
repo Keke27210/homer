@@ -60,6 +60,12 @@ Structures.extend('Message', (Message) => {
       this.eErrorID = '695722118976897085';
 
       /**
+       * Information emote used by Homer
+       * @type {string}
+       */
+      this.eInfo = 'ℹ️';
+
+      /**
        * Placeholder emote used by Homer
        * @type {string}
        */
@@ -146,6 +152,17 @@ Structures.extend('Message', (Message) => {
     }
 
     /**
+     * Calls TextChannel#send with a ℹ️ before content
+     * @param {string} content The content to send
+     * @param {?object} options The options to provide
+     * @returns {Promise<Message>}
+     */
+    info(content, options) {
+      const str = `${this.eInfo} ${content}`;
+      return this.channel.send(str, options);
+    }
+
+    /**
      * Calls TextChannel#send with a :success: before content
      * @param {string} content The content to send
      * @param {?object} options The options to provide
@@ -186,6 +203,17 @@ Structures.extend('Message', (Message) => {
      */
     editLoading(content, options) {
       const str = `${this.eLoading} ${content}`;
+      return this.edit(str, options);
+    }
+
+    /**
+     * Calls Message#edit with a ℹ️ before content
+     * @param {string} content The content to send
+     * @param {?object} options The options to provide
+     * @returns {Promise<Message>}
+     */
+    editInfo(content, options) {
+      const str = `${this.eInfo} ${content}`;
       return this.edit(str, options);
     }
 

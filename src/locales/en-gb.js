@@ -83,6 +83,15 @@ module.exports = {
     },
   },
 
+  // Dial command
+  dial: {
+    number: 'You must provide a number to dial.',
+    unknown: (number) => `The number \`${number}\` is not assigned.`,
+    error: {
+      busy: 'Your correspondent is busy.',
+    },
+  },
+
   // Google command
   google: {
     noSearch: 'You must provide something to search.',
@@ -90,6 +99,11 @@ module.exports = {
     searching: 'Searching...',
     noResults: (search) => `No search results matching \`${search}\`.`,
     error: 'An error occured while querying Google. We apologize for this.',
+  },
+
+  // Hangup command
+  hangup: {
+    none: 'There are no active calls at this time.',
   },
 
   // Lookup command
@@ -120,6 +134,12 @@ module.exports = {
       id: 'Discord ID',
       creation: 'Creation date',
     },
+  },
+
+  // Pickup command
+  pickup: {
+    noPending: '☎️ There are no pending calls.',
+    asCaller: 'You can\'t pick up as a caller.',
   },
 
   // Ping command
@@ -191,9 +211,20 @@ module.exports = {
     pending: '☎️ Your subscription request is being processed. You will receive the decision on this channel as soon as it is available.',
     occupiedChannel: (id) => `The contract n°${id} is already active on this channel.`,
     unusedChannel: 'There are no active subscription on this channel.',
+    contractRequired: (command) => `A phone subscription is required to use this feature. Use the ${command} command for more information.`,
     notification: {
       approved: (number, command) => `☎️ Your subscription request has been accepted! The number \`${number}\` has been assigned to your contract. Start calling with \`${command}\`!`,
       denied: '☎️ Your subscription request has been rejected. You can contact the support server to find out why.',
+    },
+    call: {
+      incoming: (number, command) => `☎️ Incoming call from **${number}**... Use \`${command}\` to pickup!`,
+      outgoing: (number) => `☎️ Outgoing call to **${number}**...`,
+      handler: (name, content) => `📞 ${name}: ${content}`,
+      pickup: (source) => ['📞 Your caller picked up.', '📞 You picked up the phone.'][source],
+      ended: {
+        user: (source) => ['☎️ Your caller hung up.', '📞 You hung up the phone.'][source],
+        error: '☎️ A problem occurred, communication was interrupted.',
+      },
     },
     contract: {
       title: '☎️ Information about this channel\'s contract:',
