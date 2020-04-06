@@ -13,10 +13,10 @@ const LocaleManager = require('../managers/LocaleManager');
 const CallProvider = require('../providers/CallProvider');
 const ContractProvider = require('../providers/ContractProvider');
 const PhonebookProvider = require('../providers/PhonebookProvider');
+const SettingProvider = require('../providers/SettingProvider');
 
 // Utils
 const FinderUtil = require('../util/FinderUtil');
-const SettingsUtil = require('../util/SettingsUtil');
 
 class DiscordClient extends Client {
   constructor(clientOptions, databaseCredentials, apiKeys) {
@@ -89,16 +89,16 @@ class DiscordClient extends Client {
     };
 
     /**
+     * Setting provider for this client
+     * @type {SettingProvider}
+     */
+    this.settings = new SettingProvider(this);
+
+    /**
      * Finder util for this client
      * @type {FinderUtil}
      */
     this.finderUtil = new FinderUtil(this);
-
-    /**
-     * Settings util for this client
-     * @type {SettingsUtil}
-     */
-    this.settingsUtil = new SettingsUtil(this);
   }
 
   /**

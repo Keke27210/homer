@@ -1,5 +1,49 @@
 const Command = require('../../structures/Command');
 
+class MembersSubcommand extends Command {
+  constructor(client, category) {
+    super(client, category, {
+      name: 'members',
+    });
+  }
+
+  async main(message, args) {
+    const search = args.join(' ');
+    if (!search) {
+      message.error(message._('role.noSearch'));
+      return 0;
+    }
+
+    let role;
+    if (search) {
+      const found = this.client.finderUtil.findRoles(message, search);
+      if (!found) {
+        message.error(message._('finder.roles.zero', search));
+        return 0;
+      }
+      if (found.length > 1) {
+        message.warn(this.client.finderUtil.formatRoles(message, found, search));
+        return 0;
+      }
+      [role] = found;
+    }
+
+    const members = role.members
+      .sort((a, b) => a.user.tag.localeCompare(b.user.tag))
+      .map((m) => `${message.dot} ${m.user.tag} (${m.id})`)
+      .join('\n');
+    if (!members) {
+      message.info(message._('role.members.empty', role.name));
+      return 0;
+    }
+
+    const embed = message.getEmbed().setDescription(members);
+    message.send(message._('role.members.title', role.name), embed);
+
+    return 0;
+  }
+}
+
 class RoleCommand extends Command {
   constructor(client, category) {
     super(client, category, {

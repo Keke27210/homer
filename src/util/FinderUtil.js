@@ -64,13 +64,16 @@ class FinderUtil extends Util {
     return str;
   }
 
-  findChannels(message, query) {
+  findChannels(message, query, type) {
+    let list = message.guild.channels.cache;
+    if (type) list = list.filter((c) => c.type === type);
+
     // 1- Testing mentions
     const mentions = MENTION.exec(query);
     MENTION.lastIndex = 0;
 
     if (mentions) {
-      const channel = message.guild.channels.resolve(mentions[2]);
+      const channel = list.get(mentions[2]);
       if (channel) return [channel];
     }
 
@@ -79,15 +82,15 @@ class FinderUtil extends Util {
     ID.lastIndex = 0;
 
     if (ids) {
-      const channel = message.guild.channels.resolve(ids[1]);
+      const channel = list.get(ids[1]);
       if (channel) return [channel];
     }
 
     // 3- Querying by search
     const search = query.toLowerCase();
-    const channel = message.guild.channels.cache.find((c) => c.name.toLowerCase() === search);
+    const channel = list.find((c) => c.name.toLowerCase() === search);
     if (channel) return [channel];
-    const channels = message.guild.channels.cache.filter(
+    const channels = list.filter(
       (c) => c.name.toLowerCase().startsWith(search)
         || c.name.toLowerCase().includes(search),
     );

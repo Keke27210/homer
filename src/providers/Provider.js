@@ -49,7 +49,9 @@ class Provider {
    * @returns {Promise<number>} Row ID
    */
   async insertRow(data) {
-    if (!this.database.ready) return null;
+    if (!this.database.ready) {
+      throw new Error('UNAVAILABLE_DATABASE');
+    }
 
     const columns = Object.keys(data).join(', ');
     const values = Object.values(data);
@@ -58,6 +60,9 @@ class Provider {
       `INSERT INTO ${this.table} (${columns}) VALUES (${values.map((_, i) => `$${i + 1}`).join(', ')}) RETURNING *`,
       Object.values(data),
     );
+
+    const cache = this.cache.findIndex((c) => c.id === query.rows[0].id);
+    if (cache >= 0) this.cache.splice(cache, 1);
 
     this.cache.push(query.rows[0]);
     return query.rows[0].id;

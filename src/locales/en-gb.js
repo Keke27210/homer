@@ -20,6 +20,106 @@ module.exports = {
     notReady: 'This feature relies on the database which is currently unavailable. We apologize for this.',
   },
 
+  /* HELP */
+  help: {
+    about: {
+      description: 'Information about the bot',
+      usage: null,
+      example: null,
+    },
+    avatar: {
+      description: 'Displays a member\'s avatar',
+      usage: '[member]',
+      example: '@Luke',
+    },
+    channel: {
+      description: 'Displays information about a channel',
+      usage: '[channel]',
+      example: '#general',
+    },
+    dial: {
+      description: 'Dials a telephone number',
+      usage: '<number>',
+      example: 'SUPPORT',
+    },
+    eval: {
+      description: 'Evaluates Javascript code',
+      usage: '[code]',
+      example: 'this.client.token',
+    },
+    google: {
+      description: 'Searches for an information on Google',
+      usage: '<search>',
+      example: 'Facebook\'s owner',
+    },
+    hangup: {
+      description: 'Ends an ongoing call',
+      usage: null,
+      example: null,
+    },
+    lookup: {
+      description: 'Displays information on a Discord entity (user/guild/invite/gift)',
+      usage: '<id/invite/gift code>',
+      example: '205427654042583040',
+    },
+    ping: {
+      description: 'Pong with WebSocket\'s latency',
+      usage: null,
+      example: null,
+    },
+    phonebook: {
+      description: 'Displays Homer\'s phone book',
+      usage: null,
+      example: null,
+    },
+    pickup: {
+      description: 'Answers to an incoming call',
+      usage: null,
+      example: null,
+    },
+    radio: {
+      description: 'Sets the radio channel',
+      usage: '[channel]',
+      example: 'Music',
+    },
+    role: {
+      description: 'Displays information about a role',
+      usage: '<role>',
+      example: '@Moderators',
+
+      members: {
+        description: 'Displays member having the specified role',
+        usage: '<role>',
+        example: '@Muted',
+      },
+    },
+    server: {
+      description: 'Displays information about the server',
+      usage: null,
+      example: null,
+    },
+    shutdown: {
+      description: 'Gracefully shuts down the bot',
+      usage: '[exit code]',
+      example: '4',
+    },
+    telephone: {
+      description: 'Displays information about a channel\'s contract',
+      usage: null,
+      example: null,
+    },
+    text: {
+      description: 'Sends a text message to someone',
+      usage: '<number> <message>',
+      example: '478-444 Hey, call me back!',
+    },
+    volume: {
+      description: 'Sets radio volume (in percentage)',
+      usage: '<volume>',
+      example: '75',
+    },
+  },
+
   /* UTILS */
   // Finder
   finder: {
@@ -167,6 +267,13 @@ module.exports = {
     pong: (ws) => `🏓 Pong with **${ws}** milliseconds!`,
   },
 
+  // Radio command
+  radio: {
+    none: 'Run this command while being on a voice channel or specify a voice channel name.',
+    set: (name) => `Radio channel is set to **${name}**.`,
+    error: 'An error occured while setting radio channel.',
+  },
+
   // Role command
   role: {
     title: (name) => `🎭 Information about role **${name}**:`,
@@ -284,7 +391,7 @@ module.exports = {
     },
   },
 
-  // Text
+  // Text command
   text: {
     missingNumber: 'You must provide a number to send a message to.',
     missingContent: 'You must provide message to be sent.',
@@ -316,5 +423,14 @@ module.exports = {
       dnd: 'Do not disturb',
       offline: 'Offline',
     },
+  },
+
+  // Volume command
+  volume: {
+    missing: 'You must provide a volume to set',
+    number: 'The volume must be a number',
+    range: 'The volume must be between 0 and 100.',
+    set: (volume) => `The volume is now at \`${volume}%\`.`,
+    error: 'An error occured while setting volume.',
   },
 };

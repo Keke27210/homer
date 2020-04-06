@@ -58,6 +58,14 @@ class Command {
   }
 
   /**
+   * Whether this command category requires a working database
+   * @type {boolean}
+   */
+  get databaseRequired() {
+    return ['radio', 'telephone'].includes(this.category);
+  }
+
+  /**
    * Performs the required checks then performs the command
    * @param {Message} message Message that triggered the command
    */
@@ -94,7 +102,7 @@ class Command {
       }
     }
 
-    if (this.category === 'telephone' && !this.client.database.ready) {
+    if (this.databaseRequired && !this.client.database.ready) {
       message.error(message._('database.notReady'));
       return;
     }

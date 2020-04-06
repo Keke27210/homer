@@ -15,7 +15,7 @@ Structures.extend('User', (User) => {
      * @type {?Settings}
      */
     get settings() {
-      return this.client.settingsUtil.cache.find((c) => c.id === this.id);
+      return this.client.settings.cache.find((c) => c.id === this.id);
     }
 
     /**
@@ -23,7 +23,7 @@ Structures.extend('User', (User) => {
      * @returns {Promise<Settings>}
      */
     fetchSettings() {
-      return this.client.settingsUtil.fetchSettings(this.id);
+      return this.client.settings.fetchSettings(this.id);
     }
   }
 
