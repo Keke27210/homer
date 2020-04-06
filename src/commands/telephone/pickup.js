@@ -10,29 +10,39 @@ class PickupCommand extends Command {
   }
 
   async main(message) {
-    const contract = await this.client.telephone.contractManager.fetchContract(message.channel.id);
+    const contract = await this.client.telephone.contracts.fetchContract(message.channel.id);
     if (!contract) {
-      message.info(message._('telephone.contractRequired', `${this.client.commandManager.prefixes[0]}telephone`));
+      message.send(message._('telephone.unknown'));
       return 0;
     }
 
-    const call = await this.client.telephone.callManager.findCall(contract.id);
-    if (!call || call.state > 0) {
-      message.warn(message._('pickup.noPending'));
+    if (contract.state === this.client.telephone.contracts.states.PENDING) {
+      message.send(message._('telephone.pending'));
+      return 0;
+    }
+
+    if (contract.state === this.client.telephone.contracts.states.PAUSED) {
+      message.send(message._('telephone.paused'));
+      return 0;
+    }
+
+    const call = await this.client.telephone.calls.findCall(contract.id);
+    if (!call || call.state > this.client.telephone.calls.states.PENDING) {
+      message.info(message._('pickup.noPending'));
       return 0;
     }
 
     if (call.caller === contract.id) {
-      message.info(message._('pickup.asCaller'));
+      message.warn(message._('pickup.asCaller'));
       return 0;
     }
 
-    const ret = await this.client.telephone.callManager.pickupCall(call.id);
-    if (ret) {
-      message.warn(message._(`pickup.error.${ret}`));
-    }
+    const ret = await this.client.telephone.calls.pickupCall(call.id)
+      .catch(() => {
+        message.error(message._('pickup.error'));
+      });
 
-    return 0;
+    return ret;
   }
 }
 

@@ -7,7 +7,7 @@ class MessageEvent extends Event {
 
   handle(message) {
     this.client.commandManager.handleMessage(message);
-    this.client.telephone.callManager.handleMessage(message);
+    this.client.telephone.calls.handleMessage(message);
   }
 }
 

@@ -11,43 +11,43 @@ class SubscribeSubcommand extends Command {
   }
 
   async main(message) {
-    const contract = await this.client.telephone.contractManager.fetchContract(message.channel.id);
+    const contract = await this.client.telephone.contracts.fetchContract(message.channel.id);
     if (contract) {
-      message.warn(message._('telephone.occupiedChannel', contract.id));
+      message.info(message._('telephone.existing', contract.id));
       return 0;
     }
 
-    const m = await message.warn(message._('telephone.subscribe.disclaimer', message.channel.name));
+    const m = await message.warn(message._('telephone.subscribe.disclaimer'));
     const decision = await m.awaitUserApproval(message.author.id);
     if (decision) {
       m.editLoading(message._('telephone.subscribe.eligibility'));
-      const eligibility = await this.client.telephone.contractManager
-        .eligibility(message.channel.id, message.author.id);
-      if (eligibility !== 'OK') {
-        const [context, key] = eligibility.split('.');
-        m.editError(message._(
-          `telephone.subscribe.error.${eligibility}`,
-          key === 'too_many'
-            ? this.client.telephone.contractManager[context === 'guild' ? 'maxPerGuild' : 'maxPerUser']
-            : null,
-        ));
+      const eligibility = await this.client.telephone.contracts.eligibility(
+        message.author.id,
+        message.guild ? message.guild.id : null,
+      );
+      if (!eligibility) {
+        m.editError(message._('telephone.subscribe.notEligible'));
         return 0;
       }
 
-      const contractID = await this.client.telephone.contractManager.createContract(
+      const ret = await this.client.telephone.contracts.createContract(
         message.guild ? message.guild.id : message.author.id,
         message.channel.id,
         message.author.id,
-      );
-      if (contractID === 0) {
-        m.editError(message._('telephone.subscribe.error.unknown'));
-        return 1;
-      }
-      m.editSuccess(message._('telephone.subscribe.applied', contractID));
-      return 0;
+      )
+        .then((id) => {
+          m.editSuccess(message._('telephone.subscribe.applied', id));
+          return 0;
+        })
+        .catch(() => {
+          m.editError(message._('telephone.subscribe.error'));
+          return 1;
+        });
+
+      return ret;
     }
 
-    m.editWarn(message._('telephone.subscribe.aborted'));
+    m.editInfo(message._('telephone.subscribe.aborted'));
     return 0;
   }
 }
@@ -63,28 +63,29 @@ class TerminateSubcommand extends Command {
   }
 
   async main(message) {
-    const contract = await this.client.telephone.contractManager.fetchContract(message.channel.id);
+    const contract = await this.client.telephone.contracts.fetchContract(message.channel.id);
     if (!contract) {
-      message.warn(message._('telephone.unusedChannel'));
+      message.info(message._('telephone.unknown'));
       return 0;
     }
 
     const m = await message.warn(message._('telephone.terminate.disclaimer'));
     const decision = await m.awaitUserApproval(message.author.id);
     if (decision) {
-      const res = await this.client.telephone.contractManager.terminateContract(contract.id)
-        .catch((e) => e);
-      if (res) {
-        m.editError(message._('telephone.terminate.error'));
-        this.client.logger.error(`[command->telephone->terminate] Error while terminating subscription no. ${contract.id}`, res);
-        return 1;
-      }
+      const ret = await this.client.telephone.contracts.terminateContract(contract.id, 'TERMINATED')
+        .then(() => {
+          m.editSuccess(message._('telephone.terminate.done', contract.id));
+          return 0;
+        })
+        .catch(() => {
+          m.editError(message._('telephone.terminate.error'));
+          return 1;
+        });
 
-      m.editSuccess(message._('telephone.terminate.done', contract.id));
-      return 0;
+      return ret;
     }
 
-    m.editWarn(message._('telephone.terminate.aborted'));
+    m.editInfo(message._('telephone.terminate.aborted'));
     return 0;
   }
 }
@@ -112,16 +113,17 @@ class ApproveSubcommand extends Command {
       return 0;
     }
 
-    const res = await this.client.telephone.contractManager.activateContract(id);
-    if (!/^[a-zA-Z\d]{3}-[a-zA-Z\d]{3}$/.test(res)) {
-      message.error(`An error occured while activating contract no.\`${id}\`:\`\`\`js\n${res}\`\`\``);
-      return 0;
-    }
+    const ret = await this.client.telephone.contracts.activateContract(id)
+      .then(() => {
+        message.success(`Successfully activated contract no. \`${id}\`.`);
+        return 0;
+      })
+      .catch((error) => {
+        message.error(`An error occured while activating contract no. \`${id}\`: \`${error.message}\`.`);
+        return 1;
+      });
 
-    await this.client.telephone.contractManager.notify(id, 'telephone.notification.approved', res, `${this.client.commandManager.prefixes[0]}call`)
-      .then(() => message.success(`Contract n°\`${id}\` activated successfully with number **${res}**.`))
-      .catch(() => message.warn(`Contract n°\`${id}\` activated successfully with number **${res}** but couldn't notify.`));
-    return 0;
+    return ret;
   }
 }
 
@@ -148,16 +150,57 @@ class RejectSubcommand extends Command {
       return 0;
     }
 
-    const res = await this.client.telephone.contractManager.invalidateContract(id);
-    if (res) {
-      message.error(`An error occured while rejecting contract no.\`${id}\`:\`\`\`js\n${res}\`\`\``);
+    const ret = await this.client.telephone.contracts.terminateContract(id, 'INVALIDATED')
+      .then(() => {
+        message.success(`Successfully invalidated contract no. \`${id}\`.`);
+        return 0;
+      })
+      .catch((error) => {
+        message.error(`An error occured while invalidating contract no. \`${id}\`: \`${error}\`.`);
+        return 1;
+      });
+
+    return ret;
+  }
+}
+
+// telephone->toggle
+class ToggleSubcommand extends Command {
+  constructor(client, category) {
+    super(client, category, {
+      name: 'toggle',
+      aliases: ['switch'],
+      private: true,
+      dm: true,
+    });
+  }
+
+  async main(message) {
+    const contract = await this.client.telephone.contracts.fetchContract(message.channel.id);
+    if (!contract) {
+      message.send(message._('telephone.unknown'));
       return 0;
     }
 
-    await this.client.telephone.contractManager.notify(id, 'telephone.notification.denied')
-      .then(() => message.success(`Contract n°\`${id}\` rejected`))
-      .catch(() => message.warn(`Contract n°\`${id}\` rejected but couldn't notify.`));
-    return 0;
+    if (contract.state === this.client.telephone.contracts.states.PENDING) {
+      message.send(message._('telephone.pending'));
+      return 0;
+    }
+
+    if (contract.state === this.client.telephone.contracts.states.ACTIVE) {
+      contract.state = this.client.telephone.contracts.states.PAUSED;
+    } else {
+      contract.state = this.client.telephone.contracts.states.ACTIVE;
+    }
+
+    const ret = await this.client.telephone.contracts.toggleContract(contract.id)
+      .then(() => 0)
+      .catch(() => {
+        message.error(message._('telephone.toggle.error'));
+        return 1;
+      });
+
+    return ret;
   }
 }
 
@@ -176,7 +219,7 @@ class ContractsSubcommand extends Command {
   }
 
   async main(message) {
-    const pending = await this.client.telephone.contractManager.fetchPending();
+    const pending = await this.client.telephone.contracts.fetchPending();
     if (!pending.length) {
       message.warn('There are no current subscription requests.');
       return 0;
@@ -206,6 +249,7 @@ class TelephoneCommand extends Command {
         new SubscribeSubcommand(client, category),
         new TerminateSubcommand(client, category),
         new ContractsSubcommand(client, category),
+        new ToggleSubcommand(client, category),
       ],
       dm: true,
       private: true,
@@ -213,9 +257,9 @@ class TelephoneCommand extends Command {
   }
 
   async main(message) {
-    const contract = await this.client.telephone.contractManager.fetchContract(message.channel.id);
+    const contract = await this.client.telephone.contracts.fetchContract(message.channel.id);
     if (!contract) {
-      message.send(message._('telephone.welcome', `${this.client.commandManager.prefixes[0]}telephone subscribe`));
+      message.send(message._('telephone.welcome'));
       return 0;
     }
 
@@ -224,9 +268,9 @@ class TelephoneCommand extends Command {
 
     const description = [
       `${message.dot} ${message._('telephone.contract.id')}: \`${contract.id}\``,
-      `${message.dot} ${message._('telephone.contract.number')}: **${contract.line === 'XXX-XXX' ? message._('telephone.contract.notAttributed') : contract.line}**`,
+      `${message.dot} ${message._('telephone.contract.number')}: **${contract.number || message._('telephone.contract.noNumber')}**`,
       `${message.dot} ${message._('telephone.contract.subscriber')}: ${subscriber.tag}`,
-      `${message.dot} ${message._('telephone.contract.state')}: **${message._(`telephone.contract.states.${contract.state}`)}**`,
+      `${message.dot} ${message._('telephone.contract.state')}: **${message._(`telephone.states.${contract.state}`)}**`,
       `${message.dot} ${message._('telephone.contract.textable')}: **${message._(`global.${contract.textable ? 'yes' : 'no'}`)}**`,
       `${message.dot} ${message._('telephone.contract.date')}: ${message.getMoment(contract.created.getTime())}`,
     ].join('\n');

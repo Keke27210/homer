@@ -11,30 +11,57 @@ class DialCommand extends Command {
   }
 
   async main(message, args) {
-    const contract = await this.client.telephone.contractManager.fetchContract(message.channel.id);
+    const contract = await this.client.telephone.contracts.fetchContract(message.channel.id);
     if (!contract) {
-      message.info(message._('telephone.contractRequired', `${this.client.commandManager.prefixes[0]}telephone`));
+      message.send(message._('telephone.unknown'));
+      return 0;
+    }
+
+    if (contract.state === this.client.telephone.contracts.states.PENDING) {
+      message.send(message._('telephone.pending'));
+      return 0;
+    }
+
+    if (contract.state === this.client.telephone.contracts.states.PAUSED) {
+      message.send(message._('telephone.paused'));
       return 0;
     }
 
     const [number] = args;
     if (!number) {
-      message.error(message._('dial.number'));
+      message.error(message._('dial.noNumber'));
       return 0;
     }
 
-    const correspondent = await this.client.telephone.contractManager.findContract(number);
+    const correspondent = await this.client.telephone.contracts.findContract(number);
     if (!correspondent) {
       message.warn(message._('dial.unknown', number));
       return 0;
     }
 
-    const ret = await this.client.telephone.callManager.createCall(contract.id, correspondent.id);
-    if (ret) {
-      message.warn(message._(`dial.error.${ret}`));
+    const call = await Promise.all([
+      this.client.telephone.calls.findCall(contract.id),
+      this.client.telephone.calls.findCall(correspondent.id),
+    ]);
+
+    if (call[0]) {
+      message.info(message._('dial.busy'));
+      return 0;
     }
 
-    return 0;
+    if (call[1]) {
+      message.info(message._('dial.correspondentBusy'));
+      return 0;
+    }
+
+    const ret = await this.client.telephone.calls.createCall(contract.id, correspondent.id)
+      .then(() => 0)
+      .catch(() => {
+        message.error(message._('dial.error'));
+        return 1;
+      });
+
+    return ret;
   }
 }
 

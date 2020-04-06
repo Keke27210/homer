@@ -8,7 +8,11 @@ const Logger = require('./Logger');
 const CommandManager = require('../managers/CommandManager');
 const EventManager = require('../managers/EventManager');
 const LocaleManager = require('../managers/LocaleManager');
-const { CallManager, ContractManager } = require('../telephone');
+
+// Providers
+const CallProvider = require('../providers/CallProvider');
+const ContractProvider = require('../providers/ContractProvider');
+const PhonebookProvider = require('../providers/PhonebookProvider');
 
 // Utils
 const FinderUtil = require('../util/FinderUtil');
@@ -66,16 +70,22 @@ class DiscordClient extends Client {
      */
     this.telephone = {
       /**
-       * Call manager for this telephone
+       * Call provider for this telephone
        * @type {CallManager}
        */
-      callManager: new CallManager(this),
+      calls: new CallProvider(this),
 
       /**
-       * Contract manager for this telephone
+       * Contract provider for this telephone
        * @type {ContractManager}
        */
-      contractManager: new ContractManager(this),
+      contracts: new ContractProvider(this),
+
+      /**
+       * Phonebook provider for this telephone
+       * @type {PhonebookProvider}
+       */
+      phonebook: new PhonebookProvider(this),
     };
 
     /**

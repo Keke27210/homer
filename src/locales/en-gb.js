@@ -85,11 +85,11 @@ module.exports = {
 
   // Dial command
   dial: {
-    number: 'You must provide a number to dial.',
-    unknown: (number) => `The number \`${number}\` is not assigned.`,
-    error: {
-      busy: 'Your correspondent is busy.',
-    },
+    noNumber: 'You must provide a number to dial.',
+    unknown: 'The number you dialed is not assigned.',
+    busy: 'The line\'s busy.',
+    correspondentBusy: 'Your correspondent line\'s busy.',
+    error: 'An error occurred while dialing.',
   },
 
   // Google command
@@ -103,7 +103,8 @@ module.exports = {
 
   // Hangup command
   hangup: {
-    none: 'There are no active calls at this time.',
+    noActive: '☎️ You\'re not on a phone call..',
+    error: 'An error occurred while hanging up.',
   },
 
   // Lookup command
@@ -136,10 +137,29 @@ module.exports = {
     },
   },
 
+  // Phonebook command
+  phonebook: {
+    title: '🔖 Homer\'s phone book:',
+    empty: 'The phone book is currently empty.',
+    toggle: {
+      visible: 'You are now listed in the phone book.',
+      invisible: 'You are no longer listed in the phone book.',
+      message: 'You must have defined a description for your line.',
+      error: 'An error occurred during the phone book subscription request.',
+    },
+    message: {
+      set: (message) => `You now appear in the phone book with the description: \`${message}\`.`,
+      length: (max) => `The length of your description should not exceed **${max}** characters.`,
+      missing: 'You must provide a description to be defined.',
+      error: 'An error occurred while editing your description.',
+    },
+  },
+
   // Pickup command
   pickup: {
-    noPending: '☎️ There are no pending calls.',
+    noPending: 'There are no incoming calls.',
     asCaller: 'You can\'t pick up as a caller.',
+    error: 'An error occurred while picking up.',
   },
 
   // Ping command
@@ -207,25 +227,11 @@ module.exports = {
 
   // Telephone command
   telephone: {
-    welcome: (command) => `☎️ Welcome to Homer's phone! To begin, run \`${command}\`.`,
-    pending: '☎️ Your subscription request is being processed. You will receive the decision on this channel as soon as it is available.',
-    occupiedChannel: (id) => `The contract n°${id} is already active on this channel.`,
-    unusedChannel: 'There are no active subscription on this channel.',
-    contractRequired: (command) => `A phone subscription is required to use this feature. Use the ${command} command for more information.`,
-    notification: {
-      approved: (number, command) => `☎️ Your subscription request has been accepted! The number \`${number}\` has been assigned to your contract. Start calling with \`${command}\`!`,
-      denied: '☎️ Your subscription request has been rejected. You can contact the support server to find out why.',
-    },
-    call: {
-      incoming: (number, command) => `☎️ Incoming call from **${number}**... Use \`${command}\` to pickup!`,
-      outgoing: (number) => `☎️ Outgoing call to **${number}**...`,
-      handler: (name, content) => `📞 ${name}: ${content}`,
-      pickup: (source) => ['📞 Your caller picked up.', '📞 You picked up the phone.'][source],
-      ended: {
-        user: (source) => ['☎️ Your caller hung up.', '📞 You hung up the phone.'][source],
-        error: '☎️ A problem occurred, communication was interrupted.',
-      },
-    },
+    welcome: '☎️ Welcome to Homer\'s telephone! To get started, run `h:telephone subscribe`.',
+    existing: (id) => `Contract no. \`${id}\` is already active on this channel.`,
+    unknown: '☎️ No contract present on this channel. Subscribe by running `h:telephone subscribe`.',
+    pending: '☎️ Your subscription request is in progress, please wait.',
+    paused: '☎️ You must reactivate your line before you can use it.',
     contract: {
       title: '☎️ Information about this channel\'s contract:',
       id: 'Contract no.',
@@ -234,36 +240,58 @@ module.exports = {
       state: 'State',
       textable: 'Textable',
       date: 'Subscription date',
-      notAttributed: 'Not attributed yet',
-      states: {
-        0: 'Awaiting approval...',
-        1: 'Active',
-      },
+      noNumber: 'Not assigned',
+    },
+    notifications: {
+      activated: (number) => `☎️ Your line has been activated, your number is \`${number}\`.`,
+      invalidated: 'Your line has not been activated. Join the support server to find out why.',
+      outgoing: (number) => `📞 Dialing \`${number}\`...`,
+      incoming: (number) => `📞 Incoming call from \`${number}\`. Run \`h:pickup\` to pickup the phone.`,
+      pickedCaller: '📞 Your correspondent picked up.',
+      pickedCalled: '📞 You picked up the phone.',
+      terminated: '📞 The communication has ended.',
+      paused: '☎️ Your line\'s been disabled. You can reactivate it at any time by running `h:telephone toggle`.',
+      resumed: '☎️ Your line\'s been reactivated.',
+      text: (num) => `📧 Received text message from \`${num}\`:`,
+    },
+    states: {
+      0: 'Pending',
+      1: 'Active',
+      2: 'Paused',
+      3: 'Terminated',
+      4: 'Suspended',
+      5: 'Invalidated',
     },
     subscribe: {
-      disclaimer: (name) => `Are you sure you want to apply for a contract for the channel **#${name}**?`,
+      disclaimer: 'Do you really want to apply for a subscription for this channel?',
       eligibility: 'Checking eligibility...',
-      applied: (id) => `Your subscription request has been sent successfully, you will receive an answer shortly. Note your contract number n°\`${id}\`.`,
-      aborted: 'The subscription request has been cancelled.',
-      error: {
-        guild: {
-          too_many: (max) => `This server cannot have more than ${max} contracts active simultaneously.`,
-          recent_contracts: 'At least two contracts have already been signed on this server in the last two weeks. You have to wait before you can sign them again.',
-          suspended_contracts: 'A line belonging to this server has been suspended by support. You must wait at least four weeks from the date of suspension to sign new contracts.',
-        },
-        user: {
-          too_many: (max) => `You cannot have more than ${max} contracts active simultaneously.`,
-          recent_contracts: 'You\'ve already signed two contracts in the last two weeks. You have to wait before you can sign more.',
-          suspended_contracts: 'A line for which you are responsible has been suspended by the support. You must wait at least four weeks from the date of suspension to sign new contracts.',
-        },
-      },
+      notEligible: 'You are not eligible to Homer\'s telephone.',
+      applied: (id) => `Your subscription request has been made. Your contract number: \`${id}\`.`,
+      error: 'An error occurred during your subscription request.',
+      aborted: 'You have cancelled your subscription request.',
     },
     terminate: {
-      disclaimer: 'Are you sure you want to break the contract thus ending your subscription? Keep in mind that you are limited to two signatures every two weeks.',
-      error: 'An error occurred during the termination of your contract.',
-      done: (id) => `Contract n°\`${id}\` has been terminated. The associated phone line is no longer available.`,
-      aborted: 'The request for termination of contract has been cancelled.',
+      disclaimer: 'Are you sure you want to terminate your contract? You are limited to two signatures every two weeks.',
+      done: (id) => `Contract no. \`${id}\` was successfully terminated.`,
+      error: 'There was an error in your termination request.',
+      aborted: 'You have cancelled your termination request.',
     },
+    toggle: {
+      error: 'An error occurred while processing your request.',
+    },
+    hint: {
+      text: (num) => `Reply to this message using h:text ${num} <message>`,
+    },
+  },
+
+  // Text
+  text: {
+    missingNumber: 'You must provide a number to send a message to.',
+    missingContent: 'You must provide message to be sent.',
+    contentLength: (max) => `The length of the message must not exceed **${max}** characters.`,
+    unable: (number) => `Unable to send a text message to \`${number}\`.`,
+    sent: (number) => `Your message has been successfully sent to \`${number}\`.`,
+    error: 'An error occurred while sending your message.',
   },
 
   // User command

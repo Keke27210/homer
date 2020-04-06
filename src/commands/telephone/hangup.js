@@ -10,24 +10,36 @@ class HangupCommand extends Command {
   }
 
   async main(message) {
-    const contract = await this.client.telephone.contractManager.fetchContract(message.channel.id);
+    const contract = await this.client.telephone.contracts.fetchContract(message.channel.id);
     if (!contract) {
-      message.info(message._('telephone.contractRequired', `${this.client.commandManager.prefixes[0]}telephone`));
+      message.send(message._('telephone.unknown'));
       return 0;
     }
 
-    const call = await this.client.telephone.callManager.findCall(contract.id);
+    if (contract.state === this.client.telephone.contracts.states.PENDING) {
+      message.send(message._('telephone.pending'));
+      return 0;
+    }
+
+    if (contract.state === this.client.telephone.contracts.states.PAUSED) {
+      message.send(message._('telephone.paused'));
+      return 0;
+    }
+
+    const call = await this.client.telephone.calls.findCall(contract.id);
     if (!call) {
-      message.warn(message._('hangup.none'));
+      message.send(message._('hangup.noActive'));
       return 0;
     }
 
-    const ret = await this.client.telephone.callManager.deleteCall(call.id, 'user');
-    if (ret) {
-      message.warn(message._(`hangup.error.${ret}`));
-    }
+    const ret = await this.client.telephone.calls.endCall(call.id, 'TERMINATED')
+      .then(() => 0)
+      .catch(() => {
+        message.error(message._('hangup.error'));
+        return 1;
+      });
 
-    return 0;
+    return ret;
   }
 }
 
