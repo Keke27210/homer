@@ -71,6 +71,17 @@ module.exports = {
       description: 'Displays Homer\'s phone book',
       usage: null,
       example: null,
+
+      message: {
+        description: 'Sets a description for the line',
+        usage: '<message>',
+        example: 'Domino\'s Pizza',
+      },
+      toggle: {
+        description: 'Toggles visibility in the phone book',
+        usage: null,
+        example: null,
+      },
     },
     pickup: {
       description: 'Answers to an incoming call',
@@ -107,6 +118,38 @@ module.exports = {
       description: 'Displays information about a channel\'s contract',
       usage: null,
       example: null,
+
+      contracts: {
+        description: 'Displays all pending contracts',
+        usage: null,
+        example: null,
+
+        approve: {
+          description: 'Approves a subscription request',
+          usage: '<contract no.>',
+          example: null,
+        },
+        reject: {
+          description: 'Rejects a subscription request',
+          usage: '<contract no.>',
+          example: null,
+        },
+      },
+      subscribe: {
+        description: 'Subscribes to Homer\'s telephone',
+        usage: null,
+        example: null,
+      },
+      terminate: {
+        description: 'Terminates a subscription',
+        usage: null,
+        example: null,
+      },
+      toogle: {
+        description: 'Pauses or resumes a telephone line',
+        usage: null,
+        example: null,
+      },
     },
     text: {
       description: 'Sends a text message to someone',

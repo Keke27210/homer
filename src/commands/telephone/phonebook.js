@@ -67,7 +67,7 @@ class MessageSubcommand extends Command {
 
     let entry = await this.client.telephone.phonebook.getRow(contract.id);
     if (!entry) entry = await this.client.telephone.phonebook.createBook(contract.id);
-    console.log(entry)
+
     const ret = await this.client.telephone.phonebook.setMessage(entry.id, msg)
       .then(() => {
         message.success(message._('phonebook.message.set', msg));

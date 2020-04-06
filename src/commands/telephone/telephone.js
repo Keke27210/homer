@@ -90,6 +90,46 @@ class TerminateSubcommand extends Command {
   }
 }
 
+// telephone->toggle
+class ToggleSubcommand extends Command {
+  constructor(client, category) {
+    super(client, category, {
+      name: 'toggle',
+      aliases: ['switch'],
+      private: true,
+      dm: true,
+    });
+  }
+
+  async main(message) {
+    const contract = await this.client.telephone.contracts.fetchContract(message.channel.id);
+    if (!contract) {
+      message.send(message._('telephone.unknown'));
+      return 0;
+    }
+
+    if (contract.state === this.client.telephone.contracts.states.PENDING) {
+      message.send(message._('telephone.pending'));
+      return 0;
+    }
+
+    if (contract.state === this.client.telephone.contracts.states.ACTIVE) {
+      contract.state = this.client.telephone.contracts.states.PAUSED;
+    } else {
+      contract.state = this.client.telephone.contracts.states.ACTIVE;
+    }
+
+    const ret = await this.client.telephone.contracts.toggleContract(contract.id)
+      .then(() => 0)
+      .catch(() => {
+        message.error(message._('telephone.toggle.error'));
+        return 1;
+      });
+
+    return ret;
+  }
+}
+
 // telephone->contracts->approve
 class ApproveSubcommand extends Command {
   constructor(client, category) {
@@ -157,46 +197,6 @@ class RejectSubcommand extends Command {
       })
       .catch((error) => {
         message.error(`An error occured while invalidating contract no. \`${id}\`: \`${error}\`.`);
-        return 1;
-      });
-
-    return ret;
-  }
-}
-
-// telephone->toggle
-class ToggleSubcommand extends Command {
-  constructor(client, category) {
-    super(client, category, {
-      name: 'toggle',
-      aliases: ['switch'],
-      private: true,
-      dm: true,
-    });
-  }
-
-  async main(message) {
-    const contract = await this.client.telephone.contracts.fetchContract(message.channel.id);
-    if (!contract) {
-      message.send(message._('telephone.unknown'));
-      return 0;
-    }
-
-    if (contract.state === this.client.telephone.contracts.states.PENDING) {
-      message.send(message._('telephone.pending'));
-      return 0;
-    }
-
-    if (contract.state === this.client.telephone.contracts.states.ACTIVE) {
-      contract.state = this.client.telephone.contracts.states.PAUSED;
-    } else {
-      contract.state = this.client.telephone.contracts.states.ACTIVE;
-    }
-
-    const ret = await this.client.telephone.contracts.toggleContract(contract.id)
-      .then(() => 0)
-      .catch(() => {
-        message.error(message._('telephone.toggle.error'));
         return 1;
       });
 
