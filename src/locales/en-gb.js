@@ -196,9 +196,10 @@ module.exports = {
   about: {
     title: (emote, name) => `${emote} Information about **${name}**:`,
     developers: 'Developers',
-    version: 'Homer revision',
-    node: 'Node.js',
-    djs: 'discord.js',
+    guilds: 'Servers',
+    memory: 'Memory usage:',
+    versions: 'Versions',
+    links: 'Links',
   },
 
   // Avatar command
