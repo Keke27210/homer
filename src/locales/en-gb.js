@@ -197,7 +197,7 @@ module.exports = {
     title: (emote, name) => `${emote} Information about **${name}**:`,
     developers: 'Developers',
     guilds: 'Servers',
-    memory: 'Memory usage:',
+    memory: 'Memory usage',
     versions: 'Versions',
     links: 'Links',
   },
