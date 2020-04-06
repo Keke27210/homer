@@ -29,7 +29,7 @@ class LookupCommand extends Command {
           `${message.dot} ${message._('lookup.invite.server')}: ${invite.guild ? `**${invite.guild.name}** (${invite.guild.id})` : message._('global.unknown')}`,
           `${message.dot} ${message._('lookup.invite.inviter')}: ${invite.inviter ? invite.inviter.tag : message._('global.none')}`,
           `${message.dot} ${message._('lookup.invite.channel')}: **${invite.channel.type === 'text' ? '#' : ''}${invite.channel.name}** (${invite.channel.id})`,
-          `${message.dot} ${message._('lookup.invite.members')}: ${message._('lookup.invite.memberDesc', invite.memberCount, invite.presenceCount, message.eStatus.online)}`,
+          `${message.dot} ${message._('lookup.invite.members')}: ${message._('lookup.invite.memberDesc', invite.memberCount, invite.presenceCount, message.emote('online', true))}`,
           `${message.dot} ${message._('lookup.invite.creation')}: ${invite.guild ? message.getMoment(invite.guild.createdTimestamp) : message._('global.unknown')}`,
         ];
 
@@ -56,7 +56,7 @@ class LookupCommand extends Command {
           .setDescription(description.join('\n'))
           .setThumbnail(user.displayAvatarURL({ size: 256, dynamic: true }));
 
-        m.edit(message._('lookup.user.title', user.bot ? message.eBot : '👤', user.tag), embed);
+        m.edit(message._('lookup.user.title', user.bot ? message.emote('bot') : message.emote('human'), user.tag), embed);
         return 0;
       }
 
@@ -87,8 +87,8 @@ class LookupCommand extends Command {
           memberCount[guild.members[i].status] += 1;
         }
 
-        const members = Object.keys(memberCount).map((status) => `${message.eStatus[status]} **${memberCount[status]}**`);
-        if (meta && meta.memberCount) members.push(`${message.eStatus.offline} **${meta.memberCount - guild.members.length}**`);
+        const members = Object.keys(memberCount).map((status) => `${message.emote(status, true)} **${memberCount[status]}**`);
+        if (meta && meta.memberCount) members.push(`${message.emote('offline', true)} **${meta.memberCount - guild.members.length}**`);
 
         const description = [
           `${message.dot} ${message._('lookup.server.id')}: **${guild.id}**`,

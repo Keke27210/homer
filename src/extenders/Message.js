@@ -1,6 +1,26 @@
 const { MessageEmbed, Structures } = require('discord.js');
 const moment = require('moment-timezone');
 
+const emotes = {
+  homer: '695734221322584155',
+  human: '👤',
+  bot: '695746485790310530',
+  status: {
+    online: '695746507231461469',
+    idle: '695749338877395069',
+    dnd: '695749383639138414',
+    offline: '695749413704040478',
+  },
+  loading: '696020151727947866',
+  success: '695722112823853066',
+  warn: '695722124395937862',
+  error: '695722118976897085',
+  info: 'ℹ️',
+  placeholder: '695983847061323797',
+  owner: '695975441516855337',
+  nitro: '695977635666198570',
+};
+
 Structures.extend('Message', (Message) => {
   class CustomMessage extends Message {
     constructor(client, data, channel) {
@@ -13,91 +33,26 @@ Structures.extend('Message', (Message) => {
       this.dot = '▫️';
 
       /**
-       * Logo emote used by Homer
-       * @type {string}
-       */
-      this.eHomer = '<:homer:695734221322584155>';
-
-      /**
-       * Bot emote used by Homer
-       * @type {string}
-       */
-      this.eBot = '<:bot:695746485790310530>';
-
-      /**
-       * Status emotes used by Homer
+       * IDs of emotes used by Homer
        * @type {object}
        */
-      this.eStatus = {
-        online: '<:online:695746507231461469>',
-        idle: '<:idle:695749338877395069>',
-        dnd: '<:dnd:695749383639138414>',
-        offline: '<:offline:695749413704040478>',
-      };
-
-      /**
-       * Loading emote used by Homer
-       * @type {string}
-       */
-      this.eLoadingID = '696020151727947866';
-
-      /**
-       * Success emote used by Homer
-       * @type {string}
-       */
-      this.eSuccessID = '695722112823853066';
-
-      /**
-       * Warn emote used by Homer
-       * @type {string}
-       */
-      this.eWarnID = '695722124395937862';
-
-      /**
-       * Error emote used by Homer
-       * @type {string}
-       */
-      this.eErrorID = '695722118976897085';
-
-      /**
-       * Information emote used by Homer
-       * @type {string}
-       */
-      this.eInfo = 'ℹ️';
-
-      /**
-       * Placeholder emote used by Homer
-       * @type {string}
-       */
-      this.ePlaceholder = '<:placeholder:695983847061323797>';
-
-      /**
-       * Owner emote used by Homer
-       * @type {string}
-       */
-      this.eOwner = '<:owner:695975441516855337>';
-
-      /**
-       * Nitro emote used by Homer
-       * @type {string}
-       */
-      this.eNitro = '<:nitro:695977635666198570>';
+      this.emotes = emotes;
     }
 
     get eSuccess() {
-      return this.client.emojis.resolve(this.eSuccessID).toString();
+      return this.client.emojis.resolve(this.emotes.success).toString();
     }
 
     get eWarn() {
-      return this.client.emojis.resolve(this.eWarnID).toString();
+      return this.client.emojis.resolve(this.emotes.warn).toString();
     }
 
     get eError() {
-      return this.client.emojis.resolve(this.eErrorID).toString();
+      return this.client.emojis.resolve(this.emotes.error).toString();
     }
 
     get eLoading() {
-      return this.client.emojis.resolve(this.eLoadingID).toString();
+      return this.client.emojis.resolve(this.emotes.loading).toString();
     }
 
     /**
@@ -114,6 +69,19 @@ Structures.extend('Message', (Message) => {
      */
     get locale() {
       return this._('_.code');
+    }
+
+    /**
+     * Gets a sendable emote
+     * @param {string} name Emote name
+     * @param {boolean} status Status emote
+     * @returns {string} Emote
+     */
+    emote(name, status = false) {
+      const id = status ? this.emotes.status[name] : this.emotes[name];
+      const e = this.client.emojis.resolve(id);
+      if (!e) return id;
+      return e.toString();
     }
 
     /**
@@ -254,11 +222,9 @@ Structures.extend('Message', (Message) => {
      * Get an embed with Homer design
      * @returns {MessageEmbed}
      */
+    // eslint-disable-next-line class-methods-use-this
     getEmbed() {
       const embed = new MessageEmbed();
-      if (this.guild && this.guild.me.displayHexColor !== '#000000') {
-        embed.setColor(this.guild.me.displayHexColor);
-      }
       return embed;
     }
 
@@ -270,8 +236,8 @@ Structures.extend('Message', (Message) => {
     getMoment(time = Date.now()) {
       const m = moment(time)
         .tz(this.settings.timezone)
-        .locale(this.locale);
-      return `**${m.format(this.settings.formats.date)}** ${this._('global.at')} **${m.format(this.settings.formats.time)}**`;
+        .locale(this.settings.locale);
+      return `**${m.format(this.settings.date)}** ${this._('global.at')} **${m.format(this.settings.time)}**`;
     }
 
     /**
@@ -280,21 +246,21 @@ Structures.extend('Message', (Message) => {
      * @returns {Promise<boolean>} User's decision
      */
     async awaitUserApproval(id) {
-      const emotes = [
+      const e = [
         this.client.emojis.resolveIdentifier(this.eSuccessID),
         this.client.emojis.resolveIdentifier(this.eErrorID),
       ];
-      await this.react(emotes[0]).catch(() => null);
-      await this.react(emotes[1]).catch(() => null);
+      await this.react(e[0]).catch(() => null);
+      await this.react(e[1]).catch(() => null);
       return this.awaitReactions(
-        (reaction, user) => emotes.includes(reaction.emoji.identifier)
+        (reaction, user) => e.includes(reaction.emoji.identifier)
           && user.id === id,
         { max: 1 },
       )
         .then((reactions) => {
-          if (this.guild) this.reactions.removeAll();
+          if (this.guild && this.guild.me.permissions.has('MANAGE_MESSAGES')) this.reactions.removeAll();
           const r = reactions.first();
-          if (r.emoji.identifier === emotes[0]) {
+          if (r.emoji.identifier === e[0]) {
             return true;
           }
           return false;

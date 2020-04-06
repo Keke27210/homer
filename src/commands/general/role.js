@@ -48,6 +48,7 @@ class RoleCommand extends Command {
   constructor(client, category) {
     super(client, category, {
       name: 'role',
+      children: [new MembersSubcommand(client, category)],
     });
   }
 

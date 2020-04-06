@@ -28,8 +28,8 @@ class UserCommand extends Command {
     }
 
     const honours = [];
-    if (message.guild && message.guild.ownerID === user.id) honours.push(message.eOwner);
-    if (user.avatar && user.avatar.startsWith('a_')) honours.push(message.eNitro);
+    if (message.guild && message.guild.ownerID === user.id) honours.push(message.emote('owner'));
+    if (user.avatar && user.avatar.startsWith('a_')) honours.push(message.emote('nitro'));
 
     const description = [`${message.dot} ${message._('user.id')}: **${user.id}**${honours.length ? ` ${honours.join(' ')}` : ''}`];
 
@@ -37,7 +37,7 @@ class UserCommand extends Command {
       description.push(`${message.dot} ${message._('user.nickname')}: ${member.nickname ? `**${member.nickname}**` : message._('global.none')}`);
     }
 
-    description.push(`${message.dot} ${message._('user.status')}: ${message.eStatus[user.presence.status]} **${message._(`user.statusDesc.${user.presence.status}`)}**`);
+    description.push(`${message.dot} ${message._('user.status')}: ${message.emote(user.presence.status, true)} **${message._(`user.statusDesc.${user.presence.status}`)}**`);
 
     if (user.presence.activities.length) {
       // Priority: Custom Status > Streaming > Playing > Listening > Watching
@@ -76,7 +76,7 @@ class UserCommand extends Command {
           detail = message._('user.activities.watching', activity.name);
           break;
         default:
-          emote = message.ePlaceholder;
+          emote = message.emote('placeholder');
       }
       description.push(`${message.dot} ${message._('user.activity')}: ${emote} ${detail}`);
     }
@@ -101,7 +101,7 @@ class UserCommand extends Command {
       .setThumbnail(user.avatarURL({ size: 256, dynamic: true }));
     if (member) embed.setColor(member.displayHexColor);
 
-    message.channel.send(message._('user.title', user.bot ? message.eBot : '👤', user.tag), embed);
+    message.channel.send(message._('user.title', user.bot ? message.emote('bot') : message.emote('human'), user.tag), embed);
     return 0;
   }
 }
