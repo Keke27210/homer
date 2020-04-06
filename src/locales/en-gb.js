@@ -329,6 +329,10 @@ module.exports = {
     hoisted: 'Hoisted',
     permissions: 'Permissions',
     creation: 'Creation date',
+    members: {
+      title: (name) => `🎭 Members in role **${name}**:`,
+      empty: (name) => `Role **${name}** has no members.`,
+    },
   },
 
   // Server command
