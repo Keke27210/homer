@@ -17,6 +17,7 @@ const SettingProvider = require('../providers/SettingProvider');
 
 // Utils
 const FinderUtil = require('../util/FinderUtil');
+const MenuUtil = require('../util/MenuUtil');
 
 class DiscordClient extends Client {
   constructor(clientOptions, databaseCredentials, apiKeys) {
@@ -99,6 +100,12 @@ class DiscordClient extends Client {
      * @type {FinderUtil}
      */
     this.finderUtil = new FinderUtil(this);
+
+    /**
+     * Menu util for this client
+     * @type {MenuUtil}
+     */
+    this.menuUtil = new MenuUtil(this);
   }
 
   /**

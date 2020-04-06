@@ -23,7 +23,7 @@ class CommandManager extends Manager {
      * Command categories
      * @type {string[]}
      */
-    this.categories = ['bot', 'general', 'owner', 'radio', 'telephone'];
+    this.categories = ['bot', 'general', 'owner', 'radio', 'settings', 'telephone'];
 
     /**
      * Registered commands

@@ -88,6 +88,11 @@ module.exports = {
       usage: null,
       example: null,
     },
+    prefix: {
+      description: 'Sets a custom prefix',
+      usage: '<prefix|disable>',
+      example: '/',
+    },
     radio: {
       description: 'Sets the radio channel',
       usage: '[channel]',
@@ -180,6 +185,11 @@ module.exports = {
       members: (size, search) => `**${size}** members found matching \`${search}\`:`,
       roles: (size, search) => `**${size}** roles found matching \`${search}\`:`,
     },
+  },
+
+  // Menu
+  menu: {
+    page: (page) => `Page ${page}`,
   },
 
   /* HANDLERS */
@@ -309,6 +319,15 @@ module.exports = {
   // Ping command
   ping: {
     pong: (ws) => `🏓 Pong with **${ws}** milliseconds!`,
+  },
+
+  // Prefix command
+  prefix: {
+    none: 'You must provide a prefix to set (or `disable` to disable).',
+    length: (max) => `Prefix length must not exceed **${max}** characters.`,
+    set: (prefix) => `Custom prefix set to \`${prefix}\`.`,
+    disabled: 'Disabled custom prefix.',
+    error: 'An error occured while setting custom prefix.',
   },
 
   // Radio command
@@ -447,6 +466,14 @@ module.exports = {
     unable: (number) => `Unable to send a text message to \`${number}\`.`,
     sent: (number) => `Your message has been successfully sent to \`${number}\`.`,
     error: 'An error occurred while sending your message.',
+  },
+
+  // Timezone command
+  timezone: {
+    none: 'You must provide a timezone to set.',
+    length: (max) => `Timezone length must not exceed **${max}** characters.`,
+    set: (timezone, now) => `Timezone set to \`${timezone}\`. Current date: ${now}.`,
+    error: 'An error occured while setting timezone.',
   },
 
   // User command

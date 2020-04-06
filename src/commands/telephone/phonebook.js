@@ -111,8 +111,15 @@ class PhonebookCommand extends Command {
       }
     }
 
-    const embed = message.getEmbed().setDescription(description.join('\n'));
-    message.send(message._('phonebook.title'), embed);
+    this.client.menuUtil.createMenu(
+      message.channel.id,
+      message.author.id,
+      message.id,
+      message.locale,
+      null,
+      description,
+    );
+
     return 0;
   }
 }

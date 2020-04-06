@@ -62,7 +62,7 @@ class Command {
    * @type {boolean}
    */
   get databaseRequired() {
-    return ['radio', 'telephone'].includes(this.category);
+    return ['radio', 'settings', 'telephone'].includes(this.category);
   }
 
   /**

@@ -30,15 +30,21 @@ class MembersSubcommand extends Command {
 
     const members = role.members
       .sort((a, b) => a.user.tag.localeCompare(b.user.tag))
-      .map((m) => `${message.dot} ${m.user.tag} (${m.id})`)
-      .join('\n');
-    if (!members) {
+      .map((m) => `${message.dot} ${m.user.tag} (${m.id})`);
+    if (!members.length) {
       message.info(message._('role.members.empty', role.name));
       return 0;
     }
 
-    const embed = message.getEmbed().setDescription(members);
-    message.send(message._('role.members.title', role.name), embed);
+    this.client.menuUtil.createMenu(
+      message.channel.id,
+      message.author.id,
+      message.id,
+      message.locale,
+      message._('role.members.title', role.name),
+      null,
+      members,
+    );
 
     return 0;
   }
