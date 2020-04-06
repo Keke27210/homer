@@ -472,6 +472,7 @@ module.exports = {
   timezone: {
     none: 'You must provide a timezone to set.',
     length: (max) => `Timezone length must not exceed **${max}** characters.`,
+    invalid: (timezone) => `Unrecognized timezone: \`${timezone}\`.`,
     set: (timezone, now) => `Timezone set to \`${timezone}\`. Current date: ${now}.`,
     error: 'An error occured while setting timezone.',
   },

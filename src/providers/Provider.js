@@ -81,7 +81,7 @@ class Provider {
 
     const entries = Object.entries(data);
 
-    const query = await this.database.query(
+    await this.database.query(
       `UPDATE ${this.table} SET ${entries.map(([k], i) => `${k} = $${i + 2}`).join(', ')} WHERE id = $1 RETURNING id`,
       [id].concat(Object.values(data)),
     );
@@ -89,12 +89,12 @@ class Provider {
     const index = this.cache.findIndex((c) => c.id === id);
     if (index >= 0) {
       for (let i = 0; i < entries.length; i += 1) {
-        const [k, v] = entries;
+        const [k, v] = entries[i];
         this.cache[index][k] = v;
       }
     }
 
-    return query.rows[0].id;
+    return id;
   }
 
   /**

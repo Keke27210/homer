@@ -35,10 +35,11 @@ class SettingProvider extends Provider {
   /**
    * Generates a settings object
    * @param {number} id Context ID
+   * @param {?boolean} temp Temporary settings
    * @returns {Settings} Settings
    */
-  generateSettings(id) {
-    return ({
+  generateSettings(id, temp = false) {
+    const settings = {
       id,
       locale: this.client.localeManager.defaultLocale,
       timezone: 'UTC',
@@ -46,7 +47,10 @@ class SettingProvider extends Provider {
       time: 'HH:mm:ss',
       date: 'DD/MM/YYYY',
       created: new Date(),
-    });
+    };
+
+    if (temp) settings.temp = true;
+    return settings;
   }
 
   /**
@@ -56,7 +60,7 @@ class SettingProvider extends Provider {
    */
   async createSettings(id) {
     const settings = await this.getRow(id);
-    if (settings) throw new Error('SETTINGS_EXISTS');
+    if (settings && !settings.temp) throw new Error('SETTINGS_EXISTS');
 
     await this.insertRow(this.generateSettings(id));
 
@@ -74,7 +78,7 @@ class SettingProvider extends Provider {
       settings = await this.getRow(id);
     }
     if (!settings) {
-      settings = this.generateSettings(id);
+      settings = this.generateSettings(id, true);
       this.cache.push(settings);
     }
     return settings;
@@ -90,7 +94,7 @@ class SettingProvider extends Provider {
     if (!this.client.localeManager.isValid(locale)) throw new Error('INVALID_LOCALE');
 
     const existing = await this.getRow(id);
-    if (!existing) await this.createSettings(id);
+    if (!existing || existing.temp) await this.createSettings(id);
 
     await this.updateRow(id, {
       locale,
@@ -111,7 +115,7 @@ class SettingProvider extends Provider {
     if (!tz.names().includes(timezone)) throw new Error('INVALID_LOCALE');
 
     const existing = await this.getRow(id);
-    if (!existing) await this.createSettings(id);
+    if (!existing || existing.temp) await this.createSettings(id);
 
     await this.updateRow(id, {
       timezone,
@@ -132,7 +136,7 @@ class SettingProvider extends Provider {
     if (this.client.commandManager.prefixes.includes(prefix)) throw new Error('DEFAULT_PREFIX');
 
     const existing = await this.getRow(id);
-    if (!existing) await this.createSettings(id);
+    if (!existing || existing.temp) await this.createSettings(id);
 
     await this.updateRow(id, {
       prefix,
@@ -153,7 +157,7 @@ class SettingProvider extends Provider {
     if (!ch || ch.type !== 'voice') throw new Error('INVALID_CHANNEL');
 
     const existing = await this.getRow(id);
-    if (!existing) await this.createSettings(id);
+    if (!existing || existing.temp) await this.createSettings(id);
 
     await this.updateRow(id, {
       radio: channel,
@@ -173,7 +177,7 @@ class SettingProvider extends Provider {
     if (volume < 0 || volume > 100) throw new Error('INVALID_VOLUME');
 
     const existing = await this.getRow(id);
-    if (!existing) await this.createSettings(id);
+    if (!existing || existing.temp) await this.createSettings(id);
 
     await this.updateRow(id, {
       volume,

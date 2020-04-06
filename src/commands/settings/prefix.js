@@ -20,7 +20,7 @@ class PrefixCommand extends Command {
       return 0;
     }
 
-    const ret = await this.client.settings.setPrefix(this.settings.id, prefix === 'disable' ? null : prefix)
+    const ret = await this.client.settings.setPrefix(message.settings.id, prefix === 'disable' ? null : prefix)
       .then(() => {
         if (prefix === 'disable') {
           message.success(message._('prefix.disabled'));
@@ -29,7 +29,8 @@ class PrefixCommand extends Command {
         }
         return 0;
       })
-      .catch(() => {
+      .catch((error) => {
+        this.client.logger.error(`[command->prefix] Error while setting prefix ${prefix} for settings ID ${message.settings.id}`, error);
         message.error(message._('prefix.error'));
         return 1;
       });

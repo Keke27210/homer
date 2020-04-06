@@ -84,7 +84,7 @@ class CommandManager extends Manager {
     await message.fetchSettings();
 
     const prefix = this.prefixes
-      .concat(message.settings.prefixes)
+      .concat(message.settings.prefix)
       .find((p) => message.content.startsWith(p));
     if (!prefix) return;
 

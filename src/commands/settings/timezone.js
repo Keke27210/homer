@@ -42,12 +42,13 @@ class TimezoneCommand extends Command {
       return 0;
     }
 
-    const ret = await this.client.settings.setTimezone(this.settings.id, timezone)
+    const ret = await this.client.settings.setTimezone(message.settings.id, timezone)
       .then(() => {
         message.success(message._('timezone.set', timezone, message.getMoment()));
         return 0;
       })
-      .catch(() => {
+      .catch((error) => {
+        this.client.logger.error(`[command->timezone] Error while setting timezone ${timezone} for settings ID ${message.settings.id}`, error);
         message.error(message._('timezone.error'));
         return 1;
       });
