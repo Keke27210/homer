@@ -158,12 +158,20 @@ class DiscordClient extends Client {
   async initialize() {
     this.logger.log('[database] Connecting to the database...');
     await this.database.connect()
-      .then(() => {
-        this.logger.log('[database] Connected successfully');
-      })
-      .catch(() => {
-        this.logger.warn('[database] Unable to connect - Running in no-database mode');
-      });
+      .then(() => this.logger.log('[database] Connected successfully'))
+      .catch(() => this.logger.warn('[database] Unable to connect - Running in no-database mode'));
+
+    if (this.client.database.ready) {
+      this.client.logger.log('[database] Creating database tables');
+      await this.client.apis.createTable();
+      await this.client.radios.createTable();
+      await this.client.settings.createTable();
+      await this.client.telephone.calls.createTable();
+      await this.client.telephone.contracts.createTable();
+      await this.client.telephone.phonebook.createTable();
+      await this.client.tracking.createTable();
+      this.client.logger.log('[database] Database tables created');
+    }
 
     this.logger.log('[managers] Registering components...');
     this.commandManager.registerCommands();
@@ -200,9 +208,10 @@ class DiscordClient extends Client {
   }
 
   /**
-   * Executed every minute with tasks
+   * Function ran every minute
+   * Calls tasks that need to be done every minute
    */
-  async minute() {
+  minute() {
     this.audioManager.minute();
     this.telephone.calls.minute();
   }
