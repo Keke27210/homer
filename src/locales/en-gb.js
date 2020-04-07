@@ -300,6 +300,15 @@ module.exports = (dot) => ({
     error: 'An error occurred while dialing.',
   },
 
+  // Formats command
+  formats: {
+    title: '📆 Date and time formats:',
+    date: 'Date format',
+    time: 'Time format',
+    documentation: 'Documentation',
+    hint: 'Change date format with `h:formats date` and time format with `h:formats time`.',
+  },
+
   // Google command
   google: {
     noSearch: 'You must provide something to search.',
