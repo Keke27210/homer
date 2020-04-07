@@ -24,14 +24,14 @@ const FinderUtil = require('../util/FinderUtil');
 const MenuUtil = require('../util/MenuUtil');
 
 class DiscordClient extends Client {
-  constructor(clientOptions, databaseCredentials) {
+  constructor(clientOptions, databaseCredentials, owners) {
     super(clientOptions);
 
     /**
      * Discord IDs of Homer owner(s)
      * @type {string[]}
      */
-    this.owners = clientOptions.owners || [];
+    this.owners = owners || [];
 
     /**
      * Whether the client is ready to proceed commands and events
