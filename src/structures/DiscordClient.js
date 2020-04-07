@@ -224,7 +224,7 @@ class DiscordClient extends Client {
       },
     };
 
-    return this.client.user.setPresence(presence);
+    return this.user.setPresence(presence);
   }
 
   /**
