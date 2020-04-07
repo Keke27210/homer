@@ -550,6 +550,10 @@ module.exports = (dot) => ({
       paused: '☎️ Your line\'s been disabled. You can reactivate it at any time by running `h:telephone toggle`.',
       resumed: '☎️ Your line\'s been reactivated.',
       text: (num) => `📧 Received text message from \`${num}\`:`,
+      missed: {
+        caller: (number) => `📞 No answer from \`${number}\`.`,
+        called: (number) => `📞 Missed call from \`${number}\`.`,
+      },
     },
     states: {
       0: 'Pending',

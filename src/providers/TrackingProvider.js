@@ -60,6 +60,7 @@ class TrackingProvider extends Provider {
    * @returns {Promise<void>}
    */
   async updateActivity(id) {
+    if (!this.database.ready) throw new Error('UNAVAILABLE_DATABASE');
     const entry = await this.getRow(id);
     if (!entry) await this.insertRow({ id });
     await this.updateRow(id, { activity: new Date() });
@@ -73,6 +74,7 @@ class TrackingProvider extends Provider {
    * @returns {Promise<void>}
    */
   async updateNames(id, name) {
+    if (!this.database.ready) throw new Error('UNAVAILABLE_DATABASE');
     const entry = await this.getRow(id);
     if (!entry) await this.insertRow({ id });
     const names = entry && entry.names ? entry.names : [];

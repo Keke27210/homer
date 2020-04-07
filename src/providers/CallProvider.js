@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 const Provider = require('./Provider');
 
 const TABLE_COLUMNS = [
@@ -61,8 +62,10 @@ class CallProvider extends Provider {
         throw new Error('DATABASE_ERROR');
       });
 
-    await this.contracts.notify(caller, true, 'telephone.notifications.outgoing', calledContract.number);
-    await this.contracts.notify(called, true, 'telephone.notifications.incoming', callerContract.number);
+    const callerMessage = await this.contracts.notify(caller, true, 'telephone.notifications.outgoing', calledContract.number);
+    const calledMessage = await this.contracts.notify(called, true, 'telephone.notifications.incoming', callerContract.number);
+
+    this.client.setTimeout(() => this.checkPicked(id, callerMessage.id, calledMessage.id), 30000);
 
     return id;
   }
@@ -84,6 +87,8 @@ class CallProvider extends Provider {
 
     await this.contracts.notify(call.caller, true, 'telephone.notifications.pickedCaller');
     await this.contracts.notify(call.called, true, 'telephone.notifications.pickedCalled');
+
+    this.client.setTimeout(() => this.checkPicked(id), 30000);
 
     return null;
   }
@@ -163,9 +168,12 @@ class CallProvider extends Provider {
 
   /**
    * Handles a typing event
-   * @param {string} channel Channel ID
+   * @param {Channel} channel Channel
+   * @param {User} user User
    */
-  async handleTyping(channel) {
+  async handleTyping(channel, user) {
+    if (user.id === this.client.user.id) return;
+
     const contract = await this.contracts.fetchContract(channel.id);
     if (!contract) return;
 
@@ -185,16 +193,60 @@ class CallProvider extends Provider {
   }
 
   /**
+   * Checks if a call was picked up, and ends it if not
+   * @param {number} id Call ID
+   * @param {string} caller Caller message ID
+   * @param {string} called Called message ID
+   */
+  async checkPicked(id, caller, called) {
+    const call = await this.getRow(id);
+    if (!call) throw new Error('UNKNOWN_CALL');
+    if (call.state !== this.states.PENDING) return;
+
+    const callerContract = await this.contracts.getRow(call.caller);
+    const calledContract = await this.contracts.getRow(call.called);
+    if (!callerContract || !calledContract) return;
+
+    const callerTarget = this.client.channels.resolve(callerContract.channel);
+    const calledTarget = this.client.channels.resolve(calledContract.channel);
+    if (!callerTarget || !calledTarget) return;
+
+    const callerSettings = await this.client.settings.fetchSettings(callerContract.context);
+    const calledSettings = await this.client.settings.fetchSettings(calledContract.context);
+    if (!callerSettings || !calledSettings) return;
+
+    const callerMessage = await callerTarget.messages.fetch(caller)
+      .catch(() => null);
+    if (callerMessage) {
+      callerMessage.edit(this.client.localeManager.translate(
+        callerSettings.locale,
+        'telephone.notifications.missed.caller',
+        calledContract.number,
+      ));
+    }
+
+    const calledMessage = await callerTarget.messages.fetch(called)
+      .catch(() => null);
+    if (calledMessage) {
+      calledMessage.edit(this.client.localeManager.translate(
+        calledSettings.locale,
+        'telephone.notifications.missed.called',
+        callerContract.number,
+      ));
+    }
+  }
+
+  /**
    * Executed every minute
    * Terminates every call where no-one talked the past minute
    */
   async minute() {
     const outdated = await this.getRows([
       ['state', '=', this.states.ONGOING],
-      ['updated', '<', new Date(Date.now() - 60000).toISOString(), 'timestamp'],
+      ['updated', '<', new Date(Date.now() - 30000).toISOString(), 'timestamp'],
     ]);
     for (let i = 0; i < outdated.length; i += 1) {
-      this.endCall(outdated[i].id, 'TERMINATED');
+      await this.endCall(outdated[i].id, 'TERMINATED');
     }
   }
 }

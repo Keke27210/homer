@@ -8,10 +8,10 @@ class UserUpdateEvent extends Event {
   handle(oldUser, newUser) {
     if (!this.client.ready) return;
 
-    if (this.client.database.ready) {
-      if (oldUser.username !== newUser.username) {
-        this.client.tracking.updateNames(newUser.id, oldUser.username);
-      } else this.client.tracking.updateActivity(newUser.id);
+    if (oldUser.username !== newUser.username) {
+      this.client.tracking.updateNames(newUser.id, oldUser.username);
+    } else {
+      this.client.tracking.updateActivity(newUser.id);
     }
   }
 }

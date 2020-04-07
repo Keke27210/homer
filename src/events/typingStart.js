@@ -8,13 +8,8 @@ class TypingStartEvent extends Event {
   handle(channel, user) {
     if (!this.client.ready) return;
 
-    if (this.client.database.ready) {
-      this.client.tracking.updateActivity(user.id);
-    }
-
-    if (user.id !== this.client.user.id) {
-      this.client.telephone.calls.handleTyping(channel);
-    }
+    this.client.telephone.calls.handleTyping(channel, user);
+    this.client.tracking.updateActivity(user.id);
   }
 }
 

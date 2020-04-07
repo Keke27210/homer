@@ -359,6 +359,7 @@ class ContractProvider extends Provider {
    * @param {boolean} translate Whether pass through LocaleManager#translate
    * @param {string} message Message (or translation key)
    * @param  {...any} args Translator arguments
+   * @returns {Promise<Message>} Message sent
    */
   async notify(id, translate, message, ...args) {
     const contract = await this.getRow(id);
@@ -379,13 +380,13 @@ class ContractProvider extends Provider {
     const content = translate
       ? this.client.localeManager.translate('en-gb', message, ...args)
       : message;
-    await channel.send(content, embed)
+    const m = await channel.send(content, embed)
       .catch((error) => {
         this.client.logger.warn(`[contracts->notify] Cannot send a message in channel ${channel.id}`, error);
         throw new Error('SENDING_ERROR');
       });
 
-    return null;
+    return m;
   }
 
   /**
