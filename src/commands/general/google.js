@@ -17,14 +17,14 @@ class GoogleCommand extends Command {
       return 0;
     }
 
-    const { googleCse, googleKey } = this.client.apiKeys;
-    if (!googleCse || !googleKey) {
+    const [googleCse, googleKey] = await Promise.all([this.client.apis.fetchKey('google_cse'), this.client.apis.fetchKey('google_key')]);
+    if (typeof googleCse !== 'object' || typeof googleKey !== 'object') {
       message.warn(message._('google.unavailable'));
       return 1;
     }
 
     const m = await message.loading(message._('google.searching'));
-    return fetch(`https://www.googleapis.com/customsearch/v1?key=${googleKey}&cx=${googleCse}&q=${encodeURIComponent(search)}&num=1`)
+    return fetch(`https://www.googleapis.com/customsearch/v1?key=${googleKey.key}&cx=${googleCse.key}&q=${encodeURIComponent(search)}&num=1`)
       .then((res) => res.json())
       .then((data) => {
         if (!data.items || !data.items.length) {

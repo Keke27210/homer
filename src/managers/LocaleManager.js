@@ -58,6 +58,15 @@ class LocaleManager extends Manager {
   }
 
   /**
+   * Returns true if this locale is supported
+   * @param {string} locale Locale code
+   * @returns {boolean}
+   */
+  isValid(locale) {
+    return Boolean(this.locales[locale]);
+  }
+
+  /**
    * Processes a key with the given arguments
    * @param {string} locale Locale to use
    * @param {string} key Translation key

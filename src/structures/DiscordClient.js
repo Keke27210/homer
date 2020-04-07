@@ -11,6 +11,7 @@ const EventManager = require('../managers/EventManager');
 const LocaleManager = require('../managers/LocaleManager');
 
 // Providers
+const APIProvider = require('../providers/APIProvider');
 const CallProvider = require('../providers/CallProvider');
 const ContractProvider = require('../providers/ContractProvider');
 const PhonebookProvider = require('../providers/PhonebookProvider');
@@ -23,7 +24,7 @@ const FinderUtil = require('../util/FinderUtil');
 const MenuUtil = require('../util/MenuUtil');
 
 class DiscordClient extends Client {
-  constructor(clientOptions, databaseCredentials, apiKeys) {
+  constructor(clientOptions, databaseCredentials) {
     super(clientOptions);
 
     /**
@@ -31,12 +32,6 @@ class DiscordClient extends Client {
      * @type {string[]}
      */
     this.owners = clientOptions.owners || [];
-
-    /**
-     * API keys used by Homer
-     * @type {object}
-     */
-    this.apiKeys = apiKeys;
 
     /**
      * Whether the client is ready to proceed commands and events
@@ -79,6 +74,12 @@ class DiscordClient extends Client {
      * @type {LocaleManager}
      */
     this.localeManager = new LocaleManager(this);
+
+    /**
+     * API provider for this client
+     * @type {APIProvider}
+     */
+    this.apis = new APIProvider(this);
 
     /**
      * Telephone manager for this client
@@ -133,6 +134,16 @@ class DiscordClient extends Client {
      * @type {MenuUtil}
      */
     this.menuUtil = new MenuUtil(this);
+
+    // node.js related
+    process.on('uncaughtException', (error) => {
+      this.logger.error('[uncaughtException] FATAL - SHUTTING DOWN - Uncaught exception:', error);
+      this.shutdown(-1);
+    });
+
+    process.on('unhandledRejection', (error) => {
+      this.logger.error('[unhandledRejection] An unhandled promise rejection was caught!', error);
+    });
   }
 
   /**

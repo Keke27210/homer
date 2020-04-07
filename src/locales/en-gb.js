@@ -315,6 +315,16 @@ module.exports = (dot) => ({
     error: 'An error occurred while hanging up.',
   },
 
+  // Language command
+  language: {
+    title: '🗣️ Available languages on Homer:',
+    footer: 'To change your language, run h:language <code>',
+    set: 'I will now speak in English!',
+    error: 'An error occured while setting language.',
+    unknown: (locale) => `Invalid language code \`${locale}\`.`,
+    revision: 'Last revision',
+  },
+
   // Leave command
   leave: {
     none: 'There are no active voice connections.',

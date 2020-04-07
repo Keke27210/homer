@@ -9,6 +9,7 @@ const TABLE_COLUMNS = [
   ['prefix', 'VARCHAR(5)', null],
   ['radio', 'VARCHAR(20)', null],
   ['volume', 'INT', null],
+  ['boost', 'bool', null],
   ['time', 'VARCHAR(20)', null],
   ['date', 'VARCHAR(20)', null],
   ['updated', 'TIMESTAMP', null],
