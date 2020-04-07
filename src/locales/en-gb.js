@@ -73,10 +73,20 @@ module.exports = (dot) => ({
       usage: null,
       example: null,
     },
+    leave: {
+      description: 'Leaves voice channel Homer is on',
+      usage: null,
+      example: null,
+    },
     lookup: {
       description: 'Displays information on a Discord entity (user/guild/invite/gift)',
       usage: '<id/invite/gift code>',
       example: '205427654042583040',
+    },
+    names: {
+      description: 'Shows someone\'s previous names',
+      usage: '[user]',
+      example: '@You',
     },
     ping: {
       description: 'Pong with WebSocket\'s latency',

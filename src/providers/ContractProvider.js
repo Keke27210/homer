@@ -101,7 +101,7 @@ class ContractProvider extends Provider {
       subscriber,
       textable: true,
       state: this.states.PENDING,
-      blacklist: '{}',
+      blacklist: [],
       created: now,
     })
       .catch((error) => {
@@ -295,7 +295,7 @@ class ContractProvider extends Provider {
     contract.blacklist.push(number);
 
     await this.updateRow(id, {
-      blacklist: `{${contract.blacklist.join(',')}}`,
+      blacklist: contract.blacklist,
       edited: new Date(),
     });
 
@@ -316,7 +316,7 @@ class ContractProvider extends Provider {
     contract.blacklist.splice(index, 1);
 
     await this.updateRow(id, {
-      blacklist: `{${contract.blacklist.join(',')}}`,
+      blacklist: contract.blacklist,
       edited: new Date(),
     });
 

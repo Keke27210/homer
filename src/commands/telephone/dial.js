@@ -44,12 +44,12 @@ class DialCommand extends Command {
       this.client.telephone.calls.findCall(correspondent.id),
     ]);
 
-    if (call[0]) {
+    if (call[0] || number === contract.number) {
       message.info(message._('dial.busy'));
       return 0;
     }
 
-    if (call[1]) {
+    if (call[1] || correspondent.blacklist.includes(contract.number)) {
       message.info(message._('dial.correspondentBusy'));
       return 0;
     }

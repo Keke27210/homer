@@ -50,7 +50,9 @@ class TextCommand extends Command {
       return 0;
     }
 
-    if (!correspondent.textable) {
+    if (!correspondent.textable
+        || correspondent.blacklist.includes(contract.number)
+        || number === contract.number) {
       message.warn(message._('text.unable', number));
       return 0;
     }
