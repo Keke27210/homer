@@ -1,10 +1,7 @@
 # Homer
 
 ## Introduction
-Homer is a Discord bot with uncommon features such as a phone or a real radio! Of course, it also includes the essentials so that you don't miss any information.  
-The project was born in April 2017 under the name iBot. After a number of redesigns, the name Homer was chosen by the community.  
-In April 2020, an umpteenth redesign took place to focus only on the essentials and provide a complete and seamless user experience.  
-As a result, the bot is now more reliable and responsive.
+This repository contains the ongoing rewrite version of Homer bot.
 
 ## Self-hosting
 Although the complete source code is available in this directory, it is not recommended to host copies of the bot.  

@@ -1,7 +1,7 @@
 {
   "token": "",
-  "clientOptions": {
-  },
+  "owners": [],
+  "clientOptions": {},
   "databaseCredentials": {
     "host": "",
     "user": "",
