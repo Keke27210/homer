@@ -162,15 +162,15 @@ class DiscordClient extends Client {
       .catch(() => this.logger.warn('[database] Unable to connect - Running in no-database mode'));
 
     if (this.database.ready) {
-      this.client.logger.log('[database] Creating database tables');
-      await this.client.apis.createTable();
-      await this.client.radios.createTable();
-      await this.client.settings.createTable();
-      await this.client.telephone.calls.createTable();
-      await this.client.telephone.contracts.createTable();
-      await this.client.telephone.phonebook.createTable();
-      await this.client.tracking.createTable();
-      this.client.logger.log('[database] Database tables created');
+      this.logger.log('[database] Creating database tables');
+      await this.apis.createTable();
+      await this.radios.createTable();
+      await this.settings.createTable();
+      await this.telephone.calls.createTable();
+      await this.telephone.contracts.createTable();
+      await this.telephone.phonebook.createTable();
+      await this.tracking.createTable();
+      this.logger.log('[database] Database tables created');
     }
 
     this.logger.log('[managers] Registering components...');
