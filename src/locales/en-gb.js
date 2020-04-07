@@ -308,6 +308,15 @@ module.exports = (dot) => ({
     },
   },
 
+  // Names command
+  names: {
+    title: (name) => `✏️ Names history for ${name}:`,
+    current: 'Current name',
+    until: 'until',
+    none: (name) => `No names recorded for ${name}.`,
+    footer: 'The accuracy of the data cannot be guaranteed.',
+  },
+
   // Phonebook command
   phonebook: {
     title: '🔖 Homer\'s phone book:',

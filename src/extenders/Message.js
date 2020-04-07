@@ -39,6 +39,10 @@ Structures.extend('Message', (Message) => {
       this.emotes = emotes;
     }
 
+    get eInfo() {
+      return this.emotes.info;
+    }
+
     get eSuccess() {
       return this.client.emojis.resolve(this.emotes.success).toString();
     }
@@ -249,7 +253,7 @@ Structures.extend('Message', (Message) => {
       const m = moment(date)
         .tz(this.settings.timezone)
         .locale(this.settings.locale);
-      if (Date.now() > date.getTime()) {
+      if (Date.now() > new Date(date).getTime()) {
         return m.fromNow(ffix);
       }
       return m.toNow(ffix);
