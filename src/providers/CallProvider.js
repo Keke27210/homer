@@ -183,6 +183,20 @@ class CallProvider extends Provider {
     target.startTyping(1);
     this.client.setTimeout(() => target.stopTyping(), 10000);
   }
+
+  /**
+   * Executed every minute
+   * Terminates every call where no-one talked the past minute
+   */
+  async minute() {
+    const outdated = await this.getRows([
+      ['state', '=', this.states.ONGOING],
+      ['updated', '<', new Date(Date.now() - 60000).toISOString(), 'timestamp'],
+    ]);
+    for (let i = 0; i < outdated.length; i += 1) {
+      this.endCall(outdated[i].id, 'TERMINATED');
+    }
+  }
 }
 
 module.exports = CallProvider;

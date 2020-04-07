@@ -135,6 +135,11 @@ class DiscordClient extends Client {
      */
     this.menuUtil = new MenuUtil(this);
 
+    // minutely tasks
+    this.once('ready', () => {
+      this.setInterval(() => this.minute(), 60000);
+    });
+
     // node.js related
     process.on('uncaughtException', (error) => {
       this.logger.error('[uncaughtException] FATAL - SHUTTING DOWN - Uncaught exception:', error);
@@ -188,6 +193,14 @@ class DiscordClient extends Client {
 
     this.logger.log(`[process] Exiting process with exit code ${code}`);
     process.exit(code);
+  }
+
+  /**
+   * Executed every minute with tasks
+   */
+  async minute() {
+    this.audioManager.minute();
+    this.telephone.calls.minute();
   }
 }
 

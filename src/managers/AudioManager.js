@@ -102,6 +102,22 @@ class AudioManager extends Manager {
 
     return null;
   }
+
+  /**
+   * Executed every minute
+   * Leaves voice channels if no-one listen
+   */
+  minute() {
+    const end = this.sessions.filter((s) => s.reprieve);
+    for (let i = 0; i < end.length; i += 1) this.destroySession(end[i].channel, true);
+
+    for (let i = 0; i < this.sessions.length; i += 1) {
+      const channel = this.client.channels.resolve(this.sessions[i].channel);
+      if (channel && channel.members.filter((m) => m.id !== this.client.user.id).size === 0) {
+        this.sessions[i].reprieve = true;
+      }
+    }
+  }
 }
 
 module.exports = AudioManager;
