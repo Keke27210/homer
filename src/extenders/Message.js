@@ -247,8 +247,8 @@ Structures.extend('Message', (Message) => {
      */
     async awaitUserApproval(id) {
       const e = [
-        this.client.emojis.resolveIdentifier(this.eSuccessID),
-        this.client.emojis.resolveIdentifier(this.eErrorID),
+        this.client.emojis.resolveIdentifier(this.emotes.success),
+        this.client.emojis.resolveIdentifier(this.emotes.error),
       ];
       await this.react(e[0]).catch(() => null);
       await this.react(e[1]).catch(() => null);

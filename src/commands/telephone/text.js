@@ -27,12 +27,13 @@ class TextCommand extends Command {
       return 0;
     }
 
-    const [number, ...content] = args;
+    const [number] = args;
     if (!number) {
       message.error(message._('text.missingNumber'));
       return 0;
     }
 
+    const content = args.slice(1).join(' ');
     if (!content) {
       message.error(message._('text.missingContent'));
       return 0;
@@ -59,7 +60,8 @@ class TextCommand extends Command {
         message.success(message._('text.sent', number));
         return 0;
       })
-      .catch(() => {
+      .catch((error) => {
+        this.client.logger.error(`[commands->text] ${contract.id} couldn't text ${correspondent.id}`, error);
         message.error(message._('text.error'));
         return 1;
       });

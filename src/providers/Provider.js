@@ -121,16 +121,24 @@ class Provider {
    * @param {boolean} fetch Ignore cache
    * @returns {Promise<Object>} Row
    */
-  async getRow(id) {
+  async getRow(id, fetch) {
     if (!this.database.ready) {
       throw new Error('UNAVAILABLE_DATABASE');
     }
 
     const cached = this.cache.find((c) => c.id === id);
-    if (cached) return cached;
+    if (cached && !fetch) return cached;
 
     const query = await this.database.query(`SELECT * FROM ${this.table} WHERE id = $1`, [id]);
-    return query.rows[0] || null;
+    const res = query.rows[0] || null;
+
+    if (res) {
+      const index = this.cache.findIndex((c) => c.id === id);
+      if (index >= 0) this.cache.splice(index, 1);
+      this.cache.push(query.rows[0]);
+    }
+
+    return res;
   }
 
   /**

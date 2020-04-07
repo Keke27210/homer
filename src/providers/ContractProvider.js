@@ -1,4 +1,4 @@
-const { isObject } = require('util');
+const { MessageEmbed } = require('discord.js');
 
 const Provider = require('./Provider');
 
@@ -137,7 +137,7 @@ class ContractProvider extends Provider {
         throw new Error('DATABASE_ERROR');
       });
 
-    this.notify(id, true, 'telephone.notification.activated', number);
+    this.notify(id, true, 'telephone.notifications.activated', number);
 
     return number;
   }
@@ -273,7 +273,7 @@ class ContractProvider extends Provider {
     if (suspensions.length) return false;
 
     const recent = contracts.filter(
-      (c) => (Date.now() - c.edited.getTime()) < this.delaySignature,
+      (c) => (Date.now() - c.created.getTime()) < this.delaySignature,
     );
     if (recent.length) return false;
 
@@ -302,12 +302,7 @@ class ContractProvider extends Provider {
       correspondent.id,
       true,
       'telephone.notifications.text',
-      {
-        content: message,
-        footer: {
-          text: this.client.localeManager(settings.locale, 'telephone.hint.text', correspondent.number),
-        },
-      },
+      new MessageEmbed().setDescription(message).setFooter(this.client.localeManager.translate(settings.locale, 'telephone.hint.text', correspondent.number)),
       contract.number,
       message,
     );
@@ -334,7 +329,7 @@ class ContractProvider extends Provider {
     }
 
     let embed = null;
-    if (isObject(args[0])) {
+    if (args[0] instanceof MessageEmbed) {
       embed = args.shift();
     }
 
@@ -343,7 +338,7 @@ class ContractProvider extends Provider {
       : message;
     await channel.send(content, embed)
       .catch((error) => {
-        this.client.logger.warn(`[contracts->notify] Cannot send a message in channel ${channel}`, error);
+        this.client.logger.warn(`[contracts->notify] Cannot send a message in channel ${channel.id}`, error);
         throw new Error('SENDING_ERROR');
       });
 
