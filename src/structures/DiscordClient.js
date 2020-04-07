@@ -161,7 +161,7 @@ class DiscordClient extends Client {
       .then(() => this.logger.log('[database] Connected successfully'))
       .catch(() => this.logger.warn('[database] Unable to connect - Running in no-database mode'));
 
-    if (this.client.database.ready) {
+    if (this.database.ready) {
       this.client.logger.log('[database] Creating database tables');
       await this.client.apis.createTable();
       await this.client.radios.createTable();
