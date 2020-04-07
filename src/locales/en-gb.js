@@ -39,7 +39,7 @@ module.exports = (dot) => ({
     },
     footer: 'Add "help" at the end of the command to get advanced help.',
     cannot: 'Couldn\'t send help in direct messages! Please ensure they are open.',
-    more: (invite) => `If you have more questions about a feature or cannot troubleshoot a problem encountered with Homer, feel free to join our **[support server](${invite})** where you can be helped quickly!\nYou can also make a donation to support Homer's development and have access to some cool donator perks (such as customizable telephone number, etc).`,
+    more: (invite) => `If you have more questions about a feature or cannot troubleshoot a problem encountered with Homer, feel free to join our **[support server](${invite})** where you can be helped quickly!\nYou can also make a donation to support Homer's development and have access to some cool donator perks.`,
     aliases: 'Aliases',
     usage: 'Usage',
     sub: (name) => `📚 Help for \`${name}\`:`,
