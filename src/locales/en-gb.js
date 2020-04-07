@@ -555,6 +555,7 @@ module.exports = (dot) => ({
     status: 'Status',
     activity: 'Activity',
     roles: 'Roles',
+    active: 'Last seen',
     creation: 'Creation date',
     join: 'Join date',
     activities: {

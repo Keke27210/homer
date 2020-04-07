@@ -90,6 +90,9 @@ class UserCommand extends Command {
       description.push(`${message.dot} ${message._('user.roles')}: ${roles || message._('global.none')}`);
     }
 
+    const active = await this.client.tracking.getActivity(user.id);
+    if (active) description.push(`${message.dot} ${message._('user.active')}: **${message.getDuration(active)}**`);
+
     description.push(`${message.dot} ${message._('user.creation')}: ${message.getMoment(user.createdTimestamp)}`);
 
     if (message.guild) {

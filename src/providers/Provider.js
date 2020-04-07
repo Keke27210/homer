@@ -1,5 +1,5 @@
 class Provider {
-  constructor(client, table, columns) {
+  constructor(client, table, columns, caching = true) {
     /**
      * Client that instantied this provider
      * @type {DiscordClient}
@@ -23,6 +23,12 @@ class Provider {
      * @type {object[]}
      */
     this.cache = [];
+
+    /**
+     * Enable caching for this provider
+     * @type {boolean}
+     */
+    this.caching = caching;
   }
 
   /**
@@ -61,10 +67,12 @@ class Provider {
       Object.values(data),
     );
 
-    const cache = this.cache.findIndex((c) => c.id === query.rows[0].id);
-    if (cache >= 0) this.cache.splice(cache, 1);
+    if (this.caching) {
+      const cache = this.cache.findIndex((c) => c.id === query.rows[0].id);
+      if (cache >= 0) this.cache.splice(cache, 1);
+      this.cache.push(query.rows[0]);
+    }
 
-    this.cache.push(query.rows[0]);
     return query.rows[0].id;
   }
 
@@ -86,11 +94,13 @@ class Provider {
       [id].concat(Object.values(data)),
     );
 
-    const index = this.cache.findIndex((c) => c.id === id);
-    if (index >= 0) {
-      for (let i = 0; i < entries.length; i += 1) {
-        const [k, v] = entries[i];
-        this.cache[index][k] = v;
+    if (this.caching) {
+      const index = this.cache.findIndex((c) => c.id === id);
+      if (index >= 0) {
+        for (let i = 0; i < entries.length; i += 1) {
+          const [k, v] = entries[i];
+          this.cache[index][k] = v;
+        }
       }
     }
 
@@ -109,8 +119,10 @@ class Provider {
 
     const query = await this.database.query(`DELETE FROM ${this.table} WHERE id = $1`, [id]);
 
-    const index = this.cache.findIndex((c) => c.id === id);
-    if (index >= 0) this.cache.splice(index, 1);
+    if (this.caching) {
+      const index = this.cache.findIndex((c) => c.id === id);
+      if (index >= 0) this.cache.splice(index, 1);
+    }
 
     return query.rowCount;
   }
@@ -126,13 +138,15 @@ class Provider {
       throw new Error('UNAVAILABLE_DATABASE');
     }
 
-    const cached = this.cache.find((c) => c.id === id);
-    if (cached && !fetch) return cached;
+    if (this.caching) {
+      const cached = this.cache.find((c) => c.id === id);
+      if (cached && !fetch) return cached;
+    }
 
     const query = await this.database.query(`SELECT * FROM ${this.table} WHERE id = $1`, [id]);
     const res = query.rows[0] || null;
 
-    if (res) {
+    if (this.caching && res) {
       const index = this.cache.findIndex((c) => c.id === id);
       if (index >= 0) this.cache.splice(index, 1);
       this.cache.push(query.rows[0]);

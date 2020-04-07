@@ -16,6 +16,7 @@ const ContractProvider = require('../providers/ContractProvider');
 const PhonebookProvider = require('../providers/PhonebookProvider');
 const RadioProvider = require('../providers/RadioProvider');
 const SettingProvider = require('../providers/SettingProvider');
+const TrackingProvider = require('../providers/TrackingProvider');
 
 // Utils
 const FinderUtil = require('../util/FinderUtil');
@@ -108,6 +109,12 @@ class DiscordClient extends Client {
      * @type {SettingProvider}
      */
     this.settings = new SettingProvider(this);
+
+    /**
+     * Tracking provider for this client
+     * @type {TrackingProvider}
+     */
+    this.tracking = new TrackingProvider(this);
 
     /**
      * Finder util for this client

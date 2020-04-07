@@ -241,6 +241,21 @@ Structures.extend('Message', (Message) => {
     }
 
     /**
+     * Returns a nicely formatted duration
+     * @param {Date} date Date to compare
+     * @param {?boolean} ffix Whether hide (pre|su)ffix
+     */
+    getDuration(date, ffix = false) {
+      const m = moment(date)
+        .tz(this.settings.timezone)
+        .locale(this.settings.locale);
+      if (Date.now() > date.getTime()) {
+        return m.fromNow(ffix);
+      }
+      return m.toNow(ffix);
+    }
+
+    /**
      * Waits for approval or denial from the specified user
      * @param {string} id User ID
      * @returns {Promise<boolean>} User's decision

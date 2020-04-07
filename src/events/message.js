@@ -6,6 +6,10 @@ class MessageEvent extends Event {
   }
 
   handle(message) {
+    if (this.client.database.ready) {
+      this.client.tracking.updateActivity(message.author.id);
+    }
+
     this.client.commandManager.handleMessage(message);
     this.client.telephone.calls.handleMessage(message);
   }
