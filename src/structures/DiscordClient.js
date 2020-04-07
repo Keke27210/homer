@@ -212,7 +212,7 @@ class DiscordClient extends Client {
    * @returns {Promise<Presence>}
    */
   updatePresence() {
-    if (!this.client.user) return null;
+    if (!this.user) return null;
 
     const presence = {
       status: this.database.ready ? 'online' : 'idle',
