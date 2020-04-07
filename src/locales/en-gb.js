@@ -680,6 +680,10 @@ module.exports = (dot) => ({
     invalid: (timezone) => `Unrecognized timezone: \`${timezone}\`.`,
     set: (timezone, now) => `Timezone set to \`${timezone}\`. Current date: ${now}.`,
     error: 'An error occured while setting timezone.',
+    list: {
+      title: '🌐 Available timezones:',
+      footer: 'Set a timezone using h:timezone <zone>',
+    },
   },
 
   // Tune command

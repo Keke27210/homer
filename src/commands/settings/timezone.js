@@ -10,9 +10,22 @@ class ListSubcommand extends Command {
     });
   }
 
-  main(message) {
-    const list = moment.tz.names();
-    // Build menu here
+  main(message, args) {
+    const [search] = args;
+    const list = search
+      ? moment.tz.names().filter((z) => z.toLowerCase().includes(search.toLowerCase()))
+      : moment.tz.names();
+
+    this.client.menuUtil.createMenu(
+      message.channel.id,
+      message.author.id,
+      message.id,
+      message.locale,
+      message._('timezone.list.title'),
+      null,
+      list.map((l) => `${message.dot} \`${l}\``),
+      { footer: message._('timezone.list.footer') },
+    );
   }
 }
 
