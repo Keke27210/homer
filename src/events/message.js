@@ -6,6 +6,8 @@ class MessageEvent extends Event {
   }
 
   handle(message) {
+    if (!this.client.ready) return;
+
     if (this.client.database.ready) {
       this.client.tracking.updateActivity(message.author.id);
     }

@@ -10,6 +10,7 @@ const TABLE_COLUMNS = [
   ['number', 'VARCHAR(7)', null],
   ['state', 'int', 'NOT NULL'],
   ['textable', 'bool', 'NOT NULL'],
+  ['blacklist', 'VARCHAR(7)', 'ARRAY'],
   ['edited', 'TIMESTAMP', null],
   ['created', 'TIMESTAMP', 'NOT NULL'],
 ];
@@ -100,6 +101,7 @@ class ContractProvider extends Provider {
       subscriber,
       textable: true,
       state: this.states.PENDING,
+      blacklist: '{}',
       created: now,
     })
       .catch((error) => {
@@ -278,6 +280,47 @@ class ContractProvider extends Provider {
     if (recent.length) return false;
 
     return true;
+  }
+
+  /**
+   * Blacklists a number
+   * @param {number} id Contract ID
+   * @param {string} number Number to blacklist
+   */
+  async blacklist(id, number) {
+    const contract = await this.getRow(id);
+    if (!contract) throw new Error('UNKNOWN_CONTRACT');
+
+    if (contract.blacklist.includes(number)) throw new Error('ALREADY_BLACKLISTED');
+    contract.blacklist.push(number);
+
+    await this.updateRow(id, {
+      blacklist: `{${contract.blacklist.join(',')}}`,
+      edited: new Date(),
+    });
+
+    return null;
+  }
+
+  /**
+   * Unblacklists a number
+   * @param {number} id Contract ID
+   * @param {string} number Number to unblacklist
+   */
+  async unblacklist(id, number) {
+    const contract = await this.getRow(id);
+    if (!contract) throw new Error('UNKNOWN_CONTRACT');
+
+    const index = contract.blacklist.indexOf(number);
+    if (index === -1) throw new Error('NOT_BLACKLISTED');
+    contract.blacklist.splice(index, 1);
+
+    await this.updateRow(id, {
+      blacklist: `{${contract.blacklist.join(',')}}`,
+      edited: new Date(),
+    });
+
+    return null;
   }
 
   /**

@@ -39,6 +39,12 @@ class DiscordClient extends Client {
     this.apiKeys = apiKeys;
 
     /**
+     * Whether the client is ready to proceed commands and events
+     * @type {boolean}
+     */
+    this.ready = false;
+
+    /**
      * Database for this Discord client
      * @type {Database}
      */

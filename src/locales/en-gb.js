@@ -32,6 +32,22 @@ module.exports = (dot) => ({
       usage: '[member]',
       example: '@Luke',
     },
+    blacklist: {
+      description: 'Manages a contract\'s blacklist',
+      usage: null,
+      example: null,
+
+      add: {
+        description: 'Blacklists a number',
+        usage: '<number>',
+        example: 'SUPPORT',
+      },
+      remove: {
+        description: 'Removes a number from the blacklist',
+        usage: '<number>',
+        example: 'SUPPORT',
+      },
+    },
     channel: {
       description: 'Displays information about a channel',
       usage: '[channel]',
@@ -225,6 +241,24 @@ module.exports = (dot) => ({
   // Avatar command
   avatar: {
     title: (name) => `🖼️ ${name}'s avatar:`,
+  },
+
+  // Blacklist command
+  blacklist: {
+    empty: 'There are no entries in the blacklist.',
+    list: '⛔ Blacklist for this line:',
+    missing: 'You must provide a telephone number.',
+    format: 'The format of the telephone number you provided is not valid.',
+    add: {
+      added: (number) => `Number \`${number}\` has been successfully blacklisted.`,
+      already: (number) => `Number \`${number}\` has already been blacklisted.`,
+      error: 'An error occured while blacklisting the number.',
+    },
+    remove: {
+      removed: (number) => `Number \`${number}\` has been successfully removed from the blacklist.`,
+      unknown: (number) => `Number \`${number}\` has not been found in the blacklist.`,
+      error: 'An error occured while removing the number from the blacklist.',
+    },
   },
 
   // Channel command

@@ -3,7 +3,7 @@ const Provider = require('./Provider');
 const TABLE_COLUMNS = [
   ['id', 'VARCHAR(20)', 'PRIMARY KEY'],
   ['activity', 'TIMESTAMP', null],
-  ['names', 'TEXT', null],
+  ['names', 'TEXT[][2]', null],
 ];
 
 class TrackingProvider extends Provider {
@@ -47,7 +47,11 @@ class TrackingProvider extends Provider {
   async getNames(id) {
     const entry = await this.getRow(id);
     if (!entry || !entry.names) return [];
-    return JSON.parse(entry.names);
+    const { names } = entry;
+    for (let i = 0; i < names.length; i += 1) {
+      names[i] = JSON.parse(names[i]);
+    }
+    return names;
   }
 
   /**
@@ -71,9 +75,9 @@ class TrackingProvider extends Provider {
   async updateNames(id, name) {
     const entry = await this.getRow(id);
     if (!entry) await this.insertRow({ id });
-    const names = (entry && entry.names) ? JSON.parse(entry.names) : [];
+    const names = entry && entry.names ? entry.names : [];
     names.push({ name, time: Date.now() });
-    this.updateRow(id, { activity: new Date(), names: JSON.stringify(names) });
+    await this.updateRow(id, { activity: new Date(), names });
     return null;
   }
 

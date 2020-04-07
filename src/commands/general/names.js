@@ -39,7 +39,7 @@ class NamesCommand extends Command {
     }
 
     const entries = [`${message.dot} **${user.username}** - ${message._('names.current')}`];
-    for (let i = (names.length - 1); i > 0; i -= 1) {
+    for (let i = (names.length - 1); i >= 0; i -= 1) {
       const entry = names[i];
       entries.push(`${message.dot} **${escapeMarkdown(entry.name)}**${entry.time ? ` - ${message._('names.until')} **${message.getDuration(entry.time)}**` : ''}`);
     }

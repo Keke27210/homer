@@ -116,6 +116,7 @@ class PhonebookCommand extends Command {
       message.author.id,
       message.id,
       message.locale,
+      message._('phonebook.title'),
       null,
       description,
     );

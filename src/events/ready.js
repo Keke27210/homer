@@ -9,6 +9,7 @@ class ReadyEvent extends Event {
     if (this.client.database.ready) {
       // Creating provider tables
       this.client.logger.log('[database] Creating table if not exists');
+      await this.client.tracking.createTable();
       await this.client.settings.createTable();
       await this.client.radios.createTable();
       await this.client.telephone.contracts.createTable();
@@ -19,6 +20,7 @@ class ReadyEvent extends Event {
       this.client.tracking.deleteEntries();
     }
 
+    this.client.ready = true;
     this.client.logger.log(`[ready] Bot initialized successfully - Serving as ${this.client.user.username}`);
   }
 }

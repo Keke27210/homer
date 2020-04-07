@@ -6,6 +6,8 @@ class MessageReactionAdd extends Event {
   }
 
   handle(reaction, user) {
+    if (!this.client.ready) return;
+
     if (this.client.database.ready) {
       this.client.tracking.updateActivity(user.id);
     }

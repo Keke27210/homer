@@ -42,11 +42,11 @@ class Provider {
   /**
    * Creates a table with the provided columns
    */
-  async createTable() {
+  createTable() {
     const columns = this.columns
       .map((c) => `${c[0]} ${c[1]}${c[2] ? ` ${c[2]}` : ''}`)
       .join(', ');
-    await this.database.query(`CREATE TABLE IF NOT EXISTS ${this.table} (${columns})`);
+    return this.database.query(`CREATE TABLE IF NOT EXISTS ${this.table} (${columns})`);
   }
 
   /**
@@ -89,8 +89,8 @@ class Provider {
 
     const entries = Object.entries(data);
 
-    await this.database.query(
-      `UPDATE ${this.table} SET ${entries.map(([k], i) => `${k} = $${i + 2}`).join(', ')} WHERE id = $1 RETURNING id`,
+    const query = await this.database.query(
+      `UPDATE ${this.table} SET ${entries.map(([k], i) => `${k} = $${i + 2}`).join(', ')} WHERE id = $1 RETURNING id, ${entries.map(([k]) => k).join(', ')}`,
       [id].concat(Object.values(data)),
     );
 
@@ -98,13 +98,13 @@ class Provider {
       const index = this.cache.findIndex((c) => c.id === id);
       if (index >= 0) {
         for (let i = 0; i < entries.length; i += 1) {
-          const [k, v] = entries[i];
-          this.cache[index][k] = v;
+          const [k] = entries[i];
+          this.cache[index][k] = query.rows[0][k];
         }
       }
     }
 
-    return id;
+    return query.rows[0].id;
   }
 
   /**
