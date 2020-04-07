@@ -102,7 +102,7 @@ class UserCommand extends Command {
     const embed = message.getEmbed()
       .setDescription(description.join('\n'))
       .setThumbnail(user.avatarURL({ size: 256, dynamic: true }));
-    if (member) embed.setColor(member.displayHexColor);
+    if (member) embed.setColor(member.displayHexColor === '#000000' ? null : member.displayHexColor);
 
     message.channel.send(message._('user.title', user.bot ? message.emote('bot') : message.emote('human'), user.tag), embed);
     return 0;
