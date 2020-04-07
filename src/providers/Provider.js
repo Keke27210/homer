@@ -88,9 +88,10 @@ class Provider {
     }
 
     const entries = Object.entries(data);
+    const sql = `UPDATE ${this.table} SET ${entries.map(([k], i) => `${k} = $${i + 2}`).join(', ')} WHERE id = $1`;
 
     const query = await this.database.query(
-      `UPDATE ${this.table} SET ${entries.map(([k], i) => `${k} = $${i + 2}`).join(', ')} WHERE id = $1 RETURNING id, ${entries.map(([k]) => k).join(', ')}`,
+      sql,
       [id].concat(Object.values(data)),
     );
 
@@ -104,7 +105,7 @@ class Provider {
       }
     }
 
-    return query.rows[0].id;
+    return id;
   }
 
   /**
