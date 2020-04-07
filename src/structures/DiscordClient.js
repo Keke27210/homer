@@ -208,10 +208,31 @@ class DiscordClient extends Client {
   }
 
   /**
+   * Sets the appropriate bot presence
+   * @returns {Promise<Presence>}
+   */
+  updatePresence() {
+    if (!this.client.user) return null;
+
+    const presence = {
+      status: this.database.ready ? 'online' : 'idle',
+      activity: {
+        type: 0,
+        name: this.database.ready
+          ? `Type h:help! On ${this.guilds.cache.size} servers with ${this.users.cache.size} users.`
+          : '> Database unavailable - Some features may be disabled | Type h:help!',
+      },
+    };
+
+    return this.client.user.setPresence(presence);
+  }
+
+  /**
    * Function ran every minute
    * Calls tasks that need to be done every minute
    */
   minute() {
+    this.updatePresence();
     this.audioManager.minute();
     this.telephone.calls.minute();
   }

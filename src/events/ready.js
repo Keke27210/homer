@@ -6,8 +6,9 @@ class ReadyEvent extends Event {
   }
 
   async handle() {
-    this.client.ready = true;
+    await this.client.updatePresence();
     this.client.logger.log(`[ready] Bot initialized successfully - Serving as ${this.client.user.username}`);
+    this.client.ready = true;
   }
 }
 
