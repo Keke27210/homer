@@ -303,10 +303,19 @@ module.exports = (dot) => ({
   // Formats command
   formats: {
     title: '📆 Date and time formats:',
-    date: 'Date format',
-    time: 'Time format',
+    fdate: 'Date format',
+    ftime: 'Time format',
     documentation: 'Documentation',
     hint: 'Change date format with `h:formats date` and time format with `h:formats time`.',
+    missing: 'You must provide a format to set.',
+    length: (max) => `Format length must not exceed **${max}** characters.`,
+    error: 'An error occured while setting format.',
+    date: {
+      set: (now) => `Date format successfully set! Preview: **${now}**`,
+    },
+    time: {
+      set: (now) => `Time format successfully set! Preview: **${now}**`,
+    },
   },
 
   // Google command

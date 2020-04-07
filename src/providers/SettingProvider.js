@@ -31,11 +31,17 @@ class SettingProvider extends Provider {
      * @type {number}
      */
     this.maxTimezoneLength = 32;
+
+    /**
+     * Max length for a date/time format
+     * @type {number}
+     */
+    this.maxFormatLength = 20;
   }
 
   /**
    * Generates a settings object
-   * @param {number} id Context ID
+   * @param {string} id Context ID
    * @param {?boolean} temp Temporary settings
    * @returns {Settings} Settings
    */
@@ -56,7 +62,7 @@ class SettingProvider extends Provider {
 
   /**
    * Creates settings
-   * @param {number} id Context ID
+   * @param {string} id Context ID
    * @returns {Promise<Settings>} Settings
    */
   async createSettings(id) {
@@ -70,7 +76,7 @@ class SettingProvider extends Provider {
 
   /**
    * Fetches settings
-   * @param {number} id Context ID
+   * @param {string} id Context ID
    * @returns {Promise<Settings>} settings
    */
   async fetchSettings(id) {
@@ -87,7 +93,7 @@ class SettingProvider extends Provider {
 
   /**
    * Sets a locale
-   * @param {number} id Context ID
+   * @param {string} id Context ID
    * @param {string} locale Locale code
    * @returns {Promise<void>}
    */
@@ -107,7 +113,7 @@ class SettingProvider extends Provider {
 
   /**
    * Sets a timezone
-   * @param {number} id Context ID
+   * @param {string} id Context ID
    * @param {string} timezone Timezone identifier
    * @returns {Promise<void>}
    */
@@ -128,7 +134,7 @@ class SettingProvider extends Provider {
 
   /**
    * Sets a prefix
-   * @param {number} id Context ID
+   * @param {string} id Context ID
    * @param {string} prefix Prefix
    * @returns {Promise<void>}
    */
@@ -149,7 +155,7 @@ class SettingProvider extends Provider {
 
   /**
    * Sets radio channel
-   * @param {number} id Context ID
+   * @param {string} id Context ID
    * @param {string} channel Channel ID
    * @returns {Promise<void>}
    */
@@ -170,7 +176,7 @@ class SettingProvider extends Provider {
 
   /**
    * Sets radio volume
-   * @param {number} id Context ID
+   * @param {string} id Context ID
    * @param {number} volume Volume
    * @returns {Promise<void>}
    */
@@ -184,6 +190,28 @@ class SettingProvider extends Provider {
       volume,
       updated: new Date(),
     });
+
+    return null;
+  }
+
+  /**
+   * Sets date and time formats
+   * @param {string} id Context ID
+   * @param {string} date Date format
+   * @param {string} time Time format
+   * @returns {Promise<void>}
+   */
+  async setFormats(id, date, time) {
+    if (date && date.length > this.maxFormatLength) throw new Error('DATE_LENGTH');
+    if (time && time.length > this.maxFormatLength) throw new Error('TIME_LENGTH');
+
+    const existing = await this.getRow(id);
+    if (!existing || existing.temp) await this.createSettings(id);
+
+    const update = {};
+    if (date) update.date = date;
+    if (time) update.time = time;
+    await this.updateRow(id, update);
 
     return null;
   }
