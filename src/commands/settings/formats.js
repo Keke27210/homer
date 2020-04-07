@@ -18,7 +18,7 @@ class DateSubcommand extends Command {
     }
 
     if (format.length > this.client.settings.maxFormatLength) {
-      message.error(message._('format.length', this.client.settings.maxFormatLength));
+      message.error(message._('formats.length', this.client.settings.maxFormatLength));
       return 0;
     }
 
@@ -28,12 +28,12 @@ class DateSubcommand extends Command {
           .tz(message.settings.timezone)
           .locale(message.locale)
           .format(message.settings.date);
-        message.success(message._('format.date.set', now));
+        message.success(message._('formats.date.set', now));
         return 0;
       })
       .catch((error) => {
         this.client.logger.error(`[formats->date] Error while setting date format "${format}" for context ${message.settings.id}`, error);
-        message.error(message._('format.error'));
+        message.error(message._('formats.error'));
         return 1;
       });
 
@@ -57,7 +57,7 @@ class TimeSubcommand extends Command {
     }
 
     if (format.length > this.client.settings.maxFormatLength) {
-      message.error(message._('format.length', this.client.settings.maxFormatLength));
+      message.error(message._('formats.length', this.client.settings.maxFormatLength));
       return 0;
     }
 
@@ -67,12 +67,12 @@ class TimeSubcommand extends Command {
           .tz(message.settings.timezone)
           .locale(message.locale)
           .format(message.settings.time);
-        message.success(message._('format.time.set', now));
+        message.success(message._('formats.time.set', now));
         return 0;
       })
       .catch((error) => {
         this.client.logger.error(`[formats->time] Error while setting time format "${format}" for context ${message.settings.id}`, error);
-        message.error(message._('format.error'));
+        message.error(message._('formats.error'));
         return 1;
       });
 
