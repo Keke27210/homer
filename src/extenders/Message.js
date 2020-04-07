@@ -19,6 +19,11 @@ const emotes = {
   placeholder: '695983847061323797',
   owner: '695975441516855337',
   nitro: '695977635666198570',
+  c_bot: '474150825929998337',
+  c_general: '🖥',
+  c_radio: '📻',
+  c_settings: '🔧',
+  c_telephone: '📞',
 };
 
 Structures.extend('Message', (Message) => {
@@ -101,6 +106,14 @@ Structures.extend('Message', (Message) => {
         key,
         ...args,
       );
+    }
+
+    /**
+     * Reacts a success emote
+     * @returns {Promise<MessageReaction>}
+     */
+    async reactSuccess() {
+      return this.react(this.client.emojis.resolveIdentifier(this.emotes.success));
     }
 
     /**

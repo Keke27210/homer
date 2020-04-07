@@ -24,7 +24,7 @@ class AboutCommand extends Command {
       `${message.dot} ${message._('about.guilds')}: **${this.client.guilds.cache.size}**`,
       `${message.dot} ${message._('about.memory')}: **${Math.round(process.memoryUsage().rss / 1024 / 1024)}**MB`,
       `${message.dot} ${message._('about.versions')}: ${name} **${version}** / node **${process.version}** / discord.js **${djs}**`,
-      `${message.dot} ${message._('about.links')}: **[GitHub](https://github.com/Keke27210/homer)** / **[Homer - Support server](https://discord.gg/fYRm29b)**`,
+      `${message.dot} ${message._('about.links')}: **[GitHub](https://github.com/Keke27210/homer)** / **[Homer - Support server](${this.client.invite})**`,
     ].join('\n');
 
     const embed = message.getEmbed()

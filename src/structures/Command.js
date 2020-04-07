@@ -69,14 +69,16 @@ class Command {
    * Performs the required checks then performs the command
    * @param {Message} message Message that triggered the command
    */
-  async run(message, args) {
+  async run(message, args, parent = []) {
+    parent.push(this.name);
+
     const children = args[0];
     if (children) {
       const subcommand = this.children
         .find((c) => c.name === children || c.aliases.includes(children));
       if (subcommand) {
         args.shift();
-        subcommand.run(message, args);
+        subcommand.run(message, args, parent);
         return;
       }
     }
@@ -100,6 +102,27 @@ class Command {
         message.warn(message._('command.botPermissions', missingBot.map((p) => `\`${p}\``).join(', ')));
         return;
       }
+    }
+
+    if (children === 'help') {
+      const description = [
+        message._(`help.${parent.join('.')}.description`),
+        '',
+        `${message.dot} ${message._('help.aliases')}: ${this.aliases.map((a) => `\`${a}\``).join(', ') || message._('global.none')}`,
+        `${message.dot} ${message._('help.usage')}: ${message._(`help.${parent.join('.')}.usage`) ? `\`h:${parent.join(' ')} ${message._(`help.${parent.join('.')}.usage`)}\`` : message._('global.none')}`,
+      ];
+      const embed = message.getEmbed().setDescription(description.join('\n'));
+      const child = this.children.filter((c) => !c.hidden);
+      if (child.length) {
+        const msg = [];
+        child.forEach((c) => msg.push(`${message.dot} \`h:${parent.join('.')} ${c.name}\` - ${message._(`help.${parent.join('.')}.${c.name}.description`)}`));
+        embed.addField(message._('help.subcommands'), msg.join('\n'));
+      }
+
+      message.author.send(message._('help.sub', parent.join(' ')), embed)
+        .then(() => message.reactSuccess())
+        .catch(() => message.warn(message._('help.cannot')));
+      return;
     }
 
     if (this.databaseRequired && !this.client.database.ready) {

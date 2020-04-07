@@ -22,6 +22,29 @@ module.exports = (dot) => ({
 
   /* HELP */
   help: {
+    help: {
+      description: 'Shows this menu',
+      usage: null,
+      example: null,
+    },
+
+    main: '📚 Help for **Homer**:',
+    category: {
+      bot: 'Bot',
+      general: 'General',
+      radio: 'Radio',
+      settings: 'Settings',
+      telephone: 'Telephone',
+      more: 'More',
+    },
+    footer: 'Add "help" at the end of the command to get advanced help.',
+    cannot: 'Couldn\'t send help in direct messages! Please ensure they are open.',
+    more: (invite) => `If you have more questions about a feature or cannot troubleshoot a problem encountered with Homer, feel free to join our **[support server](${invite})** where you can be helped quickly!\nYou can also make a donation to support Homer's development and have access to some cool donator perks (such as customizable telephone number, etc).`,
+    aliases: 'Aliases',
+    usage: 'Usage',
+    sub: (name) => `📚 Help for \`${name}\`:`,
+    subcommands: 'Subcommands',
+
     about: {
       description: 'Information about the bot',
       usage: null,
@@ -63,6 +86,22 @@ module.exports = (dot) => ({
       usage: '[code]',
       example: 'this.client.token',
     },
+    formats: {
+      description: 'Displays current date and time formats',
+      usage: null,
+      example: null,
+
+      date: {
+        description: 'Sets the date format',
+        usage: '<format>',
+        example: 'MM/DD/YYYY',
+      },
+      time: {
+        description: 'Sets the time format',
+        usage: '<format>',
+        example: 'HH hours mm minutes ss seconds',
+      },
+    },
     google: {
       description: 'Searches for an information on Google',
       usage: '<search>',
@@ -70,6 +109,11 @@ module.exports = (dot) => ({
     },
     hangup: {
       description: 'Ends an ongoing call',
+      usage: null,
+      example: null,
+    },
+    language: {
+      description: 'Displays available languages on Homer',
       usage: null,
       example: null,
     },
@@ -192,10 +236,26 @@ module.exports = (dot) => ({
       usage: '<number> <message>',
       example: '478-444 Hey, call me back!',
     },
+    timezone: {
+      description: 'Sets the timezone',
+      usage: '<timezone>',
+      example: 'Europe/Paris',
+
+      list: {
+        description: 'Displays available zones',
+        usage: null,
+        example: null,
+      },
+    },
     tune: {
       description: 'Tunes into a station',
       usage: '<frequency>',
       example: '98.8',
+    },
+    user: {
+      description: 'Displays information about a user',
+      usage: '[user]',
+      example: '@Homer',
     },
     volume: {
       description: 'Sets radio volume (in percentage)',

@@ -88,6 +88,8 @@ class LocaleManager extends Manager {
       return fn(...args);
     } if (typeof fn === 'string') {
       return fn;
+    } if (fn === null) {
+      return null;
     }
     this.client.logger.warn(`[locale] No value for key '${key}' in locale '${locale}'`);
     return 'UNKNOWN_KEY';

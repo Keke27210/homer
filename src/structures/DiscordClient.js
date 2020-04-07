@@ -34,6 +34,12 @@ class DiscordClient extends Client {
     this.owners = owners || [];
 
     /**
+     * Discord invite for support server
+     * @type {string}
+     */
+    this.invite = 'https://discord.gg/fYRm29b';
+
+    /**
      * Whether the client is ready to proceed commands and events
      * @type {boolean}
      */
