@@ -29,6 +29,18 @@ class TrackingProvider extends Provider {
   }
 
   /**
+   * Creates a tracking entry
+   * @param {string} id User ID
+   * @returns {Promise<Track>}
+   */
+  async createTracking(id) {
+    const existing = await this.getRow(id);
+    if (!existing) return existing;
+    const row = await this.insertRow({ id, activity: null, names: [] });
+    return this.getRow(row);
+  }
+
+  /**
    * Fetches a user's activity
    * @param {string} id User ID
    * @returns {Promise<Date>}
@@ -62,7 +74,7 @@ class TrackingProvider extends Provider {
   async updateActivity(id) {
     if (!this.database.ready) throw new Error('UNAVAILABLE_DATABASE');
     const entry = await this.getRow(id);
-    if (!entry) await this.insertRow({ id });
+    if (!entry) await this.createTracking(id);
     await this.updateRow(id, { activity: new Date() });
     return null;
   }
@@ -76,7 +88,7 @@ class TrackingProvider extends Provider {
   async updateNames(id, name) {
     if (!this.database.ready) throw new Error('UNAVAILABLE_DATABASE');
     const entry = await this.getRow(id);
-    if (!entry) await this.insertRow({ id });
+    if (!entry) await this.createTracking(id);
     const names = entry && entry.names ? entry.names : [];
     names.push({ name, time: Date.now() });
     await this.updateRow(id, { activity: new Date(), names });
@@ -96,9 +108,12 @@ class TrackingProvider extends Provider {
       ['activity', '<', new Date(Date.now() - this.deletableDelay).toISOString(), 'timestamp'],
     ]);
     if (!entries.length) return;
-    for (let i = 0; i < entries.length; i += 1) {
+    let i = 0;
+    while (i < entries.length) {
       await this.deleteRow(entries[i].id);
+      i += 1;
     }
+    this.client.logger.log(`[tracking] ${i} entries cleared`);
   }
 }
 
