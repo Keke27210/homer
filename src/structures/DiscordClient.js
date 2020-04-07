@@ -147,6 +147,7 @@ class DiscordClient extends Client {
     });
 
     process.on('unhandledRejection', (error) => {
+      if (error.message === 'UNAVAILABLE_DATABASE' && !this.database.ready) return; // Ignore these because we already know that
       this.logger.error('[unhandledRejection] An unhandled promise rejection was caught!', error);
     });
   }
@@ -164,10 +165,11 @@ class DiscordClient extends Client {
         this.logger.warn('[database] Unable to connect - Running in no-database mode');
       });
 
-    this.logger.log('[client] Registering components...');
+    this.logger.log('[managers] Registering components...');
     this.commandManager.registerCommands();
     this.eventManager.registerEvents();
     this.localeManager.registerLocales();
+    this.logger.log('[managers] Components registered');
   }
 
   /**

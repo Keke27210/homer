@@ -15,16 +15,21 @@ const config = require('../config/production.json');
 const client = new DiscordClient(
   config.clientOptions,
   config.databaseCredentials,
-  config.apiKeys,
 );
 
-client.initialize()
-  .then(() => {
-    client.login(config.token)
-      .then(() => client.logger.log('[gateway] Logged in'))
-      .catch(client.logger.error);
-  })
-  .catch(client.logger.error);
+(async function login() {
+  client.logger.log('[client] Initializing client...');
+  await client.initialize();
+  client.logger.log('[client] Client initialized!');
+
+  client.logger.log('[gateway] Connecting to the gateway');
+  await client.login(config.token);
+  client.logger.log('[gateway] Logged in');
+}())
+  .catch((error) => {
+    client.logger.error('AN ERROR OCCURED DURING BOT STARTUP', error);
+    client.shutdown(-1);
+  });
 
 process.on('SIGINT', client.shutdown.bind(client));
 process.on('SIGHUP', client.shutdown.bind(client));
