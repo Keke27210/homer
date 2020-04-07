@@ -34,7 +34,7 @@ class LocaleManager extends Manager {
     let i = 0;
     const dirContent = readdirSync(this.localeDirectory);
     while (i < dirContent.length) {
-      const locale = require(resolve(this.localeDirectory, dirContent[i]));
+      const locale = require(resolve(this.localeDirectory, dirContent[i]))('▫️');
       this.locales[locale._.code] = locale;
       i += 1;
     }

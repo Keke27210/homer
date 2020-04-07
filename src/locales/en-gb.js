@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = (dot) => ({
   /* LOCALE INFORMATION */
   _: {
     code: 'en-gb',
@@ -98,6 +98,11 @@ module.exports = {
       usage: '[channel]',
       example: 'Music',
     },
+    radios: {
+      description: 'Lists all available radios',
+      usage: null,
+      example: null,
+    },
     role: {
       description: 'Displays information about a role',
       usage: '<role>',
@@ -160,6 +165,11 @@ module.exports = {
       description: 'Sends a text message to someone',
       usage: '<number> <message>',
       example: '478-444 Hey, call me back!',
+    },
+    tune: {
+      description: 'Tunes into a station',
+      usage: '<frequency>',
+      example: '98.8',
     },
     volume: {
       description: 'Sets radio volume (in percentage)',
@@ -261,6 +271,13 @@ module.exports = {
     error: 'An error occurred while hanging up.',
   },
 
+  // Leave command
+  leave: {
+    none: 'There are no active voice connections.',
+    success: (name) => `Successfully left **${name}**.`,
+    error: 'An error occured while leaving voice channel.',
+  },
+
   // Lookup command
   lookup: {
     noSearch: 'You must provide something to look for.',
@@ -333,8 +350,51 @@ module.exports = {
   // Radio command
   radio: {
     none: 'Run this command while being on a voice channel or specify a voice channel name.',
+    unknown: 'No radio channel set. Use `h:radio <channel>` to set one.',
     set: (name) => `Radio channel is set to **${name}**.`,
     error: 'An error occured while setting radio channel.',
+  },
+
+  // Radios command
+  radios: {
+    empty: 'There are no available radios at the moment.',
+    list: '📻 Radios available on **Homer**:',
+    footer: (p, t) => `Tune into a station by running h:tune <frequency> | Page ${p}/${t}`,
+    pty: {
+      // Based on the European PTY codes
+      0: 'No programme type',
+      1: 'News',
+      2: 'Current affairs',
+      3: 'Information',
+      4: 'Sport',
+      5: 'Education',
+      6: 'Drama',
+      7: 'Culture',
+      8: 'Science',
+      9: 'Varied',
+      10: 'Pop music',
+      11: 'Rock music',
+      12: 'Easy listening',
+      13: 'Light classical',
+      14: 'Serious classical',
+      15: 'Other music',
+      16: 'Weather',
+      17: 'Finance',
+      18: 'Children\'s programmes',
+      19: 'Social affairs',
+      20: 'Religion',
+      21: 'Phone-in',
+      22: 'Travel',
+      23: 'Leisure',
+      24: 'Jazz music',
+      25: 'Country music',
+      26: 'National music',
+      27: 'Oldies music',
+      28: 'Folk music',
+      29: 'Documentary',
+      30: 'Alarm test',
+      31: 'Alarm',
+    },
   },
 
   // Role command
@@ -477,6 +537,16 @@ module.exports = {
     error: 'An error occured while setting timezone.',
   },
 
+  // Tune command
+  tune: {
+    error: 'An error occured while broadcasting radio.',
+    missing: 'You must provide a frequency to set.',
+    invalid: 'The frequency you provided is invalid.',
+    unknown: (freq) => `No radio found on frequency \`${freq}Mhz\`.\n${dot} Find available radios on \`h:radios\`.`,
+    tuning: (freq) => `Tuning into \`${freq}Mhz\`...`,
+    playing: (radio) => `📻 Listening to **${radio}**`,
+  },
+
   // User command
   user: {
     title: (emote, name) => `${emote} Information about ${name}:`,
@@ -509,4 +579,4 @@ module.exports = {
     set: (volume) => `The volume is now at \`${volume}%\`.`,
     error: 'An error occured while setting volume.',
   },
-};
+});

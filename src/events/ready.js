@@ -10,6 +10,7 @@ class ReadyEvent extends Event {
       // Creating provider tables
       this.client.logger.log('[database] Creating table if not exists');
       await this.client.settings.createTable();
+      await this.client.radios.createTable();
       await this.client.telephone.contracts.createTable();
       await this.client.telephone.calls.createTable();
       await this.client.telephone.phonebook.createTable();

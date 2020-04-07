@@ -5,6 +5,7 @@ const Database = require('./Database');
 const Logger = require('./Logger');
 
 // Managers
+const AudioManager = require('../managers/AudioManager');
 const CommandManager = require('../managers/CommandManager');
 const EventManager = require('../managers/EventManager');
 const LocaleManager = require('../managers/LocaleManager');
@@ -13,6 +14,7 @@ const LocaleManager = require('../managers/LocaleManager');
 const CallProvider = require('../providers/CallProvider');
 const ContractProvider = require('../providers/ContractProvider');
 const PhonebookProvider = require('../providers/PhonebookProvider');
+const RadioProvider = require('../providers/RadioProvider');
 const SettingProvider = require('../providers/SettingProvider');
 
 // Utils
@@ -46,6 +48,12 @@ class DiscordClient extends Client {
      * @type {Logger}
      */
     this.logger = new Logger();
+
+    /**
+     * Audio manager for this client
+     * @type {AudioManager}
+     */
+    this.audioManager = new AudioManager(this);
 
     /**
      * Command manager for this client
@@ -88,6 +96,12 @@ class DiscordClient extends Client {
        */
       phonebook: new PhonebookProvider(this),
     };
+
+    /**
+     * Radio provider for this client
+     * @type {RadioProvider}
+     */
+    this.radios = new RadioProvider(this);
 
     /**
      * Setting provider for this client

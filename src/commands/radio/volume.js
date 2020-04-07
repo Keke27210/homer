@@ -29,6 +29,11 @@ class VolumeCommand extends Command {
 
     const ret = await this.client.settings.setVolume(message.settings.id, volume)
       .then(() => {
+        const dispatcher = message.guild.voice
+          ? message.guild.voice.connection.dispatcher
+          : null;
+        if (dispatcher) dispatcher.setVolume((volume / 100).toFixed(2));
+
         message.success(message._('volume.set', volume));
         return 0;
       })
