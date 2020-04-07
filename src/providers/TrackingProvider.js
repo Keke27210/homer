@@ -25,7 +25,6 @@ class TrackingProvider extends Provider {
      */
     this.sweepInterval = (24 * 60 * 60 * 1000);
 
-    this.deleteEntries();
     this.client.setInterval(() => this.deleteEntries(), this.sweepInterval);
   }
 
@@ -85,9 +84,10 @@ class TrackingProvider extends Provider {
    * @returns {Promise<void>}
    */
   async deleteEntries() {
+    this.client.logger.log('[tracking] Clearing outdated entries');
     const entries = await this.getRows([
       ['names', 'is', 'null'],
-      ['activity', '<', Date.now() - this.deletableDelay],
+      ['activity', '<', new Date(Date.now() - this.deletableDelay).toISOString(), 'timestamp'],
     ]);
     if (!entries.length) return;
     for (let i = 0; i < entries.length; i += 1) {

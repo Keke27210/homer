@@ -160,6 +160,29 @@ class CallProvider extends Provider {
 
     await this.contracts.notify(correspondent.id, false, `📞 ${message.author.tag}: ${content}${attachments ? `\n${attachments}` : ''}`);
   }
+
+  /**
+   * Handles a typing event
+   * @param {string} channel Channel ID
+   */
+  async handleTyping(channel) {
+    const contract = await this.contracts.fetchContract(channel.id);
+    if (!contract) return;
+
+    const call = await this.findCall(contract.id);
+    if (!call || call.state !== this.states.ONGOING) return;
+
+    const correspondent = await this.contracts.getRow(call.caller === contract.id
+      ? call.called
+      : call.caller);
+    if (!correspondent) return;
+
+    const target = this.client.channels.resolve(correspondent.channel);
+    if (!target) return;
+
+    target.startTyping(1);
+    this.client.setTimeout(() => target.stopTyping(), 10000);
+  }
 }
 
 module.exports = CallProvider;

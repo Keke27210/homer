@@ -14,9 +14,12 @@ class ReadyEvent extends Event {
       await this.client.telephone.contracts.createTable();
       await this.client.telephone.calls.createTable();
       await this.client.telephone.phonebook.createTable();
+
+      // Clearing outdated tracking
+      this.client.tracking.deleteEntries();
     }
 
-    this.client.logger.log(`[ready] Bot initialized successfully - Serving as ${this.client.user.tag}`);
+    this.client.logger.log(`[ready] Bot initialized successfully - Serving as ${this.client.user.username}`);
   }
 }
 

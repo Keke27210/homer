@@ -170,9 +170,9 @@ class Provider {
       for (let i = 0; i < properties.length; i += 1) {
         const prop = properties[i];
         if (Array.isArray(prop[0])) {
-          conditions.push(`(${prop.map((p) => `${p[0]} ${p[1]} ${p[2] === 'null' ? 'null' : `'${p[2]}'`}`).join(' OR ')})`);
+          conditions.push(`(${prop.map((p) => `${p[0]} ${p[1]} ${p[2] === 'null' ? 'null' : `${p[3] ? `${p[3]} ` : ''}'${p[2]}'`}`).join(' OR ')})`);
         } else {
-          conditions.push(`${prop[0]} ${prop[1]} ${prop[2] === 'null' ? 'null' : `'${prop[2]}'`}`);
+          conditions.push(`${prop[0]} ${prop[1]} ${prop[2] === 'null' ? 'null' : `${prop[3] ? `${prop[3]} ` : ''}'${prop[2]}'`}`);
         }
       }
     }

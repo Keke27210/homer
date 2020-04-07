@@ -5,9 +5,13 @@ class TypingStartEvent extends Event {
     super(client, 'typingStart');
   }
 
-  handle(_, user) {
+  handle(channel, user) {
     if (this.client.database.ready) {
       this.client.tracking.updateActivity(user.id);
+    }
+
+    if (user.id !== this.client.user.id) {
+      this.client.telephone.calls.handleTyping(channel);
     }
   }
 }
