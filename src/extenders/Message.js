@@ -2,6 +2,7 @@ const { MessageEmbed, Structures } = require('discord.js');
 const moment = require('moment-timezone');
 
 const emotes = {
+  // Status/Prefix emotes
   homer: '695734221322584155',
   human: '👤',
   bot: '695746485790310530',
@@ -17,10 +18,25 @@ const emotes = {
   error: '695722118976897085',
   info: 'ℹ️',
   placeholder: '695983847061323797',
+
+  // User flags
   developer: '697441287921467432',
   owner: '695975441516855337',
   donator: '697439375847456818',
   nitro: '695977635666198570',
+  DISCORD_EMPLOYEE: '697537107505446962',
+  DISCORD_PARTNER: '697536791192010933',
+  HYPESQUAD_EVENTS: '697539960592400485',
+  BUGHUNTER_LEVEL1: '697534883115040838',
+  HOUSE_BRAVERY: '697534635755700224',
+  HOUSE_BRILLANCE: '697534618617774160',
+  HOUSE_BALANCE: '697533287870103596',
+  EARLY_SUPPORTER: '697538498873393153',
+  TEAM_USER: '👥',
+  SYSTEM: '442415945647128585',
+  BUGHUNTER_LEVEL2: '697534883115040838',
+
+  // Help categories
   c_bot: '474150825929998337',
   c_general: '🖥',
   c_radio: '📻',

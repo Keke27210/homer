@@ -163,18 +163,19 @@ class Command {
     let ret = true;
 
     // Global restriction
-    ret = !topic.includes('{-homer}');
-    ret = topic.includes('{homer}');
+    if (topic.includes('{-homer}')) ret = false;
+    if (topic.includes('{homer}')) ret = true;
 
     // Category restriction
-    ret = !topic.includes(`{-${this.category}}`);
-    ret = topic.includes(`{${this.category}}`);
+    if (topic.includes(`{-${this.category}}`)) ret = false;
+    if (topic.includes(`{${this.category}}`)) ret = true;
 
     // Command restriction
-    ret = !topic.includes(`{-${command}}`);
-    ret = topic.includes(`{${command}}`);
-    ret = !topic.includes(`{-${this.name}}`);
-    ret = topic.includes(`{${this.name}}`);
+    if (topic.includes(`{${this.name}}`) || topic.includes(`{${command}}`)) {
+      ret = true;
+    } else if (topic.includes(`{-${this.name}}`) || topic.includes(`{-${command}}`)) {
+      ret = false;
+    }
 
     return ret;
   }
