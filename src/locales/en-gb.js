@@ -14,6 +14,8 @@ module.exports = (dot) => ({
     yes: 'Yes',
     no: 'No',
     unknown: 'Unknown',
+    loading: 'Loading...',
+    more: (num) => `and **${num}** more...`,
   },
 
   database: {
@@ -272,6 +274,11 @@ module.exports = (dot) => ({
       description: 'Sets radio volume (in percentage)',
       usage: '<volume>',
       example: '75',
+    },
+    weather: {
+      description: 'Gets weather for the provided city',
+      usage: '<city>',
+      example: 'Paris',
     },
   },
 
@@ -768,5 +775,54 @@ module.exports = (dot) => ({
     range: 'The volume must be between 0 and 100.',
     set: (volume) => `The volume is now at \`${volume}%\`.`,
     error: 'An error occured while setting volume.',
+  },
+
+  // Weather command
+  weather: {
+    missing: 'You must provide a city to look for.',
+    none: (search) => `No cities have been found matching \`${search}\`.`,
+    multiple: (search) => `Several cities have been found matching \`${search}\`:`,
+    error: 'An error occured while fetching data.',
+    title: (city, state, country) => `🌥️ Weather for **${city}** (${state}, ${country}):`,
+    footer: 'The information is provided by Accuweather.',
+
+    now: 'Currently',
+    today: 'Today',
+    condition: 'Weather',
+    temperature: 'Temperature',
+    feel: 'Feels like',
+    wind: 'Wind',
+    uv: 'UV Index',
+    humidity: 'Humidity',
+    pressure: 'Pressure',
+    nebulosity: 'Nebulosity',
+    sunrise: 'Sunrise',
+    sunset: 'Sunset',
+    moon: 'Moon',
+
+    format: {
+      day: 'dddd MMMM Do',
+      time: 'HH:mmA',
+      temperature: ([c, f]) => `**${c}**°C (**${f}**°F)`,
+      temperatures: ({ max, min }) => `from **${min[0]}**°C (**${min[1]}**°F) to **${max[0]}**°C (**${max[1]}**°F)`,
+      feel: ([c, f]) => `**${c}**°C (**${f}**°F)`,
+      wind: ({ direction, speed }, gust) => `**${direction}** - **${speed[0]}**kph (**${speed[1]}**mph) - Gusts of **${gust[0]}**kph (**${gust[1]}**mph)`,
+      uv: ({ index, text }) => `**${index}** (**${text}**)`,
+      humidity: (hr) => `**${hr}**%`,
+      pressure: (pr) => `**${pr}**mb`,
+      nebulosity: (cover) => `**${cover}**%`,
+      moon: (emote, phase) => `${emote} **${phase}**`,
+    },
+
+    moons: {
+      New: 'New moon',
+      WaxingCrescent: 'Waxing crescent',
+      FirstQuarter: 'First quarter',
+      WaxingGibbous: 'Waxing gibbous',
+      Full: 'Full moon',
+      WaningGibbous: 'Waning gibbous',
+      LastQuarter: 'Last quarter',
+      WaningCrescent: 'Waning crescent',
+    },
   },
 });
