@@ -39,7 +39,7 @@ class TuneCommand extends Command {
       message.author.id,
       radio.id,
       message.settings.volume,
-      message.settings.boost,
+      await this.client.settings.isDonator(message.author.id),
     )
       .catch((error) => {
         this.client.logger.error(`[commands->tune] Error while tuning on ${radio.id} in ${voice.id}`, error);

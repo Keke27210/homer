@@ -47,8 +47,13 @@ class LookupCommand extends Command {
       const user = await this.client.users.fetch(search, { cache: false })
         .catch(() => null);
       if (user) {
+        const honours = [];
+        if (this.client.owners.includes(user.id)) honours.push(message.emote('developer'));
+        if (await this.client.settings.isDonator(user.id)) honours.push(message.emote('donator'));
+        if (user.avatar && user.avatar.startsWith('a_')) honours.push(message.emote('nitro'));
+
         const description = [
-          `${message.dot} ${message._('lookup.user.id')}: **${user.id}**`,
+          `${message.dot} ${message._('lookup.user.id')}: **${user.id}**${honours.length ? ` ${honours.join(' ')}` : ''}`,
           `${message.dot} ${message._('lookup.user.creation')}: ${message.getMoment(user.createdTimestamp)}`,
         ];
 

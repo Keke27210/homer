@@ -28,7 +28,9 @@ class UserCommand extends Command {
     }
 
     const honours = [];
+    if (this.client.owners.includes(user.id)) honours.push(message.emote('developer'));
     if (message.guild && message.guild.ownerID === user.id) honours.push(message.emote('owner'));
+    if (await this.client.settings.isDonator(user.id)) honours.push(message.emote('donator'));
     if (user.avatar && user.avatar.startsWith('a_')) honours.push(message.emote('nitro'));
 
     const description = [`${message.dot} ${message._('user.id')}: **${user.id}**${honours.length ? ` ${honours.join(' ')}` : ''}`];

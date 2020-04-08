@@ -215,6 +215,17 @@ class SettingProvider extends Provider {
 
     return null;
   }
+
+  /**
+   * Returns if a user or guild has donator perks enabled
+   * @param {string} id Context ID
+   * @returns {Promise<boolean>}
+   */
+  async isDonator(id) {
+    const existing = await this.getRow(id);
+    if (!existing || !existing.boost) return false;
+    return true;
+  }
 }
 
 module.exports = SettingProvider;

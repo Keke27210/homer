@@ -371,6 +371,7 @@ module.exports = (dot) => ({
     error: 'An error occurred while dialing.',
   },
 
+  // Donators command
   donators: {
     title: '💵 Donations for **Homer**:',
     message: [
