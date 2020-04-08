@@ -110,6 +110,7 @@ class Command {
         '',
         `${message.dot} ${message._('help.aliases')}: ${this.aliases.map((a) => `\`${a}\``).join(', ') || message._('global.none')}`,
         `${message.dot} ${message._('help.usage')}: ${message._(`help.${parent.join('.')}.usage`) ? `\`h:${parent.join(' ')} ${message._(`help.${parent.join('.')}.usage`)}\`` : message._('global.none')}`,
+        `${message.dot} ${message._('help.example')}: ${message._(`help.${parent.join('.')}.example`) ? `\`h:${parent.join(' ')} ${message._(`help.${parent.join('.')}.example`)}\`` : message._('global.none')}`,
       ];
       const embed = message.getEmbed().setDescription(description.join('\n'));
       const child = this.children.filter((c) => !c.hidden);

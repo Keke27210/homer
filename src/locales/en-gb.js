@@ -22,13 +22,7 @@ module.exports = (dot) => ({
 
   /* HELP */
   help: {
-    help: {
-      description: 'Shows this menu',
-      usage: null,
-      example: null,
-    },
-
-    main: '📚 Help for **Homer**:',
+    // Categories names
     category: {
       bot: 'Bot',
       general: 'General',
@@ -37,14 +31,21 @@ module.exports = (dot) => ({
       telephone: 'Telephone',
       more: 'More',
     },
+
+    // Help command
+    main: '📚 Help for **Homer**:',
     footer: 'Add "help" at the end of the command to get advanced help.',
     cannot: 'Couldn\'t send help in direct messages! Please ensure they are open.',
     more: (invite) => `If you have more questions about a feature or cannot troubleshoot a problem encountered with Homer, feel free to join our **[support server](${invite})** where you can be helped quickly!\nYou can also make a donation to support Homer's development and have access to some cool donator perks.`,
+
+    // Help for a specific command
+    sub: (name) => `📚 Help for \`${name}\`:`,
     aliases: 'Aliases',
     usage: 'Usage',
-    sub: (name) => `📚 Help for \`${name}\`:`,
+    example: 'Example',
     subcommands: 'Subcommands',
 
+    // Help for commands
     about: {
       description: 'Information about the bot',
       usage: null,
@@ -109,6 +110,11 @@ module.exports = (dot) => ({
     },
     hangup: {
       description: 'Ends an ongoing call',
+      usage: null,
+      example: null,
+    },
+    help: {
+      description: 'Shows this menu',
       usage: null,
       example: null,
     },
