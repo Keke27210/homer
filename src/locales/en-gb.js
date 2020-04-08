@@ -451,6 +451,18 @@ module.exports = (dot) => ({
       creation: 'Server creation date',
       memberDesc: (total, online, emote) => `**${total}** including ${emote} **${online}**`,
     },
+    gift: {
+      title: (code) => `🎁 Information about gift code **${code}**:`,
+      name: 'Product',
+      summary: 'Summary',
+      uses: 'Uses',
+      redeem: 'Redeem link',
+      expires: 'This gift will expire on',
+      status: {
+        redeemed: 'Redeemed',
+        available: 'Available',
+      },
+    },
     server: {
       widgetDisabled: (id) => `Server found matching ID \`${id}\` but no further information available.`,
       title: (name) => `🖥️ Information about server **${name}**:`,

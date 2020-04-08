@@ -1,5 +1,8 @@
+const fetch = require('node-fetch');
 const { resolveInviteCode } = require('discord.js/src/util/DataResolver');
 const { deconstruct } = require('discord.js/src/util/Snowflake');
+
+const GIFT_URL = (id) => `https://discordapp.com/api/v6/entitlements/gift-codes/${id}`;
 
 const Command = require('../../structures/Command');
 
@@ -41,7 +44,30 @@ class LookupCommand extends Command {
       }
 
       // 2- Gift code
-      // TBD
+      const gift = await fetch(GIFT_URL(search))
+        .then((r) => r.json())
+        .catch(() => null);
+      if (gift && gift.code !== 10038) {
+        const description = [
+          `${message.dot} ${message._('lookup.gift.name')}: **${gift.store_listing.sku.name}**`,
+          `${message.dot} ${message._('lookup.gift.summary')}: **${gift.store_listing.summary}**`,
+          `${message.dot} ${message._('lookup.gift.uses')}: **${gift.uses}**/**${gift.max_uses}** (**${message._(`lookup.gift.status.${gift.redeemed ? 'redeemed' : 'available'}`)}**)`,
+          `${message.dot} ${message._('lookup.gift.redeem')}: **[${gift.code}](https://discord.gift/${gift.code})**`,
+        ];
+
+        const embed = message.getEmbed().setDescription(description.join('\n'));
+        if (gift.expires_at) {
+          embed
+            .setFooter(message._('lookup.gift.expires'))
+            .setTimestamp(new Date(gift.expires_at));
+        }
+        if (gift.store_listing.thumbnail) {
+          embed.setThumbnail(`https://cdn.discordapp.com/app-assets/${gift.store_listing.sku.application_id}/store/${gift.store_listing.thumbnail.id}.png`);
+        }
+
+        m.edit(message._('lookup.gift.title', gift.code), embed);
+        return 0;
+      }
     } else {
       // 3- User ID
       const user = await this.client.users.fetch(search, { cache: false })
