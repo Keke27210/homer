@@ -144,7 +144,7 @@ module.exports = (dot) => ({
       example: '@You',
     },
     ping: {
-      description: 'Pong with WebSocket\'s latency',
+      description: 'Pong!',
       usage: null,
       example: null,
     },
@@ -504,7 +504,7 @@ module.exports = (dot) => ({
 
   // Ping command
   ping: {
-    pong: (ws) => `🏓 Pong with **${ws}** milliseconds!`,
+    pong: (ws) => `🏓 Pong, **${ws}**ms.`,
   },
 
   // Prefix command
