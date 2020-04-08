@@ -52,10 +52,12 @@ class LookupCommand extends Command {
         if (await this.client.settings.isDonator(user.id)) honours.push(message.emote('donator'));
         if (user.avatar && user.avatar.startsWith('a_')) honours.push(message.emote('nitro'));
 
-        const description = [
-          `${message.dot} ${message._('lookup.user.id')}: **${user.id}**${honours.length ? ` ${honours.join(' ')}` : ''}`,
-          `${message.dot} ${message._('lookup.user.creation')}: ${message.getMoment(user.createdTimestamp)}`,
-        ];
+        const description = [`${message.dot} ${message._('lookup.user.id')}: **${user.id}**${honours.length ? ` ${honours.join(' ')}` : ''}`];
+
+        const active = await this.client.tracking.getActivity(user.id);
+        if (active) description.push(`${message.dot} ${message._('lookup.user.active')}: **${message.getDuration(active)}**`);
+
+        description.push(`${message.dot} ${message._('lookup.user.creation')}: ${message.getMoment(user.createdTimestamp)}`);
 
         const embed = message.getEmbed()
           .setDescription(description.join('\n'))

@@ -463,6 +463,7 @@ module.exports = (dot) => ({
     user: {
       title: (emote, name) => `${emote} Information about ${name}:`,
       id: 'Discord ID',
+      active: 'Last seen',
       creation: 'Creation date',
     },
   },
