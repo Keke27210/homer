@@ -82,6 +82,11 @@ module.exports = (dot) => ({
       usage: '<number>',
       example: 'SUPPORT',
     },
+    donators: {
+      description: 'Information about donators and donation process',
+      usage: null,
+      example: null,
+    },
     eval: {
       description: 'Evaluates Javascript code',
       usage: '[code]',
@@ -364,6 +369,21 @@ module.exports = (dot) => ({
     busy: 'The line\'s busy.',
     correspondentBusy: 'Your correspondent line\'s busy.',
     error: 'An error occurred while dialing.',
+  },
+
+  donators: {
+    title: '💵 Donations for **Homer**:',
+    message: [
+      'Homer is a bot developed and maintained pro bono. His hosting costs money and unfortunately there is no magic money. Although I can easily rent a machine for Homer, the money collected from donations could be used for subscriptions to external APIs to embellish the bot with new features.',
+      '',
+      'If you would like to make a donation, please join the support server and contact a developer (listed in h:about). Thank you a lot!',
+    ].join('\n'),
+    list: 'Donators',
+    perks: 'Perks',
+    perkList: [
+      'Higher audio quality (from 56 to 128kbps)',
+      'Cool badge on user and lookup commands',
+    ],
   },
 
   // Formats command

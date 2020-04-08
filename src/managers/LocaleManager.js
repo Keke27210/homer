@@ -86,7 +86,7 @@ class LocaleManager extends Manager {
     }
     if (typeof fn === 'function') {
       return fn(...args);
-    } if (typeof fn === 'string') {
+    } if (typeof fn === 'string' || Array.isArray(fn)) {
       return fn;
     } if (fn === null) {
       return null;
