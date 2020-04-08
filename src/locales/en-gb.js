@@ -311,6 +311,7 @@ module.exports = (dot) => ({
   command: {
     error: 'An error occured during the execution of this command. Please try again or join the support server.',
     noDm: 'This command cannot be ran in a DM environment.',
+    override: 'A channel topic override prevents this command from executing.',
     userPermissions: (permissions) => `You need the following permissions to run this command: ${permissions}.`,
     botPermissions: (permissions) => `I need the following permissions to run this command: ${permissions}.`,
   },
