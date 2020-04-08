@@ -125,6 +125,11 @@ module.exports = (dot) => ({
       usage: null,
       example: null,
     },
+    invite: {
+      description: 'Shows the link to invite Homer into your server',
+      usage: null,
+      example: null,
+    },
     language: {
       description: 'Displays available languages on Homer',
       usage: null,
@@ -426,6 +431,11 @@ module.exports = (dot) => ({
   hangup: {
     noActive: '☎️ You\'re not on a phone call..',
     error: 'An error occurred while hanging up.',
+  },
+
+  // Invite
+  invite: {
+    invite: (emote, url) => `${emote} Invite Homer into your server by following this link: <${url}>.`,
   },
 
   // Language command
