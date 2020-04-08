@@ -91,6 +91,11 @@ class Command {
     }
 
     if (message.guild) {
+      if (message.channel.topic && !this.canRun(message.channel.topic, parent.join(' '))) {
+        message.error(message._('command.override'));
+        return;
+      }
+
       const missingUser = message.member.permissions.missing(this.userPermissions);
       if (missingUser.length) {
         message.warn(message._('command.userPermissions', missingUser.map((p) => `\`${p}\``).join(', ')));
@@ -146,6 +151,32 @@ class Command {
    */
   async main() {
     this.client.logger.warn(`[command->${this.name}] no custom main function`);
+  }
+
+  /**
+   * Checks if there are any channel topic option prevent the command to run
+   * @param {string} topic Channel
+   * @param {string} command Command name with parent
+   * @returns {boolean}
+   */
+  canRun(topic, command) {
+    let ret = true;
+
+    // Global restriction
+    ret = !topic.includes('{-homer}');
+    ret = topic.includes('{homer}');
+
+    // Category restriction
+    ret = !topic.includes(`{-${this.category}}`);
+    ret = topic.includes(`{${this.category}}`);
+
+    // Command restriction
+    ret = !topic.includes(`{-${command}}`);
+    ret = topic.includes(`{${command}}`);
+    ret = !topic.includes(`{-${this.name}}`);
+    ret = topic.includes(`{${this.name}}`);
+
+    return ret;
   }
 }
 
