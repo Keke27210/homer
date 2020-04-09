@@ -423,7 +423,7 @@ class ContractProvider extends Provider {
     ]);
     let i = 0;
     while (i < list.length) {
-      const channel = await this.client.channels.fetch(list[i].channel);
+      const channel = await this.client.channels.fetch(list[i].channel).catch(() => null);
       if (!channel) await this.terminateContract(list[i].id, 'INVALIDATED');
       i += 1;
     }
