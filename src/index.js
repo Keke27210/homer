@@ -10,7 +10,9 @@ require('./extenders/User');
 
 const DiscordClient = require('./structures/DiscordClient');
 
-const config = require('../config/production.json');
+const config = require(process.argv0 === 'DEBUG'
+  ? '../config/development.json'
+  : '../config/production.json');
 
 const client = new DiscordClient(
   config.clientOptions,
