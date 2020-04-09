@@ -26,7 +26,7 @@ class HangupCommand extends Command {
     }
 
     const call = await this.client.telephone.calls.findCall(contract.id);
-    if (!call) {
+    if (!call || call.state > this.client.telephone.calls.states.ONGOING) {
       message.send(message._('hangup.noActive'));
       return 0;
     }

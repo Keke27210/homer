@@ -140,7 +140,7 @@ class CallProvider extends Provider {
     if (!contract) return;
 
     const call = await this.findCall(contract.id);
-    if (!call) return;
+    if (!call || call.state !== this.states.ONGOING) return;
 
     const correspondent = await this.contracts.getRow(call.caller === contract.id
       ? call.called
