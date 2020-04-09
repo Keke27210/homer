@@ -26,11 +26,12 @@ class TextCommand extends Command {
       return 0;
     }
 
-    const [number] = args;
+    let [number] = args;
     if (!number) {
       message.error(message._('text.missingNumber'));
       return 0;
     }
+    number = number.toUpperCase();
 
     const content = args.slice(1).join(' ');
     if (!content) {

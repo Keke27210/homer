@@ -26,12 +26,13 @@ class DialCommand extends Command {
       return 0;
     }
 
-    const [number] = args;
+    let [number] = args;
     if (!number) {
       message.error(message._('dial.noNumber'));
       return 0;
     }
 
+    number = number.toUpperCase();
     const correspondent = await this.client.telephone.contracts.findContract(number);
     if (!correspondent) {
       message.warn(message._('dial.unknown', number));
