@@ -37,7 +37,7 @@ class CommandManager extends Manager {
    * @type {string[]}
    */
   get prefixes() {
-    return ['hb:', `<@${this.client.user.id}>`, `<@!${this.client.user.id}>`];
+    return ['h:', `<@${this.client.user.id}>`, `<@!${this.client.user.id}>`];
   }
 
   /**
