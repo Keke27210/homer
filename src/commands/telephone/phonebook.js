@@ -42,7 +42,6 @@ class MessageSubcommand extends Command {
       name: 'message',
       aliases: ['set'],
       dm: true,
-      private: true,
     });
   }
 
@@ -90,7 +89,6 @@ class PhonebookCommand extends Command {
         new MessageSubcommand(client, category),
       ],
       dm: true,
-      private: true,
     });
   }
 
