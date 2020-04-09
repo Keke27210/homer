@@ -170,6 +170,7 @@ class CallProvider extends Provider {
       .join('\n');
 
     await this.contracts.notify(correspondent.id, false, `📞 ${message.author.tag}: ${content}${attachments ? `\n${attachments}` : ''}`);
+    await this.updateRow(call.id, { updated: new Date() });
   }
 
   /**
@@ -196,6 +197,7 @@ class CallProvider extends Provider {
 
     target.startTyping(1);
     this.client.setTimeout(() => target.stopTyping(), 10000);
+    await this.updateRow(call.id, { updated: new Date() });
   }
 
   /**
