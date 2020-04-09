@@ -12,11 +12,11 @@ class AboutCommand extends Command {
   }
 
   async main(message) {
-    const { owners } = this.client;
-    for (let i = 0; i < owners.length; i += 1) {
-      const user = await this.client.users.fetch(owners[i])
+    const owners = [];
+    for (let i = 0; i < this.client.owners.length; i += 1) {
+      const user = await this.client.users.fetch(this.client.owners[i])
         .catch(() => null);
-      if (user) owners[i] = user.tag;
+      if (user) owners.push(user.tag);
     }
 
     const description = [
