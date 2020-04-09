@@ -422,12 +422,16 @@ class ContractProvider extends Provider {
       ['state', '<', this.states.TERMINATED],
     ]);
     let i = 0;
+    let j = 0;
     while (i < list.length) {
       const channel = await this.client.channels.fetch(list[i].channel).catch(() => null);
-      if (!channel) await this.terminateContract(list[i].id, 'INVALIDATED');
+      if (!channel) {
+        await this.terminateContract(list[i].id, 'INVALIDATED');
+        j += 1;
+      }
       i += 1;
     }
-    if (i > 0) this.client.logger.log(`[contracts->checkInvalid] Invalidated ${i} contracts`);
+    if (j > 0) this.client.logger.log(`[contracts->checkInvalid] Invalidated ${j} contracts`);
     return i;
   }
 }
