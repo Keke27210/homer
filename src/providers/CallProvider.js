@@ -96,8 +96,9 @@ class CallProvider extends Provider {
    * Terminates an ongoing call
    * @param {number} id Call ID
    * @param {'TERMINATED'|'ERROR'} type Termination type
+   * @param {boolean} nomsg Do not send the terminated notification
    */
-  async endCall(id, type) {
+  async endCall(id, type, nomsg = false) {
     if (!this.states[type]) throw new Error('UNKNOWN_TYPE');
 
     const call = await this.getRow(id);
@@ -110,8 +111,10 @@ class CallProvider extends Provider {
       updated: new Date(),
     });
 
-    await this.contracts.notify(call.caller, true, 'telephone.notifications.terminated').catch(() => null);
-    await this.contracts.notify(call.called, true, 'telephone.notifications.terminated').catch(() => null);
+    if (!nomsg) {
+      await this.contracts.notify(call.caller, true, 'telephone.notifications.terminated').catch(() => null);
+      await this.contracts.notify(call.called, true, 'telephone.notifications.terminated').catch(() => null);
+    }
 
     return null;
   }
@@ -205,7 +208,7 @@ class CallProvider extends Provider {
     const call = await this.getRow(id);
     if (!call) throw new Error('UNKNOWN_CALL');
     if (call.state !== this.states.PENDING) return;
-    await this.endCall(id, 'TERMINATED');
+    await this.endCall(id, 'TERMINATED', true);
 
     const callerContract = await this.contracts.getRow(call.caller);
     const calledContract = await this.contracts.getRow(call.called);
