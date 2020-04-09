@@ -116,23 +116,13 @@ class Logger {
   }
 
   /**
-   * Generates a nicely formatted time
-   * @param {?Moment} time Moment object to use
-   * @returns {string} Formatted time
-   */
-  // eslint-disable-next-line class-methods-use-this
-  genTime(time) {
-    return `[${(time || moment()).format('HH:mm:ss')}]`;
-  }
-
-  /**
    * Generate log information to output
    * @param {number} severity Log severity
    * @param {string} content Log content
    */
   genLog(severity, content) {
     const now = moment();
-    const time = this.genTime(now);
+    const time = this.constructor.genTime(now);
     this.writeConsole(time, format(content), severity);
     this.writeFile(time, format(content), severity);
   }
@@ -174,6 +164,16 @@ class Logger {
    */
   debug(str) {
     this.genLog(0, str);
+  }
+
+  /**
+   * Generates a nicely formatted time
+   * @param {?Moment} time Moment object to use
+   * @static
+   * @returns {string} Formatted time
+   */
+  static genTime(time) {
+    return `[${(time || moment()).format('HH:mm:ss')}]`;
   }
 }
 

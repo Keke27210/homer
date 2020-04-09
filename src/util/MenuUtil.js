@@ -66,10 +66,10 @@ class MenuUtil extends Util {
    * Parses menu entries
    * @param {string[]} raw Raw entries
    * @param {number} entriesPerPage Entries per page
+   * @static
    * @returns {string[][]} Parsed entries
    */
-  // eslint-disable-next-line class-methods-use-this
-  parseEntries(raw, entriesPerPage) {
+  static parseEntries(raw, entriesPerPage) {
     const entries = [];
     const count = Math.ceil(raw.length / entriesPerPage);
     for (let i = 0; i < count; i += 1) {
@@ -85,10 +85,10 @@ class MenuUtil extends Util {
   /**
    * Parses options for the menu
    * @param {object} options Menu options
+   * @static
    * @returns {object} Menu options
    */
-  // eslint-disable-next-line class-methods-use-this
-  parseOptions(options) {
+  static parseOptions(options) {
     return ({
       entriesPerPage: options.entriesPerPage || 10,
       footer: options.footer || null,
@@ -114,13 +114,13 @@ class MenuUtil extends Util {
       origin,
       locale,
       content,
-      options: this.parseOptions(options),
+      options: this.constructor.parseOptions(options),
       pages: pages || [],
       current: 0,
       time: Date.now(),
     };
 
-    instance.entries = this.parseEntries(entries, instance.options.entriesPerPage);
+    instance.entries = this.constructor.parseEntries(entries, instance.options.entriesPerPage);
     const embed = this.generateEmbed(instance);
 
     const target = await this.client.channels.fetch(instance.channel);
