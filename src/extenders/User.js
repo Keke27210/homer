@@ -10,9 +10,11 @@ Structures.extend('User', (User) => {
 
       /**
        * Flags for that user
-       * @type {UserFlags}
+       * @type {?UserFlags}
        */
-      this.flags = new UserFlags(data.public_flags);
+      this.flags = typeof data.public_flags !== 'undefined'
+        ? new UserFlags(data.public_flags)
+        : null;
     }
 
     /**
@@ -35,8 +37,8 @@ Structures.extend('User', (User) => {
      * Fetches user flags
      * @returns {Promise<UserFlags>}
      */
-    fetchFlags() {
-      if (this.flags.fetched) return this.flags;
+    async fetchFlags() {
+      if (this.flags) return this.flags;
       return this.client.api
         .users(this.id)
         .get()

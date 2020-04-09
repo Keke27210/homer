@@ -1,17 +1,7 @@
 /* eslint-disable no-bitwise */
 const { BitField } = require('discord.js');
 
-class UserFlags extends BitField {
-  constructor(bits) {
-    super(bits);
-
-    /**
-     * Whether the flags have been fetched
-     * @type {boolean}
-     */
-    this.fetched = !(typeof bits === 'undefined');
-  }
-}
+class UserFlags extends BitField {}
 
 UserFlags.FLAGS = {
   DISCORD_EMPLOYEE: 1 << 0,
