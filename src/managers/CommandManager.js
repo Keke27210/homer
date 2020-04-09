@@ -83,9 +83,9 @@ class CommandManager extends Manager {
     if (message.author.bot || !message.content) return;
     await message.fetchSettings();
 
-    const prefix = this.prefixes
-      .concat(message.settings.prefix)
-      .find((p) => message.content.toLowerCase().startsWith(p.toLowerCase()));
+    let prefix = this.prefixes;
+    if (message.settings.prefix) prefix.push(message.settings.prefix);
+    prefix = prefix.find((p) => message.content.toLowerCase().startsWith(p.toLowerCase()));
     if (!prefix) return;
 
     const parse = message.content.substring(prefix.length).trim();
