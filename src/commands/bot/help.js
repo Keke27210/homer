@@ -22,7 +22,6 @@ class HelpCommand extends Command {
 
     for (let i = 0; i < this.client.commandManager.categories.length; i += 1) {
       const category = this.client.commandManager.categories[i];
-      // eslint-disable-next-line no-continue
       if (category === 'owner') continue;
 
       const msg = [`${message.emote(`c_${category}`)} **${message._(`help.category.${category}`)}**`, ''];

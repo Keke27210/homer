@@ -67,7 +67,6 @@ class APIProvider extends Provider {
 
     for (let i = 0; i < res.length; i += 1) {
       const data = res[i];
-      // eslint-disable-next-line no-continue
       if (data.Type !== 'City') continue;
 
       locations.push({

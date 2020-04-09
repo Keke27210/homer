@@ -1,4 +1,3 @@
-/* eslint-disable no-continue */
 const Provider = require('./Provider');
 
 const TABLE_COLUMNS = [
