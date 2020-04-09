@@ -427,7 +427,7 @@ class ContractProvider extends Provider {
       if (!channel) await this.terminateContract(list[i].id, 'INVALIDATED');
       i += 1;
     }
-    if (i > 0) this.client.logger.info(`[contracts->checkInvalid] Invalidated ${i} contracts`);
+    if (i > 0) this.client.logger.log(`[contracts->checkInvalid] Invalidated ${i} contracts`);
     return i;
   }
 }
