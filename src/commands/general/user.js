@@ -34,6 +34,7 @@ class UserCommand extends Command {
     if (this.client.owners.includes(user.id)) honours.push(message.emote('developer'));
     if (message.guild && message.guild.ownerID === user.id) honours.push(message.emote('owner'));
     if (await this.client.settings.isDonator(user.id)) honours.push(message.emote('donator'));
+    if (user.system) honours.push(message.emote('VERIFIED_BOT'));
     for (let i = 0; i < flags.length; i += 1) honours.push(message.emote(flags[i]));
     if (user.avatar && user.avatar.startsWith('a_')) honours.push(message.emote('nitro'));
 
