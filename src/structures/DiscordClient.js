@@ -17,6 +17,7 @@ const ContractProvider = require('../providers/ContractProvider');
 const PhonebookProvider = require('../providers/PhonebookProvider');
 const RadioProvider = require('../providers/RadioProvider');
 const SettingProvider = require('../providers/SettingProvider');
+const TagProvider = require('../providers/TagProvider');
 const TrackingProvider = require('../providers/TrackingProvider');
 
 // Utils
@@ -124,6 +125,12 @@ class DiscordClient extends Client {
     this.settings = new SettingProvider(this);
 
     /**
+     * Tag provider for this client
+     * @type {TagProvider}
+     */
+    this.tags = new TagProvider(this);
+
+    /**
      * Tracking provider for this client
      * @type {TrackingProvider}
      */
@@ -175,6 +182,7 @@ class DiscordClient extends Client {
       await this.telephone.calls.createTable();
       await this.telephone.contracts.createTable();
       await this.telephone.phonebook.createTable();
+      await this.tags.createTable();
       await this.tracking.createTable();
       this.logger.log('[database] Database tables created');
     }

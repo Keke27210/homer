@@ -212,6 +212,47 @@ module.exports = (dot) => ({
       usage: '[exit code]',
       example: '4',
     },
+    tag: {
+      description: 'Executes a tag using Lisa\'s scripting language',
+      usage: '<name>',
+      example: 'discord.js',
+
+      create: {
+        description: 'Creates a tag',
+        usage: '<name> <content>',
+        example: 'discord.js What a powerful library!',
+      },
+      delete: {
+        description: 'Deletes a tag',
+        usage: '<name>',
+        example: 'discord.js',
+      },
+      owner: {
+        description: 'Displays a tag owner',
+        usage: '<name>',
+        example: 'discord.js',
+      },
+      raw: {
+        description: 'Displays a tag content without processing',
+        usage: '<name>',
+        example: 'discord.js',
+      },
+      raw2: {
+        description: 'Displays a tag content in code blocks',
+        usage: '<name>',
+        example: 'discord.js',
+      },
+      private: {
+        description: 'Makes a tag private or public',
+        usage: '<name>',
+        example: 'discord.js',
+      },
+      source: {
+        description: 'Makes a tag\'s source private or public',
+        usage: '<name>',
+        example: 'discord.js',
+      },
+    },
     telephone: {
       description: 'Displays information about a channel\'s contract',
       usage: null,
@@ -658,6 +699,42 @@ module.exports = (dot) => ({
     },
   },
 
+  // Tag command
+  tag: {
+    missing: 'You must provide a tag name.',
+    content: 'You must provide a content for your tag.',
+    unknown: (name) => `No tags found matching \`${name}\`.`,
+    exists: (name) => `Tag \`${name}\` already exists.`,
+    owner: (name, { user, id }) => `🏷️ Tag \`${name}\` belongs to ${user} (${id}).`,
+    permissions: (name) => `You are not owner of tag \`${name}\`.`,
+    create: {
+      length: (max) => `Content length must not exceed **${max}** characters.`,
+      created: (name) => `Tag \`${name}\` created successfully.`,
+      error: 'An error occured while creating your tag.',
+    },
+    edit: {
+      cannot: (name) => `You can't edit tag \`${name}\`.`,
+      length: (max) => `New content length must not exceed **${max}** characters.`,
+      edited: (name) => `Tag \`${name}\` edited successfully.`,
+      error: 'An error occured while editing your tag.',
+    },
+    delete: {
+      cannot: (name) => `You can't delete tag \`${name}\`.`,
+      deleted: (name) => `Tag \`${name}\` deleted successfully.`,
+      error: 'An error occured while deleting your tag.',
+    },
+    private: {
+      activated: (name) => `Tag \`${name}\` made public successfully.`,
+      deactivated: (name) => `Tag \`${name}\` made private successfully.`,
+      error: 'An error occured while activating or deactivating your tag.',
+    },
+    source: {
+      public: (name) => `Source of tag \`${name}\` is now public.`,
+      private: (name) => `Source of tag \`${name}\` is now private.`,
+      error: 'An error occured while publishing or unpublishing your tag\'s source.',
+    },
+  },
+
   // Telephone command
   telephone: {
     welcome: '☎️ Welcome to Homer\'s telephone! To get started, run `h:telephone subscribe`.',
@@ -796,7 +873,6 @@ module.exports = (dot) => ({
     error: 'An error occured while fetching data.',
     title: (city, state, country) => `🌥️ Weather for **${city}** (${state}, ${country}):`,
     footer: 'The information is provided by Accuweather.',
-
     now: 'Currently',
     today: 'Today',
     condition: 'Weather',
@@ -810,7 +886,6 @@ module.exports = (dot) => ({
     sunrise: 'Sunrise',
     sunset: 'Sunset',
     moon: 'Moon',
-
     format: {
       day: 'dddd MMMM Do',
       time: 'HH:mmA',
@@ -824,7 +899,6 @@ module.exports = (dot) => ({
       nebulosity: (cover) => `**${cover}**%`,
       moon: (emote, phase) => `${emote} **${phase}**`,
     },
-
     moons: {
       New: 'New moon',
       WaxingCrescent: 'Waxing crescent',
