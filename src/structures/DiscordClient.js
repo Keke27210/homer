@@ -8,6 +8,7 @@ const Logger = require('./Logger');
 const AudioManager = require('../managers/AudioManager');
 const CommandManager = require('../managers/CommandManager');
 const EventManager = require('../managers/EventManager');
+const LisaManager = require('../managers/LisaManager');
 const LocaleManager = require('../managers/LocaleManager');
 
 // Providers
@@ -75,6 +76,12 @@ class DiscordClient extends Client {
      * @type {EventManager}
      */
     this.eventManager = new EventManager(this);
+
+    /**
+     * Lisa manager for this client
+     * @type {LisaManager}
+     */
+    this.lisaManager = new LisaManager(this);
 
     /**
      * Locale manager for this client
@@ -190,6 +197,7 @@ class DiscordClient extends Client {
     this.logger.log('[managers] Registering components...');
     this.commandManager.registerCommands();
     this.eventManager.registerEvents();
+    this.lisaManager.registerMethods();
     this.localeManager.registerLocales();
     this.logger.log('[managers] Components registered');
   }
@@ -204,6 +212,7 @@ class DiscordClient extends Client {
     this.logger.log('[managers] Unregistering components...');
     this.commandManager.unregisterCommands();
     this.eventManager.unregisterEvents();
+    this.lisaManager.unregisterMethods();
     this.localeManager.unregisterLocales();
     this.logger.log('[managers] Components unregistered');
 

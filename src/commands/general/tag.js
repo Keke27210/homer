@@ -16,6 +16,11 @@ class CreateSubcommand extends Command {
       return 0;
     }
 
+    if (name.length > this.client.tags.nameLength) {
+      message.error(message._('tag.create.nlength', this.client.tags.nameLength));
+      return 0;
+    }
+
     const existing = await this.client.tags.getTag(name);
     if (existing) {
       message.warn(message._('tag.exists', existing.name));
@@ -70,7 +75,7 @@ class EditSubcommand extends Command {
 
     const existing = await this.client.tags.getTag(name);
     if (!existing) {
-      message.warn(message._('tag.unknown', existing.name));
+      message.warn(message._('tag.unknown', name));
       return 0;
     }
 
@@ -147,6 +152,49 @@ class DeleteSubcommand extends Command {
       });
 
     return ret;
+  }
+}
+
+// tag->list
+class ListSubcommand extends Command {
+  constructor(client, category) {
+    super(client, category, {
+      name: 'list',
+      dm: true,
+    });
+  }
+
+  async main(message, args) {
+    const search = args.join(' ');
+    let { member } = message;
+    let user = message.author;
+    if (message.guild && search) {
+      const found = await this.client.finderUtil.findMembers(message, search);
+      if (!found) {
+        message.error(message._('finder.members.zero', search));
+        return 0;
+      }
+      if (found.length > 1) {
+        message.warn(this.client.finderUtil.formatMembers(message, found, search));
+        return 0;
+      }
+      [member] = found;
+      user = member.user;
+    }
+
+    const conditions = [
+      ['author', '=', user.id],
+    ];
+    if (user.id !== message.author.id) conditions.push(['private', '=', false]);
+
+    const tags = await this.client.tags.getRows(conditions);
+    if (!tags.length) {
+      message.info(message._('tag.list.none', user.tag));
+      return 0;
+    }
+
+    message.send(message._('tag.list.title', user.tag, tags.map((t) => t.name).join(' ')));
+    return 0;
   }
 }
 
@@ -331,6 +379,7 @@ class TagCommand extends Command {
         new CreateSubcommand(client, category),
         new EditSubcommand(client, category),
         new DeleteSubcommand(client, category),
+        new ListSubcommand(client, category),
         new OwnerSubcommand(client, category),
         new RawSubcommand(client, category),
         new Raw2Subcommand(client, category),
@@ -342,7 +391,7 @@ class TagCommand extends Command {
   }
 
   async main(message, args) {
-    const [name] = args;
+    const name = args.shift();
     if (!name) return message.error(message._('tag.missing'));
 
     const tag = await this.client.tags.getTag(name);
@@ -351,7 +400,28 @@ class TagCommand extends Command {
       return 0;
     }
 
-    message.send(tag.content);
+    const m = await message.loading(message._('global.loading'));
+    let processed = false;
+    this.client.setTimeout(() => {
+      if (!processed) m.editError(message._('tag.error'));
+    }, 10000);
+
+    const parsed = await this.client.lisaManager.parseString(
+      message,
+      tag.content,
+      'tag',
+      args,
+    );
+    processed = true;
+
+    m.edit(parsed.content
+      ? parsed.content.replace(/@everyone/g, '!EVERYONE').replace(/@here/g, '!HERE')
+      : '', {
+      embed: parsed.embed,
+    })
+      .catch((error) => {
+        m.editError(message._('tag.api', error.message));
+      });
 
     return 0;
   }

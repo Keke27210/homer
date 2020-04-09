@@ -227,6 +227,11 @@ module.exports = (dot) => ({
         usage: '<name>',
         example: 'discord.js',
       },
+      list: {
+        description: 'Lists all tags owned by a user',
+        usage: '[user]',
+        example: '@b1nZy',
+      },
       owner: {
         description: 'Displays a tag owner',
         usage: '<name>',
@@ -707,7 +712,10 @@ module.exports = (dot) => ({
     exists: (name) => `Tag \`${name}\` already exists.`,
     owner: (name, { user, id }) => `🏷️ Tag \`${name}\` belongs to ${user} (${id}).`,
     permissions: (name) => `You are not owner of tag \`${name}\`.`,
+    error: 'An error occured during tag processing. Please check syntax and its ability to end.',
+    api: (message) => `An API error occured when sending processed tag, this is probably due to an invalid embed.\n\`\`\`${message}\`\`\``,
     create: {
+      nlength: (max) => `Name length must not exceed **${max}** characters.`,
       length: (max) => `Content length must not exceed **${max}** characters.`,
       created: (name) => `Tag \`${name}\` created successfully.`,
       error: 'An error occured while creating your tag.',
@@ -722,6 +730,10 @@ module.exports = (dot) => ({
       cannot: (name) => `You can't delete tag \`${name}\`.`,
       deleted: (name) => `Tag \`${name}\` deleted successfully.`,
       error: 'An error occured while deleting your tag.',
+    },
+    list: {
+      none: (user) => `${user} does not own any tags.`,
+      title: (user, list) => `🏷️ Tags owned by ${user}:\n${list}`,
     },
     private: {
       activated: (name) => `Tag \`${name}\` made public successfully.`,

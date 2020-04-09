@@ -2,7 +2,7 @@ const Provider = require('./Provider');
 
 const TABLE_COLUMNS = [
   ['id', 'SERIAL', 'PRIMARY KEY'],
-  ['name', 'VARCHAR(15)', 'NOT NULL'],
+  ['name', 'VARCHAR(30)', 'NOT NULL'],
   ['content', 'TEXT', 'NOT NULL'],
   ['author', 'VARCHAR(20)', 'NOT NULL'],
   ['active', 'bool', 'NOT NULL'],
@@ -19,7 +19,7 @@ class TagProvider extends Provider {
      * Maximum length for name
      * @type {number}
      */
-    this.nameLength = 15;
+    this.nameLength = 30;
 
     /**
      * Maximum length for content

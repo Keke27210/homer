@@ -1,6 +1,6 @@
 {
   "name": "homer",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "A true Swiss knife for your Discord server",
   "main": "src/index.js",
   "scripts": {
