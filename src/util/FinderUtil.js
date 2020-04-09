@@ -29,13 +29,20 @@ class FinderUtil extends Util {
 
     // 3- fetchAllMembers ? Seek in our cache : Querying Discord
     if (this.client.options.fetchAllMembers) {
-      const found = message.guild.members.cache.filter((m) => {
+      const instant = message.guild.members.cache.find(
+        (m) => m.user.username.toLowerCase() === query.toLowerCase()
+          || `${m.user.username.toLowerCase()}#${m.user.discriminator}` === query.toLowerCase(),
+      );
+      if (instant) return [instant];
+
+      const array = message.guild.members.cache.array();
+      return array.filter((m) => {
         let res = false;
-        if (`${m.user.username}#${m.discriminator}`.startsWith(query.toLowerCase())) res = true;
+        if (`${m.user.username.toLowerCase()}#${m.user.discriminator}`.startsWith(query.toLowerCase())) res = true;
         if (m.nickname && m.nickname.toLowerCase().startsWith(query.toLowerCase())) res = true;
+        if (m.user.discriminator === query) res = true;
         return res;
       });
-      return found.array();
     }
 
     // 3a- Extract username from tag if a tag was provided
