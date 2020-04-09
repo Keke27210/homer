@@ -3,6 +3,12 @@
  * Copyright (c) 2020 - Kevin B. - Apache 2.0 License
  */
 
+const { resolve } = require('path');
+
+if (process.cwd() !== resolve(__dirname, '..')) {
+  throw new Error('You must run this file from the root directory of Homer.');
+}
+
 // Load extended structures first
 require('./extenders/Guild');
 require('./extenders/Message');
@@ -10,7 +16,7 @@ require('./extenders/User');
 
 const DiscordClient = require('./structures/DiscordClient');
 
-const config = require(process.argv0 === 'DEBUG'
+const config = require(process.argv.includes('DEBUG')
   ? '../config/development.json'
   : '../config/production.json');
 
