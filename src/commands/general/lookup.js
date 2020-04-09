@@ -134,8 +134,10 @@ class LookupCommand extends Command {
         }
 
         const honours = [];
-        if (meta.verified) honours.push(message.emote('verified'));
-        if (meta.partner) honours.push(message.emote('DISCORD_PARTNER'));
+        if (meta) {
+          if (meta.verified) honours.push(message.emote('verified'));
+          if (meta.partner) honours.push(message.emote('DISCORD_PARTNER'));
+        }
 
         const members = Object.keys(memberCount).map((status) => `${message.emote(status, true)} **${memberCount[status]}**`);
         if (meta && meta.memberCount) members.push(`${message.emote('offline', true)} **${meta.memberCount - guild.members.length}**`);
