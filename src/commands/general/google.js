@@ -6,6 +6,7 @@ class GoogleCommand extends Command {
   constructor(client, category) {
     super(client, category, {
       name: 'google',
+      aliases: ['g'],
       dm: true,
     });
   }
