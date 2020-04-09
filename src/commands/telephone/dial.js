@@ -6,7 +6,6 @@ class DialCommand extends Command {
       name: 'dial',
       aliases: ['call'],
       dm: true,
-      private: true,
     });
   }
 

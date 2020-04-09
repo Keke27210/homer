@@ -6,7 +6,6 @@ class TextCommand extends Command {
       name: 'text',
       aliases: ['sms'],
       dm: true,
-      private: true,
     });
   }
 

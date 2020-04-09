@@ -6,7 +6,6 @@ class SubscribeSubcommand extends Command {
     super(client, category, {
       name: 'subscribe',
       dm: true,
-      private: true,
     });
   }
 
@@ -58,7 +57,6 @@ class TerminateSubcommand extends Command {
     super(client, category, {
       name: 'terminate',
       dm: true,
-      private: true,
     });
   }
 
@@ -96,7 +94,6 @@ class ToggleSubcommand extends Command {
     super(client, category, {
       name: 'toggle',
       aliases: ['switch'],
-      private: true,
       dm: true,
     });
   }
@@ -252,7 +249,6 @@ class TelephoneCommand extends Command {
         new ToggleSubcommand(client, category),
       ],
       dm: true,
-      private: true,
     });
   }
 

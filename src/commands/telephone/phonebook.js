@@ -6,7 +6,6 @@ class ToggleSubcommand extends Command {
       name: 'toggle',
       aliases: ['switch'],
       dm: true,
-      private: true,
     });
   }
 

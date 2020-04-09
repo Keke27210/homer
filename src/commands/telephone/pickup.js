@@ -5,7 +5,6 @@ class PickupCommand extends Command {
     super(client, category, {
       name: 'pickup',
       dm: true,
-      private: true,
     });
   }
 

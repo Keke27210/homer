@@ -5,7 +5,6 @@ class HangupCommand extends Command {
     super(client, category, {
       name: 'hangup',
       dm: true,
-      private: true,
     });
   }
 
