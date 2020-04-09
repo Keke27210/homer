@@ -170,6 +170,8 @@ class DiscordClient extends Client {
       if (error.message === 'UNAVAILABLE_DATABASE' && !this.database.ready) return; // Ignore these because we already know that
       this.logger.error('[unhandledRejection] An unhandled promise rejection was caught!', error);
     });
+
+    this.setMaxListeners(20);
   }
 
   /**
