@@ -4,7 +4,7 @@ class UserCommand extends Command {
   constructor(client, category) {
     super(client, category, {
       name: 'user',
-      aliases: ['userinfo'],
+      aliases: ['userinfo', 'info'],
       dm: true,
     });
   }
