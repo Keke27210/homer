@@ -367,7 +367,7 @@ class ContractProvider extends Provider {
       throw new Error('UNKNOWN_CONTRACT');
     }
 
-    const channel = this.client.channels.resolve(contract.channel);
+    const channel = await this.client.channels.fetch(contract.channel).catch(() => null);
     if (!channel) {
       throw new Error('UNKNOWN_CHANNEL');
     }
