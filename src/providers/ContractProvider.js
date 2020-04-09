@@ -412,6 +412,24 @@ class ContractProvider extends Provider {
 
     return number;
   }
+
+  /**
+   * Fetches invalid contracts (missing channel basically) and invalidates them
+   * @returns {Promise<number>}
+   */
+  async checkInvalid() {
+    const list = await this.getRows([
+      ['state', '<', this.states.TERMINATED],
+    ]);
+    let i = 0;
+    while (i < list.length) {
+      const channel = await this.client.channels.fetch(list[i].channel);
+      if (!channel) await this.terminateContract(list[i].id, 'INVALIDATED');
+      i += 1;
+    }
+    if (i > 0) this.client.logger.info(`[contracts->checkInvalid] Invalidated ${i} contracts`);
+    return i;
+  }
 }
 
 module.exports = ContractProvider;

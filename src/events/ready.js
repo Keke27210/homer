@@ -7,6 +7,7 @@ class ReadyEvent extends Event {
 
   async handle() {
     await this.client.updatePresence();
+    await this.client.telephone.contracts.checkInvalid();
     this.client.logger.log(`[ready] Bot initialized successfully - Serving as ${this.client.user.username}`);
     this.client.ready = true;
   }

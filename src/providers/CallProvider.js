@@ -110,8 +110,8 @@ class CallProvider extends Provider {
       updated: new Date(),
     });
 
-    await this.contracts.notify(call.caller, true, 'telephone.notifications.terminated');
-    await this.contracts.notify(call.called, true, 'telephone.notifications.terminated');
+    await this.contracts.notify(call.caller, true, 'telephone.notifications.terminated').catch(() => null);
+    await this.contracts.notify(call.called, true, 'telephone.notifications.terminated').catch(() => null);
 
     return null;
   }
@@ -146,6 +146,10 @@ class CallProvider extends Provider {
       ? call.called
       : call.caller);
     if (!correspondent) return;
+    if (correspondent.state > this.contracts.states.PAUSED) {
+      this.endCall(correspondent.id, 'ERROR');
+      return;
+    }
 
     let content = message.cleanContent;
     const linkTest = content.match(/(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[A-Z0-9+&@#/%=~_|$])/igm);
