@@ -44,7 +44,6 @@ Structures.extend('User', (User) => {
         .get()
         .then((data) => {
           this._patch(data);
-          this.flags.fetched = true;
           return this.flags;
         });
     }
