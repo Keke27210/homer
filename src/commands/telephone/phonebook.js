@@ -118,7 +118,7 @@ class PhonebookCommand extends Command {
       message.locale,
       message._('phonebook.title'),
       null,
-      description,
+      description.sort((a, b) => a.localeCompare(b)),
     );
 
     return 0;
