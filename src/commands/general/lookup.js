@@ -28,8 +28,14 @@ class LookupCommand extends Command {
       const invite = await this.client.fetchInvite(search)
         .catch(() => null);
       if (invite) {
+        const honours = [];
+        if (invite.guild) {
+          if (invite.guild.verified) honours.push(message.emote('verified'));
+          if (invite.guild.features.includes('PARTNERED')) honours.push(message.emote('DISCORD_PARTNER'));
+        }
+
         const description = [
-          `${message.dot} ${message._('lookup.invite.server')}: ${invite.guild ? `**${invite.guild.name}** (${invite.guild.id})` : message._('global.unknown')}`,
+          `${message.dot} ${message._('lookup.invite.server')}: ${invite.guild ? `**${invite.guild.name}** (${invite.guild.id})${honours.length ? ` ${honours.join(' ')}` : ''}` : message._('global.unknown')}`,
           `${message.dot} ${message._('lookup.invite.inviter')}: ${invite.inviter ? invite.inviter.tag : message._('global.none')}`,
           `${message.dot} ${message._('lookup.invite.channel')}: **${invite.channel.type === 'text' ? '#' : ''}${invite.channel.name}** (${invite.channel.id})`,
           `${message.dot} ${message._('lookup.invite.members')}: ${message._('lookup.invite.memberDesc', invite.memberCount, invite.presenceCount, message.emote('online', true))}`,
@@ -115,6 +121,8 @@ class LookupCommand extends Command {
           .then((invite) => ({
             icon: invite.guild ? invite.guild.iconURL({ size: 256, dynamic: true }) : null,
             memberCount: invite.memberCount,
+            partner: invite.guild ? invite.guild.features.includes('PARTNERED') : false,
+            verified: invite.guild ? invite.guild.verified : false,
           }))
           .catch(() => null);
 
@@ -125,11 +133,15 @@ class LookupCommand extends Command {
           memberCount[guild.members[i].status] += 1;
         }
 
+        const honours = [];
+        if (meta.verified) honours.push(message.emote('verified'));
+        if (meta.partner) honours.push(message.emote('DISCORD_PARTNER'));
+
         const members = Object.keys(memberCount).map((status) => `${message.emote(status, true)} **${memberCount[status]}**`);
         if (meta && meta.memberCount) members.push(`${message.emote('offline', true)} **${meta.memberCount - guild.members.length}**`);
 
         const description = [
-          `${message.dot} ${message._('lookup.server.id')}: **${guild.id}**`,
+          `${message.dot} ${message._('lookup.server.id')}: **${guild.id}**${honours.length ? ` ${honours.join(' ')}` : ''}`,
           `${message.dot} ${message._('lookup.server.members')}: ${members.join(' - ')}`,
           `${message.dot} ${message._('lookup.server.channels')}: **${guild.channels.length}** ${message._('channel.types.voice')}`,
           `${message.dot} ${message._('lookup.server.invite')}: ${code ? `**[${code}](https://discord.gg/${resolveInviteCode(code)})**` : message._('global.none')}`,

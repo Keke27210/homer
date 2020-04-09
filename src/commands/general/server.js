@@ -39,8 +39,12 @@ class ServerCommand extends Command {
     const { guild } = message;
     await this.client.users.fetch(guild.ownerID);
 
+    const honours = [];
+    if (guild.verified) honours.push(message.emote('verified'));
+    if (guild.features.includes('PARTNERED')) honours.push(message.emote('DISCORD_PARTNER'));
+
     const description = [
-      `${message.dot} ${message._('server.id')}: **${guild.id}**`,
+      `${message.dot} ${message._('server.id')}: **${guild.id}**${honours.length ? ` ${honours.join(' ')}` : ''}`,
       `${message.dot} ${message._('server.owner')}: ${guild.owner.user.tag} (${guild.ownerID})`,
       `${message.dot} ${message._('server.region')}: ${this.region[guild.region]} **${message._(`server.regions.${guild.region}`)}**`,
       `${message.dot} ${message._('server.boost')}: ${guild.premiumTier === 0 ? message._('global.none') : `**${message._('server.boosts.level', guild.premiumTier)}** (${message._('server.boosts.count', guild.premiumSubscriptionCount)})`}`,

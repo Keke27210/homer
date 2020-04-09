@@ -18,6 +18,7 @@ const emotes = {
   error: '695722118976897085',
   info: 'ℹ️',
   placeholder: '695983847061323797',
+  verified: '697804778910253086',
 
   // User flags
   developer: '697441287921467432',
@@ -35,6 +36,8 @@ const emotes = {
   TEAM_USER: '👥',
   SYSTEM: '442415945647128585',
   BUGHUNTER_LEVEL2: '697534883115040838',
+  VERIFIED_BOT: '697804778910253086',
+  VERIFIED_DEVELOPER: '697803716597645363',
 
   // Help categories
   c_bot: '474150825929998337',
