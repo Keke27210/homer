@@ -57,7 +57,7 @@ class MenuUtil extends Util {
       .catch(() => null);
     if (!message) return;
 
-    message.reactions
+    message.reactions.cache
       .filter((r) => r.me)
       .forEach((r) => r.remove());
   }
