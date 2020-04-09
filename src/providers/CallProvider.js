@@ -205,6 +205,7 @@ class CallProvider extends Provider {
     const call = await this.getRow(id);
     if (!call) throw new Error('UNKNOWN_CALL');
     if (call.state !== this.states.PENDING) return;
+    await this.endCall(id, 'TERMINATED');
 
     const callerContract = await this.contracts.getRow(call.caller);
     const calledContract = await this.contracts.getRow(call.called);
