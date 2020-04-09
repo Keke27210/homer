@@ -3,7 +3,7 @@ const Provider = require('./Provider');
 const TABLE_COLUMNS = [
   ['id', 'SERIAL', 'PRIMARY KEY'],
   ['frequency', 'VARCHAR(5)', 'UNIQUE NOT NULL'],
-  ['name', 'VARCHAR(20)', 'NOT NULL'],
+  ['name', 'VARCHAR(40)', 'NOT NULL'],
   ['stream', 'TEXT', 'NOT NULL'],
   ['pty', 'INT', null],
   ['emote', 'VARCHAR(20)', null],

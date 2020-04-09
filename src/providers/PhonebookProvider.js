@@ -3,7 +3,7 @@ const Provider = require('./Provider');
 const TABLE_COLUMNS = [
   ['id', 'INT', 'PRIMARY KEY'],
   ['visible', 'bool', 'NOT NULL'],
-  ['message', 'VARCHAR(50)', null],
+  ['message', 'VARCHAR(100)', null],
   ['updated', 'TIMESTAMP', null],
   ['created', 'TIMESTAMP', 'NOT NULL'],
 ];
@@ -16,7 +16,7 @@ class PhonebookProvider extends Provider {
      * Maximum length for a phonebook message
      * @type {number}
      */
-    this.maxLength = 50;
+    this.maxLength = 100;
   }
 
   /**
