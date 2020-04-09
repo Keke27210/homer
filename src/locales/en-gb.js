@@ -289,7 +289,7 @@ module.exports = (dot) => ({
         usage: null,
         example: null,
       },
-      toogle: {
+      toggle: {
         description: 'Pauses or resumes a telephone line',
         usage: null,
         example: null,
