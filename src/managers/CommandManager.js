@@ -85,7 +85,7 @@ class CommandManager extends Manager {
 
     const prefix = this.prefixes
       .concat(message.settings.prefix)
-      .find((p) => message.content.startsWith(p));
+      .find((p) => message.content.toLowerCase().startsWith(p.toLowerCase()));
     if (!prefix) return;
 
     const parse = message.content.substring(prefix.length).trim();
