@@ -15,7 +15,7 @@ class GameCommand extends Command {
     let user = message.author;
     if (message.guild && search) {
       const found = await this.client.finderUtil.findMembers(message, search);
-      if (!found) {
+      if (!found.length) {
         message.error(message._('finder.members.zero', search));
         return 0;
       }
