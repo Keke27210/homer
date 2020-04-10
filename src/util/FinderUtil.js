@@ -69,7 +69,7 @@ class FinderUtil extends Util {
 
 
     // X- Return an empty array
-    return null;
+    return [];
   }
 
   formatMembers(message, list, query) {
