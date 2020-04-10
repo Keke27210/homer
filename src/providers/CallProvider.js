@@ -252,7 +252,7 @@ class CallProvider extends Provider {
   async minute() {
     const outdated = await this.getRows([
       ['state', '=', this.states.ONGOING],
-      ['updated', '<', new Date(Date.now() - 30000).toISOString(), 'timestamp'],
+      ['updated', '<', new Date(Date.now() - 60000).toISOString(), 'timestamp'],
     ]);
     for (let i = 0; i < outdated.length; i += 1) {
       await this.endCall(outdated[i].id, 'TERMINATED');
