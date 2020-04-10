@@ -28,7 +28,7 @@ class GameCommand extends Command {
     }
 
     const { activities } = user.presence;
-    if (!activities) {
+    if (!activities.length) {
       message.send(message._('activities.none', message.emote('activities'), user.tag));
       return 0;
     }
