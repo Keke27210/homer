@@ -53,6 +53,11 @@ module.exports = (dot) => ({
       usage: null,
       example: null,
     },
+    activities: {
+      description: 'Displays user activities',
+      usage: '[user]',
+      example: 'Luke',
+    },
     avatar: {
       description: 'Displays a member\'s avatar',
       usage: '[member]',
@@ -376,6 +381,27 @@ module.exports = (dot) => ({
     memory: 'Memory usage',
     versions: 'Versions',
     links: 'Links',
+  },
+
+  // Activities command
+  activities: {
+    title: (emote, user) => `${emote} Activities for ${user}:`,
+    none: (emote, name) => `${emote} ${name} is doing nothing at the moment.`,
+    elapsed: (time) => `Begun **${time}**`,
+    remaining: (time) => `Ends **${time}**`,
+    listening: {
+      artist: (name) => `By ${name}`,
+      album: (name) => `On ${name}`,
+    },
+    streaming: {
+      link: (url) => `**[Watch this stream](${url})**`,
+    },
+    type: {
+      PLAYING: (game) => `🎮 Playing ${game}`,
+      STREAMING: (game) => `📡 Streaming ${game}`,
+      LISTENING: (service) => `🎵 Listening to ${service}`,
+      WATCHING: (topic) => `📺 Watching ${topic}`,
+    },
   },
 
   // Avatar command

@@ -19,6 +19,7 @@ const emotes = {
   info: 'ℹ️',
   placeholder: '695983847061323797',
   verified: '697804778910253086',
+  activities: '698065014321446922',
 
   // User flags
   developer: '697441287921467432',
