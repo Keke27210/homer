@@ -234,7 +234,7 @@ class CallProvider extends Provider {
       ));
     }
 
-    const calledMessage = await callerTarget.messages.fetch(called)
+    const calledMessage = await calledTarget.messages.fetch(called)
       .catch(() => null);
     if (calledMessage) {
       calledMessage.edit(this.client.localeManager.translate(
