@@ -35,7 +35,7 @@ class TrackingProvider extends Provider {
    */
   async createTracking(id) {
     const existing = await this.getRow(id);
-    if (!existing) return existing;
+    if (existing) return existing;
     const row = await this.insertRow({ id, activity: null, names: [] });
     return this.getRow(row);
   }
