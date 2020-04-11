@@ -64,7 +64,7 @@ class UserCommand extends Command {
           } else {
             emote = '';
           }
-          detail = activity.state;
+          detail = activity.state || '';
           break;
         case 'STREAMING':
           emote = '📡';
