@@ -48,7 +48,7 @@ However, read the **[CONTRIBUTING](CONTRIBUTING.md)** guide before proceeding.
 This project is licensed under the Apache 2.0 license.  
 See **[LICENSE](LICENSE)** for more information.
 
-©️ Credits
+# ©️ Credits
 - **bufferutil**: Fast buffering tool for WebSocket ([websockets/bufferutil](https://github.com/websockets/bufferutil))
 - **colors**: Pretty colors into terminal ([Marak/colors.js](https://github.com/Marak/colors.js))
 - **discord.js**: Discord API wrapper ([discordjs/discord.js](https://github.com/discordjs/discord.js))
