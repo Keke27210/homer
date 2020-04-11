@@ -47,7 +47,7 @@ class ServicetelCommand extends Command {
     ]);
 
     // Guild information if any
-    const guild = await this.client.guilds.fetch(contract.context)
+    const guild = await this.client.guilds.resolve(contract.context)
       .catch(() => null);
     if (guild) {
       pages.push({ title: message._('servicetel.guild') });
