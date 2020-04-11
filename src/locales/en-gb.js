@@ -212,6 +212,11 @@ module.exports = (dot) => ({
       usage: null,
       example: null,
     },
+    servicetel: {
+      description: 'Displays information about a contract',
+      usage: '<contract no.>',
+      example: '0',
+    },
     shutdown: {
       description: 'Gracefully shuts down the bot',
       usage: '[exit code]',
@@ -728,6 +733,18 @@ module.exports = (dot) => ({
       'us-south': 'US South',
       'us-west': 'US West',
     },
+  },
+
+  // Servicetel command
+  servicetel: {
+    noID: 'You must provide the no. of a contract to fetch.',
+    invalid: 'The value you entered is not a valid no..',
+    unknown: (id) => `No contract found with no. \`${id}\`.`,
+    contract: (type) => `Information about ${type} contract`,
+    title: (id) => `Information about contract no. \`${id}\`:`,
+    guild: 'Information about contract\'s guild',
+    subscriber: 'Information about contract\'s subscriber',
+    blacklist: 'Contract\'s blacklist',
   },
 
   // Tag command
