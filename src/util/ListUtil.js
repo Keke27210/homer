@@ -27,8 +27,13 @@ class ListUtil extends Util {
       await fetch(
         `https://discord.bots.gg/api/v1/bots/${this.client.user.id}/stats`,
         {
+          method: 'POST',
           headers: { Authorization: api.key, 'Content-Type': 'application/json' },
-          body: { guildCount: count, shardCount: shards.length, shardId: shard },
+          body: JSON.stringify({
+            guildCount: count,
+            shardCount: shards.length,
+            shardId: shard,
+          }),
         },
       )
         .then((r) => (r.ok
@@ -56,8 +61,13 @@ class ListUtil extends Util {
       await fetch(
         `https://top.gg/api/bots/${this.client.user.id}/stats`,
         {
+          method: 'POST',
           headers: { Authorization: api.key, 'Content-Type': 'application/json' },
-          body: { server_count: count, shard_count: shards.length, shard_id: shard },
+          body: JSON.stringify({
+            server_count: count,
+            shard_count: shards.length,
+            shard_id: shard,
+          }),
         },
       )
         .then((r) => (r.ok

@@ -164,7 +164,7 @@ class DiscordClient extends Client {
 
     // minutely tasks
     this.once('ready', () => {
-      this.setInterval(this.minute, 60000);
+      this.setInterval(() => this.minute(), 60000);
     });
 
     // node.js related
