@@ -13,7 +13,6 @@ class ListUtil extends Util {
 
   /**
    * Updates server count for discord.bots.gg
-   * @param {number} count Server count
    * @returns {Promise<void>}
    */
   async updateBotsGg() {
@@ -47,7 +46,6 @@ class ListUtil extends Util {
 
   /**
    * Updates server count for top.gg
-   * @param {number} count Server count
    * @returns {Promise<void>}
    */
   async updateTopGg() {
@@ -75,6 +73,33 @@ class ListUtil extends Util {
           : this.client.logger.warn(`[list] HTTP ${r.status} returned from top.gg`)))
         .catch((error) => this.client.logger.error('[list] Error while trying to update stats for top.gg', error));
     }
+
+    return null;
+  }
+
+  /**
+   * Updates server count for discordapps.dev
+   * @returns {Promise<void>}
+   */
+  async updateDADev() {
+    const api = await this.client.apis.fetchKey('dadev');
+    if (!api) return null;
+
+    const count = this.client.guilds.cache.size;
+    await fetch(
+      `https://api.discordapps.dev/api/v2/bots/${this.client.user.id}`,
+      {
+        method: 'POST',
+        headers: { Authorization: api.key, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          bot: { count },
+        }),
+      },
+    )
+      .then((r) => (r.ok
+        ? this.client.logger.debug(`[list] Updated stats for discordapps.dev (count: ${count})`)
+        : this.client.logger.warn(`[list] HTTP ${r.status} returned from discordapps.dev`)))
+      .catch((error) => this.client.logger.error('[list] Error while trying to update stats for discordapps.dev', error));
 
     return null;
   }
