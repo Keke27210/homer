@@ -157,7 +157,7 @@ class DiscordClient extends Client {
 
     // minutely tasks
     this.once('ready', () => {
-      this.setInterval(() => this.minute(), 60000);
+      this.setInterval(this.minute, 60000);
     });
 
     // node.js related
@@ -255,9 +255,12 @@ class DiscordClient extends Client {
    * Calls tasks that need to be done every minute
    */
   minute() {
+    if (!this.ready) return;
+
     this.updatePresence();
     this.audioManager.minute();
     this.telephone.calls.minute();
+    this.listUtil.update();
   }
 }
 
