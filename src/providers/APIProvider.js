@@ -23,7 +23,7 @@ const Provider = require('./Provider');
 const TABLE_COLUMNS = [
   ['id', 'SERIAL', 'PRIMARY KEY'],
   ['name', 'VARCHAR(10)', 'NOT NULL'],
-  ['key', 'VARCHAR(100)', 'NOT NULL'],
+  ['key', 'VARCHAR(200)', 'NOT NULL'],
 ];
 
 class APIProvider extends Provider {
