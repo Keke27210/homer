@@ -383,6 +383,7 @@ module.exports = (dot) => ({
     title: (emote, name) => `${emote} Information about **${name}**:`,
     developers: 'Developers',
     guilds: 'Servers',
+    shard: (id) => `you are on shard \`#${id}\``,
     memory: 'Memory usage',
     versions: 'Versions',
     links: 'Links',
