@@ -23,6 +23,7 @@ const TrackingProvider = require('../providers/TrackingProvider');
 
 // Utils
 const FinderUtil = require('../util/FinderUtil');
+const ListUtil = require('../util/ListUtil');
 const MenuUtil = require('../util/MenuUtil');
 
 class DiscordClient extends Client {
@@ -148,6 +149,12 @@ class DiscordClient extends Client {
      * @type {FinderUtil}
      */
     this.finderUtil = new FinderUtil(this);
+
+    /**
+     * List util for this client
+     * @type {ListUtil}
+     */
+    this.listUtil = new ListUtil(this);
 
     /**
      * Menu util for this client
