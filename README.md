@@ -1,4 +1,4 @@
-![Homer avatar](https://cdn.discordapp.com/avatars/305277118105911296/c4ec60c0a110ea4ac268f8aaf9c657da.png?size=256)
+![Homer avatar](https://cdn.discordapp.com/avatars/305277118105911296/c4ec60c0a110ea4ac268f8aaf9c657da.png?size=128)
 
 # 🖥️ Introduction
 Homer is a "Discord" bot providing the basic features of any good bot: Google search, weather, information on anything you want. Moreover, it is multilingual (currently in English and French)!  
@@ -32,19 +32,19 @@ Oops, maybe you fell too low... unless you have a problem with Homer (which is n
 
 We invite you to join the support server whose invitation is somewhere on this page just above 👆 and you'll be helped and guided quickly.
 
-⚙️ Self-hosting
+# ⚙️ Self-hosting
 Although the complete source code is available in this directory, it is not recommended to host copies of the bot.  
 In addition, no assistance will be provided in hosting the bot by a third party.
 
-🗣️ Translations
+# 🗣️ Translations
 Homer is currently available in 2 languages: English and French.  
 You can help translate Homer into your language by following the **[TRANSLATING](TRANSLATING.md)** guide.
 
-⌨️ Contributing
+# ⌨️ Contributing
 You can also make a contribution and suggest improvements to the bot.  
 However, read the **[CONTRIBUTING](CONTRIBUTING.md)** guide before proceeding.
 
-📃 License
+# 📃 License
 This project is licensed under the Apache 2.0 license.  
 See **[LICENSE](LICENSE)** for more information.
 
