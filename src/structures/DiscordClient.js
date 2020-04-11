@@ -175,6 +175,7 @@ class DiscordClient extends Client {
 
     process.on('unhandledRejection', (error) => {
       if (error.message === 'UNAVAILABLE_DATABASE' && !this.database.ready) return; // Ignore these because we already know that
+      if (error.message.includes('tracking_pkey')) return; // I am aware of these errors
       this.logger.error('[unhandledRejection] An unhandled promise rejection was caught!', error);
     });
   }
