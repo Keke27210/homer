@@ -9,6 +9,7 @@ class ListUtil extends Util {
   update() {
     this.updateBotsGg();
     this.updateTopGg();
+    this.updateDADev();
   }
 
   /**
