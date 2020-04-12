@@ -23,6 +23,8 @@ class ListUtil extends Util {
 
     const shards = this.client.ws.shards.keyArray();
     for (let i = 0; i < shards.length; i += 1) {
+      if (i > 0) await wait(5000);
+
       const shard = shards[i];
       const count = this.client.guilds.cache.filter((g) => g.shardID === shard).size;
       await fetch(
@@ -41,8 +43,6 @@ class ListUtil extends Util {
           ? this.client.logger.debug(`[list] Updated stats for shard ID ${shard} for discord.bots.gg (count: ${count})`)
           : this.client.logger.warn(`[list] HTTP ${r.status} returned from discord.bots.gg - Retry after: ${r.headers['retry-after'] || 'None'}`)))
         .catch((error) => this.client.logger.error('[list] Error while trying to update stats for discord.bots.gg', error));
-
-      await wait(1000);
     }
 
     return null;
