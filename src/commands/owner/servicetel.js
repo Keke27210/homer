@@ -161,7 +161,7 @@ class ServicetelCommand extends Command {
     if (active) description.push(`${message.dot} ${message._('user.active')}: **${message.getDuration(active)}**`);
 
     description.push(`${message.dot} ${message._('user.creation')}: ${message.getMoment(subscriber.createdTimestamp)}`);
-    entries.push(description.join('\n'))
+    entries.push(description.join('\n'));
 
     // Blacklist
     pages.push({ title: message._('servicetel.blacklist') });
