@@ -49,6 +49,18 @@ class DiscordClient extends Client {
     this.ready = false;
 
     /**
+     * Status override for presence update
+     * @type {?string}
+     */
+    this.status = null;
+
+    /**
+     * Activity/game override for presence update
+     * @type {?string}
+     */
+    this.message = null;
+
+    /**
      * Database for this Discord client
      * @type {Database}
      */
@@ -248,12 +260,12 @@ class DiscordClient extends Client {
     if (!this.user) return null;
 
     const presence = {
-      status: this.database.ready ? 'online' : 'idle',
+      status: this.status || (this.database.ready ? 'online' : 'idle'),
       activity: {
         type: 0,
-        name: this.database.ready
+        name: this.message || (this.database.ready
           ? `Type h:help! On ${this.guilds.cache.size} servers with ${this.users.cache.size} users.`
-          : '> Database unavailable - Some features may be disabled | Type h:help!',
+          : '> Database unavailable - Some features may be disabled | Type h:help!'),
       },
     };
 
