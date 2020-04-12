@@ -102,9 +102,9 @@ class APIProvider extends Provider {
     const data = res[0];
     const current = {
       condition: data.WeatherText,
-      icon: data.WeatherIcon,
+      icon: data.WeatherIcon < 10 ? `0${data.weatherIcon}` : String(data.weatherIcon),
       temperature: [data.Temperature.Metric.Value, data.Temperature.Imperial.Value],
-      feel: [data.RealFeelTemperature.Imperial.Value, data.RealFeelTemperature.Imperial.Value],
+      feel: [data.RealFeelTemperature.Metric.Value, data.RealFeelTemperature.Imperial.Value],
       wind: {
         direction: data.Wind.Direction.Localized,
         speed: [data.Wind.Speed.Metric.Value, data.Wind.Speed.Imperial.Value],
@@ -148,7 +148,7 @@ class APIProvider extends Provider {
       forecast.push({
         date: data.EpochDate * 1000,
         condition: data.Day.ShortPhrase,
-        icon: data.Day.Icon,
+        icon: data.Day.Icon < 10 ? `0${data.Day.Icon}` : String(data.Day.Icon),
         temperatures: {
           max: [toCelcius(data.Temperature.Maximum.Value), data.Temperature.Maximum.Value],
           min: [toCelcius(data.Temperature.Minimum.Value), data.Temperature.Minimum.Value],
