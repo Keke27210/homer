@@ -26,11 +26,11 @@ class WeatherCommand extends Command {
     this.moons = {
       New: '🌑',
       WaxingCrescent: '🌒',
-      FirstQuarter: '🌓',
+      First: '🌓',
       WaxingGibbous: '🌔',
       Full: '🌕',
       WaningGibbous: '🌖',
-      LastQuarter: '🌗',
+      Last: '🌗',
       WaningCrescent: '🌘',
     };
   }

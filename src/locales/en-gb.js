@@ -958,11 +958,11 @@ module.exports = (dot) => ({
     moons: {
       New: 'New moon',
       WaxingCrescent: 'Waxing crescent',
-      FirstQuarter: 'First quarter',
+      First: 'First quarter',
       WaxingGibbous: 'Waxing gibbous',
       Full: 'Full moon',
       WaningGibbous: 'Waning gibbous',
-      LastQuarter: 'Last quarter',
+      Last: 'Last quarter',
       WaningCrescent: 'Waning crescent',
     },
   },
