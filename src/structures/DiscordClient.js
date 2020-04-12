@@ -257,7 +257,7 @@ class DiscordClient extends Client {
       },
     };
 
-    if (presence) presence.shardID = shard;
+    if (shard) presence.shardID = shard;
     return this.user.setPresence(presence);
   }
 
