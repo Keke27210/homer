@@ -7,6 +7,33 @@ class ServicetelCommand extends Command {
       dm: true,
       private: true,
     });
+
+    /**
+     * Emotes for voice regions
+     * @type {string}
+     */
+    this.region = {
+      amsterdam: ':flag_nl:',
+      brazil: ':flag_br:',
+      dubai: ':flag_sa:',
+      europe: ':flag_eu:',
+      'eu-central': ':flag_eu',
+      'eu-east': ':flag_eu:',
+      'eu-west': ':flag_eu:',
+      frankfurt: ':flag_de:',
+      hongkong: ':flag_hk:',
+      india: ':flag_in:',
+      japan: ':flag_ja:',
+      london: ':flag_gb:',
+      russia: ':flag_ru:',
+      singapore: ':flag_sg:',
+      southafrica: ':flag_za:',
+      sydney: ':flag_au:',
+      'us-central': ':flag_us:',
+      'us-east': ':flag_us:',
+      'us-south': ':flag_us:',
+      'us-west': ':flag_us:',
+    };
   }
 
   async main(message, args) {
@@ -44,7 +71,7 @@ class ServicetelCommand extends Command {
       `${message.dot} ${message._('telephone.contract.state')}: **${message._(`telephone.states.${contract.state}`)}**`,
       `${message.dot} ${message._('telephone.contract.textable')}: **${message._(`global.${contract.textable ? 'yes' : 'no'}`)}**`,
       `${message.dot} ${message._('telephone.contract.date')}: ${message.getMoment(contract.created.getTime())}`,
-    ]);
+    ].join('\n'));
 
     // Guild information if any
     const guild = await this.client.guilds.resolve(contract.context);
@@ -134,10 +161,11 @@ class ServicetelCommand extends Command {
     if (active) description.push(`${message.dot} ${message._('user.active')}: **${message.getDuration(active)}**`);
 
     description.push(`${message.dot} ${message._('user.creation')}: ${message.getMoment(subscriber.createdTimestamp)}`);
+    entries.push(description.join('\n'))
 
     // Blacklist
     pages.push({ title: message._('servicetel.blacklist') });
-    entries.push(contract.blacklist.map((b) => `\`${b}\``).join(' - '));
+    entries.push(contract.blacklist.map((b) => `\`${b}\``).join(' - ') || 'None');
 
     this.client.menuUtil.createMenu(
       message.channel.id,
