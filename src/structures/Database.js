@@ -26,6 +26,13 @@ class Database extends Client {
         this.ready = true;
       });
   }
+
+  end() {
+    return super.end()
+      .then(() => {
+        this.ready = false;
+      });
+  }
 }
 
 module.exports = Database;
