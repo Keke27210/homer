@@ -241,9 +241,10 @@ class DiscordClient extends Client {
 
   /**
    * Sets the appropriate bot presence
+   * @param {?number} shard Shard ID to set presence on
    * @returns {Promise<Presence>}
    */
-  updatePresence() {
+  updatePresence(shard) {
     if (!this.user) return null;
 
     const presence = {
@@ -256,6 +257,7 @@ class DiscordClient extends Client {
       },
     };
 
+    if (presence) presence.shardID = shard;
     return this.user.setPresence(presence);
   }
 

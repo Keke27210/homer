@@ -6,6 +6,7 @@ class ShardReadyEvent extends Event {
   }
 
   async handle(id, unavailableGuilds) {
+    await this.client.user.updatePresence(id);
     this.client.logger.log(`[shard ${id}] Ready - Unavailable guilds: ${unavailableGuilds ? unavailableGuilds.values().join(' - ') : 'None'}`);
   }
 }
