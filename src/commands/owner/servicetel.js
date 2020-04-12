@@ -96,7 +96,7 @@ class ServicetelCommand extends Command {
         )}`,
         `${message.dot} ${message._('server.channels')}: ${['category', 'text', 'voice'].map((t) => `**${guild.channels.cache.filter((c) => c.type === t).size}** ${message._(`server.channel.${t}`)}`).join(', ')}`,
         `${message.dot} ${message._('server.creation')}: ${message.getMoment(guild.createdTimestamp)}`,
-      ]);
+      ].join('\n'));
     }
 
     // Subscriber information
