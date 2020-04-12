@@ -28,10 +28,8 @@ class Database extends Client {
   }
 
   end() {
-    return super.end()
-      .then(() => {
-        this.ready = false;
-      });
+    this.ready = false;
+    return super.end();
   }
 }
 
