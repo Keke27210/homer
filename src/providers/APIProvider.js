@@ -102,7 +102,7 @@ class APIProvider extends Provider {
     const data = res[0];
     const current = {
       condition: data.WeatherText,
-      icon: data.WeatherIcon < 10 ? `0${data.weatherIcon}` : String(data.weatherIcon),
+      icon: data.WeatherIcon < 10 ? `0${data.WeatherIcon}` : String(data.WeatherIcon),
       temperature: [data.Temperature.Metric.Value, data.Temperature.Imperial.Value],
       feel: [data.RealFeelTemperature.Metric.Value, data.RealFeelTemperature.Imperial.Value],
       wind: {
