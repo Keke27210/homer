@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const wait = require('util').promisify(setTimeout);
 
 const Util = require('./Util');
 
@@ -40,6 +41,8 @@ class ListUtil extends Util {
           ? this.client.logger.debug(`[list] Updated stats for shard ID ${shard} for discord.bots.gg (count: ${count})`)
           : this.client.logger.warn(`[list] HTTP ${r.status} returned from discord.bots.gg`)))
         .catch((error) => this.client.logger.error('[list] Error while trying to update stats for discord.bots.gg', error));
+
+      await wait(1000);
     }
 
     return null;
