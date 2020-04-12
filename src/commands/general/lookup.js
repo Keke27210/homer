@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 const { resolveInviteCode } = require('discord.js/src/util/DataResolver');
 const { deconstruct } = require('discord.js/src/util/Snowflake');
 
-const GIFT_URL = (id) => `https://discordapp.com/api/v6/entitlements/gift-codes/${id}`;
+const GIFT_URL = (id) => `https://discordapp.com/api/v6/entitlements/gift-codes/${encodeURIComponent(id)}`;
 
 const Command = require('../../structures/Command');
 
@@ -51,9 +51,9 @@ class LookupCommand extends Command {
 
       // 2- Gift code
       const gift = await fetch(GIFT_URL(search))
-        .then((r) => r.json())
+        .then((r) => (r.ok ? r.json() : null))
         .catch(() => null);
-      if (gift && gift.code !== 10038) {
+      if (gift) {
         const description = [
           `${message.dot} ${message._('lookup.gift.name')}: **${gift.store_listing.sku.name}**`,
           `${message.dot} ${message._('lookup.gift.summary')}: **${gift.store_listing.summary}**`,
