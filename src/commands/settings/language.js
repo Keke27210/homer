@@ -5,6 +5,7 @@ class LanguageCommand extends Command {
     super(client, category, {
       name: 'language',
       aliases: ['lang', 'locale'],
+      userPermissions: ['MANAGE_GUILD'],
       dm: true,
     });
   }

@@ -4,6 +4,7 @@ class PrefixCommand extends Command {
   constructor(client, category) {
     super(client, category, {
       name: 'prefix',
+      userPermissions: ['MANAGE_GUILD'],
       dm: true,
     });
   }

@@ -6,6 +6,7 @@ class DateSubcommand extends Command {
   constructor(client, category) {
     super(client, category, {
       name: 'date',
+      userPermissions: ['MANAGE_GUILD'],
       dm: true,
     });
   }

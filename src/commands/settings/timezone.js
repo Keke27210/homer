@@ -34,6 +34,7 @@ class TimezoneCommand extends Command {
     super(client, category, {
       name: 'timezone',
       children: [new ListSubcommand(client, category)],
+      userPermissions: ['MANAGE_GUILD'],
       dm: true,
     });
   }

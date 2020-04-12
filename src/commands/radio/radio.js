@@ -4,6 +4,7 @@ class RadioCommand extends Command {
   constructor(client, category) {
     super(client, category, {
       name: 'radio',
+      userPermissions: ['MANAGE_GUILD'],
     });
   }
 
