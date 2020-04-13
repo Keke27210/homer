@@ -8,7 +8,7 @@ class ChannelDeleteEvent extends Event {
   handle(channel) {
     if (!this.client.ready) return;
 
-    this.client.contracts._channelDelete(channel.id);
+    this.client.telephone.contracts._channelDelete(channel.id);
   }
 }
 

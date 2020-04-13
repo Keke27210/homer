@@ -8,7 +8,7 @@ class GuildDeleteEvent extends Event {
   handle(guild) {
     if (!this.client.ready) return;
 
-    this.client.contracts._guildDelete(guild.id);
+    this.client.telephone.contracts._guildDelete(guild.id);
   }
 }
 
