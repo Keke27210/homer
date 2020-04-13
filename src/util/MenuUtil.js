@@ -57,8 +57,11 @@ class MenuUtil extends Util {
       .catch(() => null);
     if (!message) return;
 
-    const queue = message.reactions.cache.filter((r) => r.me).array();
-    for (let i = 0; queue.length; i += 1) await queue[i].users.remove();
+    const queue = message.reactions.cache.array();
+    for (let i = 0; i < queue.length; i += 1) {
+      if (!queue[i].me) continue;
+      await queue[i].users.remove();
+    }
   }
 
   /**
