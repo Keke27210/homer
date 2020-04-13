@@ -432,6 +432,34 @@ class ContractProvider extends Provider {
     if (j > 0) this.client.logger.log(`[contracts->checkInvalid] Invalidated ${j} contracts`);
     return j;
   }
+
+  /**
+   * Invalidates contract of a deleted channel
+   * @param {string} channel Channel ID
+   * @returns {Promise<void>}
+   */
+  async _channelDelete(channel) {
+    const contract = await this.fetchContract(channel);
+    if (!contract) return null;
+    await this.terminateContract(contract.id, 'INVALIDATED');
+    return null;
+  }
+
+  /**
+   * Invalidates contracts of a deleted guild
+   * @param {string} guild Guild ID
+   * @returns {Promise<void>}
+   */
+  async _guildDelete(guild) {
+    const contracts = await this.getRows([
+      ['context', '=', guild],
+      ['state', '<', this.states.TERMINATED],
+    ]);
+    for (let i = 0; i < contracts.length; i += 1) {
+      await this.terminateContract(contracts[i].id, 'INVALIDATED');
+    }
+    return null;
+  }
 }
 
 module.exports = ContractProvider;
