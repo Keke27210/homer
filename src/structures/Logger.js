@@ -103,8 +103,8 @@ class Logger {
   writeConsole(time, content, severity) {
     if (severity === 0 && !this.debugEnabled) return;
     const str = this.useColors
-      ? `${this.colors[severity][0](time)} ${this.colors[severity][1](content)}`
-      : `${time} ${this.colors[severity][2]} ${content}`;
+      ? `${this.colors[severity][0](time)} S${this.shard} => ${this.colors[severity][1](content)}`
+      : `${time} S${this.shard} => ${this.colors[severity][2]} ${content}`;
     const output = severity >= 2 ? process.stderr : process.stdout;
     output.write(`${str}\n`);
   }
