@@ -34,7 +34,7 @@ class ListUtil extends Util {
           headers: { Authorization: api.key, 'Content-Type': 'application/json' },
           body: JSON.stringify({
             guildCount: count,
-            shardCount: shards.length,
+            shardCount: this.client.shard.count,
             shardId: shard,
           }),
         },
@@ -67,7 +67,7 @@ class ListUtil extends Util {
           headers: { Authorization: api.key, 'Content-Type': 'application/json' },
           body: JSON.stringify({
             server_count: count,
-            shard_count: shards.length,
+            shard_count: this.client.shard.count,
             shard_id: shard,
           }),
         },
@@ -89,7 +89,7 @@ class ListUtil extends Util {
     const api = await this.client.apis.fetchKey('dadev');
     if (!api) return null;
 
-    const count = this.client.guilds.cache.size;
+    const count = this.client.guilds.cache.size * this.client.shard.count; // Approximation for the moment
     await fetch(
       `https://api.discordapps.dev/api/v2/bots/${this.client.user.id}`,
       {
