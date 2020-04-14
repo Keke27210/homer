@@ -70,7 +70,7 @@ class DiscordClient extends Client {
      * Logger for this client
      * @type {Logger}
      */
-    this.logger = new Logger();
+    this.logger = new Logger(this.shard.ids[0]);
 
     /**
      * Audio manager for this client
