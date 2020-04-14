@@ -33,34 +33,34 @@ function handleMessage(shard, message) {
     const id = parseInt(message.split('_')[1]);
     const s = sharder.shards.get(id);
     if (s) {
-      this.client.logger.warn(`[shard ${shard.id}] RESTARTING SHARD ${id}`);
+      sharder.logger.warn(`[shard ${shard.id}] RESTARTING SHARD ${id}`);
       s.respawn(1500);
     }
   } else if (message === 'RESTARTALL') {
-    this.client.logger.warn(`[shard ${shard.id}] RESTARTING ALL SHARDS`);
+    sharder.logger.warn(`[shard ${shard.id}] RESTARTING ALL SHARDS`);
     sharder.respawnAll(5000, 1500);
   } else if (message.startsWith('KILL_')) {
     const id = parseInt(message.split('_')[1]);
     const s = sharder.shards.get(id);
     if (s) {
-      this.client.logger.warn(`[shard ${shard.id}] KILLING SHARD ${id}`);
+      sharder.logger.warn(`[shard ${shard.id}] KILLING SHARD ${id}`);
       s.kill();
     }
   } else if (message === 'KILLALL') {
-    this.client.logger.warn(`[shard ${shard.id}] KILLING ALL SHARDS`);
+    sharder.logger.warn(`[shard ${shard.id}] KILLING ALL SHARDS`);
     sharder.shards.forEach((s) => s.kill());
   } else {
-    this.client.logger.log(`[shard ${shard.id}] ${message}`);
+    sharder.logger.log(`[shard ${shard.id}] ${message}`);
   }
 }
 
 sharder.on('shardCreate', (shard) => {
   sharder.logger.log(`[sharder] Created shard ID ${shard.id}`);
   shard.on('message', (message) => handleMessage(shard, message));
-  shard.on('ready', () => this.client.logger.log(`[shard ${shard.id}] Ready was received`));
-  shard.on('reconnecting', () => this.client.logger.log(`[shard ${shard.id}] Reconnecting...`));
+  shard.on('ready', () => sharder.logger.log(`[shard ${shard.id}] Ready was received`));
+  shard.on('reconnecting', () => sharder.logger.log(`[shard ${shard.id}] Reconnecting...`));
 });
 
 sharder.spawn()
-  .then(() => this.client.logger.log('[sharder] Spawning shards...'))
-  .catch(this.client.logger.error);
+  .then(() => sharder.logger.log('[sharder] Spawning shards...'))
+  .catch(sharder.logger.error);
