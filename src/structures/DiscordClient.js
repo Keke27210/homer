@@ -70,7 +70,7 @@ class DiscordClient extends Client {
      * Logger for this client
      * @type {Logger}
      */
-    this.logger = new Logger(this.shard.id);
+    this.logger = new Logger();
 
     /**
      * Audio manager for this client
@@ -253,9 +253,10 @@ class DiscordClient extends Client {
 
   /**
    * Sets the appropriate bot presence
+   * @param {?number} shard Shard ID to set presence on
    * @returns {Promise<Presence>}
    */
-  updatePresence() {
+  updatePresence(shard) {
     if (!this.user) return null;
 
     const presence = {
@@ -263,11 +264,12 @@ class DiscordClient extends Client {
       activity: {
         type: 0,
         name: this.message || (this.database.ready
-          ? `Type h:help! On ${this.guilds.cache.size} servers on shard #${this.shard.id + 1}.`
+          ? `Type h:help! On ${this.guilds.cache.size} servers with ${this.users.cache.size} users.`
           : '> Database unavailable - Some features may be disabled | Type h:help!'),
       },
     };
 
+    if (shard) presence.shardID = shard;
     return this.user.setPresence(presence);
   }
 
