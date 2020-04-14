@@ -3,50 +3,53 @@ const moment = require('moment-timezone');
 
 const emotes = {
   // Status/Prefix emotes
-  homer: '695734221322584155',
+  homer: '<:homer:695734221322584155>',
   human: '👤',
-  bot: '695746485790310530',
+  bot: '<:bot:695746485790310530>',
   status: {
-    online: '695746507231461469',
-    idle: '695749338877395069',
-    dnd: '695749383639138414',
-    offline: '695749413704040478',
+    online: '<:online:695746507231461469>',
+    idle: '<:idle:695749338877395069>',
+    dnd: '<:dnd:695749383639138414>',
+    offline: '<:offline:695749413704040478>'
   },
-  loading: '696020151727947866',
-  success: '695722112823853066',
-  warn: '695722124395937862',
-  error: '695722118976897085',
+  loading: '<a:loading:696020151727947866>',
+  success: '<:success:695722112823853066>',
+  warn: '<:warn:695722124395937862>',
+  error: '<:error:695722118976897085>',
+  successIdentifier: 'success:695722112823853066',
+  errorIdentifier: 'error:695722118976897085',
   info: 'ℹ️',
-  placeholder: '695983847061323797',
-  verified: '697804778910253086',
-  activities: '698065014321446922',
+  placeholder: '<:placeholder:695983847061323797>',
+  verified: '<:verified:697804778910253086>',
+  activities: '<:activities:698065014321446922>',
 
   // User flags
-  developer: '697441287921467432',
-  owner: '695975441516855337',
-  donator: '697439375847456818',
-  nitro: '695977635666198570',
-  DISCORD_EMPLOYEE: '697537107505446962',
-  DISCORD_PARTNER: '697536791192010933',
-  HYPESQUAD_EVENTS: '697539960592400485',
-  BUGHUNTER_LEVEL1: '697534883115040838',
-  HOUSE_BRAVERY: '697534635755700224',
-  HOUSE_BRILLIANCE: '697534618617774160',
-  HOUSE_BALANCE: '697533287870103596',
-  EARLY_SUPPORTER: '698886219358142536',
+  developer: '<:developer:697441287921467432>',
+  owner: '<:owner:695975441516855337>',
+  donator: '<:donator:697439375847456818>',
+  nitro: '<:nitro:695977635666198570>',
+  DISCORD_EMPLOYEE: '<:staff:697537107505446962>',
+  DISCORD_PARTNER: '<:partner:697536791192010933>',
+  HYPESQUAD_EVENTS: '<:hypesquad_events:697539960592400485>',
+  BUGHUNTER_LEVEL1: '<:bughunter:697534883115040838>',
+  HOUSE_BRAVERY: '<:bravery:697534635755700224>',
+  HOUSE_BRILLIANCE: '<:brilliance:697534618617774160>',
+  HOUSE_BALANCE: '<:balance:697533287870103596>',
+  EARLY_SUPPORTER: '<:early_supporter:698886219358142536>',
   TEAM_USER: '👥',
-  SYSTEM: '442415945647128585',
-  BUGHUNTER_LEVEL2: '697534883115040838',
-  VERIFIED_BOT: '697824845215301642',
-  VERIFIED_DEVELOPER: '697803716597645363',
+  SYSTEM: '<:discord:442415945647128585>',
+  BUGHUNTER_LEVEL2: '<:bughunter:697534883115040838>',
+  VERIFIED_BOT: '<:verified_bot:697824845215301642>',
+  VERIFIED_DEVELOPER: '<:verified_developer:697803716597645363>',
 
   // Help categories
-  c_bot: '474150825929998337',
+  c_bot: '<:homer:695734221322584155>',
   c_general: '🖥',
   c_radio: '📻',
   c_settings: '🔧',
   c_telephone: '📞',
 };
+
 
 Structures.extend('Message', (Message) => {
   class CustomMessage extends Message {
@@ -71,19 +74,19 @@ Structures.extend('Message', (Message) => {
     }
 
     get eSuccess() {
-      return this.client.emojis.resolve(this.emotes.success).toString();
+      return this.emotes.success;
     }
 
     get eWarn() {
-      return this.client.emojis.resolve(this.emotes.warn).toString();
+      return this.emotes.warn;
     }
 
     get eError() {
-      return this.client.emojis.resolve(this.emotes.error).toString();
+      return this.emotes.error;
     }
 
     get eLoading() {
-      return this.client.emojis.resolve(this.emotes.loading).toString();
+      return this.emotes.loading;
     }
 
     /**
@@ -110,9 +113,7 @@ Structures.extend('Message', (Message) => {
      */
     emote(name, status = false) {
       const id = status ? this.emotes.status[name] : this.emotes[name];
-      const e = this.client.emojis.resolve(id);
-      if (!e) return id;
-      return e.toString();
+      return id;
     }
 
     /**
@@ -135,7 +136,7 @@ Structures.extend('Message', (Message) => {
      * @returns {Promise<MessageReaction>}
      */
     async reactSuccess() {
-      return this.react(this.client.emojis.resolveIdentifier(this.emotes.success));
+      return this.react(this.emotes.successIdentifier);
     }
 
     /**
@@ -300,10 +301,7 @@ Structures.extend('Message', (Message) => {
      * @returns {Promise<boolean>} User's decision
      */
     async awaitUserApproval(id) {
-      const e = [
-        this.client.emojis.resolveIdentifier(this.emotes.success),
-        this.client.emojis.resolveIdentifier(this.emotes.error),
-      ];
+      const e = [this.emotes.succesIdentifier, this.emotes.errorIdentifier];
       await this.react(e[0]).catch(() => null);
       await this.react(e[1]).catch(() => null);
       return this.awaitReactions(
