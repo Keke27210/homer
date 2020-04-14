@@ -71,7 +71,8 @@ class ContractProvider extends Provider {
    * @returns {Promise<number>} Contract ID
    */
   async createContract(context, channel, subscriber) {
-    if (!this.client.channels.resolve(channel)) {
+    const channel = await this.client.channels.fetch(channel);
+    if (!channel) {
       throw new Error('UNKNOWN_CHANNEL');
     }
 

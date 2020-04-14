@@ -12,7 +12,7 @@ class ShutdownCommand extends Command {
   async main(message, args) {
     const code = parseInt(args[0], 10) || 0;
     await message.send(`🔌 Shutting down with exit code \`${code}\`.`);
-    this.client.shutdown();
+    this.client.shard.broadcastEval('this.shutdown()');
   }
 }
 
