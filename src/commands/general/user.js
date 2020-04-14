@@ -44,7 +44,7 @@ class UserCommand extends Command {
       description.push(`${message.dot} ${message._('user.nickname')}: ${member.nickname ? `**${member.nickname}**` : message._('global.none')}`);
     }
 
-    description.push(`${message.dot} ${message._('user.status')}: ${message.emote(user.presence.status, true)} **${message._(`user.statusDesc.${user.presence.status}`)}**`);
+    description.push(`${message.dot} ${message._('user.status')}: ${message.emote(user.presence.clientStatus.mobile === 'online' ? 'mobile' : user.presence.status, true)} **${message._(`user.statusDesc.${user.presence.status}`)}**`);
 
     if (user.presence.activities.length) {
       // Priority: Custom Status > Streaming > Playing > Listening > Watching

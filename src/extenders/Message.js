@@ -10,7 +10,8 @@ const emotes = {
     online: '<:online:695746507231461469>',
     idle: '<:idle:695749338877395069>',
     dnd: '<:dnd:695749383639138414>',
-    offline: '<:offline:695749413704040478>'
+    offline: '<:offline:695749413704040478>',
+    mobile: '<:mobile:699672449767178261>',
   },
   loading: '<a:loading:696020151727947866>',
   success: '<:success:695722112823853066>',
