@@ -419,8 +419,6 @@ class ContractProvider extends Provider {
    * @returns {Promise<number>} Number of terminated contracts
    */
   async checkInvalid() {
-    if (this.client.shard.id !== 0) return;
-
     const list = await this.getRows([
       ['state', '<', this.states.TERMINATED],
     ]);
