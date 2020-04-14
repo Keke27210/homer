@@ -10,12 +10,18 @@ const moment = require('moment-timezone');
 require('colors');
 
 class Logger {
-  constructor() {
+  constructor(shard) {
     /**
      * Base directory for log files
      * @type {string}
      */
     this.baseDirectory = resolve(process.cwd(), 'logs');
+
+    /**
+     * Shard for this logger (-1 for sharding manager)
+     * @type {number}
+     */
+    this.shard = shard;
 
     /**
      * Whether print/write debug information
@@ -112,7 +118,7 @@ class Logger {
   writeFile(time, content, severity) {
     const path = this.genPath();
     const str = `${time} ${content}\n`;
-    appendFileSync(resolve(path, `${this.colors[severity][3]}.log`), str);
+    appendFileSync(resolve(path, `S${this.shard}_${this.colors[severity][3]}.log`), str);
   }
 
   /**

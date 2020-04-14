@@ -1,9 +1,9 @@
 const Command = require('../../structures/Command');
 
-class ShutdownCommand extends Command {
+class RestartCommand extends Command {
   constructor(client, category) {
     super(client, category, {
-      name: 'shutdown',
+      name: 'restart',
       dm: true,
       private: true,
     });
@@ -17,13 +17,13 @@ class ShutdownCommand extends Command {
         message.warn(`The provided ID is not a number.`);
         return;
       }
-      message.success(`Sent kill request for shard \`${id}\`.`);
-      this.client.shard.send(`KILL_${id}`);
+      message.success(`Sent restart request for shard \`${id}\`.`);
+      this.client.shard.send(`RESTART_${id}`);
     } else {
-      message.success('Sent kill request for all shards.');
-      this.client.shard.send('KILLALL');
+      message.success('Sent restart request for all shards.');
+      this.client.shard.send('RESTARTALL');
     }
   }
 }
 
-module.exports = ShutdownCommand;
+module.exports = RestartCommand;

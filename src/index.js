@@ -3,42 +3,64 @@
  * Copyright (c) 2020 - Kevin B. - Apache 2.0 License
  */
 
+const { ShardingManager } = require('discord.js');
 const { resolve } = require('path');
+
+const Logger = require('./structures/Logger');
 
 if (process.cwd() !== resolve(__dirname, '..')) {
   throw new Error('You must run this file from the root directory of Homer.');
 }
 
-// Load extended structures first
-require('./extenders/Guild');
-require('./extenders/Message');
-require('./extenders/User');
-
-const DiscordClient = require('./structures/DiscordClient');
-
 const config = require(process.argv.includes('DEBUG')
   ? '../config/development.json'
   : '../config/production.json');
 
-const client = new DiscordClient(
-  config.clientOptions,
-  config.databaseCredentials,
-  config.owners,
+const sharder = new ShardingManager(
+  resolve(__dirname, 'bot.js'),
+  config.sharderOptions,
 );
 
-(async function login() {
-  client.logger.log('[client] Initializing client...');
-  await client.initialize();
-  client.logger.log('[client] Client initialized!');
+sharder.logger = new Logger(-1);
 
-  client.logger.log('[gateway] Connecting to the gateway');
-  await client.login(config.token);
-  client.logger.log('[gateway] Logged in');
-}())
-  .catch((error) => {
-    client.logger.error('AN ERROR OCCURED DURING BOT STARTUP', error);
-    client.shutdown(-1);
-  });
+/**
+ * Handles a shard message
+ * @param {Shard} shard Shard that sent the message
+ * @param {*} message Message the shard sent
+ */
+function handleMessage(shard, message) {
+  if (message.startsWith('RESTART_')) {
+    const id = parseInt(message.split('_')[1]);
+    const s = sharder.shards.get(id);
+    if (s) {
+      this.client.logger.warn(`[shard ${shard.id}] RESTARTING SHARD ${id}`);
+      s.respawn(1500);
+    }
+  } else if (message === 'RESTARTALL') {
+    this.client.logger.warn(`[shard ${shard.id}] RESTARTING ALL SHARDS`);
+    sharder.respawnAll(5000, 1500);
+  } else if (message.startsWith('KILL_')) {
+    const id = parseInt(message.split('_')[1]);
+    const s = sharder.shards.get(id);
+    if (s) {
+      this.client.logger.warn(`[shard ${shard.id}] KILLING SHARD ${id}`);
+      s.kill();
+    }
+  } else if (message === 'KILLALL') {
+    this.client.logger.warn(`[shard ${shard.id}] KILLING ALL SHARDS`);
+    sharder.shards.forEach((s) => s.kill());
+  } else {
+    this.client.logger.log(`[shard ${shard.id}] ${message}`);
+  }
+}
 
-process.on('SIGINT', client.shutdown.bind(client));
-process.on('SIGHUP', client.shutdown.bind(client));
+sharder.on('shardCreate', (shard) => {
+  sharder.logger.log(`[sharder] Created shard ID ${shard.id}`);
+  shard.on('message', (message) => handleMessage(shard, message));
+  shard.on('ready', () => this.client.logger.log(`[shard ${shard.id}] Ready was received`));
+  shard.on('reconnecting', () => this.client.logger.log(`[shard ${shard.id}] Reconnecting...`));
+});
+
+sharder.spawn()
+  .then(() => this.client.logger.log('[sharder] Spawning shards...'))
+  .catch(this.client.logger.error);

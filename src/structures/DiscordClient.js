@@ -253,23 +253,22 @@ class DiscordClient extends Client {
 
   /**
    * Sets the appropriate bot presence
-   * @param {?number} shard Shard ID to set presence on
    * @returns {Promise<Presence>}
    */
-  updatePresence(shard) {
+  updatePresence() {
     if (!this.user) return null;
 
+    const shards = this.shard.ids;
     const presence = {
       status: this.status || (this.database.ready ? 'online' : 'idle'),
       activity: {
         type: 0,
         name: this.message || (this.database.ready
-          ? `Type h:help! On ${this.guilds.cache.size} servers with ${this.users.cache.size} users.`
+          ? `Type h:help! On ${this.guilds.cache.size} servers on shard${shards.length > 1 ? 's' : ''} ${shards.map((s) => s + 1).join('/')}.`
           : '> Database unavailable - Some features may be disabled | Type h:help!'),
       },
     };
 
-    if (shard) presence.shardID = shard;
     return this.user.setPresence(presence);
   }
 

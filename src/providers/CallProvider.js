@@ -11,7 +11,7 @@ const TABLE_COLUMNS = [
 
 class CallProvider extends Provider {
   constructor(client) {
-    super(client, 'calls', TABLE_COLUMNS);
+    super(client, 'calls', TABLE_COLUMNS, false);
 
     /**
      * States for a call
