@@ -192,11 +192,7 @@ class CallProvider extends Provider {
       : call.caller);
     if (!correspondent) return;
 
-    const target = this.client.channels.resolve(correspondent.channel);
-    if (!target) return;
-
-    target.startTyping(1);
-    this.client.setTimeout(() => target.stopTyping(), 10000);
+    this.startTyping(correspondent.channel);
     await this.updateRow(call.id, { updated: new Date() });
   }
 
@@ -216,28 +212,24 @@ class CallProvider extends Provider {
     const calledContract = await this.contracts.getRow(call.called);
     if (!callerContract || !calledContract) return;
 
-    const callerTarget = this.client.channels.resolve(callerContract.channel);
-    const calledTarget = this.client.channels.resolve(calledContract.channel);
-    if (!callerTarget || !calledTarget) return;
-
     const callerSettings = await this.client.settings.fetchSettings(callerContract.context);
     const calledSettings = await this.client.settings.fetchSettings(calledContract.context);
     if (!callerSettings || !calledSettings) return;
 
-    const callerMessage = await callerTarget.messages.fetch(caller)
+    const callerMessage = await this.fetchMessage(callerContract.channel, caller)
       .catch(() => null);
     if (callerMessage) {
-      callerMessage.edit(this.client.localeManager.translate(
+      this.editMessage(callerContract.channel, caller, this.client.localeManager.translate(
         callerSettings.locale,
         'telephone.notifications.missed.caller',
         calledContract.number,
       ));
     }
 
-    const calledMessage = await calledTarget.messages.fetch(called)
+    const calledMessage = await this.fetchMessage(calledContract.channel, called)
       .catch(() => null);
     if (calledMessage) {
-      calledMessage.edit(this.client.localeManager.translate(
+      this.editMessage(calledContract.channel, called, this.client.localeManager.translate(
         calledSettings.locale,
         'telephone.notifications.missed.called',
         callerContract.number,
@@ -257,6 +249,45 @@ class CallProvider extends Provider {
     for (let i = 0; i < outdated.length; i += 1) {
       await this.endCall(outdated[i].id, 'TERMINATED');
     }
+  }
+
+  /**
+   * Fetches a message from the Discord API
+   * @param {string} channel Channel ID
+   * @param {string} message Message ID
+   * @returns {Promise<Message>}
+   */
+  fetchMessage(channel, message) {
+    return this.client.api
+      .channels[channel]
+      .messages[message]
+      .get();
+  }
+
+  /**
+   * Edits a message
+   * @param {string} channel Channel ID
+   * @param {string} message Message ID
+   * @param {string} content Content
+   */
+  editMessage(channel, message, content) {
+    return this.client.api
+      .channels[channel]
+      .messages[message]
+      .patch({
+        data: { content },
+      });
+  }
+
+  /**
+   * Triggers typing indicator
+   * @param {string} id Channel ID
+   */
+  startTyping(id) {
+    return this.client.api
+      .channels[id]
+      .typings
+      .post();
   }
 }
 

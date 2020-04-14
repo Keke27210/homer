@@ -367,11 +367,6 @@ class ContractProvider extends Provider {
       throw new Error('UNKNOWN_CONTRACT');
     }
 
-    const channel = await this.client.channels.fetch(contract.channel).catch(() => null);
-    if (!channel) {
-      throw new Error('UNKNOWN_CHANNEL');
-    }
-
     let embed = null;
     if (args[0] instanceof MessageEmbed) {
       embed = args.shift();
@@ -380,7 +375,10 @@ class ContractProvider extends Provider {
     const content = translate
       ? this.client.localeManager.translate('en-gb', message, ...args)
       : message;
-    const m = await channel.send(content, embed)
+    const m = await this.client.api.channels[contract.channel].messages
+      .post({
+        data: { content },
+      })
       .catch((error) => {
         this.client.logger.warn(`[contracts->notify] Cannot send a message in channel ${channel.id}`, error);
         throw new Error('SENDING_ERROR');
@@ -423,7 +421,8 @@ class ContractProvider extends Provider {
     ]);
     let j = 0;
     for (let i = 0; i < list.length; i += 1) {
-      const channel = await this.client.channels.fetch(list[i].channel).catch(() => null);
+      const channel = await this.client.api.channels[list[i].channel].get()
+        .catch(() => null);
       if (!channel) {
         await this.terminateContract(list[i].id, 'INVALIDATED');
         j += 1;
