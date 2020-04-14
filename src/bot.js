@@ -35,5 +35,6 @@ const client = new DiscordClient(
     client.shutdown(-1);
   });
 
+process.on('SIGTERM', client.shutdown.bind(client));
 process.on('SIGINT', client.shutdown.bind(client));
 process.on('SIGHUP', client.shutdown.bind(client));
