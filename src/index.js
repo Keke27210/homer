@@ -13,7 +13,7 @@ const config = require(process.argv.includes('DEBUG')
   : '../config/production.json');
 
 const sharder = new ShardingManager(
-  resolve(_dirname, 'bot.js'),
+  resolve(__dirname, 'bot.js'),
   config.sharderOptions,
 );
 
