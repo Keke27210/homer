@@ -17,10 +17,10 @@ class ShutdownCommand extends Command {
         message.warn(`The provided ID is not a number.`);
         return;
       }
-      message.success(`Sent kill request for shard \`${id}\`.`);
+      message.success(`Sent kill request for cluster \`${id}\`.`);
       this.client.shard.send(`KILL_${id}`);
     } else {
-      message.success('Sent kill request for all shards.');
+      message.success('Sent kill request for all clusters.');
       this.client.shard.send('KILLALL');
     }
   }

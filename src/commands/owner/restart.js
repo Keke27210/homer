@@ -17,10 +17,10 @@ class RestartCommand extends Command {
         message.warn(`The provided ID is not a number.`);
         return;
       }
-      message.success(`Sent restart request for shard \`${id}\`.`);
+      message.success(`Sent restart request for cluster \`${id}\`.`);
       this.client.shard.send(`RESTART_${id}`);
     } else {
-      message.success('Sent restart request for all shards.');
+      message.success('Sent restart request for all clusters.');
       this.client.shard.send('RESTARTALL');
     }
   }
