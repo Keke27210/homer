@@ -18,7 +18,7 @@ class RadiosCommand extends Command {
     const entries = radios
       .sort((a, b) => parseFloat(a.frequency) - parseFloat(b.frequency))
       .map((r) => {
-        return `\`${r.frequency}\`: ${emote ? `<:RADIO:${emote}>` : message.dot} [${r.name}](${r.website}) - ${r.language} (${r.country}) - ${message._(`radios.pty.${r.pty}`)}`;
+        return `\`${r.frequency}\`: ${r.emote ? `<:RADIO:${r.emote}>` : message.dot} [${r.name}](${r.website}) - ${r.language} (${r.country}) - ${message._(`radios.pty.${r.pty}`)}`;
       });
 
     const count = Math.ceil(entries.length / 10);
