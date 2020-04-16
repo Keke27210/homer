@@ -39,7 +39,7 @@ const emotes = {
   EARLY_SUPPORTER: '<:early_supporter:698886219358142536>',
   TEAM_USER: '👥',
   SYSTEM: '<:discord:442415945647128585>',
-  BUGHUNTER_LEVEL2: '<:bughunter:697534883115040838>',
+  BUGHUNTER_LEVEL2: '<:bughunter_gold:700342086905495644>',
   VERIFIED_BOT: '<:verified_bot:697824845215301642>',
   VERIFIED_DEVELOPER: '<:verified_developer:697803716597645363>',
 
