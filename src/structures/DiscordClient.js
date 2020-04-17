@@ -246,10 +246,10 @@ class DiscordClient extends Client {
     const presence = {
       status: this.database.ready ? 'online' : 'idle',
       activity: {
-        type: 0,
+        type: 2,
         name: this.database.ready
-          ? `Type h:help! On ${this.guilds.cache.size} servers on shard${shards.length > 1 ? 's' : ''} ${shards.map((s) => s + 1).join('/')}.`
-          : '> Database unavailable - Some features may be disabled | Type h:help!',
+          ? `h:help | On ${this.guilds.cache.size} servers on shard${shards.length > 1 ? 's' : ''} ${shards.map((s) => s + 1).join('/')}.`
+          : 'h:help /!\\ Database unavailable - Some features may be disabled',
       },
     };
 
