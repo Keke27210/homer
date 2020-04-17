@@ -55,8 +55,8 @@ class FinderUtil extends Util {
     }
 
     // 3b- Query Discord
-    const results = await message.guild.members.fetch({ query: search, limit: 20 })
-      .catch(this.client.logger.error);
+    const results = await message.guild.members.fetch({ query: search, limit: 5, time: 1e3 })
+      .catch(() => []);
     if (results && results.size) {
       const found = results.find(
         (m) => (m.nickname ? m.nickname.toLowerCase() === search.toLowerCase() : false)
