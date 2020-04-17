@@ -20,6 +20,13 @@ Structures.extend('Message', (Message) => {
     }
 
     /**
+     * Homer's dot for embeds
+     */
+    get dot() {
+      return this.emote('dot');
+    }
+
+    /**
      * Generates a sendable emote from an ID
      * @param {string} id Emote ID
      * @returns {string} Sendable emote
