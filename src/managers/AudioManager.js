@@ -115,7 +115,7 @@ class AudioManager extends Manager {
       .array();
     for (let i = 0; i < inactive.length; i += 1) {
       const session = this.sessions.find((s) => s.channel === inactive[i].channel.id);
-      if (session) await this.destroySession(session.id, true);
+      if (session) await this.destroySession(session.channel, true);
       else await inactive[i].disconnect();
     }
   }
