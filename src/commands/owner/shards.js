@@ -21,7 +21,7 @@ class ShardsCommand extends Command {
       3: 'IDLE',
       4: 'NEARLY',
       5: 'DISCONNECTED',
-      6: 'WAITING_FOR_GUILDS',
+      6: 'WAITING FOR GUILDS',
       7: 'IDENTIFYING',
       8: 'RESUMING',
     };
@@ -57,7 +57,7 @@ class ShardsCommand extends Command {
       const clDesc = [`${message.dot} Cluster #**${i}** (**${cluster.guilds}** guilds)`];
       for (let j = 0; j < cluster.shards.length; j += 1) {
         const shard = cluster.shards[j];
-        clDesc.push(`${message.emote('placeholder')}${message.dot} Shard #**${shard.id}**: ${message.emote(this.getEmote(shard.status), true)} **${this.status[shard.status]}** - **${shard.ping}**ms`);
+        clDesc.push(`${message.emote('placeholder')}${message.dot} Shard #**${shard.id}**: ${message.emote(this.getEmote(shard.status))} **${this.status[shard.status]}** - **${shard.ping}**ms`);
       }
       description.push(clDesc.join('\n'));
     }
