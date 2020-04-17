@@ -33,7 +33,7 @@ class AudioManager extends Manager {
      */
     this.boostedBitrate = 128;
 
-    this.client.setInterval(this.leaveInactive, 30000);
+    this.client.setInterval(() => this.leaveInactive(), 30000);
   }
 
   /**
