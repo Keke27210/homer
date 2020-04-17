@@ -27,7 +27,7 @@ class GameCommand extends Command {
       user = member.user;
     }
 
-    const { activities } = user.presence;
+    const activities = user.presence.activities.filter((a) => a.type !== 'CUSTOM_STATUS');
     if (!activities.length) {
       message.send(message._('activities.none', message.emote('activities'), user.tag));
       return 0;
@@ -40,8 +40,6 @@ class GameCommand extends Command {
       .sort((a, b) => Number(a.assets) > Number(b.assets)
         || (a.timestamps ? a.timestamps.start : 0) - (b.timestamps ? b.timestamps.start : 0))
       .forEach((activity) => {
-        if (activity.type === 'CUSTOM_STATUS') return;
-
         pages.push({
           title: message._(`activities.type.${activity.type}`, activity.name),
           thumbnail: activity.assets ? activity.assets.largeImageURL({ size: 256 }) : undefined,
