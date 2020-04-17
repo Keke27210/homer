@@ -1,3 +1,4 @@
+const { MessageEmbed } = require('discord.js');
 const moment = require('moment-timezone');
 
 const Command = require('../../structures/Command');
@@ -108,7 +109,7 @@ class FormatsCommand extends Command {
       `${message.emote('placeholder')} ${message._('formats.hint')}`,
     ].join('\n');
 
-    const embed = message.getEmbed()
+    const embed = new MessageEmbed()
       .setDescription(description);
     message.send(message._('formats.title'), embed);
   }

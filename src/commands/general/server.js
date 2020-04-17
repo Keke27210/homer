@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 const Command = require('../../structures/Command');
 
 class ServerCommand extends Command {
@@ -60,7 +62,7 @@ class ServerCommand extends Command {
       `${message.dot} ${message._('server.creation')}: ${message.getMoment(guild.createdTimestamp)}`,
     ];
 
-    const embed = message.getEmbed()
+    const embed = new MessageEmbed()
       .setDescription(description.join('\n'))
       .setThumbnail(guild.iconURL({ size: 256 }));
 

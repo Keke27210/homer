@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 const Command = require('../../structures/Command');
 
 // telephone->subscribe
@@ -231,7 +233,7 @@ class ContractsSubcommand extends Command {
       description.push(`${message.dot} Contract n°\`${contract.id}\` - Subscriber: ${user ? `${user.tag} (${user.id})` : 'Unknown'} - Guild: ${guild === 'None' ? 'DM' : (guild ? `**${guild.name}** (${guild.id})` : 'Unknown')}`);
     }
 
-    const embed = message.getEmbed().setDescription(description.join('\n'));
+    const embed = new MessageEmbed().setDescription(description.join('\n'));
     message.send('☎️ Current subscription requests:', embed);
     return 0;
   }
@@ -271,7 +273,7 @@ class TelephoneCommand extends Command {
       `${message.dot} ${message._('telephone.contract.date')}: ${message.getMoment(contract.created.getTime())}`,
     ].join('\n');
 
-    const embed = message.getEmbed().setDescription(description);
+    const embed = new MessageEmbed().setDescription(description);
     message.send(message._('telephone.contract.title'), embed);
     return 0;
   }

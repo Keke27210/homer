@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 const Command = require('../../structures/Command');
 
 class LanguageCommand extends Command {
@@ -16,7 +18,7 @@ class LanguageCommand extends Command {
       const description = Object.entries(this.client.localeManager.locales)
         .map(([code, lang]) => `${message.dot} \`${code}\`: **${lang._.name}** - ${message._('language.revision')}: **${message.getDuration(lang._.revision)}**`)
         .join('\n');
-      const embed = message.getEmbed()
+      const embed = new MessageEmbed()
         .setDescription(description)
         .setFooter(message._('language.footer'));
       message.send(message._('language.title'), embed);

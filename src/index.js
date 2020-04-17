@@ -31,7 +31,7 @@ sharder.logger = new Logger(-1);
 function handleMessage(shard, message) {
   if (typeof message === 'string') {
     if (message.startsWith('RESTART_')) {
-      const id = parseInt(message.split('_')[1]);
+      const id = parseInt(message.split('_')[1], 10);
       const s = sharder.shards.get(id);
       if (s) {
         sharder.logger.warn(`[shard ${shard.id}] RESTARTING SHARD ${id}`);
@@ -41,7 +41,7 @@ function handleMessage(shard, message) {
       sharder.logger.warn(`[shard ${shard.id}] RESTARTING ALL SHARDS`);
       sharder.respawnAll(5000, 1500);
     } else if (message.startsWith('KILL_')) {
-      const id = parseInt(message.split('_')[1]);
+      const id = parseInt(message.split('_')[1], 10);
       const s = sharder.shards.get(id);
       if (s) {
         sharder.logger.warn(`[shard ${shard.id}] KILLING SHARD ${id}`);

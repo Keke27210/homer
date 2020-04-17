@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const { MessageEmbed } = require('discord.js');
 const { resolveInviteCode } = require('discord.js/src/util/DataResolver');
 const { deconstruct } = require('discord.js/src/util/Snowflake');
 
@@ -42,7 +43,7 @@ class LookupCommand extends Command {
           `${message.dot} ${message._('lookup.invite.creation')}: ${invite.guild ? message.getMoment(invite.guild.createdTimestamp) : message._('global.unknown')}`,
         ];
 
-        const embed = message.getEmbed().setDescription(description.join('\n'));
+        const embed = new MessageEmbed().setDescription(description.join('\n'));
         if (invite.guild) embed.setThumbnail(invite.guild.iconURL({ size: 256, dynamic: true }));
 
         m.edit(message._('lookup.invite.title', invite.code), embed);
@@ -61,7 +62,7 @@ class LookupCommand extends Command {
           `${message.dot} ${message._('lookup.gift.redeem')}: **[${gift.code}](https://discord.gift/${gift.code})**`,
         ];
 
-        const embed = message.getEmbed().setDescription(description.join('\n'));
+        const embed = new MessageEmbed().setDescription(description.join('\n'));
         if (gift.expires_at) {
           embed
             .setFooter(message._('lookup.gift.expires'))
@@ -97,7 +98,7 @@ class LookupCommand extends Command {
 
         description.push(`${message.dot} ${message._('lookup.user.creation')}: ${message.getMoment(user.createdTimestamp)}`);
 
-        const embed = message.getEmbed()
+        const embed = new MessageEmbed()
           .setDescription(description.join('\n'))
           .setThumbnail(user.displayAvatarURL({ size: 256, dynamic: true }));
 
@@ -151,7 +152,7 @@ class LookupCommand extends Command {
           `${message.dot} ${message._('lookup.server.creation')}: ${message.getMoment(deconstruct(guild.id).timestamp)}`,
         ];
 
-        const embed = message.getEmbed()
+        const embed = new MessageEmbed()
           .setDescription(description.join('\n'))
           .setThumbnail(meta ? meta.icon : undefined);
 

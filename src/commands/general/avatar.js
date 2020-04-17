@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 const Command = require('../../structures/Command');
 
 class AvatarCommand extends Command {
@@ -26,7 +28,7 @@ class AvatarCommand extends Command {
       user = member.user;
     }
 
-    const embed = message.getEmbed().setImage(user.displayAvatarURL({ size: 512, dynamic: true }));
+    const embed = new MessageEmbed().setImage(user.displayAvatarURL({ size: 512, dynamic: true }));
     if (message.guild) embed.setColor(member.displayHexColor);
 
     message.send(message._('avatar.title', user.tag), embed);

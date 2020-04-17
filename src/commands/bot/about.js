@@ -1,4 +1,4 @@
-const { version: djs } = require('discord.js');
+const { MessageEmbed, version: djs } = require('discord.js');
 const { name, version } = require('../../../package.json');
 
 const Command = require('../../structures/Command');
@@ -27,7 +27,7 @@ class AboutCommand extends Command {
       `${message.dot} ${message._('about.links')}: **[GitHub](https://github.com/Keke27210/homer)** / **[Homer - Support server](${this.client.invite})**`,
     ].join('\n');
 
-    const embed = message.getEmbed()
+    const embed = new MessageEmbed()
       .setDescription(description)
       .setThumbnail(this.client.user.avatarURL({ size: 128 }));
 

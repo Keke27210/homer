@@ -377,10 +377,10 @@ class ContractProvider extends Provider {
       : message;
     const m = await this.client.api.channels[contract.channel].messages
       .post({
-        data: { content },
+        data: { content, embed },
       })
       .catch((error) => {
-        this.client.logger.warn(`[contracts->notify] Cannot send a message in channel ${channel.id}`, error);
+        this.client.logger.warn(`[contracts->notify] Cannot send a message in channel ${contract.channel}`, error);
         throw new Error('SENDING_ERROR');
       });
 
@@ -437,6 +437,7 @@ class ContractProvider extends Provider {
    * @param {string} channel Channel ID
    * @returns {Promise<void>}
    */
+  // eslint-disable-next-line no-underscore-dangle
   async _channelDelete(channel) {
     const contract = await this.fetchContract(channel);
     if (!contract) return null;
@@ -449,6 +450,7 @@ class ContractProvider extends Provider {
    * @param {string} guild Guild ID
    * @returns {Promise<void>}
    */
+  // eslint-disable-next-line no-underscore-dangle
   async _guildDelete(guild) {
     const contracts = await this.getRows([
       ['context', '=', guild],

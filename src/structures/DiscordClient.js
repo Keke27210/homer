@@ -1,5 +1,7 @@
 const { Client } = require('discord.js');
 
+const Constants = require('./Constants');
+
 // Structures
 const Database = require('./Database');
 const Logger = require('./Logger');
@@ -27,38 +29,20 @@ const ListUtil = require('../util/ListUtil');
 const MenuUtil = require('../util/MenuUtil');
 
 class DiscordClient extends Client {
-  constructor(clientOptions, databaseCredentials, owners) {
+  constructor(clientOptions, databaseCredentials) {
     super(clientOptions);
 
     /**
-     * Discord IDs of Homer owner(s)
-     * @type {string[]}
+     * Constants values for Homer
+     * @type {Constants}
      */
-    this.owners = owners || [];
-
-    /**
-     * Discord invite for support server
-     * @type {string}
-     */
-    this.invite = 'https://discord.gg/fYRm29b';
+    this.constants = Constants;
 
     /**
      * Whether the client is ready to proceed commands and events
      * @type {boolean}
      */
     this.ready = false;
-
-    /**
-     * Status override for presence update
-     * @type {?string}
-     */
-    this.status = null;
-
-    /**
-     * Activity/game override for presence update
-     * @type {?string}
-     */
-    this.message = null;
 
     /**
      * Database for this Discord client
@@ -260,12 +244,12 @@ class DiscordClient extends Client {
 
     const shards = this.shard.ids;
     const presence = {
-      status: this.status || (this.database.ready ? 'online' : 'idle'),
+      status: this.database.ready ? 'online' : 'idle',
       activity: {
         type: 0,
-        name: this.message || (this.database.ready
+        name: this.database.ready
           ? `Type h:help! On ${this.guilds.cache.size} servers on shard${shards.length > 1 ? 's' : ''} ${shards.map((s) => s + 1).join('/')}.`
-          : '> Database unavailable - Some features may be disabled | Type h:help!'),
+          : '> Database unavailable - Some features may be disabled | Type h:help!',
       },
     };
 

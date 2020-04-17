@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 const Command = require('../../structures/Command');
 
 class MembersSubcommand extends Command {
@@ -91,7 +93,7 @@ class RoleCommand extends Command {
       `${message.dot} ${message._('role.creation')}: ${message.getMoment(role.createdTimestamp)}`,
     ];
 
-    const embed = message.getEmbed()
+    const embed = new MessageEmbed()
       .setDescription(description.join('\n'))
       .setColor(role.hexColor);
 

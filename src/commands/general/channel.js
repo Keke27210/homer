@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 const Command = require('../../structures/Command');
 
 class ChannelCommand extends Command {
@@ -45,7 +47,7 @@ class ChannelCommand extends Command {
 
     description.push(`${message.dot} ${message._('channel.creation')}: ${message.getMoment(channel.createdTimestamp)}`);
 
-    const embed = message.getEmbed().setDescription(description.join('\n'));
+    const embed = new MessageEmbed().setDescription(description.join('\n'));
     if (channel.topic) embed.addField(message._('channel.topic'), channel.topic);
 
     message.send(message._('channel.title', channel.name, channel.type), embed);

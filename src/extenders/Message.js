@@ -1,94 +1,8 @@
-const { MessageEmbed, Structures } = require('discord.js');
+const { Structures } = require('discord.js');
 const moment = require('moment-timezone');
-
-const emotes = {
-  // Status/Prefix emotes
-  homer: '<:homer:695734221322584155>',
-  human: '👤',
-  bot: '<:bot:695746485790310530>',
-  status: {
-    online: '<:online:695746507231461469>',
-    idle: '<:idle:695749338877395069>',
-    dnd: '<:dnd:695749383639138414>',
-    offline: '<:offline:695749413704040478>',
-    mobile: '<:mobile:699672449767178261>',
-  },
-  loading: '<a:loading:696020151727947866>',
-  success: '<:success:695722112823853066>',
-  warn: '<:warn:695722124395937862>',
-  error: '<:error:695722118976897085>',
-  successIdentifier: 'success:695722112823853066',
-  errorIdentifier: 'error:695722118976897085',
-  info: 'ℹ️',
-  placeholder: '<:placeholder:695983847061323797>',
-  verified: '<:verified:697804778910253086>',
-  activities: '<:activities:698065014321446922>',
-
-  // User flags
-  developer: '<:developer:697441287921467432>',
-  owner: '<:owner:695975441516855337>',
-  donator: '<:donator:697439375847456818>',
-  nitro: '<:nitro:695977635666198570>',
-  DISCORD_EMPLOYEE: '<:staff:697537107505446962>',
-  DISCORD_PARTNER: '<:partner:697536791192010933>',
-  HYPESQUAD_EVENTS: '<:hypesquad_events:697539960592400485>',
-  BUGHUNTER_LEVEL1: '<:bughunter:697534883115040838>',
-  HOUSE_BRAVERY: '<:bravery:697534635755700224>',
-  HOUSE_BRILLIANCE: '<:brilliance:697534618617774160>',
-  HOUSE_BALANCE: '<:balance:697533287870103596>',
-  EARLY_SUPPORTER: '<:early_supporter:698886219358142536>',
-  TEAM_USER: '👥',
-  SYSTEM: '<:discord:442415945647128585>',
-  BUGHUNTER_LEVEL2: '<:bughunter_gold:700342086905495644>',
-  VERIFIED_BOT: '<:verified_bot:697824845215301642>',
-  VERIFIED_DEVELOPER: '<:verified_developer:697803716597645363>',
-
-  // Help categories
-  c_bot: '<:homer:695734221322584155>',
-  c_general: '🖥',
-  c_radio: '📻',
-  c_settings: '🔧',
-  c_telephone: '📞',
-};
 
 Structures.extend('Message', (Message) => {
   class CustomMessage extends Message {
-    constructor(client, data, channel) {
-      super(client, data, channel);
-
-      /**
-       * dot emote used by Homer (:white_small_square:)
-       * @type {string}
-       */
-      this.dot = '▫️';
-
-      /**
-       * IDs of emotes used by Homer
-       * @type {object}
-       */
-      this.emotes = emotes;
-    }
-
-    get eInfo() {
-      return this.emotes.info;
-    }
-
-    get eSuccess() {
-      return this.emotes.success;
-    }
-
-    get eWarn() {
-      return this.emotes.warn;
-    }
-
-    get eError() {
-      return this.emotes.error;
-    }
-
-    get eLoading() {
-      return this.emotes.loading;
-    }
-
     /**
      * Settings for the current context (guild or user)
      * @type {Settings}
@@ -106,14 +20,15 @@ Structures.extend('Message', (Message) => {
     }
 
     /**
-     * Gets a sendable emote
-     * @param {string} name Emote name
-     * @param {boolean} status Status emote
-     * @returns {string} Emote
+     * Generates a sendable emote from an ID
+     * @param {string} id Emote ID
+     * @returns {string} Sendable emote
      */
-    emote(name, status = false) {
-      const id = status ? this.emotes.status[name] : this.emotes[name];
-      return id;
+    emote(id) {
+      const value = this.client.constants.emotes[id];
+      if (!value) return null;
+      if (value.length < 15) return value;
+      return `<${(id === 'loading') ? 'a' : ''}:e:${value}>`;
     }
 
     /**
@@ -136,7 +51,7 @@ Structures.extend('Message', (Message) => {
      * @returns {Promise<MessageReaction>}
      */
     async reactSuccess() {
-      return this.react(this.emotes.successIdentifier);
+      return this.react(`e:${this.client.constants.emotes.success}`);
     }
 
     /**
@@ -155,7 +70,7 @@ Structures.extend('Message', (Message) => {
      * @returns {Promise<Message>}
      */
     loading(content, options) {
-      const str = `${this.eLoading} ${content}`;
+      const str = `${this.emote('loading')} ${content}`;
       return this.channel.send(str, options);
     }
 
@@ -166,7 +81,7 @@ Structures.extend('Message', (Message) => {
      * @returns {Promise<Message>}
      */
     info(content, options) {
-      const str = `${this.eInfo} ${content}`;
+      const str = `${this.emote('info')} ${content}`;
       return this.channel.send(str, options);
     }
 
@@ -177,7 +92,7 @@ Structures.extend('Message', (Message) => {
      * @returns {Promise<Message>}
      */
     success(content, options) {
-      const str = `${this.eSuccess} ${content}`;
+      const str = `${this.emote('success')} ${content}`;
       return this.channel.send(str, options);
     }
 
@@ -188,7 +103,7 @@ Structures.extend('Message', (Message) => {
      * @returns {Promise<Message>}
      */
     warn(content, options) {
-      const str = `${this.eWarn} ${content}`;
+      const str = `${this.emote('warn')} ${content}`;
       return this.channel.send(str, options);
     }
 
@@ -199,7 +114,7 @@ Structures.extend('Message', (Message) => {
      * @returns {Promise<Message>}
      */
     error(content, options) {
-      const str = `${this.eError} ${content}`;
+      const str = `${this.emote('error')} ${content}`;
       return this.channel.send(str, options);
     }
 
@@ -210,7 +125,7 @@ Structures.extend('Message', (Message) => {
      * @returns {Promise<Message>}
      */
     editLoading(content, options) {
-      const str = `${this.eLoading} ${content}`;
+      const str = `${this.emote('loading')} ${content}`;
       return this.edit(str, options);
     }
 
@@ -221,7 +136,7 @@ Structures.extend('Message', (Message) => {
      * @returns {Promise<Message>}
      */
     editInfo(content, options) {
-      const str = `${this.eInfo} ${content}`;
+      const str = `${this.emote('info')} ${content}`;
       return this.edit(str, options);
     }
 
@@ -232,7 +147,7 @@ Structures.extend('Message', (Message) => {
      * @returns {Promise<Message>}
      */
     editSuccess(content, options) {
-      const str = `${this.eSuccess} ${content}`;
+      const str = `${this.emote('success')} ${content}`;
       return this.edit(str, options);
     }
 
@@ -243,7 +158,7 @@ Structures.extend('Message', (Message) => {
      * @returns {Promise<Message>}
      */
     editWarn(content, options) {
-      const str = `${this.eWarn} ${content}`;
+      const str = `${this.emote('warn')} ${content}`;
       return this.edit(str, options);
     }
 
@@ -254,18 +169,8 @@ Structures.extend('Message', (Message) => {
      * @returns {Promise<Message>}
      */
     editError(content, options) {
-      const str = `${this.eError} ${content}`;
+      const str = `${this.emote('error')} ${content}`;
       return this.edit(str, options);
-    }
-
-    /**
-     * Get an embed with Homer design
-     * @returns {MessageEmbed}
-     */
-    // eslint-disable-next-line class-methods-use-this
-    getEmbed() {
-      const embed = new MessageEmbed();
-      return embed;
     }
 
     /**
@@ -301,11 +206,11 @@ Structures.extend('Message', (Message) => {
      * @returns {Promise<boolean>} User's decision
      */
     async awaitUserApproval(id) {
-      const e = [this.emotes.successIdentifier, this.emotes.errorIdentifier];
-      await this.react(e[0]).catch(() => null);
-      await this.react(e[1]).catch(() => null);
+      const emotes = [this.emote('success'), this.emote('error')];
+      await this.react(`e:${emotes[0]}`).catch(() => null);
+      await this.react(`e:${emotes[1]}`).catch(() => null);
       return this.awaitReactions(
-        (reaction, user) => e.includes(reaction.emoji.identifier)
+        (reaction, user) => emotes.includes(reaction.emoji.id)
           && user.id === id,
         { max: 1 },
       )
@@ -314,7 +219,7 @@ Structures.extend('Message', (Message) => {
             this.reactions.removeAll();
           }
           const r = reactions.first();
-          if (r.emoji.identifier === e[0]) {
+          if (r.emoji.id === emotes[0]) {
             return true;
           }
           return false;

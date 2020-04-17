@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 const Command = require('../../structures/Command');
 
 class UserCommand extends Command {
@@ -106,7 +108,7 @@ class UserCommand extends Command {
       description.push(`${message.dot} ${message._('user.join')}: ${message.getMoment(member.joinedTimestamp)}`);
     }
 
-    const embed = message.getEmbed()
+    const embed = new MessageEmbed()
       .setDescription(description.join('\n'))
       .setThumbnail(user.avatarURL({ size: 256, dynamic: true }));
     if (member) embed.setColor(member.displayHexColor === '#000000' ? null : member.displayHexColor);

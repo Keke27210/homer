@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 const Command = require('../../structures/Command');
 
 class ShardsCommand extends Command {
@@ -25,11 +27,25 @@ class ShardsCommand extends Command {
     };
   }
 
-  getEmote(status) {
-    if (status === 0) return 'online';
-    else if (status >= 1 && status <= 4) return 'idle';
-    else if (status === 5) return 'offline';
-    return 'dnd';
+  static getEmote(status) {
+    let emote;
+    switch (status) {
+      case 0:
+        emote = 'online';
+        break;
+      case 1:
+      case 2:
+      case 3:
+      case 4:
+        emote = 'idle';
+        break;
+      case 5:
+        emote = 'offline';
+        break;
+      default:
+        emote = 'dnd';
+    }
+    return emote;
   }
 
   async main(message) {
@@ -46,7 +62,7 @@ class ShardsCommand extends Command {
       description.push(clDesc.join('\n'));
     }
 
-    const embed = message.getEmbed().setDescription(description.join('\n'));
+    const embed = new MessageEmbed().setDescription(description.join('\n'));
     message.send('📡 Information about shards:', embed);
   }
 }

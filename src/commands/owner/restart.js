@@ -14,7 +14,7 @@ class RestartCommand extends Command {
     if (id) {
       id = parseInt(id, 10);
       if (Number.isNaN(id)) {
-        message.warn(`The provided ID is not a number.`);
+        message.warn('The provided ID is not a number.');
         return;
       }
       message.success(`Sent restart request for cluster \`${id}\`.`);

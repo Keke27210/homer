@@ -89,7 +89,7 @@ class ListUtil extends Util {
     const api = await this.client.apis.fetchKey('dadev');
     if (!api) return null;
 
-    const count = this.client.guilds.cache.size * this.client.shard.count; // Approximation for the moment
+    const count = this.client.guilds.cache.size * this.client.shard.count;
     await fetch(
       `https://api.discordapps.dev/api/v2/bots/${this.client.user.id}`,
       {
