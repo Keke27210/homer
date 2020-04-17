@@ -32,6 +32,8 @@ class AudioManager extends Manager {
      * @type {number}
      */
     this.boostedBitrate = 128;
+
+    this.client.setInterval(this.leaveInactive, 30000);
   }
 
   /**
@@ -104,18 +106,17 @@ class AudioManager extends Manager {
   }
 
   /**
-   * Executed every minute
-   * Leaves voice channels if no-one listen
+   * Leaves all voice channels where only the bot is on
+   * @returns {Promise<void>}
    */
-  minute() {
-    const end = this.sessions.filter((s) => s.reprieve);
-    for (let i = 0; i < end.length; i += 1) this.destroySession(end[i].channel, true);
-
-    for (let i = 0; i < this.sessions.length; i += 1) {
-      const channel = this.client.channels.resolve(this.sessions[i].channel);
-      if (channel && channel.members.filter((m) => m.id !== this.client.user.id).size === 0) {
-        this.sessions[i].reprieve = true;
-      }
+  async leaveInactive() {
+    const inactive = this.client.voice.connections
+      .filter((c) => c.channel.members.size === 1)
+      .array();
+    for (let i = 0; i < inactive.length; i += 1) {
+      const session = this.sessions.find((s) => s.channel === inactive[i].channel.id);
+      if (session) await this.destroySession(session.id, true);
+      else await inactive[i].disconnect();
     }
   }
 }
