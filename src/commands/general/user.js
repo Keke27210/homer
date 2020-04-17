@@ -33,7 +33,7 @@ class UserCommand extends Command {
     const flags = Object.entries(user.flags.serialize()).filter(([, v]) => v).map(([k]) => k);
 
     const honours = [];
-    if (this.client.owners.includes(user.id)) honours.push(message.emote('developer'));
+    if (this.client.constants.owners.includes(user.id)) honours.push(message.emote('developer'));
     if (message.guild && message.guild.ownerID === user.id) honours.push(message.emote('owner'));
     if (await this.client.settings.isDonator(user.id)) honours.push(message.emote('donator'));
     if (user.system) honours.push(message.emote('VERIFIED_BOT'));

@@ -85,7 +85,7 @@ class Command {
       }
     }
 
-    if (this.private && !this.client.owners.includes(message.author.id)) return;
+    if (this.private && !this.client.constants.owners.includes(message.author.id)) return;
 
     if (!message.guild && !this.dm) {
       message.error(message._('command.noDm'));

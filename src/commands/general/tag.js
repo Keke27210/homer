@@ -79,7 +79,8 @@ class EditSubcommand extends Command {
       return 0;
     }
 
-    if (message.author.id !== existing.author && !this.client.owners.includes(message.author.id)) {
+    if (message.author.id !== existing.author
+      && !this.client.constants.owners.includes(message.author.id)) {
       message.warn(message._('tag.edit.cannot', existing.name));
       return 0;
     }
@@ -135,7 +136,8 @@ class DeleteSubcommand extends Command {
       return 0;
     }
 
-    if (message.author.id !== existing.author && !this.client.owners.includes(message.author.id)) {
+    if (message.author.id !== existing.author
+      && !this.client.constants.owners.includes(message.author.id)) {
       message.warn(message._('tag.delete.cannot', existing.name));
       return 0;
     }
@@ -306,7 +308,8 @@ class PrivateSubcommand extends Command {
       return 0;
     }
 
-    if (message.author.id !== tag.author && !this.client.owners.includes(message.author.id)) {
+    if (message.author.id !== tag.author
+      && !this.client.constants.owners.includes(message.author.id)) {
       message.error(message._('tag.permissions', tag.name));
       return 0;
     }
@@ -349,7 +352,8 @@ class SourceSubcommand extends Command {
       return 0;
     }
 
-    if (message.author.id !== tag.author && !this.client.owners.includes(message.author.id)) {
+    if (message.author.id !== tag.author
+      && !this.client.constants.owners.includes(message.author.id)) {
       message.error(message._('tag.permissions', tag.name));
       return 0;
     }

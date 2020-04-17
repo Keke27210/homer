@@ -103,7 +103,7 @@ class ServicetelCommand extends Command {
     pages.push({ title: message._('servicetel.subscriber') });
     const flags = Object.entries(subscriber.flags.serialize()).filter(([, v]) => v).map(([k]) => k);
     const honours = [];
-    if (this.client.owners.includes(subscriber.id)) honours.push(message.emote('developer'));
+    if (this.client.constants.owners.includes(subscriber.id)) honours.push(message.emote('developer'));
     if (message.guild && message.guild.ownerID === subscriber.id) honours.push(message.emote('owner'));
     if (await this.client.settings.isDonator(subscriber.id)) honours.push(message.emote('donator'));
     if (subscriber.system) honours.push(message.emote('VERIFIED_BOT'));
