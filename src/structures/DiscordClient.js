@@ -264,7 +264,6 @@ class DiscordClient extends Client {
     if (!this.ready) return;
 
     this.updatePresence();
-    this.audioManager.minute();
     this.telephone.calls.minute();
   }
 
