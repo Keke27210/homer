@@ -213,7 +213,7 @@ Structures.extend('Message', (Message) => {
      * @returns {Promise<boolean>} User's decision
      */
     async awaitUserApproval(id) {
-      const emotes = [this.emote('success'), this.emote('error')];
+      const emotes = [this.client.constants.emotes.success, this.client.constants.emotes.error];
       await this.react(`e:${emotes[0]}`).catch(() => null);
       await this.react(`e:${emotes[1]}`).catch(() => null);
       return this.awaitReactions(
