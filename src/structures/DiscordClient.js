@@ -1,6 +1,6 @@
 const { Client } = require('discord.js');
 
-const Constants = require('./Constants');
+const Constants = require('../Constants');
 
 // Structures
 const Database = require('./Database');
