@@ -16,7 +16,7 @@ class PrefixCommand extends Command {
       return 0;
     }
 
-    if (prefix.length > this.client.settings.maxPrefixLength) {
+    if (prefix.length > this.client.settings.maxPrefixLength && prefix !== 'disable') {
       message.error(message._('prefix.length', this.client.settings.maxPrefixLength));
       return 0;
     }
