@@ -155,6 +155,11 @@ module.exports = (dot) => ({
       usage: '[user]',
       example: '@You',
     },
+    now: {
+      description: 'Displays information about playing radio',
+      usage: null,
+      example: null,
+    },
     ping: {
       description: 'Pong!',
       usage: null,
@@ -231,6 +236,11 @@ module.exports = (dot) => ({
         description: 'Creates a tag',
         usage: '<name> <content>',
         example: 'discord.js What a powerful library!',
+      },
+      edit: {
+        description: 'Edits a tag',
+        usage: '<name> <content>',
+        example: 'discord.js No actually it\'s the best one',
       },
       delete: {
         description: 'Deletes a tag',
@@ -583,6 +593,15 @@ module.exports = (dot) => ({
     until: 'until',
     none: (name) => `No names recorded for ${name}.`,
     footer: 'The accuracy of the data cannot be guaranteed.',
+  },
+
+  // Now command
+  now: {
+    title: '📻 Information about broadcasted radio:',
+    playing: (now) => `Playing **${now}**`,
+    noInformation: 'No playing information',
+    begun: (time) => `Begun **${time}**`,
+    noSession: 'You must be broadcasting a radio.',
   },
 
   // Phonebook command
