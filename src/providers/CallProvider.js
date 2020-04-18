@@ -286,7 +286,7 @@ class CallProvider extends Provider {
   startTyping(id) {
     return this.client.api
       .channels[id]
-      .typings
+      .typing
       .post();
   }
 }
