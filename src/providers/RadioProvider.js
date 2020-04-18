@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 const Provider = require('./Provider');
 
 const TABLE_COLUMNS = [
@@ -10,6 +12,7 @@ const TABLE_COLUMNS = [
   ['website', 'TEXT', null],
   ['language', 'VARCHAR(20)', null],
   ['country', 'VARCHAR(20)', null],
+  ['radionet', 'INT', null],
   ['updated', 'TIMESTAMP', null],
   ['created', 'TIMESTAMP', 'NOT NULL'],
 ];
@@ -29,6 +32,27 @@ class RadioProvider extends Provider {
       ['frequency', '=', frequency],
     ]);
     return radios[0] || null;
+  }
+
+  /**
+   * Fetches playing information from radio.net
+   * @param {number} id Radio ID
+   * @returns {Promise<string>}
+   */
+  async nowPlaying(id) {
+    const api = this.client.apis.fetchKey('radionet');
+    if (!api) return null;
+
+    const radio = await this.getRow(id);
+    if (!radio) throw new Error('UNKNOWN_RADIO');
+    if (!radio.radionet) return null;
+
+    const req = await fetch(`https://api.radio.net/info/v2/search/nowplaying?apikey=${api.key}&numberoftitles=1&station=${radio.radionet}`)
+      .then((r) => r.json())
+      .catch(() => null);
+    if (!req) return null;
+
+    return req[0].streamTitle;
   }
 }
 
