@@ -139,8 +139,10 @@ class SettingProvider extends Provider {
    * @returns {Promise<void>}
    */
   async setPrefix(id, prefix) {
-    if (prefix.length > this.maxPrefixLength) throw new Error('INVALID_LENGTH');
-    if (this.client.commandManager.prefixes.includes(prefix)) throw new Error('DEFAULT_PREFIX');
+    if (prefix) {
+      if (prefix.length > this.maxPrefixLength) throw new Error('INVALID_LENGTH');
+      if (this.client.commandManager.prefixes.includes(prefix)) throw new Error('DEFAULT_PREFIX');
+    }
 
     const existing = await this.getRow(id);
     if (!existing || existing.temp) await this.createSettings(id);
