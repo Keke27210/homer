@@ -40,7 +40,7 @@ class RadioProvider extends Provider {
    * @returns {Promise<string>}
    */
   async nowPlaying(id) {
-    const api = this.client.apis.fetchKey('radionet');
+    const api = await this.client.apis.fetchKey('radionet');
     if (!api) return null;
 
     const radio = await this.getRow(id);
