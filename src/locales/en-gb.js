@@ -550,11 +550,14 @@ module.exports = (dot) => ({
     noResults: (search) => `No Discord entity found matching \`${search}\`.`,
     invite: {
       title: (code) => `📧 Information about invitation **${code}**:`,
-      server: 'Server',
       inviter: 'Inviter',
       channel: 'Channel',
       members: 'Members',
-      creation: 'Server creation date',
+      guild: {
+        title: 'Server information',
+        server: 'Name',
+        creation: 'Creation date',
+      },
       memberDesc: (total, online, emote) => `**${total}** including ${emote} **${online}**`,
     },
     gift: {

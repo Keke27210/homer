@@ -36,14 +36,22 @@ class LookupCommand extends Command {
         }
 
         const description = [
-          `${message.dot} ${message._('lookup.invite.server')}: ${invite.guild ? `**${invite.guild.name}** (${invite.guild.id})${honours.length ? ` ${honours.join(' ')}` : ''}` : message._('global.unknown')}`,
-          `${message.dot} ${message._('lookup.invite.inviter')}: ${invite.inviter ? invite.inviter.tag : message._('global.none')}`,
+          `${message.dot} ${message._('lookup.invite.inviter')}: ${invite.inviter ? `${invite.inviter.tag} (${invite.inviter.id})` : message._('global.none')}`,
           `${message.dot} ${message._('lookup.invite.channel')}: **${invite.channel.type === 'text' ? '#' : ''}${invite.channel.name}** (${invite.channel.id})`,
           `${message.dot} ${message._('lookup.invite.members')}: ${message._('lookup.invite.memberDesc', invite.memberCount, invite.presenceCount, message.emote('online', true))}`,
-          `${message.dot} ${message._('lookup.invite.creation')}: ${invite.guild ? message.getMoment(invite.guild.createdTimestamp) : message._('global.unknown')}`,
-        ];
+        ].join('\n');
 
-        const embed = new MessageEmbed().setDescription(description.join('\n'));
+        const guildDesc = [];
+        if (invite.guild) {
+          guildDesc.push(
+            `${message.dot} ${message._('lookup.invite.guild.server')}: ${invite.guild ? `**${invite.guild.name}** (${invite.guild.id})${honours.length ? ` ${honours.join(' ')}` : ''}` : message._('global.unknown')}`,
+            `${message.dot} ${message._('lookup.invite.guild.creation')}: ${invite.guild ? message.getMoment(invite.guild.createdTimestamp) : message._('global.unknown')}`,
+          );
+        }
+
+        const embed = new MessageEmbed()
+          .setDescription(description);
+        if (guildDesc.length) embed.addField(message._('lookup.invite.guild.title'), guildDesc.join('\n'));
         if (invite.guild) embed.setThumbnail(invite.guild.iconURL({ size: 256, dynamic: true }));
 
         m.edit(message._('lookup.invite.title', invite.code), embed);
