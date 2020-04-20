@@ -52,7 +52,7 @@ class ChannelCommand extends Command {
 
     const overwrites = channel.permissionOverwrites.get(message.guild.id);
     // eslint-disable-next-line no-nested-ternary
-    const emote = message.emote(overwrites && overwrites.deny.has('VIEW_CHANNEL')
+    const emote = message.emote(overwrites && overwrites.deny.any(['VIEW_CHANNEL', 'CONNECT'])
       ? `${channel.type === 'voice' ? 'voice' : 'channel'}_locked`
       : channel.type === 'voice' ? 'voice' : 'channel');
 
