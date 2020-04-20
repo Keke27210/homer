@@ -18,7 +18,7 @@ const config = require(process.argv.includes('DEBUG')
 const client = new DiscordClient(
   config.clientOptions,
   config.databaseCredentials,
-  config.owners,
+  config.lavalinkCredentials,
 );
 
 (async function login() {
