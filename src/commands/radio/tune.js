@@ -66,6 +66,7 @@ class TuneCommand extends Command {
       });
 
       player.once('error', (error) => {
+        if (error.code === 1000) return;
         this.client.logger.error(`[lavalink->broadcast] Broadcast error - Radio: ${radio.id} - Channel: ${voice.id}\n${inspect(error)}`);
         m.editError(message._('tune.error'));
       });
@@ -73,7 +74,6 @@ class TuneCommand extends Command {
       await player.play(track.track, { volume: message.settings.volume });
     })()
       .catch((error) => {
-        if (error.code === 1000) return;
         this.client.logger.error(`[commands->tune] Error while tuning on ${radio.id} in ${voice.id}`, error);
         m.editError(message._('tune.error'));
       });
