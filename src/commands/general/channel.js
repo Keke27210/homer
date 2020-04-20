@@ -50,8 +50,9 @@ class ChannelCommand extends Command {
     const embed = new MessageEmbed().setDescription(description.join('\n'));
     if (channel.topic) embed.addField(message._('channel.topic'), channel.topic);
 
+    const overwrites = channel.permissionOverwrites.get(message.guild.id);
     // eslint-disable-next-line no-nested-ternary
-    const emote = message.emote(channel.permissionOverwrites.size
+    const emote = message.emote(overwrites && overwrites.deny.has('VIEW_CHANNEL')
       ? `${channel.type === 'voice' ? 'voice' : 'channel'}_locked`
       : channel.type === 'voice' ? 'voice' : 'channel');
 
