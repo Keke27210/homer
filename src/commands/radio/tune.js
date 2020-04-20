@@ -1,3 +1,5 @@
+const { inspect } = require('util');
+
 const Command = require('../../structures/Command');
 
 class TuneCommand extends Command {
@@ -64,7 +66,7 @@ class TuneCommand extends Command {
       });
 
       player.once('error', (error) => {
-        this.client.logger.error(`[lavalink->broadcast] Broadcast error - Radio: ${radio.id} - Channel: ${voice.id}`, error);
+        this.client.logger.error(`[lavalink->broadcast] Broadcast error - Radio: ${radio.id} - Channel: ${voice.id}\n${inspect(error)}`);
         m.editError(message._('tune.error'));
       });
 
