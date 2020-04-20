@@ -48,7 +48,7 @@ class LavacordManager extends Manager {
    */
   getTracks(query) {
     const node = this.idealNodes[0];
-    return fetch(`http://${node.host}:${node.port}/loadtracks?identifier=${encodeURIComponent(query)}`)
+    return fetch(`http://${node.host}:${node.port}/loadtracks?identifier=${encodeURIComponent(query)}`, { headers: { Authorization: node.password } })
       .then((r) => r.json())
       .then((data) => data.tracks);
   }
