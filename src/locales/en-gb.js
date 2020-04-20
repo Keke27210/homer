@@ -445,7 +445,7 @@ module.exports = (dot) => ({
 
   // Channel command
   channel: {
-    title: (name, type) => `🗺️ Information about **${type === 'text' ? '#' : ''}${name}**:`,
+    title: (emote, name, type) => `${emote} Information about **${type === 'text' ? '#' : ''}${name}**:`,
     id: 'Discord ID',
     type: 'Type',
     position: 'Position',

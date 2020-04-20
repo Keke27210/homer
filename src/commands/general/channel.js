@@ -50,7 +50,12 @@ class ChannelCommand extends Command {
     const embed = new MessageEmbed().setDescription(description.join('\n'));
     if (channel.topic) embed.addField(message._('channel.topic'), channel.topic);
 
-    message.send(message._('channel.title', channel.name, channel.type), embed);
+    // eslint-disable-next-line no-nested-ternary
+    const emote = message.emote(channel.permissionOverwrites.size
+      ? `${channel.type === 'voice' ? 'voice' : 'channel'}_locked`
+      : channel.type === 'voice' ? 'voice' : 'channel');
+
+    message.send(message._('channel.title', emote, channel.name, channel.type), embed);
     return 0;
   }
 }
