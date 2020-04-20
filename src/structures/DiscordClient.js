@@ -7,7 +7,6 @@ const Database = require('./Database');
 const Logger = require('./Logger');
 
 // Managers
-const AudioManager = require('../managers/AudioManager');
 const CommandManager = require('../managers/CommandManager');
 const EventManager = require('../managers/EventManager');
 const LavacordManager = require('../managers/LavacordManager');
@@ -56,12 +55,6 @@ class DiscordClient extends Client {
      * @type {Logger}
      */
     this.logger = new Logger(this.shard.ids[0]);
-
-    /**
-     * Audio manager for this client
-     * @type {AudioManager}
-     */
-    this.audioManager = new AudioManager(this);
 
     /**
      * Command manager for this client
