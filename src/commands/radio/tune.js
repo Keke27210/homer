@@ -43,12 +43,14 @@ class TuneCommand extends Command {
     }
 
     (async () => {
-      const player = this.client.lavacordManager.players.get(message.guild.id)
-        || await this.client.lavacordManager.join({
-          guild: message.guild.id,
-          channel: voice.id,
-          node: this.client.lavacordManager.idealNodes[0].id,
-        });
+      const existing = this.client.lavacordManager.players.get(message.guild.id);
+      if (existing) await existing.destroy();
+
+      const player = await this.client.lavacordManager.join({
+        guild: message.guild.id,
+        channel: voice.id,
+        node: this.client.lavacordManager.idealNodes[0].id,
+      });
 
       player.once('start', () => {
         m.edit(message._('tune.playing', radio.name));
