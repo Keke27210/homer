@@ -246,7 +246,7 @@ function evaluateStatement(statement) {
   console.log(statement)
 
   const s1 = statement.substring(0, index).trim();
-  const s2 = statement.substring(index + 3).trim().split('|')[0];
+  const s2 = statement.substring(index + 3).trim().split('|')[0].trim();
   console.log(s1, '\n', s2)
 
   if (!Number.isNaN(s1) && !Number.isNaN(s2)) {
