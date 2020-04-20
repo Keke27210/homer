@@ -16,13 +16,11 @@ class ExecCommand extends Command {
 
   async main(message, args) {
     const code = args.join(' ');
+    if (!code) return message.error('You must provide something to execute!');
 
     const m = await message.loading('Executing code...');
     exec(code, async (err, stdout, stderr) => {
-      if (err) {
-        m.editError(`Failed to execute command \`${code}\`.\n\`\`\`xl\n${err}\`\`\``);
-        return 0;
-      }
+      if (err) return m.editError(`Failed to execute command \`${code}\`.\n\`\`\`xl\n${err}\`\`\``);
 
       let output = '';
       if (stderr) output += stderr;
@@ -46,6 +44,8 @@ class ExecCommand extends Command {
 
       return 0;
     });
+
+    return 0;
   }
 }
 
