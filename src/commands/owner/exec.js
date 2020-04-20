@@ -19,7 +19,7 @@ class ExecCommand extends Command {
     if (!code) return message.error('You must provide something to execute!');
 
     const m = await message.loading('Executing code...');
-    exec(code, async (err, stdout, stderr) => {
+    exec(code, { timeout: (30 * 1000) }, async (err, stdout, stderr) => {
       if (err) return m.editError(`Failed to execute command \`${code}\`.\n\`\`\`xl\n${err}\`\`\``);
 
       let output = '';
