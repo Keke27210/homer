@@ -236,51 +236,39 @@ function evaluateMath(statement) {
 }
 
 function evaluateStatement(statement) {
-  let index = statement.lastIndexOf('|=|');
-  if (index === -1) index = statement.lastIndexOf('|<|');
-  if (index === -1) index = statement.lastIndexOf('|>|');
-  if (index === -1) index = statement.lastIndexOf('|~|');
-  if (index === -1) index = statement.lastIndexOf('|?|');
-  if (index === -1) index = statement.lastIndexOf('|%|');
-  if (index === -1) return statement;
-  console.log(statement)
+  const [operand1, operator, operand2] = statement.split('|');
 
-  const s1 = statement.substring(0, index).trim();
-  const s2 = statement.substring(index + 3).trim().split('|')[0].trim();
-  console.log(s1);
-  console.log(s2)
+  const n1 = parseFloat(operand1);
+  const n2 = parseFloat(operand2);
 
-  if (!Number.isNaN(s1) && !Number.isNaN(s2)) {
-    const i1 = parseFloat(s1);
-    const i2 = parseFloat(s2);
-
-    switch (statement.substring(index, index + 3)) {
-      case '|=|':
-        return (i1 === i2);
-      case '|~|':
-        return ((i1 * 100) === (i2 * 100));
-      case '|>|':
-        return (i1 > i2);
-      case '|<|':
-        return (i1 < i2);
+  if (!Number.isNaN(n1) && !Number.isNaN(n2)) {
+    switch (operator) {
+      case '=':
+        return (n1 === n2);
+      case '~':
+        return ((n1 * 100) === (n2 * 100));
+      case '>':
+        return (n1 > n2);
+      case '<':
+        return (n1 < n2);
       default:
         return false;
     }
   } else {
-    switch (statement.substring(index, index + 3)) {
-      case '|=|':
-        return (s1 === s2);
-      case '|~|':
+    switch (operator) {
+      case '=':
+        return (operand1 === operand2);
+      case '~':
         // eslint-disable-next-line eqeqeq
-        return (s1.toLowerCase() == s2.toLowerCase());
-      case '|>|':
-        return (s1.compareTo(s2) > 0);
-      case '|<|':
-        return (s1.compareTo(s2) < 0);
-      case '|?|':
-        try { return s1.match(new RegExp(s2, 'igm')); } catch (e) { return null; }
-      case '|%|':
-        return s1.toLowerCase().includes(s2.toLowerCase());
+        return (operand1.toLowerCase() == operand2.toLowerCase());
+      case '>':
+        return (operand1.compareTo(operand2) > 0);
+      case '<':
+        return (operand1.compareTo(operand2) < 0);
+      case '?':
+        try { return operand1.match(new RegExp(operand2, 'igm')); } catch (e) { return false; }
+      case '%':
+        return operand1.toLowerCase().includes(operand2.toLowerCase());
       default:
         return false;
     }
