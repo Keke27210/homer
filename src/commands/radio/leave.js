@@ -18,7 +18,7 @@ class LeaveCommand extends Command {
     const player = this.client.lavacordManager.players.get(message.guild.id);
     if (player) await player.destroy();
 
-    const ret = await voice.connection.disconnect()
+    const ret = await this.client.lavacordManager.leave(message.guild.id)
       .then(() => {
         message.success(message._('leave.success', voice.channel.name));
         return 0;

@@ -52,6 +52,9 @@ class TuneCommand extends Command {
         node: this.client.lavacordManager.idealNodes[0].id,
       });
 
+      player.radio = radio.id;
+      this.client.lavacordManager.players.set(message.guild.id, player);
+
       player.once('start', () => {
         m.edit(message._('tune.playing', radio.name));
       });
