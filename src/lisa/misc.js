@@ -54,8 +54,8 @@ module.exports = [
 
       const request = await fetch(url, options)
         .then(async (r) => {
-          try { return JSON.stringify(await r.text()); }
-          catch { return (r.ok ? `HTTP_RESPONSE_${r.status}` : `HTTP_ERROR_${r.status}`); }
+          if (r.ok) return await r.text();
+          else return `HTTP_ERROR_${r.status}`;
         })
         .catch(() => 'HTTP_ERROR_UNKNOWN');
 
