@@ -158,7 +158,7 @@ module.exports = [
   // Neper constant (used by natural logarithms)
   new Method(
     'e',
-    (_) => Math.E.toString(),
+    () => Math.E.toString(),
     null,
   ),
 
@@ -178,61 +178,64 @@ module.exports = [
 ];
 
 function evaluateMath(statement) {
-  let index = statement.lastIndexOf('|+|');
-  if (index === -1) index = statement.lastIndexOf('|-|');
-  if (index === -1) index = statement.lastIndexOf('|*|');
-  if (index === -1) index = statement.lastIndexOf('|%|');
-  if (index === -1) index = statement.lastIndexOf('|/|');
-  if (index === -1) index = statement.lastIndexOf('|^|');
-  if (index === -1) return statement;
+  const [operand1, operator, operand2] = statement.split('|');
 
-  const first = evaluateMath(statement.substring(0, index)).trim();
-  const second = evaluateMath(statement.substring(index + 3)).trim();
+  const res1 = evaluateMath(operand1);
+  const res2 = evaluateMath(operand2);
+  let res;
 
-  let val1;
-  let val2;
-  try {
-    val1 = parseFloat(first);
-    val2 = parseFloat(second);
+  const n1 = parseFloat(operand1);
+  const n2 = parseFloat(operand2);
 
-    switch (statement.substring(index, index + 3)) {
-      case '|+|':
-        return `${val1 + val2}`;
-      case '|-|':
-        return `${val1 - val2}`;
-      case '|*|':
-        return `${val1 * val2}`;
-      case '|%|':
-        return `${val1 % val2}`;
-      case '|/|':
-        return `${val1 / val2}`;
-      case '|^|':
-        return `${val1 ** val2}`;
+  if (!Number.isNaN(n1) && !Number.isNaN(n2)) {
+    switch (operator) {
+      case '+':
+        res = n1 + n2;
+        break;
+      case '-':
+        res = n1 - n2;
+        break;
+      case '*':
+        res = n1 * n2;
+        break;
+      case '/':
+        res = n1 / n2;
+        break;
+      case '%':
+        res = n1 % n2;
+        break;
+      case '^':
+        res = n1 ** n2;
+        break;
       default:
+        res = 0;
     }
-  } catch {
-    return '0';
+  } else {
+    switch (operator) {
+      case '+':
+        res = `${res1}|+|${res2}`;
+        break;
+      case '-':
+        res = `${res1}|-|${res2}`;
+        break;
+      case '*':
+        res = `${res1}|*|${res2}`;
+        break;
+      case '/':
+        res = `${res1}|/|${res2}`;
+        break;
+      case '%':
+        res = `${res1}|%|${res2}`;
+        break;
+      case '^':
+        res = `${res1}|^|${res2}`;
+        break;
+      default:
+        res = 0;
+    }
   }
 
-  switch (statement.substring(index, index + 3)) {
-    case '|+|':
-      return `${first}+${second}`;
-    case '|-|':
-      // eslint-disable-next-line no-case-declarations
-      const loc = first.indexOf(second);
-      if (loc !== -1) return first.substring(0, loc) + ((loc + second.length < first.length) ? first.substring(loc + second.length) : '');
-      return `${first}-${second}`;
-    case '|*|':
-      return `${first}*${second}`;
-    case '|%|':
-      return `${first}%${second}`;
-    case '|/|':
-      return `${first}/${second}`;
-    case '|^|':
-      return `${first}^${second}`;
-    default:
-      return statement;
-  }
+  return String(res);
 }
 
 function evaluateStatement(statement) {
