@@ -10,6 +10,7 @@ const Logger = require('./Logger');
 const AudioManager = require('../managers/AudioManager');
 const CommandManager = require('../managers/CommandManager');
 const EventManager = require('../managers/EventManager');
+const LavacordManager = require('../managers/LavacordManager');
 const LisaManager = require('../managers/LisaManager');
 const LocaleManager = require('../managers/LocaleManager');
 
@@ -29,7 +30,7 @@ const ListUtil = require('../util/ListUtil');
 const MenuUtil = require('../util/MenuUtil');
 
 class DiscordClient extends Client {
-  constructor(clientOptions, databaseCredentials) {
+  constructor(clientOptions, databaseCredentials, lavalinkCredentials) {
     super(clientOptions);
 
     /**
@@ -73,6 +74,16 @@ class DiscordClient extends Client {
      * @type {EventManager}
      */
     this.eventManager = new EventManager(this);
+
+    /**
+     * Lavacord manager for this client
+     * @type {LavacordManager}
+     */
+    this.lavacordManager = new LavacordManager(
+      this,
+      lavalinkCredentials.nodes,
+      lavalinkCredentials.options,
+    );
 
     /**
      * Lisa manager for this client
