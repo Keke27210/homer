@@ -44,7 +44,11 @@ class TuneCommand extends Command {
 
     (async () => {
       const existing = this.client.lavacordManager.players.get(message.guild.id);
-      if (existing) await existing.destroy();
+      if (existing) {
+        await existing.stop();
+        await existing.destroy();
+        this.client.lavacordManager.players.delete(message.guild.id);
+      }
 
       const player = await this.client.lavacordManager.join({
         guild: message.guild.id,
