@@ -15,13 +15,16 @@ class LeaveCommand extends Command {
       return 0;
     }
 
-    const ret = await this.client.audioManager.destroySession(voice.channelID, true)
+    const player = this.client.lavacordManager.players.get(message.guild.id);
+    if (player) await player.destroy();
+
+    const ret = await voice.channel.disconnect()
       .then(() => {
         message.success(message._('leave.success', voice.channel.name));
         return 0;
       })
       .catch((error) => {
-        this.client.logger.error(`[commands->leave] Error while leaving channel ${voice.id}`, error);
+        this.client.logger.error(`[commands->leave] Error while leaving channel ${voice.channel.id}`, error);
         message.error(message._('leave.error'));
         return 1;
       });

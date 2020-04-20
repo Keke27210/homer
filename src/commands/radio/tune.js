@@ -34,34 +34,39 @@ class TuneCommand extends Command {
 
     const m = await message.loading(message._('tune.tuning', radio.frequency));
 
-    const dispatcher = await this.client.audioManager.createSession(
-      voice.id,
-      message.author.id,
-      radio.id,
-      message.settings.volume,
-      await this.client.settings.isDonator(message.author.id),
-    )
+    const track = await this.client.lavacordManager.getTracks(radio.stream)
+      .then((r) => r[0]);
+    if (!track) {
+      m.editError(message._('tune.error'));
+      this.client.logger.error(`[lavacord->getTrack] Couldn't get track for radio ${radio.id}`);
+      return 1;
+    }
+
+    (async () => {
+      const player = this.client.lavacordManager.players.get(message.guild.id)
+        || await this.client.lavacordManager.join({
+          guild: message.guild.id,
+          channel: voice.id,
+          node: this.client.lavacordManager.idealNodes[0].id,
+        });
+
+      player.once('start', () => {
+        m.edit(message._('tune.playing', radio.name));
+      });
+
+      player.once('error', (error) => {
+        this.client.logger.error(`[lavalink->broadcast] Broadcast error - Radio: ${radio.id} - Channel: ${voice.id}`, error);
+        m.editError(message._('tune.error'));
+      });
+
+      await player.play(track.track, { volume: message.settings.volume });
+    })()
       .catch((error) => {
         this.client.logger.error(`[commands->tune] Error while tuning on ${radio.id} in ${voice.id}`, error);
         m.editError(message._('tune.error'));
       });
 
-    if (dispatcher) {
-      dispatcher.once('start', () => {
-        m.edit(message._('tune.playing', radio.name));
-      });
-
-      dispatcher.once('error', () => {
-        this.client.logger.error(`[audio->broadcast] Broadcast error - Radio: ${radio.id} - Channel: ${voice.id}`);
-        m.editError(message._('tune.error'));
-      });
-
-      dispatcher.on('debug', (info) => {
-        this.client.logger.debug(`[audio->brooadcast] Radio: ${radio.id} / Channel: ${voice.id} => ${info}`);
-      });
-    }
-
-    return (dispatcher ? 0 : 1);
+    return 0;
   }
 }
 

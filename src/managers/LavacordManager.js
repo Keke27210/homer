@@ -1,12 +1,17 @@
+/* eslint-disable no-param-reassign */
 const { Manager } = require('lavacord');
+const fetch = require('node-fetch');
+
+const Player = require('../extenders/Player');
 
 class LavacordManager extends Manager {
   constructor(client, nodes, options = {}) {
-    // eslint-disable-next-line no-param-reassign
     options.send = (packet) => {
       const guild = this.client.guilds.resolve(packet.d.guild_id);
       return client.ws.shards.get(guild.shardID).send(packet);
     };
+
+    options.Player = Player;
 
     super(nodes, options);
 
@@ -34,6 +39,18 @@ class LavacordManager extends Manager {
           await this.voiceStateUpdate({ ...guild.voice_states[i], guild_id: guild.id });
         }
       });
+  }
+
+  /**
+   * Queries Lavalink for tracks
+   * @param {string} query Query string
+   * @returns {Promise<Track[]>}
+   */
+  getTracks(query) {
+    const node = this.idealNodes[0];
+    return fetch(`http://${node.host}:${node.port}/loadtracks?identifier=${encodeURIComponent(query)}`)
+      .then((r) => r.json())
+      .then((data) => data.tracks);
   }
 }
 

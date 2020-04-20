@@ -29,10 +29,8 @@ class VolumeCommand extends Command {
 
     const ret = await this.client.settings.setVolume(message.settings.id, volume)
       .then(() => {
-        const dispatcher = message.guild.voice
-          ? message.guild.voice.connection.dispatcher
-          : null;
-        if (dispatcher) dispatcher.setVolume((volume / 100).toFixed(2));
+        const player = this.client.lavacordManager.players.get(message.guild.id);
+        if (player) player.volume(volume);
 
         message.success(message._('volume.set', volume));
         return 0;

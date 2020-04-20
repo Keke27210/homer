@@ -25,13 +25,13 @@ class NowCommand extends Command {
   }
 
   async main(message) {
-    const session = this.client.audioManager.sessions.find((s) => s.guild === message.guild.id);
-    if (!session) {
+    const player = this.client.lavacordManager.players.get(message.guild.id);
+    if (!player) {
       message.error(message._('now.noSession'));
       return 0;
     }
 
-    const radio = await this.client.radios.getRow(session.radio);
+    const radio = await this.client.radios.getRow(player.radio);
 
     // Frequency
     const freq = String(radio.frequency).split('');
@@ -45,7 +45,7 @@ class NowCommand extends Command {
       frequency,
       `<:RADIO:${radio.emote}> **${radio.name}**`,
       now ? message._('now.playing', now) : message._('now.noInformation'),
-      message._('now.begun', message.getDuration(session.created)),
+      message._('now.begun', message.getDuration(player.timestamp)),
     ].join('\n');
 
     const embed = new MessageEmbed()
