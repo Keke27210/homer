@@ -581,6 +581,17 @@ module.exports = (dot) => ({
       invite: 'Invitation',
       creation: 'Date de création',
     },
+    template: {
+      title: (emote, code) => `${emote} Informations sur le modèle **${code}**:`,
+      name: 'Nom',
+      description: 'Description',
+      creator: 'Créateur',
+      usages: 'Nombre d\'utilisations',
+      creation: 'Date de création',
+      use: 'Utilisation',
+      uselink: 'Appliquer ce modèle',
+      update: 'Dernière mise à jour',
+    },
     user: {
       title: (emote, name) => `${emote} Informations sur ${name}:`,
       id: 'Discord ID',

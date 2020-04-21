@@ -83,6 +83,30 @@ class LookupCommand extends Command {
         m.edit(message._('lookup.gift.title', gift.code), embed);
         return 0;
       }
+
+      // 5- Template
+      const template = await this.client.api.guilds.templates(search).get()
+        .catch(() => null);
+      if (template) {
+        const description = [
+          `${message.dot} ${message._('lookup.template.name')}: **${template.name}**`,
+          `${message.dot} ${message._('lookup.template.description')}: ${template.description ? `**${template.description}**` : message._('global.none')}`,
+          `${message.dot} ${message._('lookup.template.creator')}: **${template.creator.username}**#${template.creator.discriminator} (${template.creator_id})`,
+          `${message.dot} ${message._('lookup.template.usages')}: **${template.usage_count}**`,
+          `${message.dot} ${message._('lookup.template.creation')}: **${message.getMoment(template.created_at)}**`,
+          `${message.dot} ${message._('lookup.template.use')}: **[${message._('lookup.template.uselink')}](https://discordapp.com/template/${template.code})**`,
+        ].join('\n');
+
+        const embed = new MessageEmbed()
+          .setDescription(description)
+          .setThumbnail(`https://cdn.discordapp.com/guilds/${template.source_guild_id}/${template.serialized_source_guild.icon_hash}.png`);
+        if (template.updated_at) {
+          embed.setFooter(message._('lookup.template.update'));
+          embed.setTimestamp(new Date(template.updated_at));
+        }
+
+        m.edit(message._('lookup.template.title', message.emote('template'), template.code), embed);
+      }
     } else {
       // 3- User ID
       const user = await this.client.users.fetch(search, { cache: false })
