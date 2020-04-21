@@ -28,6 +28,7 @@ class LavacordManager extends Manager {
       this.connect()
         .then(() => this.client.logger.log(`[lavacord] Connected successfully to ${this.idealNodes[0].host}:${this.idealNodes[0].port}`))
         .catch((error) => this.client.logger.error('[lavacord] Error while connecting to Lavalink', error));
+      this.client.setInterval(this.clearPlayers.bind(this), (60 * 1000));
     });
 
     // Handle voice updates
@@ -51,6 +52,21 @@ class LavacordManager extends Manager {
     return fetch(`http://${node.host}:${node.port}/loadtracks?identifier=${encodeURIComponent(query)}`, { headers: { Authorization: node.password } })
       .then((r) => r.json())
       .then((data) => data.tracks);
+  }
+
+  /**
+   * Destroys players no-one listen to
+   * @returns {Promise<void>}
+   */
+  async clearPlayers() {
+    const unlistened = Array.from(this.voiceStates.values())
+      .filter((s) => this.client.channels.resolve(s.channel_id).members.size === 1);
+    for (let i = 0; i < unlistened.length; i += 1) {
+      const player = this.players.get(unlistened[i].guild_id);
+      if (!player) continue;
+      await player.destroy();
+      await this.leave(unlistened[i].guild_id);
+    }
   }
 }
 
