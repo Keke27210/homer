@@ -913,6 +913,7 @@ module.exports = (dot) => ({
   // Tune command
   tune: {
     error: 'An error occured while broadcasting radio.',
+    none: (channel) => `You must be in the radio channel (**${channel}**).`,
     missing: 'You must provide a frequency to set.',
     invalid: 'The frequency you provided is invalid.',
     unknown: (freq) => `No radio found on frequency \`${freq}Mhz\`.\n${dot} Find available radios on \`h:radios\`.`,

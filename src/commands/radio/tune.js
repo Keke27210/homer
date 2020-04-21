@@ -16,6 +16,12 @@ class TuneCommand extends Command {
       return 0;
     }
 
+    const { channelID } = message.member.voice;
+    if (channelID !== voice.id) {
+      message.error(message._('tune.none', voice.name));
+      return 0;
+    }
+
     let [frequency] = args;
     if (!frequency) {
       message.error(message._('tune.missing'));

@@ -913,6 +913,7 @@ module.exports = (dot) => ({
   // Tune command
   tune: {
     error: 'Une erreur est survenue lors de la diffusion.',
+    none: (channel) => `Vous devez être dans le salon radio (**${channel}**).`,
     missing: 'Vous devez fournir une fréquence à écouter.',
     invalid: 'La fréquence que vous avez fournie est invalide.',
     unknown: (freq) => `Aucune radio trouvée sur la fréquence \`${freq}Mhz\`.\n${dot} Retrouvez les radios disponibles sur \`h:radios\`.`,
