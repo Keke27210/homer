@@ -42,10 +42,10 @@ class NowCommand extends Command {
     const now = await this.client.radios.nowPlaying(radio.id);
 
     const description = [
-      frequency,
+      `${frequency}\n`,
       `<:RADIO:${radio.emote}> **${radio.name}**`,
       now ? message._('now.playing', now) : message._('now.noInformation'),
-      message._('now.begun', message.getDuration(player.timestamp)),
+      message._('now.begun', message.getDuration(player.start)),
     ].join('\n');
 
     const embed = new MessageEmbed()

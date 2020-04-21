@@ -9,6 +9,12 @@ class CustomPlayer extends Player {
      * @type {number}
      */
     this.radio = radio;
+
+    /**
+     * Time this player was created at
+     * @type {number}
+     */
+    this.start = Date.now();
   }
 }
 
