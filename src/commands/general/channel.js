@@ -51,10 +51,9 @@ class ChannelCommand extends Command {
     if (channel.topic) embed.addField(message._('channel.topic'), channel.topic);
 
     const overwrites = channel.permissionOverwrites.get(message.guild.id);
+    const locked = overwrites ? overwrites.deny.any(['VIEW_CHANNEL', 'CONNECT']) : false;
     // eslint-disable-next-line no-nested-ternary
-    const emote = message.emote(overwrites && overwrites.deny.any(['VIEW_CHANNEL', 'CONNECT'])
-      ? `${channel.type === 'voice' ? 'voice' : 'channel'}_locked`
-      : channel.type === 'voice' ? 'voice' : 'channel');
+    const emote = message.emote(channel.nsfw ? 'channel_nsfw' : (locked ? `${channel.type === 'voice' ? 'voice' : 'channel'}_locked` : channel.type === 'voice' ? 'voice' : 'channel'));
 
     message.send(message._('channel.title', emote, channel.name, channel.type), embed);
     return 0;

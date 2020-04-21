@@ -47,6 +47,7 @@ exports.emotes = {
   // Channel icons
   channel: '701885312644939796',
   channel_locked: '701885312493944914',
+  channel_nsfw: '702231451722055732',
   voice: '701885312909181049',
   voice_locked: '701885313131479051',
 
