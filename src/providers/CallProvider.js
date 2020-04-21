@@ -23,6 +23,10 @@ class CallProvider extends Provider {
       TERMINATED: 2,
       ERROR: 4,
     };
+
+    // Set listeners
+    this.client.on('message', this.handleMessage.bind(this));
+    this.client.on('typingStart', this.handleTyping.bind(this));
   }
 
   /**

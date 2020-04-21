@@ -25,6 +25,14 @@ class TrackingProvider extends Provider {
      */
     this.sweepInterval = (24 * 60 * 60 * 1000);
 
+    // Set listeners
+    this.client.on('message', (message) => this.updateActivity(message.author.id));
+    this.client.on('typingStart', (_, user) => this.updateActivity(user.id));
+    this.client.on('messageReactionAdd', (_, user) => this.updateActivity(user.id));
+    this.client.on('userUpdate', (oldUser, newUser) => {
+      if (oldUser.username !== newUser.username) this.updateNames(newUser.id, oldUser.username);
+      else this.updateActivity(newUser.id);
+    });
     this.client.setInterval(() => this.deleteEntries(), this.sweepInterval);
   }
 

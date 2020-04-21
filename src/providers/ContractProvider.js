@@ -61,6 +61,11 @@ class ContractProvider extends Provider {
      * @type {number}
      */
     this.delaySuspension = (4 * 7 * 24 * 60 * 60 * 1000);
+
+    // Set listeners
+    this.client.on('ready', this.checkInvalid.bind(this));
+    this.client.on('channelDelete', this.channelDelete.bind(this));
+    this.client.on('guildDelete', this.guildDelete.bind(this));
   }
 
   /**
@@ -434,12 +439,11 @@ class ContractProvider extends Provider {
 
   /**
    * Invalidates contract of a deleted channel
-   * @param {string} channel Channel ID
+   * @param {Channel} channel Channel
    * @returns {Promise<void>}
    */
-  // eslint-disable-next-line no-underscore-dangle
-  async _channelDelete(channel) {
-    const contract = await this.fetchContract(channel);
+  async channelDelete(channel) {
+    const contract = await this.fetchContract(channel.id);
     if (!contract) return null;
     await this.terminateContract(contract.id, 'INVALIDATED');
     return null;
@@ -447,13 +451,12 @@ class ContractProvider extends Provider {
 
   /**
    * Invalidates contracts of a deleted guild
-   * @param {string} guild Guild ID
+   * @param {Guild} guild Guild
    * @returns {Promise<void>}
    */
-  // eslint-disable-next-line no-underscore-dangle
-  async _guildDelete(guild) {
+  async guildDelete(guild) {
     const contracts = await this.getRows([
-      ['context', '=', guild],
+      ['context', '=', guild.id],
       ['state', '<', this.states.TERMINATED],
     ]);
     for (let i = 0; i < contracts.length; i += 1) {

@@ -30,6 +30,9 @@ class CommandManager extends Manager {
      * @type {Command[]}
      */
     this.commands = [];
+
+    // Set listeners
+    this.client.on('message', this.handleMessage.bind(this));
   }
 
   /**
@@ -80,7 +83,7 @@ class CommandManager extends Manager {
    * @param {Message} message Message that triggered the command
    */
   async handleMessage(message) {
-    if (message.author.bot || !message.content) return;
+    if (message.author.bot || !message.content || !this.client.ready) return;
     await message.fetchSettings();
 
     let prefix = this.prefixes;
