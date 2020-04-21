@@ -93,7 +93,7 @@ class LookupCommand extends Command {
           `${message.dot} ${message._('lookup.template.description')}: ${template.description ? `**${template.description}**` : message._('global.none')}`,
           `${message.dot} ${message._('lookup.template.creator')}: **${template.creator.username}**#${template.creator.discriminator} (${template.creator_id})`,
           `${message.dot} ${message._('lookup.template.usages')}: **${template.usage_count}**`,
-          `${message.dot} ${message._('lookup.template.creation')}: **${message.getMoment(template.created_at)}**`,
+          `${message.dot} ${message._('lookup.template.creation')}: ${message.getMoment(template.created_at)}`,
           `${message.dot} ${message._('lookup.template.use')}: **[${message._('lookup.template.uselink')}](https://discordapp.com/template/${template.code})**`,
         ].join('\n');
 
@@ -106,6 +106,7 @@ class LookupCommand extends Command {
         }
 
         m.edit(message._('lookup.template.title', message.emote('template'), template.code), embed);
+        return 0;
       }
     } else {
       // 3- User ID
