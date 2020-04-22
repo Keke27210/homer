@@ -10,6 +10,18 @@ class NowCommand extends Command {
     });
   }
 
+  /**
+   * Generates a well-designed volume bar
+   * @param {number} volume Volume (0-100)
+   * @static
+   * @returns {string}
+   */
+  static getVolume(volume) {
+    const str = '──────────';
+    const index = Math.round(volume * 10);
+    return `${str.substring(0, index - 1)}○${str.substring(index)}`;
+  }
+
   async main(message) {
     const player = this.client.lavacordManager.players.get(message.guild.id);
     if (!player) {
@@ -28,7 +40,8 @@ class NowCommand extends Command {
     const now = await this.client.radios.nowPlaying(radio.id);
 
     const description = [
-      `${frequency}\n`,
+      `${frequency}`,
+      `🔈 ${this.constructor.getVolume(message.settings.volume)}`,
       `<:RADIO:${radio.emote}> **${radio.name}**`,
       `${message.dot} ${message._('now.playing')}: ${now ? `**${now}**` : message._('now.noInformation')}`,
       `${message.dot} ${message._('now.begun')}: **${message.getDuration(player.start)}**`,
