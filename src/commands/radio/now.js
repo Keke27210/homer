@@ -33,9 +33,8 @@ class NowCommand extends Command {
 
     // Frequency
     const freq = String(radio.frequency).split('');
-    let frequency = message.emote('placeholder').repeat(2);
+    let frequency = message.emote('placeholder');
     for (let i = 0; i < freq.length; i += 1) frequency += message.emote(`digit_${freq[i] === '.' ? 'dot' : freq[i]}`);
-    frequency += message.emote('placeholder').repeat(2);
 
     const now = await this.client.radios.nowPlaying(radio.id);
 
