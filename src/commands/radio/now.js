@@ -18,7 +18,7 @@ class NowCommand extends Command {
    */
   static getVolume(volume) {
     const str = '──────────';
-    const index = Math.round(volume * 10);
+    const index = Math.round(volume / 10);
     return `${str.substring(0, index - 1)}○${str.substring(index)}`;
   }
 
@@ -41,7 +41,7 @@ class NowCommand extends Command {
 
     const description = [
       `${frequency}`,
-      `🔈 ${this.constructor.getVolume(message.settings.volume)}`,
+      `🔈 ${this.constructor.getVolume(message.settings.volume)}\n`,
       `<:RADIO:${radio.emote}> **${radio.name}**`,
       `${message.dot} ${message._('now.playing')}: ${now ? `**${now}**` : message._('now.noInformation')}`,
       `${message.dot} ${message._('now.begun')}: **${message.getDuration(player.start)}**`,
