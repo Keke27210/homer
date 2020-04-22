@@ -31,7 +31,7 @@ class NowCommand extends Command {
       `${frequency}\n`,
       `<:RADIO:${radio.emote}> **${radio.name}**`,
       `${message.dot} ${message._('now.playing')}: ${now ? `**${now}**` : message._('now.noInformation')}`,
-      `${message.dot} ${message._('now.begun')}: ${message.getDuration(player.start)}`,
+      `${message.dot} ${message._('now.begun')}: **${message.getDuration(player.start)}**`,
     ].join('\n');
 
     const embed = new MessageEmbed()
