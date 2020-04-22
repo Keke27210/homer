@@ -612,9 +612,9 @@ module.exports = (dot) => ({
   // Now command
   now: {
     title: '📻 Informations sur la radio en cours de diffusion:',
-    playing: (now) => `Diffuse **${now}**`,
-    noInformation: 'Aucune information sur la diffusion.',
-    begun: (time) => `Débuté **${time}**`,
+    playing: 'Diffuse',
+    noInformation: 'Aucune information',
+    begun: 'Débuté',
     noSession: 'Vous devez écouter une radio.',
   },
 

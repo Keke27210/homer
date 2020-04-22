@@ -8,20 +8,6 @@ class NowCommand extends Command {
       name: 'now',
       aliases: ['np', 'nowplaying'],
     });
-
-    this.digits = {
-      0: ':zero:',
-      1: ':one:',
-      2: ':two:',
-      3: ':three:',
-      4: ':four:',
-      5: ':five:',
-      6: ':six:',
-      7: ':seven:',
-      8: ':eight:',
-      9: ':nine:',
-      '.': ':small_blue_diamond:',
-    };
   }
 
   async main(message) {
@@ -36,7 +22,7 @@ class NowCommand extends Command {
     // Frequency
     const freq = String(radio.frequency).split('');
     let frequency = message.emote('placeholder').repeat(2);
-    for (let i = 0; i < freq.length; i += 1) frequency += this.digits[freq[i]];
+    for (let i = 0; i < freq.length; i += 1) frequency += message.emote(`digit_${freq[i] === '.' ? 'dot' : freq[i]}`);
     frequency += message.emote('placeholder').repeat(2);
 
     const now = await this.client.radios.nowPlaying(radio.id);
@@ -44,8 +30,8 @@ class NowCommand extends Command {
     const description = [
       `${frequency}\n`,
       `<:RADIO:${radio.emote}> **${radio.name}**`,
-      now ? message._('now.playing', now) : message._('now.noInformation'),
-      message._('now.begun', message.getDuration(player.start)),
+      `${message.dot} ${message._('now.playing')}: ${now ? `**${now}**` : message._('now.noInformation')}`,
+      `${message.dot} ${message._('now.begun')}: ${message.getDuration(player.start)}`,
     ].join('\n');
 
     const embed = new MessageEmbed()
