@@ -74,7 +74,7 @@ class NowCommand extends Command {
       else {
         const number = parseInt(ps[i], 10);
         if (!Number.isNaN(number)) output += message.emote(`digit_${ps[i]}`);
-        else output += message.emote(`letter_${ps[i]}`);
+        else output += message.emote(`letter_${ps[i].toLowerCase()}`);
       }
     }
 
