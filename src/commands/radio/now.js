@@ -96,7 +96,7 @@ class NowCommand extends Command {
       .replace(/ +/g, '¤')
       .padStart(infoLine.length + Math.floor((17 - infoLine.length) / 2), '¤')
       .padEnd(17, '¤');
-    for (let i = 0; i < infoLine.length; i += 1) {
+    for (let i = 0; i < 17; i += 1) {
       if (infoLine[i] === '¤') line2 += message.emote('letter_none', true);
       else {
         const number = parseInt(infoLine[i], 10);
