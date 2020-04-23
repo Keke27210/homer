@@ -36,7 +36,7 @@ Structures.extend('Message', (Message) => {
       const value = this.client.constants.emotes[name];
       if (!value) return null;
       if (value.length < 15) return value;
-      return `<${(['loading', 'dspblk'].includes(name)) ? 'a' : ''}:${discret ? 'e' : name}:${value}>`;
+      return `<${(['loading', 'char_:'].includes(name)) ? 'a' : ''}:${discret ? 'e' : name}:${value}>`;
     }
 
     /**
