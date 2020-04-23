@@ -86,7 +86,7 @@ class NowCommand extends Command {
           if (this.cooldown.has(message.guild.id)) this.cooldown.delete(message.guild.id);
           this.client.clearInterval(interval);
         });
-    }, this.active);
+    }, this.interval);
 
     return 0;
   }
