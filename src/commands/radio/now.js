@@ -9,9 +9,16 @@ class NowCommand extends Command {
       name: 'now',
       aliases: ['np', 'nowplaying'],
     });
+
+    this.cooldown = new Set();
   }
 
   async main(message) {
+    if (this.cooldown.has(message.guild.id)) {
+      message.warn(message._('global.cooldown'));
+      return 0;
+    }
+
     const player = this.client.lavacordManager.players.get(message.guild.id);
     if (!player) {
       message.error(message._('now.noSession'));
@@ -37,8 +44,12 @@ class NowCommand extends Command {
     const m = await message.send(message._('now.title'), embed);
 
     if (now.length > 1) {
+      this.cooldown.add(message.guild.id);
       const interval = this.client.setInterval(async () => {
-        if (index > 20) return this.client.clearInterval(interval);
+        if (index > 60) {
+          if (this.cooldown.has(message.guild.id)) this.cooldown.delete(message.guild.id);
+          return this.client.clearInterval(interval);
+        }
         if (index % now.length === 0) {
           now = await this.client.radios.nowPlaying(radio.id)
             .then((n) => (n ? n.split('-') : [message._('now.noInformation')]));
@@ -52,7 +63,10 @@ class NowCommand extends Command {
           message.settings.volume,
         );
         return m.edit(message._('now.title'), { embed: embed.setDescription(newDisplay) })
-          .catch(() => this.client.clearInterval(interval));
+          .catch(() => {
+            if (this.cooldown.has(message.guild.id)) this.cooldown.delete(message.guild.id);
+            this.client.clearInterval(interval);
+          });
       }, 3000);
     }
 

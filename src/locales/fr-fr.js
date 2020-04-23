@@ -16,6 +16,7 @@ module.exports = (dot) => ({
     unknown: 'Inconnu',
     loading: 'Chargement...',
     more: (num) => `et **${num}** encore...`,
+    cooldown: 'On se calme !',
   },
 
   database: {
@@ -616,7 +617,7 @@ module.exports = (dot) => ({
     noInformation: 'Aucune info',
     begun: 'Débuté',
     noSession: 'Vous devez écouter une radio.',
-    footer: 'Ce message se rafrîchira toutes les 3 secondes pendant une minute.',
+    footer: 'Ce message se rafrîchira toutes les 3 secondes pendant 3 minutes.',
   },
 
   // Phonebook command
