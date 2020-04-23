@@ -106,7 +106,7 @@ class NowCommand extends Command {
     output.push(line2);
 
     // 3- BLANK LINE
-    output.push(message.emote('letter_none', true).repeat(16));
+    output.push(message.emote('letter_none', true).repeat(17));
 
     // 4- Volume
     let line3 = ['v', 'o', 'l', 'u', 'm', 'e', 'none'].map((c) => message.emote(`letter_${c}`, true)).join('');
