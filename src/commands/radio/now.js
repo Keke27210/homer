@@ -145,7 +145,7 @@ class NowCommand extends Command {
     output.push(message.emote('off', true).repeat(17));
 
     // 4- Volume
-    let line3 = ['v', 'o', 'l', 'u', 'm', 'e'].map((c) => message.emote(`letter_${c}`, true)).join('') + message.emote('off');
+    let line3 = ['v', 'o', 'l', 'u', 'm', 'e'].map((c) => message.emote(`letter_${c}`, true)).join('') + message.emote('off', true);
     const volLevel = Math.ceil(volume / 10);
     line3 += message.emote('letter_x', true).repeat(volLevel) + message.emote('char_-', true).repeat(10 - volLevel);
     output.push(line3);
