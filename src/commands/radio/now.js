@@ -103,17 +103,17 @@ class NowCommand extends Command {
     const output = [];
 
     // 1- _FREQUENCY___PS__
-    let line = message.emote('letter_none', true).repeat(frequency.length < 5 ? 2 : 1);
+    let line = message.emote('off', true).repeat(frequency.length < 5 ? 2 : 1);
     for (let i = 0; i < frequency.length; i += 1) {
       if (frequency[i] === '.') continue;
       line += message.emote(`digit_${frequency[i]}${frequency[i + 1] === '.' ? 'd' : ''}`, true);
     }
 
-    line += message.emote('letter_none', true).repeat(3);
+    line += message.emote('off', true).repeat(3);
 
     // PS
     for (let i = 0; i < ps.length; i += 1) {
-      if (ps[i] === '¤') line += message.emote('letter_none', true);
+      if (ps[i] === '¤') line += message.emote('off', true);
       else {
         const number = parseInt(ps[i], 10);
         if (!Number.isNaN(number)) line += message.emote(`digit_${ps[i]}`, true);
@@ -121,7 +121,7 @@ class NowCommand extends Command {
       }
     }
 
-    line += message.emote('letter_none', true);
+    line += message.emote('off', true);
     output.push(line);
 
     // 2- Playing Information
@@ -133,34 +133,28 @@ class NowCommand extends Command {
       .padStart(infoLine.length + Math.floor((17 - infoLine.length) / 2), '¤')
       .padEnd(17, '¤');
     for (let i = 0; i < 17; i += 1) {
-      if (infoLine[i] === '¤') line2 += message.emote('letter_none', true);
-      else {
-        const number = parseInt(infoLine[i], 10);
-        if (!Number.isNaN(number)) line2 += message.emote(`digit_${infoLine[i]}`, true);
-        else if (infoLine[i] === '-') message.emote('dsphyp');
-        else {
-          const e = message.emote(`letter_${infoLine[i].toLowerCase()}`, true);
-          if (e) line2 += e;
-          else line2 += message.emote('letter_none', true);
-        }
-      }
+      const e = ['char', 'digit', 'letter'].map((t) => message.emote(`${t}_${infoLine[i]}`, true));
+      if (e[0]) line2 += e[0];
+      else if (e[1]) line2 += e[1];
+      else if (e[2]) line2 += e[2];
+      else line2 += message.emote('off', true);
     }
     output.push(line2);
 
     // 3- BLANK LINE
-    output.push(message.emote('letter_none', true).repeat(17));
+    output.push(message.emote('off', true).repeat(17));
 
     // 4- Volume
-    let line3 = ['v', 'o', 'l', 'u', 'm', 'e', 'none'].map((c) => message.emote(`letter_${c}`, true)).join('');
+    let line3 = ['v', 'o', 'l', 'u', 'm', 'e'].map((c) => message.emote(`letter_${c}`, true)).join('') + message.emote('off');
     const volLevel = Math.ceil(volume / 10);
-    line3 += message.emote('letter_x', true).repeat(volLevel) + message.emote('dsphyp', true).repeat(10 - volLevel);
+    line3 += message.emote('letter_x', true).repeat(volLevel) + message.emote('char_hyphen', true).repeat(10 - volLevel);
     output.push(line3);
 
     // 5- Hour
-    let line4 = message.emote('letter_none', true).repeat(6);
+    let line4 = message.emote('off', true).repeat(6);
     const hr = moment().tz(message.settings.timezone).format('HH:mm');
-    for (let i = 0; i < hr.length; i += 1) line4 += message.emote(hr[i] === ':' ? 'dspblk' : `digit_${hr[i]}`, true);
-    line4 += message.emote('letter_none', true).repeat(6);
+    for (let i = 0; i < hr.length; i += 1) line4 += message.emote(hr[i] === ':' ? 'char_doublepoint' : `digit_${hr[i]}`, true);
+    line4 += message.emote('off', true).repeat(6);
     output.push(line4);
 
     return output.join('\n');
