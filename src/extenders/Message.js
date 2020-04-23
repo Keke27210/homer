@@ -27,15 +27,15 @@ Structures.extend('Message', (Message) => {
     }
 
     /**
-     * Generates a sendable emote from an ID
-     * @param {string} id Emote ID
+     * Generates a sendable emote from a name
+     * @param {string} name Emote name
      * @returns {string} Sendable emote
      */
-    emote(id) {
-      const value = this.client.constants.emotes[id];
+    emote(name) {
+      const value = this.client.constants.emotes[name];
       if (!value) return null;
       if (value.length < 15) return value;
-      return `<${(id === 'loading') ? 'a' : ''}:e:${value}>`;
+      return `<${(name === 'loading') ? 'a' : ''}:${name}:${value}>`;
     }
 
     /**
