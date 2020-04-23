@@ -19,13 +19,13 @@ class NowCommand extends Command {
       return 0;
     }
 
-    const player = this.client.lavacordManager.players.get(message.guild.id);
+    let player = this.client.lavacordManager.players.get(message.guild.id);
     if (!player) {
       message.error(message._('now.noSession'));
       return 0;
     }
 
-    const radio = await this.client.radios.getRow(player.radio);
+    let radio = await this.client.radios.getRow(player.radio);
     let now = await this.client.radios.nowPlaying(radio.id)
       .then((n) => (n ? n.split('-') : [message._('now.noInformation')]));
 
@@ -46,10 +46,12 @@ class NowCommand extends Command {
     if (now.length > 1) {
       this.cooldown.add(message.guild.id);
       const interval = this.client.setInterval(async () => {
-        if (index > 60) {
+        player = this.client.lavacordManager.players.get(message.guild.id);
+        if (index > 60 || !player) {
           if (this.cooldown.has(message.guild.id)) this.cooldown.delete(message.guild.id);
           return this.client.clearInterval(interval);
         }
+        radio = await this.client.radios.getRow(player.radio);
         if (index % now.length === 0) {
           now = await this.client.radios.nowPlaying(radio.id)
             .then((n) => (n ? n.split('-') : [message._('now.noInformation')]));
