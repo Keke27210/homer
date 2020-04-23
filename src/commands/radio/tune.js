@@ -84,6 +84,8 @@ class TuneCommand extends Command {
         m.editError(message._('tune.error'));
       });
 
+    m.delete({ timeout: 10e3 });
+    if (message.deletable) message.delete({ timeout: 10e3 });
     return 0;
   }
 }
