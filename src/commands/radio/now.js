@@ -133,7 +133,7 @@ class NowCommand extends Command {
       .padStart(infoLine.length + Math.floor((17 - infoLine.length) / 2), '¤')
       .padEnd(17, '¤');
     for (let i = 0; i < 17; i += 1) {
-      const e = ['char', 'digit', 'letter'].map((t) => message.emote(`${t}_${infoLine[i]}`, true));
+      const e = ['char', 'digit', 'letter'].map((t) => message.emote(`${t}_${infoLine[i].toLowerCase()}`, true));
       if (e[0]) line2 += e[0];
       else if (e[1]) line2 += e[1];
       else if (e[2]) line2 += e[2];
