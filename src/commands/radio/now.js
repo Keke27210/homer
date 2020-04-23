@@ -20,7 +20,7 @@ class NowCommand extends Command {
 
     const radio = await this.client.radios.getRow(player.radio);
     const now = await this.client.radios.nowPlaying(radio.id)
-      .then((n) => (n ? n.split('-') : [message.emote('now.noInformation')]));
+      .then((n) => (n ? n.split('-') : [message._('now.noInformation')]));
 
     let index = 0;
     const display = this.constructor.getDisplay(
