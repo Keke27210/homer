@@ -51,7 +51,10 @@ class NowCommand extends Command {
         if (this.cooldown.has(message.guild.id)) this.cooldown.delete(message.guild.id);
         return this.client.clearInterval(interval);
       }
-      radio = await this.client.radios.getRow(player.radio);
+      if (player.radio !== radio.id) {
+        index = 0;
+        radio = await this.client.radios.getRow(player.radio);
+      }
       if (index % now.length === 0) {
         now = await this.client.radios.nowPlaying(radio.id)
           .then((n) => {
