@@ -19,7 +19,7 @@ class NowCommand extends Command {
     }
 
     const radio = await this.client.radios.getRow(player.radio);
-    const now = await this.client.radios.nowPlaying(radio.id)
+    let now = await this.client.radios.nowPlaying(radio.id)
       .then((n) => (n ? n.split('-') : [message._('now.noInformation')]));
 
     let index = 0;
@@ -37,8 +37,12 @@ class NowCommand extends Command {
     const m = await message.send(message._('now.title'), embed);
 
     if (now.length > 1) {
-      const interval = this.client.setInterval(() => {
+      const interval = this.client.setInterval(async () => {
         if (index > 20) return this.client.clearInterval(interval);
+        if (index % now.length === 0) {
+          now = await this.client.radios.nowPlaying(radio.id)
+            .then((n) => (n ? n.split('-') : [message._('now.noInformation')]));
+        }
         index += 1;
         const newDisplay = this.constructor.getDisplay(
           message,
@@ -47,7 +51,8 @@ class NowCommand extends Command {
           (index % now.length),
           message.settings.volume,
         );
-        return m.edit(message._('now.title'), { embed: embed.setDescription(newDisplay) });
+        return m.edit(message._('now.title'), { embed: embed.setDescription(newDisplay) })
+          .catch(() => this.client.clearInterval(interval));
       }, 3000);
     }
 
