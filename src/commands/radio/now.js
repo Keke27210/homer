@@ -31,19 +31,12 @@ class NowCommand extends Command {
 
     const radio = await this.client.radios.getRow(player.radio);
 
-    // Frequency
-    const freq = String(radio.frequency).split('');
-    let frequency = message.emote('placeholder');
-    if (freq.length < 5) frequency += message.emote('digit_n');
-    for (let i = 0; i < freq.length; i += 1) {
-      if (freq[i] === '.') continue;
-      frequency += message.emote(`digit_${freq[i]}${freq[i + 1] === '.' ? 'd' : ''}`);
-    }
+    const display = this.constructor.getDisplay(message, radio.frequency, radio.ps);
 
     const now = await this.client.radios.nowPlaying(radio.id);
 
     const description = [
-      `${frequency}`,
+      display,
       `🔈 ${this.constructor.getVolume(message.settings.volume)}\n`,
       `<:RADIO:${radio.emote}> **${radio.name}**`,
       `${message.dot} ${message._('now.playing')}: ${now ? `**${now}**` : message._('now.noInformation')}`,
@@ -54,6 +47,34 @@ class NowCommand extends Command {
       .setDescription(description);
     message.send(message._('now.title'), embed);
     return 0;
+  }
+
+  /**
+   * Returns a neat display for radio information
+   * @param {Message} message Message to get emotes from
+   * @param {string} frequency Radio frequency
+   * @param {string} ps Program Service
+   * @returns {string}
+   */
+  static getDisplay(message, frequency, ps) {
+    let output = '';
+
+    // Frequency
+    if (frequency.length < 5) output += message.emote('letter_none');
+    for (let i = 0; i < frequency.length; i += 1) {
+      if (frequency[i] === '.') continue;
+      output += message.emote(`digit_${frequency[i]}${frequency[i + 1] === '.' ? 'd' : ''}`);
+    }
+
+    output += message.emote('placeholder').repeat(2);
+
+    // PS
+    for (let i = 0; i < ps.length; i += 1) {
+      if (ps[i] === '¤') output += message.emote('letter_none');
+      else output += message.emote(`letter_${ps[i]}`);
+    }
+
+    return output;
   }
 }
 

@@ -6,6 +6,7 @@ const TABLE_COLUMNS = [
   ['id', 'SERIAL', 'PRIMARY KEY'],
   ['frequency', 'VARCHAR(5)', 'UNIQUE NOT NULL'],
   ['name', 'VARCHAR(40)', 'NOT NULL'],
+  ['ps', 'VARCHAR(8)', 'NOT NULL'], // Program Service - 8 chars to display station's name
   ['stream', 'TEXT', 'NOT NULL'],
   ['pty', 'INT', null],
   ['emote', 'VARCHAR(20)', null],
