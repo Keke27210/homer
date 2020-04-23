@@ -10,7 +10,8 @@ class NowCommand extends Command {
       aliases: ['np', 'nowplaying'],
     });
 
-    this.active = 600e3;
+    this.interval = 3e3;
+    this.timeout = (10 * 60e3) / this.interval;
     this.cooldown = new Set();
   }
 
@@ -48,7 +49,7 @@ class NowCommand extends Command {
     this.cooldown.add(message.guild.id);
     const interval = this.client.setInterval(async () => {
       player = this.client.lavacordManager.players.get(message.guild.id);
-      if (index > 60 || !player) {
+      if (index > this.timeout || !player) {
         if (this.cooldown.has(message.guild.id)) this.cooldown.delete(message.guild.id);
         return this.client.clearInterval(interval);
       }
