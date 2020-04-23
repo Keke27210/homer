@@ -10,6 +10,7 @@ class NowCommand extends Command {
       aliases: ['np', 'nowplaying'],
     });
 
+    this.active = 600e3;
     this.cooldown = new Set();
   }
 
@@ -54,6 +55,10 @@ class NowCommand extends Command {
       if (player.radio !== radio.id) {
         index = 0;
         radio = await this.client.radios.getRow(player.radio);
+        if (!radio) {
+          if (this.cooldown.has(message.guild.id)) this.cooldown.delete(message.guild.id);
+          return this.client.clearInterval(interval);
+        }
       }
       if (index % now.length === 0) {
         now = await this.client.radios.nowPlaying(radio.id)
@@ -80,7 +85,7 @@ class NowCommand extends Command {
           if (this.cooldown.has(message.guild.id)) this.cooldown.delete(message.guild.id);
           this.client.clearInterval(interval);
         });
-    }, 3000);
+    }, this.active);
 
     return 0;
   }
