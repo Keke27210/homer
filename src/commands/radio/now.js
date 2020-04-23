@@ -80,7 +80,6 @@ class NowCommand extends Command {
         (index % now.length),
         message.settings.volume,
       );
-      if (now.length === 1) return null;
       return m.edit(message._('now.title'), { embed: embed.setDescription(newDisplay) })
         .catch(() => {
           if (this.cooldown.has(message.guild.id)) this.cooldown.delete(message.guild.id);
