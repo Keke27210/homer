@@ -38,7 +38,7 @@ class NowCommand extends Command {
 
     if (now.length > 1) {
       const interval = this.client.setInterval(() => {
-        if (index % now.length > 20) return this.client.clearInterval(interval);
+        if (index > 20) return this.client.clearInterval(interval);
         index += 1;
         const newDisplay = this.constructor.getDisplay(
           message,
@@ -47,8 +47,8 @@ class NowCommand extends Command {
           (index % now.length),
           message.settings.volume,
         );
-        return m.edit({ embed: embed.setDescription(newDisplay) });
-      });
+        return m.edit(message._('now.title'), { embed: embed.setDescription(newDisplay) });
+      }, 3000);
     }
 
     return 0;
@@ -73,7 +73,7 @@ class NowCommand extends Command {
       line += message.emote(`digit_${frequency[i]}${frequency[i + 1] === '.' ? 'd' : ''}`, true);
     }
 
-    line += message.emote('letter_none', true).repeat(2);
+    line += message.emote('letter_none', true).repeat(3);
 
     // PS
     for (let i = 0; i < ps.length; i += 1) {
@@ -91,8 +91,9 @@ class NowCommand extends Command {
     // 2- Playing Information
     let line2 = '';
     let infoLine = now[index];
+    console.log(infoLine);
     infoLine = infoLine
-      .padStart(infoLine.length + Math.floor((16 - infoLine.length) / 2), '¤')
+      .padStart(infoLine.length + Math.floor((17 - infoLine.length) / 2), '¤')
       .padEnd(16, '¤');
     for (let i = 0; i < infoLine; i += 1) {
       if (infoLine[i] === '¤') line2 += message.emote('letter_none', true);
@@ -115,7 +116,7 @@ class NowCommand extends Command {
     output.push(line3);
 
     // 5- Hour
-    let line4 = message.emote('letter_none', true).repeat(5);
+    let line4 = message.emote('letter_none', true).repeat(6);
     const hr = moment().tz(message.settings.timezone).format('HH:mm');
     for (let i = 0; i < hr.length; i += 1) line4 += message.emote(hr[i] === ':' ? 'dspblk' : `digit_${hr[i]}`, true);
     line4 += message.emote('letter_none', true).repeat(6);
