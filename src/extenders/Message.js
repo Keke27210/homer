@@ -29,13 +29,14 @@ Structures.extend('Message', (Message) => {
     /**
      * Generates a sendable emote from a name
      * @param {string} name Emote name
+     * @param {boolean} discret Whether display the actuel emote name
      * @returns {string} Sendable emote
      */
-    emote(name) {
+    emote(name, discret = false) {
       const value = this.client.constants.emotes[name];
       if (!value) return null;
       if (value.length < 15) return value;
-      return `<${(name === 'loading') ? 'a' : ''}:${name}:${value}>`;
+      return `<${(['loading', 'dspblk'].includes(name)) ? 'a' : ''}:${discret ? 'e' : name}:${value}>`;
     }
 
     /**

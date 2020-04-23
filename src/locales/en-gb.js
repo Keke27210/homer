@@ -616,6 +616,7 @@ module.exports = (dot) => ({
     noInformation: 'No information',
     begun: 'Begun',
     noSession: 'You must be broadcasting a radio.',
+    footer: 'This message will be updated every 3 seconds during one minute.',
   },
 
   // Phonebook command
