@@ -29,6 +29,7 @@ class NowCommand extends Command {
     let now = await this.client.radios.nowPlaying(radio.id)
       .then((n) => (n ? n.split('-') : [message._('now.noInformation')]));
 
+
     let index = 0;
     const display = this.constructor.getDisplay(
       message,
@@ -43,34 +44,40 @@ class NowCommand extends Command {
       .setFooter(message._('now.footer'));
     const m = await message.send(message._('now.title'), embed);
 
-    if (now.length > 1) {
-      this.cooldown.add(message.guild.id);
-      const interval = this.client.setInterval(async () => {
-        player = this.client.lavacordManager.players.get(message.guild.id);
-        if (index > 60 || !player) {
-          if (this.cooldown.has(message.guild.id)) this.cooldown.delete(message.guild.id);
-          return this.client.clearInterval(interval);
-        }
-        radio = await this.client.radios.getRow(player.radio);
-        if (index % now.length === 0) {
-          now = await this.client.radios.nowPlaying(radio.id)
-            .then((n) => (n ? n.split('-') : [message._('now.noInformation')]));
-        }
-        index += 1;
-        const newDisplay = this.constructor.getDisplay(
-          message,
-          radio,
-          now,
-          (index % now.length),
-          message.settings.volume,
-        );
-        return m.edit(message._('now.title'), { embed: embed.setDescription(newDisplay) })
-          .catch(() => {
-            if (this.cooldown.has(message.guild.id)) this.cooldown.delete(message.guild.id);
-            this.client.clearInterval(interval);
+    this.cooldown.add(message.guild.id);
+    const interval = this.client.setInterval(async () => {
+      player = this.client.lavacordManager.players.get(message.guild.id);
+      if (index > 60 || !player) {
+        if (this.cooldown.has(message.guild.id)) this.cooldown.delete(message.guild.id);
+        return this.client.clearInterval(interval);
+      }
+      radio = await this.client.radios.getRow(player.radio);
+      if (index % now.length === 0) {
+        now = await this.client.radios.nowPlaying(radio.id)
+          .then((n) => {
+            if (!n) return [message._('now.noInformation')];
+            const a = n.split('-');
+            for (let i = 0; i < a.length; i += 1) {
+              if (a[i].length > 17) a[i] = a[i].match(/(.{1,17})(?:\s|$)/g);
+            }
+            return a.flat();
           });
-      }, 3000);
-    }
+      }
+      index += 1;
+      const newDisplay = this.constructor.getDisplay(
+        message,
+        radio,
+        now,
+        (index % now.length),
+        message.settings.volume,
+      );
+      if (newDisplay === display) return null;
+      return m.edit(message._('now.title'), { embed: embed.setDescription(newDisplay) })
+        .catch(() => {
+          if (this.cooldown.has(message.guild.id)) this.cooldown.delete(message.guild.id);
+          this.client.clearInterval(interval);
+        });
+    }, 3000);
 
     return 0;
   }
