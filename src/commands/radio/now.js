@@ -116,7 +116,7 @@ class NowCommand extends Command {
 
     // 5- Hour
     let line4 = message.emote('letter_none', true).repeat(5);
-    const hr = moment().timezone(message.settings.timezone).format('HH:mm');
+    const hr = moment().tz(message.settings.timezone).format('HH:mm');
     for (let i = 0; i < hr.length; i += 1) line4 += message.emote(hr[i] === ':' ? 'dspblk' : `digit_${hr[i]}`, true);
     line4 += message.emote('letter_none', true).repeat(6);
     output.push(line4);
