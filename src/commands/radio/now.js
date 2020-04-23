@@ -147,13 +147,13 @@ class NowCommand extends Command {
     // 4- Volume
     let line3 = ['v', 'o', 'l', 'u', 'm', 'e'].map((c) => message.emote(`letter_${c}`, true)).join('') + message.emote('off');
     const volLevel = Math.ceil(volume / 10);
-    line3 += message.emote('letter_x', true).repeat(volLevel) + message.emote('char_hyphen', true).repeat(10 - volLevel);
+    line3 += message.emote('letter_x', true).repeat(volLevel) + message.emote('char_-', true).repeat(10 - volLevel);
     output.push(line3);
 
     // 5- Hour
     let line4 = message.emote('off', true).repeat(6);
     const hr = moment().tz(message.settings.timezone).format('HH:mm');
-    for (let i = 0; i < hr.length; i += 1) line4 += message.emote(hr[i] === ':' ? 'char_doublepoint' : `digit_${hr[i]}`, true);
+    for (let i = 0; i < hr.length; i += 1) line4 += message.emote(hr[i] === ':' ? 'char_:' : `digit_${hr[i]}`, true);
     line4 += message.emote('off', true).repeat(6);
     output.push(line4);
 
