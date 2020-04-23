@@ -92,6 +92,8 @@ class NowCommand extends Command {
     let line2 = '';
     let infoLine = now[index];
     infoLine = infoLine
+      .trim()
+      .replace(/ +/g, '¤')
       .padStart(infoLine.length + Math.floor((17 - infoLine.length) / 2), '¤')
       .padEnd(16, '¤');
     for (let i = 0; i < infoLine.length; i += 1) {
@@ -100,7 +102,11 @@ class NowCommand extends Command {
         const number = parseInt(infoLine[i], 10);
         if (!Number.isNaN(number)) line2 += message.emote(`digit_${infoLine[i]}`, true);
         else if (infoLine[i] === '-') message.emote('dsphyp');
-        else line2 += message.emote(`letter_${infoLine[i].toLowerCase()}`, true);
+        else {
+          const e = message.emote(`letter_${infoLine[i].toLowerCase()}`, true);
+          if (e) line2 += e;
+          else line2 += message.emote('letter_none', true);
+        }
       }
     }
     output.push(line2);
