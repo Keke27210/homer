@@ -613,9 +613,10 @@ module.exports = (dot) => ({
   now: {
     title: '📻 Informations sur la radio en cours de diffusion:',
     playing: 'Diffuse',
-    noInformation: 'Aucune information',
+    noInformation: 'Aucune info',
     begun: 'Débuté',
     noSession: 'Vous devez écouter une radio.',
+    footer: 'Ce message se rafrîchira toutes les 3 secondes pendant une minute.',
   },
 
   // Phonebook command
