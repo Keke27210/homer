@@ -44,7 +44,7 @@ class NowCommand extends Command {
           message,
           radio,
           now,
-          index,
+          (index % now.length),
           message.settings.volume,
         );
         return m.edit({ embed: embed.setDescription(newDisplay) });
