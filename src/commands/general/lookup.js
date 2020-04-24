@@ -66,7 +66,7 @@ class LookupCommand extends Command {
         const description = [
           `${message.dot} ${message._('lookup.gift.name')}: **${gift.store_listing.sku.name}**`,
           `${message.dot} ${message._('lookup.gift.summary')}: **${gift.store_listing.summary}**`,
-          `${message.dot} ${message._('lookup.gift.uses')}: **${gift.uses}**/**${gift.max_uses}** (**${message._(`lookup.gift.status.${gift.redeemed ? 'redeemed' : 'available'}`)}**)`,
+          `${message.dot} ${message._('lookup.gift.uses')}: **${gift.uses}**/**${gift.max_uses}** (**${message._(`lookup.gift.status.${(gift.uses >= gift.max_uses) ? 'redeemed' : 'available'}`)}**)`,
           `${message.dot} ${message._('lookup.gift.redeem')}: **[${gift.code}](https://discord.gift/${gift.code})**`,
         ];
 
