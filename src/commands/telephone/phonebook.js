@@ -99,7 +99,11 @@ class PhonebookCommand extends Command {
       return 0;
     }
 
-    const description = [];
+    const sIndex = entries.findIndex((e) => e.number === 'SUPPORT');
+    const support = entries[sIndex];
+    entries.splice(sIndex, 1);
+
+    const description = [`${message.dot} ${support ? `\`${support.number}\`: ${support.message}` : message._('global.none')}`];
     for (let i = 0; i < entries.length; i += 1) {
       const entry = entries[i];
       const contract = await this.client.telephone.contracts.getRow(entry.id);
