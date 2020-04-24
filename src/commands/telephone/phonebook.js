@@ -99,16 +99,19 @@ class PhonebookCommand extends Command {
       return 0;
     }
 
-    const sIndex = entries.findIndex((e) => e.number === 'SUPPORT');
-    const support = entries[sIndex];
-    entries.splice(sIndex, 1);
+    let support;
 
-    const description = [`${message.dot} ${support ? `\`${support.number}\`: ${support.message}` : message._('global.none')}`];
+    const description = [];
     for (let i = 0; i < entries.length; i += 1) {
       const entry = entries[i];
       const contract = await this.client.telephone.contracts.getRow(entry.id);
       if (contract) {
-        description.push(`${message.dot} \`${contract.number}\`: ${entry.message}`);
+        if (contract.number === 'SUPPORT') {
+          support = entry.message;
+          continue;
+        } else if (contract.state === this.client.telephone.contracts.states.ACTIVE) {
+          description.push(`${message.dot} \`${contract.number}\`: ${entry.message}`);
+        }
       }
     }
 
@@ -119,7 +122,7 @@ class PhonebookCommand extends Command {
       message.locale,
       message._('phonebook.title'),
       null,
-      description.sort((a, b) => a.localeCompare(b)),
+      [`${message.dot} \`SUPPORT\`: ${support}`, description.sort((a, b) => a.localeCompare(b))].flat(),
     );
 
     return 0;
