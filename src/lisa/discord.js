@@ -1,7 +1,7 @@
 const Method = require('../structures/Method');
 const moment = require('moment');
 const { MessageEmbed } = require('discord.js');
-const { deconstruct } = require('discord.js/src/util/Snowflake');
+const { deconstruct } = require('../../node_modules/discord.js/src/util/Snowflake');
 
 module.exports = [
   // user

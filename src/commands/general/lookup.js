@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const { MessageEmbed } = require('discord.js');
-const { resolveInviteCode } = require('discord.js/src/util/DataResolver');
-const { deconstruct } = require('discord.js/src/util/Snowflake');
+const { resolveInviteCode } = require('../../../node_modules/discord.js/src/util/DataResolver');
+const { deconstruct } = require('../../../node_modules/discord.js/src/util/Snowflake');
 
 const GIFT_URL = (id) => `https://discordapp.com/api/v6/entitlements/gift-codes/${encodeURIComponent(id)}`;
 
