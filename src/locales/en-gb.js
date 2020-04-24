@@ -95,6 +95,11 @@ module.exports = (dot) => ({
       usage: null,
       example: null,
     },
+    equalizer: {
+      description: 'Configures radio equalizer (not available yet)',
+      usage: '<band> <gain>',
+      example: '2 4',
+    },
     eval: {
       description: 'Evaluates Javascript code',
       usage: '[code]',
