@@ -10,33 +10,40 @@ class TuneCommand extends Command {
   }
 
   async main(message, args) {
+    if (message.deletable) message.delete({ timeout: 10e3 });
+
     const voice = this.client.channels.resolve(message.settings.radio);
     if (!voice) {
-      message.warn(message._('radio.unknown'));
+      message.warn(message._('radio.unknown'))
+        .then((s) => s.delete({ timeout: 5e3 }));
       return 0;
     }
 
     const { channelID } = message.member.voice;
     if (channelID !== voice.id) {
-      message.error(message._('tune.none', voice.name));
+      message.error(message._('tune.none', voice.name))
+        .then((s) => s.delete({ timeout: 5e3 }));
       return 0;
     }
 
     let [frequency] = args;
     if (!frequency) {
-      message.error(message._('tune.missing'));
+      message.error(message._('tune.missing'))
+        .then((s) => s.delete({ timeout: 5e3 }));
       return 0;
     }
 
     frequency = Number(frequency);
     if (Number.isNaN(frequency)) {
-      message.error(message._('tune.invalid'));
+      message.error(message._('tune.invalid'))
+        .then((s) => s.delete({ timeout: 5e3 }));
       return 0;
     }
 
     const radio = await this.client.radios.getRadio(frequency);
     if (!radio) {
-      message.warn(message._('tune.unknown', frequency));
+      message.warn(message._('tune.unknown', frequency))
+        .then((s) => s.delete({ timeout: 5e3 }));
       return 0;
     }
 
@@ -45,7 +52,8 @@ class TuneCommand extends Command {
     const track = await this.client.lavacordManager.getTracks(radio.stream)
       .then((r) => r[0]);
     if (!track) {
-      m.editError(message._('tune.error'));
+      m.editError(message._('tune.error'))
+        .then((s) => s.delete({ timeout: 5e3 }));
       this.client.logger.error(`[lavacord->getTrack] Couldn't get track for radio ${radio.id}`);
       return 1;
     }
@@ -85,7 +93,6 @@ class TuneCommand extends Command {
       });
 
     m.delete({ timeout: 10e3 });
-    if (message.deletable) message.delete({ timeout: 10e3 });
     return 0;
   }
 }
