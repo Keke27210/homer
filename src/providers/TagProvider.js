@@ -13,7 +13,7 @@ const TABLE_COLUMNS = [
 
 class TagProvider extends Provider {
   constructor(client) {
-    super(client, 'tags', TABLE_COLUMNS);
+    super(client, 'tags', TABLE_COLUMNS, false);
 
     /**
      * Maximum length for name

@@ -21,7 +21,7 @@ function threeDigits() {
 
 class ContractProvider extends Provider {
   constructor(client) {
-    super(client, 'contracts', TABLE_COLUMNS);
+    super(client, 'contracts', TABLE_COLUMNS, false);
 
     /**
      * States for a contract

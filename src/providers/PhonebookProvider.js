@@ -10,7 +10,7 @@ const TABLE_COLUMNS = [
 
 class PhonebookProvider extends Provider {
   constructor(client) {
-    super(client, 'phonebook', TABLE_COLUMNS);
+    super(client, 'phonebook', TABLE_COLUMNS, false);
 
     /**
      * Maximum length for a phonebook message
