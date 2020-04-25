@@ -27,7 +27,7 @@ class CustomPlayer extends Player {
    * @param {string} frequency
    */
   setFrequency(frequency) {
-    this.frequency = typeof frequency !== 'string' ? '87.5' : frequency;
+    this.frequency = typeof frequency !== 'number' ? 87.5 : frequency;
   }
 
   /**

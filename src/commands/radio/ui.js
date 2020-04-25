@@ -46,7 +46,7 @@ class UiCommand extends Command {
         const freq = player.frequency - 0.1;
         // eslint-disable-next-line no-nested-ternary
         player.setFrequency(freq < 87.5 ? 108 : (freq > 108 ? 87.5 : freq));
-        const radio = this.client.radios.getRadio(freq);
+        const radio = await this.client.radios.getRadio(freq);
         const track = await this.client.lavacordManager.getTracks(radio
           ? radio.stream
           : this.noProgramme);
@@ -63,7 +63,7 @@ class UiCommand extends Command {
         const freq = player.frequency - 0.1;
         // eslint-disable-next-line no-nested-ternary
         player.setFrequency(freq < 87.5 ? 108 : (freq > 108 ? 87.5 : freq));
-        const radio = this.client.radios.getRadio(freq);
+        const radio = await this.client.radios.getRadio(freq);
         const track = await this.client.lavacordManager.getTracks(radio
           ? radio.stream
           : this.noProgramme);
@@ -83,7 +83,7 @@ class UiCommand extends Command {
 
   async main(message, [frequency]) {
     frequency = Number(frequency).toFixed(1);
-    if (Number.isNaN(frequency) || (frequency < 87.5 && frequency > 108)) frequency = '87.5';
+    if (Number.isNaN(frequency) || (frequency < 87.5 && frequency > 108)) frequency = 87.5;
 
     const channel = message.guild.channels.resolve(message.settings.radio);
     if (!channel) return message.warn(message._('radio.unset'));
