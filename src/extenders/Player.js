@@ -112,7 +112,7 @@ class CustomPlayer extends Player {
 
     // 1- Frequency and PS
     const radio = await this.client.radios.getRadio(String((this.frequency / 10).toFixed(1)));
-    lines.push(this.generateLine(` ${this.frequency < 1000 ? ' ' : ''}${radio.frequency}   ${radio ? radio.ps : 'NOSIGNAL'}`));
+    lines.push(this.generateLine(` ${this.frequency < 1000 ? ' ' : ''}${String((this.frequency / 10).toFixed(1))}   ${radio ? radio.ps : 'NOSIGNAL'}`));
 
     // 2- Playing information
     if (radio && (this.refreshes % this.playingInfo.length) === 0) {
