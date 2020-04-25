@@ -99,7 +99,7 @@ class UiCommand extends Command {
     lines.push(this.generateLine(message, playing || '', true));
 
     // 3- Blank line
-    lines.push(this.generateLine(message));
+    lines.push(this.generateLine(message, ''));
 
     // 4- Volume
     const level = Array(10).fill(message.emote('char_-', true));
@@ -131,7 +131,6 @@ class UiCommand extends Command {
     let j = 0;
 
     if (center) {
-      console.log(typeof str);
       str = str
         .trim()
         .padStart(str.length + Math.floor((this.lineLength - str.length) / 2), ' ')
