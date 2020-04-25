@@ -43,7 +43,7 @@ class UiCommand extends Command {
         return true;
       },
       '◀️': async (message, player) => {
-        const freq = player.frequency - 0.1;
+        const freq = (player.frequency - 0.1).toFixed(1);
         // eslint-disable-next-line no-nested-ternary
         player.setFrequency(freq < 87.5 ? 108 : (freq > 108 ? 87.5 : freq));
         const radio = await this.client.radios.getRadio(freq);
@@ -60,7 +60,7 @@ class UiCommand extends Command {
         return false;
       },
       '▶️': async (message, player) => {
-        const freq = player.frequency - 0.1;
+        const freq = (player.frequency + 0.1).toFixed(1);
         // eslint-disable-next-line no-nested-ternary
         player.setFrequency(freq < 87.5 ? 108 : (freq > 108 ? 87.5 : freq));
         const radio = await this.client.radios.getRadio(freq);
