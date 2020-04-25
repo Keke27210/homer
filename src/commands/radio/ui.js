@@ -18,6 +18,12 @@ class UiCommand extends Command {
     this.lineLength = 17;
 
     /**
+     * Time between each refresh (5s)
+     * @type {number}
+     */
+    this.refreshTime = 5 * 1000;
+
+    /**
      * No programme's FX
      * @type {string}
      */
@@ -34,11 +40,13 @@ class UiCommand extends Command {
         else volume -= 1;
         player.volume(volume * 10);
         this.client.settings.setVolume(message.guild.id, volume * 10);
-        return null;
+        return true;
       },
-      '⏹️': (_, player) => {
+      '⏹️': (message, player) => {
         player.stop();
         player.destroy();
+        this.client.lavacordManager.leave(message.guild.id);
+        return false;
       },
       '🔊': (message, player) => {
         let volume = Math.floor(message.settings.volume / 10);
@@ -46,7 +54,7 @@ class UiCommand extends Command {
         else volume += 1;
         player.volume(volume * 10);
         this.client.settings.setVolume(message.guild.id, volume * 10);
-        return null;
+        return true;
       },
     };
   }
@@ -83,6 +91,10 @@ class UiCommand extends Command {
 
     const embed = await this.generateEmbed(message);
     const m = await message.send(embed);
+    const interval = this.client.setInterval(
+      () => m.edit(this.generateEmbed(message)),
+      this.refreshTime,
+    );
 
     const emotes = Object.keys(this.actions);
     (async function react() {
@@ -93,8 +105,16 @@ class UiCommand extends Command {
       (reaction, user) => emotes.includes(reaction.emoji.name) && user.id === message.author.id,
     );
 
-    collector.on('collect', (reaction) => this.actions[reaction.emoji.name](message, player));
-    player.once('end', () => m.delete());
+    collector.on('collect', (reaction) => {
+      if (this.actions[reaction.emoji.name](message, player)) {
+        m.edit(this.generateEmbed(message));
+      }
+    });
+    player.once('end', () => {
+      if (message.deletable) message.delete();
+      this.client.clearInterval(interval);
+      m.delete();
+    });
 
     return 0;
   }
