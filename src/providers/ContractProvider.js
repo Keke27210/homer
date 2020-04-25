@@ -350,7 +350,7 @@ class ContractProvider extends Provider {
       correspondent.id,
       true,
       'telephone.notifications.text',
-      new MessageEmbed().setDescription(message).setFooter(this.client.localeManager.translate(settings.locale, 'telephone.hint.text', correspondent.number)),
+      new MessageEmbed().setDescription(message).setFooter(this.client.localeManager.translate(settings.locale, 'telephone.hint.text', contract.number)),
       contract.number,
       message,
     );
