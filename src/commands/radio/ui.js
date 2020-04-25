@@ -121,11 +121,11 @@ class UiCommand extends Command {
   /**
    * Generates a 17-char long radio-stylized message
    * @param {Message} message Message that instantied this radio
-   * @param {string} str Message to display
-   * @param {boolean} center Whether center string
+   * @param {?string} str Message to display
+   * @param {?boolean} center Whether center string
    * @returns {string}
    */
-  generateLine(message, str, center = false) {
+  generateLine(message, str = '', center = false) {
     const line = Array(this.lineLength).fill(message.emote('off', true));
     let i = 0;
     let j = 0;
