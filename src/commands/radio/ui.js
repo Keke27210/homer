@@ -102,8 +102,8 @@ class UiCommand extends Command {
     lines.push(this.generateLine(message, ''));
 
     // 4- Volume
-    const level = Array(10).fill(message.emote('char_-', true));
-    for (let i = 0; i < (Math.ceil(message.settings.volume / 10)); i += 1) level[i] = message.emote('letter_x', true);
+    const level = Array(10).fill('-');
+    for (let i = 0; i < (Math.ceil(message.settings.volume / 10)); i += 1) level[i] = 'X';
     lines.push(this.generateLine(message, `VOLUME ${level.join('')}`, true));
 
     // 5- Hour
