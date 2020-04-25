@@ -76,7 +76,7 @@ class CustomPlayer extends Player {
     }
 
     this.frequency = frequency;
-    this.playingInfo = await this.setPlaying(radio.id);
+    if (radio && radio.radionet) this.playingInfo = await this.setPlaying(radio.id);
     this.refreshes = 0;
   }
 
