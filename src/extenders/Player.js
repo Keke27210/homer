@@ -43,10 +43,11 @@ class CustomPlayer extends Player {
       (reaction, user) => e.includes(reaction.emoji.name) && user.id === message.author.id,
     );
 
-    collector.on('collect', (reaction) => {
+    collector.on('collect', async (reaction) => {
       emotes[reaction.emoji.name](this);
       reaction.users.remove(message.author.id)
         .catch(() => null);
+      m.edit(await this.generateEmbed());
     });
 
     const interval = this.client.setInterval(async () => {
@@ -71,7 +72,8 @@ class CustomPlayer extends Player {
     }
 
     this.frequency = frequency;
-    if (radio?.radionet) this.playingInfo = await this.setPlaying(radio.id);
+    this.playingInfo = [];
+    if (radio && radio.radionet) await this.setPlaying(radio.id);
     this.refreshes = 0;
   }
 
@@ -101,14 +103,14 @@ class CustomPlayer extends Player {
     const lines = [];
 
     // 1- Frequency and PS
-    const radio = await this.client.radios.getRadio(String(this.frequency / 10));
-    lines.push(this.generateLine(` ${this.frequency < 1000 ? ' ' : ''}${String(this.frequency / 10)}   ${radio ? radio.ps : 'NOSIGNAL'}`));
+    const radio = await this.client.radios.getRadio(String((this.frequency / 10).toFixed(1)));
+    lines.push(this.generateLine(` ${this.frequency < 1000 ? ' ' : ''}${radio.frequency}   ${radio ? radio.ps : 'NOSIGNAL'}`));
 
     // 2- Playing information
-    if (radio && (this.refreshes % (this?.playingInfo?.length || 5)) === 0) {
+    if (radio && (this.refreshes % this.playingInfo.length) === 0) {
       await this.setPlaying(radio.id);
     }
-    lines.push(this.generateLine(this.playingInfo[this.refreshes], true));
+    lines.push(this.generateLine(this.playingInfo[this.refreshes % this.playingInfo.length], true));
 
     // 3- Blank line
     lines.push(this.generateLine(''));
