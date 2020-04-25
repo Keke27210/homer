@@ -63,6 +63,7 @@ class CustomPlayer extends Player {
     frequency = Number(frequency).toFixed(1);
     if (frequency < 87.5) frequency = 108.0;
     else if (frequency > 108) frequency = 87.5;
+    if (Number.isNaN(frequency)) frequency = 87.5;
 
     const radio = await this.client.radios.getRadio(String(frequency));
     const track = await this.client.lavacordManager.getTracks(radio
