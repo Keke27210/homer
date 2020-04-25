@@ -62,13 +62,10 @@ class RadioCommand extends Command {
     if (!channel) return message.warn(message._('radio.unset'));
 
     const { voice } = message.member;
-    if (!voice || voice.channelID !== channel.id) return message.error(message._('radio.channel', channel.name));
+    if (!voice || voice.channelID !== channel.id) return message.error(message._('radio.notin', channel.name));
 
     const existing = this.client.lavacordManager.players.get(message.guild.id);
-    if (existing) {
-      await existing.destroy();
-      this.client.lavacordManager.players.delete(message.guild.id);
-    }
+    if (existing) return message.warn(message._('radio.instance'));
 
     const player = await this.client.lavacordManager.join({
       channel: channel.id,
