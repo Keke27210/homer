@@ -47,7 +47,7 @@ class CustomPlayer extends Player {
       emotes[reaction.emoji.name](this);
       reaction.users.remove(message.author.id)
         .catch(() => null);
-      m.edit(await this.generateEmbed());
+      m.edit(message._('radio.header'), await this.generateEmbed(false));
     });
 
     const interval = this.client.setInterval(async () => {
@@ -56,7 +56,7 @@ class CustomPlayer extends Player {
         return this.destroyRadio();
       }
 
-      m.edit(message._('radio.header'), await this.generateEmbed())
+      return m.edit(message._('radio.header'), await this.generateEmbed())
         .catch(() => {
           this.client.clearInterval(interval);
           this.destroyRadio();
@@ -106,7 +106,7 @@ class CustomPlayer extends Player {
     this.client.settings.setVolume(volume);
   }
 
-  async generateEmbed() {
+  async generateEmbed(count = true) {
     const embed = new MessageEmbed();
     const lines = [];
 
@@ -137,7 +137,7 @@ class CustomPlayer extends Player {
     embed.setDescription(lines.join('\n'));
     embed.setFooter(this.message._('radio.footer'));
 
-    this.refreshes += 1;
+    if (count) this.refreshes += 1;
     return embed;
   }
 
