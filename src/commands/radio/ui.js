@@ -64,8 +64,8 @@ class UiCommand extends Command {
 
     player.frequency = frequency;
 
-    const radio = await this.client.radios.getRadio(player.frequency)
-      || ({ stream: this.noProgramme });
+    let radio = await this.client.radios.getRadio(player.frequency);
+    if (!radio) radio = ({ stream: this.noProgramme });
 
     const track = await this.client.lavacordManager.getTracks(radio.stream).then((r) => r[0]);
     await player.play(track);
