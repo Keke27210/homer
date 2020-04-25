@@ -69,16 +69,14 @@ class CustomPlayer extends Player {
     this.playingInfo = [];
 
     const radio = await this.client.radios.getRadio(String(frequency / 10));
-    const track = await this.client.lavacordManager.getTracks(radio
+    this.client.lavacordManager.getTracks(radio
       ? radio.stream
-      : this.noProgramme).then((r) => r[0]);
-
-    if (track.track !== this.track) {
-      await this.play(track.track, {
+      : this.noProgramme).then((r) => {
+      this.play(r[0].track, {
         noReplace: false,
         volume: this.state.volume,
       });
-    }
+    });
 
     if (radio && radio.radionet) await this.setPlaying(radio.id);
     this.refreshes = 0;
