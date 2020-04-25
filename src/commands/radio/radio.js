@@ -1,5 +1,22 @@
 /* eslint-disable no-param-reassign */
+const { MessageEmbed } = require('discord.js');
+
 const Command = require('../../structures/Command');
+
+class TutorialSubcommand extends Command {
+  constructor(client, category) {
+    super(client, category, {
+      name: 'tutorial',
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async main(message) {
+    const embed = new MessageEmbed()
+      .setDescription(message._('radio.tutorial.list'));
+    message.send(message._('radio.tutorial.title'), embed);
+  }
+}
 
 class ChannelSubCommand extends Command {
   constructor(client, category) {
@@ -48,7 +65,10 @@ class RadioCommand extends Command {
   constructor(client, category) {
     super(client, category, {
       name: 'radio',
-      children: [new ChannelSubCommand(client, category)],
+      children: [
+        new ChannelSubCommand(client, category),
+        new TutorialSubcommand(client, category),
+      ],
     });
   }
 

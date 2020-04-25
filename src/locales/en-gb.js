@@ -212,6 +212,11 @@ module.exports = (dot) => ({
         usage: '[channel]',
         example: 'Music',
       },
+      tutorial: {
+        description: 'Guide to use Homer\'s radio',
+        usage: null,
+        example: null,
+      },
     },
     radios: {
       description: 'Lists all available radios',
@@ -688,7 +693,7 @@ module.exports = (dot) => ({
   radio: {
     deprecate: 'Homer\'s radio is now button-based! Run `h:radio [frequency]` to turn it on.',
     header: '📻 Homer radio interface',
-    footer: 'Turn radio off by pushing ⏹️, kicking Homer from the voice channel or by deleting this message.',
+    footer: 'Learn how to use Homer\'s radio using h:radio tutorial.',
     unset: 'You must set a radio channel using `h:radio channel`.',
     notin: (name) => `You must be in the radio channel (**${name}**).`,
     instance: 'You must turn off current\'s radio before creating a new one.',
@@ -697,6 +702,18 @@ module.exports = (dot) => ({
       unknown: 'No radio channel set. Use `h:radio <channel>` to set one.',
       set: (name) => `Radio channel is set to **${name}**.`,
       error: 'An error occured while setting radio channel.',
+    },
+    tutorial: {
+      title: '📻 How to use Homer\'s radio:',
+      list: [
+        `${dot} Get the list of all available radios on \`h:radios\`.`,
+        `${dot} Directly tune into a station using \`h:radio [frequency]\`.`,
+        `${dot} Change frequency using ◀️ and ▶️ buttons.`,
+        `${dot} Change volume using 🔉 and 🔊 buttons.`,
+        `${dot} Stop radio at any time using the ⏹️ button.`,
+        `${dot} Missing radio? Dial \`SUPPORT\` to get it added!`,
+        `${dot} You may need to wait a bit before radio actually starts playing, don't touch frequency!`,
+      ].join('\n'),
     },
   },
 

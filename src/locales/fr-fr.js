@@ -682,7 +682,7 @@ module.exports = (dot) => ({
   radio: {
     deprecate: 'Homer\'s radio is now button-based! Run `h:radio [frequency]` to turn it on.',
     header: '📻 Interface radio d\'Homer',
-    footer: 'Éteignez la radio avec le bouton ⏹️, en kickant Homer du salon vocal ou en supprimant ce message.',
+    footer: 'Apprenez à utiliser la radio d\'Homer avec h:radio tutorial.',
     unset: 'Vous devez définir un salon radio avec `h:radio channel`.',
     notin: (name) => `Vous devez être dans le salon radio (**${name}**).`,
     instance: 'You must turn off current\'s radio before creating a new one.',
@@ -691,6 +691,18 @@ module.exports = (dot) => ({
       unknown: 'Aucun salon de radio. Utilisez `h:radio <salon>` pour le définir.',
       set: (name) => `La radio sera désormais jouée dans **${name}**.`,
       error: 'Une erreur est survenue lors du réglage du salon.',
+    },
+    tutorial: {
+      title: '📻 Comment utiliser la radio d\'Homer:',
+      list: [
+        `${dot} Obtenez la liste des radios disponibles sur \`h:radios\`.`,
+        `${dot} Branchez-vous directement sur une station avec \`h:radio [fréquence]\`.`,
+        `${dot} Changez de fréquence avec les boutons ◀️ et ▶️.`,
+        `${dot} Changez le volume avec les boutons 🔉 et 🔊.`,
+        `${dot} Arrêtez la radio à tout moment avec le bouton ⏹️.`,
+        `${dot} Radio manquante ? Appelez \`SUPPORT\` pour qu'elle soit rajoutée !`,
+        `${dot} Vous devrez peut-être attendre un peu avant que le son arrive, ne touchez pas à la fréquence !`,
+      ].join('\n'),
     },
   },
 
