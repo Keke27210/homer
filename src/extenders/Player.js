@@ -32,7 +32,7 @@ class CustomPlayer extends Player {
 
     this.client = message.client;
     this.message = message;
-    this.frequency = frequency;
+    await this.setFrequency(frequency);
 
     const embed = await this.generateEmbed();
     const m = await message.send(embed);
