@@ -22,6 +22,7 @@ class CustomPlayer extends Player {
     this.radioMessage = null;
     this.refreshes = 0;
     this.lineLength = 17;
+    this.noProgramme = 'https://raw.githubusercontent.com/Keke27210/homer_cdn/master/assets/radios/NO_PROGRAMME.mp3';
   }
 
   async setup(message, frequency) {
