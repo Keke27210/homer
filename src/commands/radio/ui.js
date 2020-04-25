@@ -34,7 +34,7 @@ class UiCommand extends Command {
 
   async main(message, [frequency]) {
     frequency = Number(frequency).toFixed(1);
-    if (Number.isNaN(frequency)) frequency = null;
+    if (Number.isNaN(frequency)) frequency = '87.5';
 
     const channel = message.guild.channels.resolve(message.settings.radio);
     if (!channel) return message.warn(message._('radio.unset'));
@@ -62,7 +62,7 @@ class UiCommand extends Command {
       node: this.client.lavacordManager.idealNodes[0].id,
     });
 
-    player.frequency = frequency || '87.5';
+    player.frequency = frequency;
 
     const radio = await this.client.radios.getRadio(player.frequency)
       || ({ stream: this.noProgramme });
