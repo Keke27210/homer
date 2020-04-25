@@ -20,6 +20,7 @@ class CustomPlayer extends Player {
     this.frequency = null;
     this.playingInfo = [];
     this.radioMessage = null;
+    this.currentTrack = null;
     this.refreshes = 0;
     this.lineLength = 17;
     this.noProgramme = 'https://raw.githubusercontent.com/Keke27210/homer_cdn/master/assets/radios/NO_PROGRAMME.mp3';
@@ -75,10 +76,14 @@ class CustomPlayer extends Player {
     this.client.lavacordManager.getTracks(radio
       ? radio.stream
       : this.noProgramme).then((r) => {
-      this.play(r[0].track, {
-        noReplace: false,
-        volume: this.state.volume,
-      });
+      if (r[0].track !== this.currentTrack) {
+        this.play(r[0].track, {
+          noReplace: false,
+          volume: this.state.volume,
+        });
+      }
+
+      this.currentTrack = r[0].track;
     });
 
     if (radio && radio.radionet) this.setPlaying(radio.id).then(() => { this.refreshes = 0; });
