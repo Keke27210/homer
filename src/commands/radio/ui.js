@@ -60,7 +60,7 @@ class UiCommand extends Command {
     if (!radio) radio = ({ stream: this.noProgramme });
 
     const track = await this.client.lavacordManager.getTracks(radio.stream).then((r) => r[0]);
-    await player.play(track);
+    await player.play(track.track, { volume: message.settings.volume });
 
     const embed = await this.generateEmbed(message);
     const m = await message.send(embed);
@@ -87,7 +87,7 @@ class UiCommand extends Command {
 
     // 1- Frequency and PS
     const radio = await this.client.radios.getRadio(player.frequency);
-    lines.push(this.generateLine(message, `  ${player.frequency}   ${radio ? radio.ps : 'NOSIGNAL'}`));
+    lines.push(this.generateLine(message, ` ${player.frequency.length < 5 ? ` ${player.frequency}` : player.frequency}   ${radio ? radio.ps : 'NOSIGNAL'}`));
 
     // 2- Playing information
     let { playing } = player;
