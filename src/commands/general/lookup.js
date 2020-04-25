@@ -59,7 +59,8 @@ class LookupCommand extends Command {
       }
 
       // 2- Gift code
-      const gift = await fetch(GIFT_URL(search))
+      const expr = /(?:https:\/\/)?(?:www.)?discordapp.gift\/([\s\S]{1,})/.exec(search);
+      const gift = await fetch(GIFT_URL(expr ? expr[1] : search))
         .then((r) => (r.ok ? r.json() : null))
         .catch(() => null);
       if (gift) {
