@@ -105,7 +105,7 @@ class UiCommand extends Command {
 
     player.setFrequency(frequency);
 
-    let radio = await this.client.radios.getRadio(player.frequency);
+    let radio = await this.client.radios.getRadio(String(player.frequency));
     if (!radio) radio = ({ stream: this.noProgramme });
 
     const track = await this.client.lavacordManager.getTracks(radio.stream).then((r) => r[0]);
@@ -147,8 +147,8 @@ class UiCommand extends Command {
     const lines = [];
 
     // 1- Frequency and PS
-    const radio = await this.client.radios.getRadio(player.frequency);
-    lines.push(this.generateLine(message, ` ${player.frequency.length < 5 ? ` ${player.frequency}` : player.frequency}   ${radio ? radio.ps : 'NOSIGNAL'}`));
+    const radio = await this.client.radios.getRadio(String(player.frequency));
+    lines.push(this.generateLine(message, ` ${player.frequency < 100 ? ' ' : ''}${String(player.frequency)}   ${radio ? radio.ps : 'NOSIGNAL'}`));
 
     // 2- Playing information
     if (!player.playing || (player.refreshes % player.playing.length) === 0) {
