@@ -34,7 +34,7 @@ class CustomPlayer extends Player {
     this.message = message;
     this.frequency = frequency;
 
-    const embed = this.generateEmbed();
+    const embed = await this.generateEmbed();
     const m = await message.send(embed);
 
     const e = Object.keys(emotes);
