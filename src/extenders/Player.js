@@ -59,6 +59,7 @@ class CustomPlayer extends Player {
   }
 
   async setFrequency(frequency) {
+    frequency = Number(frequency).toFixed(1);
     if (frequency < 87.5) frequency = 108.0;
     else if (frequency > 108) frequency = 87.5;
 
