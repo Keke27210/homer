@@ -6,13 +6,14 @@ class QuoteCommand extends Command {
   constructor(client, category) {
     super(client, category, {
       name: 'quote',
+      dm: true,
     });
   }
 
   async main(message, [id, ...ch]) {
     const search = ch.join(' ');
     let { channel } = message;
-    if (search) {
+    if (message.guild && search) {
       const found = this.client.finderUtil.findChannels(message, search)
         .filter((c) => c.type === 'text');
       if (!found) {
