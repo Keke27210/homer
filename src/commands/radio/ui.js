@@ -75,7 +75,7 @@ class UiCommand extends Command {
     );
 
     collector.on('collect', (reaction) => this.actions[reaction.emoji.name](message, player));
-    player.once('end', m.delete());
+    player.once('end', () => m.delete());
 
     return 0;
   }
