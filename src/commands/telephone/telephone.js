@@ -7,6 +7,7 @@ class SubscribeSubcommand extends Command {
   constructor(client, category) {
     super(client, category, {
       name: 'subscribe',
+      userPermissions: ['MANAGE_GUILD'],
       dm: true,
     });
   }
@@ -58,6 +59,7 @@ class TerminateSubcommand extends Command {
   constructor(client, category) {
     super(client, category, {
       name: 'terminate',
+      userPermissions: ['MANAGE_GUILD'],
       dm: true,
     });
   }
@@ -96,6 +98,7 @@ class ToggleSubcommand extends Command {
     super(client, category, {
       name: 'toggle',
       aliases: ['switch'],
+      userPermissions: ['MANAGE_GUILD'],
       dm: true,
     });
   }
