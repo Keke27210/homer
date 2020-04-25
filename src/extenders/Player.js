@@ -17,6 +17,12 @@ class CustomPlayer extends Player {
     this.frequency = null;
 
     /**
+     * Refreshes of the embed
+     * @type {number}
+     */
+    this.refreshes = 0;
+
+    /**
      * Time this player was created at
      * @type {number}
      */
