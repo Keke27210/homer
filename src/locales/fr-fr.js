@@ -671,7 +671,7 @@ module.exports = (dot) => ({
 
   // Quote command
   quote: {
-    title: (author, channel) => `💬 Citation de ${author} dans **#${channel.name}**:`,
+    title: (author, channel) => `💬 Citation de ${author} dans **#${channel}**:`,
     edit: (id) => `ID:${id} - Édité`,
     creation: (id) => `ID:${id} - Envoyé`,
     noContent: 'Ce message ne contient aucun contenu affichable.',
