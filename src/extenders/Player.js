@@ -5,9 +5,9 @@ const moment = require('moment-timezone');
 
 const emotes = {
   '🔉': (player) => player.setVolume(player.state.volume - 10),
-  '◀️': (player) => player.setFrequency(player.frequency - 0.1),
+  '◀️': (player) => player.setFrequency(player.frequency - 1),
   '⏹️': (player) => player.destroyRadio(),
-  '▶️': (player) => player.setFrequency(player.frequency + 0.1),
+  '▶️': (player) => player.setFrequency(player.frequency + 1),
   '🔊': (player) => player.setVolume(player.state.volume + 10),
 };
 
@@ -26,10 +26,6 @@ class CustomPlayer extends Player {
   }
 
   async setup(message, frequency) {
-    frequency = Number(frequency).toFixed(1);
-    if (Number.isNaN(frequency)) throw new Error('NOT_A_NUMBER');
-    if (frequency < 87.5 || frequency > 108) throw new Error('NOT_IN_BAND');
-
     this.client = message.client;
     this.message = message;
     await this.setFrequency(frequency);
@@ -60,12 +56,9 @@ class CustomPlayer extends Player {
   }
 
   async setFrequency(frequency) {
-    frequency = Number(frequency).toFixed(1);
-    if (frequency < 87.5) frequency = 108.0;
-    else if (frequency > 108) frequency = 87.5;
-    if (Number.isNaN(frequency)) frequency = 87.5;
+    if (typeof frequency === 'string') frequency = Number(frequency) * 10;
 
-    const radio = await this.client.radios.getRadio(String(frequency));
+    const radio = await this.client.radios.getRadio(String(frequency / 10));
     const track = await this.client.lavacordManager.getTracks(radio
       ? radio.stream
       : this.noProgramme).then((r) => r[0]);
@@ -78,7 +71,7 @@ class CustomPlayer extends Player {
     }
 
     this.frequency = frequency;
-    if (radio && radio.radionet) this.playingInfo = await this.setPlaying(radio.id);
+    if (radio?.radionet) this.playingInfo = await this.setPlaying(radio.id);
     this.refreshes = 0;
   }
 
@@ -108,8 +101,8 @@ class CustomPlayer extends Player {
     const lines = [];
 
     // 1- Frequency and PS
-    const radio = await this.client.radios.getRadio(String(this.frequency));
-    lines.push(this.generateLine(` ${this.frequency < 100 ? ' ' : ''}${String(this.frequency)}   ${radio ? radio.ps : 'NOSIGNAL'}`));
+    const radio = await this.client.radios.getRadio(String(this.frequency / 10));
+    lines.push(this.generateLine(` ${this.frequency < 1000 ? ' ' : ''}${String(this.frequency / 10)}   ${radio ? radio.ps : 'NOSIGNAL'}`));
 
     // 2- Playing information
     if (radio && (this.refreshes % (this?.playingInfo?.length || 5)) === 0) {

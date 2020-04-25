@@ -10,8 +10,10 @@ class UiCommand extends Command {
   }
 
   async main(message, [frequency]) {
-    frequency = Number(frequency).toFixed(1);
-    if (Number.isNaN(frequency) || (frequency < 87.5 && frequency > 108)) frequency = 87.5;
+    frequency = Number(frequency);
+    if (Number.isNaN(frequency)) frequency = 87.5;
+    if (frequency < 87.5 || frequency > 108) frequency = 87.5;
+    frequency = frequency.toFixed(1);
 
     const channel = message.guild.channels.resolve(message.settings.radio);
     if (!channel) return message.warn(message._('radio.unset'));
