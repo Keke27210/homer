@@ -130,6 +130,7 @@ class UiCommand extends Command {
     let i = 0;
     let j = 0;
 
+    if (typeof str !== 'string') str = '';
     if (center) {
       str = str
         .trim()
