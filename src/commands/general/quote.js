@@ -6,7 +6,6 @@ class QuoteCommand extends Command {
   constructor(client, category) {
     super(client, category, {
       name: 'quote',
-      dm: true,
     });
   }
 
