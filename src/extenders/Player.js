@@ -65,6 +65,8 @@ class CustomPlayer extends Player {
 
   async setFrequency(frequency) {
     if (typeof frequency === 'string') frequency = Number(frequency) * 10;
+    this.frequency = frequency;
+    this.playingInfo = [];
 
     const radio = await this.client.radios.getRadio(String(frequency / 10));
     const track = await this.client.lavacordManager.getTracks(radio
@@ -78,8 +80,6 @@ class CustomPlayer extends Player {
       });
     }
 
-    this.frequency = frequency;
-    this.playingInfo = [];
     if (radio && radio.radionet) await this.setPlaying(radio.id);
     this.refreshes = 0;
   }
