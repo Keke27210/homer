@@ -53,7 +53,7 @@ class UiCommand extends Command {
 
   async main(message, [frequency]) {
     frequency = Number(frequency).toFixed(1);
-    if (Number.isNaN(frequency)) frequency = '87.5';
+    if (Number.isNaN(frequency) || (frequency < 87.5 && frequency > 108)) frequency = '87.5';
 
     const channel = message.guild.channels.resolve(message.settings.radio);
     if (!channel) return message.warn(message._('radio.unset'));
@@ -73,7 +73,7 @@ class UiCommand extends Command {
       node: this.client.lavacordManager.idealNodes[0].id,
     });
 
-    player.frequency = frequency;
+    player.setFrequency(frequency);
 
     let radio = await this.client.radios.getRadio(player.frequency);
     if (!radio) radio = ({ stream: this.noProgramme });
@@ -109,13 +109,10 @@ class UiCommand extends Command {
     lines.push(this.generateLine(message, ` ${player.frequency.length < 5 ? ` ${player.frequency}` : player.frequency}   ${radio ? radio.ps : 'NOSIGNAL'}`));
 
     // 2- Playing information
-    let { playing } = player;
-    if (!playing || (player.refreshes % playing.length) === 0) {
-      playing = await this.client.radios.nowPlaying(radio.id);
-      player.playing = playing;
-      this.client.lavacordManager.players.set(message.guild.id, player);
+    if (!player.playing || (player.refreshes % player.playing.length) === 0) {
+      player.setPlaying(await this.client.radios.nowPlaying(radio.id));
     }
-    lines.push(this.generateLine(message, playing === null ? '' : playing, true));
+    lines.push(this.generateLine(message, player.playing, true));
 
     // 3- Blank line
     lines.push(this.generateLine(message, ''));
