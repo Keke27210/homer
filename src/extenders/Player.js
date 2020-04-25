@@ -51,9 +51,9 @@ class CustomPlayer extends Player {
     });
 
     const interval = this.client.setInterval(async () => {
-      if (m.deleted || !message.guild?.voice?.connection) {
+      if (m.deleted || !this.client.lavacordManager.players.has(m.guild.id)) {
         this.client.clearInterval(interval);
-        this.destroyRadio();
+        return this.destroyRadio();
       }
 
       m.edit(message._('radio.header'), await this.generateEmbed())
