@@ -42,11 +42,33 @@ class UiCommand extends Command {
         this.client.settings.setVolume(message.guild.id, volume * 10);
         return true;
       },
+      '◀️': async (message, player) => {
+        const freq = player.frequency - 0.1;
+        // eslint-disable-next-line no-nested-ternary
+        player.setFrequency(freq < 87.5 ? 108 : (freq > 108 ? 87.5 : freq));
+        const radio = this.client.radios.getRadio(freq);
+        const track = await this.client.lavacordManager.getTracks(radio
+          ? radio.stream
+          : this.noProgramme);
+        if (track.track !== player.track) await player.play(track.track);
+        return true;
+      },
       '⏹️': (message, player) => {
         player.stop();
         player.destroy();
         this.client.lavacordManager.leave(message.guild.id);
         return false;
+      },
+      '▶️': async (message, player) => {
+        const freq = player.frequency - 0.1;
+        // eslint-disable-next-line no-nested-ternary
+        player.setFrequency(freq < 87.5 ? 108 : (freq > 108 ? 87.5 : freq));
+        const radio = this.client.radios.getRadio(freq);
+        const track = await this.client.lavacordManager.getTracks(radio
+          ? radio.stream
+          : this.noProgramme);
+        if (track.track !== player.track) await player.play(track.track);
+        return true;
       },
       '🔊': (message, player) => {
         let volume = Math.floor(message.settings.volume / 10);
@@ -92,7 +114,7 @@ class UiCommand extends Command {
     const embed = await this.generateEmbed(message);
     const m = await message.send(embed);
     const interval = this.client.setInterval(
-      () => m.edit(this.generateEmbed(message)),
+      () => m.edit(this.generateEmbed(message).catch(() => this.client.clearInterval(interval))),
       this.refreshTime,
     );
 
@@ -105,8 +127,8 @@ class UiCommand extends Command {
       (reaction, user) => emotes.includes(reaction.emoji.name) && user.id === message.author.id,
     );
 
-    collector.on('collect', (reaction) => {
-      if (this.actions[reaction.emoji.name](message, player)) {
+    collector.on('collect', async (reaction) => {
+      if (await this.actions[reaction.emoji.name](message, player)) {
         m.edit(this.generateEmbed(message));
       }
     });
