@@ -51,15 +51,13 @@ class CustomPlayer extends Player {
       m.edit(message._('radio.header'), await this.generateEmbed(false));
     });
 
-    const interval = this.client.setInterval(async () => {
+    this.interval = this.client.setInterval(async () => {
       if (m.deleted || !this.client.lavacordManager.players.has(m.guild.id)) {
-        this.client.clearInterval(interval);
         return this.destroyRadio();
       }
 
       return m.edit(message._('radio.header'), await this.generateEmbed())
         .catch(() => {
-          this.client.clearInterval(interval);
           this.destroyRadio();
         });
     }, (6 * 1000));
@@ -186,6 +184,7 @@ class CustomPlayer extends Player {
   }
 
   destroyRadio() {
+    this.client.clearInterval(this.interval);
     if (!this.radioMessage.deleted) this.radioMessage.delete().catch(() => null);
     if (!this.message.deleted && this.message.deletable) this.message.delete().catch(() => null);
     this.stop().then(() => this.destroy());
