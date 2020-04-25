@@ -96,7 +96,7 @@ class UiCommand extends Command {
       player.playing = playing;
       this.client.lavacordManager.players.set(message.guild.id, player);
     }
-    lines.push(this.generateLine(message, playing || '', true));
+    lines.push(this.generateLine(message, playing === null ? '' : playing, true));
 
     // 3- Blank line
     lines.push(this.generateLine(message, ''));
