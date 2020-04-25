@@ -78,8 +78,7 @@ class CustomPlayer extends Player {
       });
     });
 
-    if (radio && radio.radionet) await this.setPlaying(radio.id);
-    this.refreshes = 0;
+    if (radio && radio.radionet) this.setPlaying(radio.id).then(() => { this.refreshes = 0; });
   }
 
   async setPlaying(id) {
