@@ -61,7 +61,7 @@ class CustomPlayer extends Player {
           this.client.clearInterval(interval);
           this.destroyRadio();
         });
-    }, (4 * 1000));
+    }, (6 * 1000));
   }
 
   async setFrequency(frequency) {
@@ -185,8 +185,8 @@ class CustomPlayer extends Player {
   }
 
   destroyRadio() {
-    this.radioMessage.delete();
-    if (this.message.deletable) this.message.delete();
+    this.radioMessage.delete().catch(() => null);
+    if (this.message.deletable) this.message.delete().catch(() => null);
     this.stop().then(() => this.destroy());
     this.client.lavacordManager.leave(this.message.guild.id);
   }
