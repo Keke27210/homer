@@ -10,7 +10,8 @@ class TuneCommand extends Command {
   }
 
   async main(message, args) {
-    if (message.deletable) message.delete({ timeout: 10e3 });
+    message.info(message._('radio.deprecate'));
+    /* if (message.deletable) message.delete({ timeout: 10e3 });
 
     const voice = this.client.channels.resolve(message.settings.radio);
     if (!voice) {
@@ -93,7 +94,7 @@ class TuneCommand extends Command {
       });
 
     m.delete({ timeout: 10e3 });
-    return 0;
+    return 0; */
   }
 }
 

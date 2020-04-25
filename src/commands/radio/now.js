@@ -16,7 +16,8 @@ class NowCommand extends Command {
   }
 
   async main(message) {
-    if (this.cooldown.has(message.guild.id)) {
+    message.info(message._('radio.deprecate'));
+    /* if (this.cooldown.has(message.guild.id)) {
       message.warn(message._('global.cooldown'));
       return 0;
     }
@@ -87,7 +88,7 @@ class NowCommand extends Command {
         });
     }, this.interval);
 
-    return 0;
+    return 0; */
   }
 
   /**

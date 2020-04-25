@@ -8,6 +8,8 @@ class VolumeCommand extends Command {
   }
 
   async main(message, args) {
+    message.info(message._('radio.deprecate'));
+    /* message.info(message._('radio.deprecate'));
     let [volume] = args;
     if (!volume) {
       message.error(message._('volume.missing'));
@@ -40,7 +42,7 @@ class VolumeCommand extends Command {
         return 1;
       });
 
-    return ret;
+    return ret; */
   }
 }
 

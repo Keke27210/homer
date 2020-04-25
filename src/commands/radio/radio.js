@@ -1,9 +1,10 @@
+/* eslint-disable no-param-reassign */
 const Command = require('../../structures/Command');
 
-class RadioCommand extends Command {
+class ChannelSubCommand extends Command {
   constructor(client, category) {
     super(client, category, {
-      name: 'radio',
+      name: 'channel',
       userPermissions: ['MANAGE_GUILD'],
     });
   }
@@ -25,21 +26,58 @@ class RadioCommand extends Command {
     }
 
     if (!channel) {
-      message.error(message._('radio.none'));
+      message.error(message._('radio.channel.none'));
       return 0;
     }
 
     const ret = await this.client.settings.setRadio(message.settings.id, channel.id)
       .then(() => {
-        message.success(message._('radio.set', channel.name));
+        message.success(message._('radio.channel.set', channel.name));
         return 0;
       })
       .catch(() => {
-        message.error(message._('radio.error'));
+        message.error(message._('radio.channel.error'));
         return 1;
       });
 
     return ret;
+  }
+}
+
+class RadioCommand extends Command {
+  constructor(client, category) {
+    super(client, category, {
+      name: 'radio',
+      children: [new ChannelSubCommand(client, category)],
+    });
+  }
+
+  async main(message, [frequency]) {
+    frequency = Number(frequency);
+    if (Number.isNaN(frequency)) frequency = 87.5;
+    if (frequency < 87.5 || frequency > 108) frequency = 87.5;
+    frequency = frequency.toFixed(1);
+
+    const channel = message.guild.channels.resolve(message.settings.radio);
+    if (!channel) return message.warn(message._('radio.unset'));
+
+    const { voice } = message.member;
+    if (!voice || voice.channelID !== channel.id) return message.error(message._('radio.channel', channel.name));
+
+    const existing = this.client.lavacordManager.players.get(message.guild.id);
+    if (existing) {
+      await existing.destroy();
+      this.client.lavacordManager.players.delete(message.guild.id);
+    }
+
+    const player = await this.client.lavacordManager.join({
+      channel: channel.id,
+      guild: message.guild.id,
+      node: this.client.lavacordManager.idealNodes[0].id,
+    });
+
+    player.setup(message, frequency);
+    return 0;
   }
 }
 

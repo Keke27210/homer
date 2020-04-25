@@ -680,12 +680,17 @@ module.exports = (dot) => ({
 
   // Radio command
   radio: {
-    none: 'Exécutez cette commande en spécifiant le nom d\'un salon vocal ou en étant dans un salon.',
-    unknown: 'Aucun salon de radio. Utilisez `h:radio <salon>` pour le définir.',
-    set: (name) => `La radio sera désormais jouée dans **${name}**.`,
-    error: 'Une erreur est survenue lors du réglage du salon.',
+    deprecate: 'Homer\'s radio is now button-based! Run `h:radio [frequency]` to turn it on.',
     header: '📻 Interface radio d\'Homer',
     footer: 'Éteignez la radio avec le bouton ⏹️, en kickant Homer du salon vocal ou en supprimant ce message.',
+    unset: 'Vous devez définir un salon radio avec `h:radio channel`.',
+    notin: (name) => `Vous devez être dans le salon radio (**${name}**).`,
+    channel: {
+      none: 'Exécutez cette commande en spécifiant le nom d\'un salon vocal ou en étant dans un salon.',
+      unknown: 'Aucun salon de radio. Utilisez `h:radio <salon>` pour le définir.',
+      set: (name) => `La radio sera désormais jouée dans **${name}**.`,
+      error: 'Une erreur est survenue lors du réglage du salon.',
+    },
   },
 
   // Radios command

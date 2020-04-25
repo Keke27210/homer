@@ -203,9 +203,15 @@ module.exports = (dot) => ({
       example: '703352314445955082 #staff',
     },
     radio: {
-      description: 'Sets the radio channel',
-      usage: '[channel]',
-      example: 'Music',
+      description: 'Listen to Homer\'s radio',
+      usage: '[frequency]',
+      example: '98.8',
+
+      channel: {
+        description: 'Sets the radio channel',
+        usage: '[channel]',
+        example: 'Music',
+      },
     },
     radios: {
       description: 'Lists all available radios',
@@ -680,12 +686,17 @@ module.exports = (dot) => ({
 
   // Radio command
   radio: {
-    none: 'Run this command while being on a voice channel or specify a voice channel name.',
-    unknown: 'No radio channel set. Use `h:radio <channel>` to set one.',
-    set: (name) => `Radio channel is set to **${name}**.`,
-    error: 'An error occured while setting radio channel.',
+    deprecate: 'Homer\'s radio is now button-based! Run `h:radio [frequency]` to turn it on.',
     header: '📻 Homer radio interface',
     footer: 'Turn radio off by pushing ⏹️, kicking Homer from the voice channel or by deleting this message.',
+    unset: 'You must set a radio channel using `h:radio channel`.',
+    notin: (name) => `You must be in the radio channel (**${name}**).`,
+    channel: {
+      none: 'Run this command while being on a voice channel or specify a voice channel name.',
+      unknown: 'No radio channel set. Use `h:radio <channel>` to set one.',
+      set: (name) => `Radio channel is set to **${name}**.`,
+      error: 'An error occured while setting radio channel.',
+    },
   },
 
   // Radios command

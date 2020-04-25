@@ -44,7 +44,8 @@ class CustomPlayer extends Player {
     );
 
     collector.on('collect', async (reaction) => {
-      emotes[reaction.emoji.name](this);
+      await emotes[reaction.emoji.name](this);
+      if (m.deleted) return;
       reaction.users.remove(message.author.id)
         .catch(() => null);
       m.edit(message._('radio.header'), await this.generateEmbed(false));
@@ -185,8 +186,8 @@ class CustomPlayer extends Player {
   }
 
   destroyRadio() {
-    this.radioMessage.delete().catch(() => null);
-    if (this.message.deletable) this.message.delete().catch(() => null);
+    if (!this.radioMessage.deleted) this.radioMessage.delete().catch(() => null);
+    if (!this.message.deleted && this.message.deletable) this.message.delete().catch(() => null);
     this.stop().then(() => this.destroy());
     this.client.lavacordManager.leave(this.message.guild.id);
   }

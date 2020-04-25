@@ -9,7 +9,8 @@ class LeaveCommand extends Command {
   }
 
   async main(message) {
-    const { voice } = message.guild;
+    message.info(message._('radio.deprecate'));
+    /* const { voice } = message.guild;
     if (!voice || !voice.channelID) {
       message.error(message._('leave.none'));
       return 0;
@@ -29,7 +30,7 @@ class LeaveCommand extends Command {
         return 1;
       });
 
-    return ret;
+    return ret; */
   }
 }
 
