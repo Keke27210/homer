@@ -28,7 +28,26 @@ class UiCommand extends Command {
      * @type {object}
      */
     this.actions = {
-      '🔉': () => '',
+      '🔉': (message, player) => {
+        let volume = Math.floor(message.settings.volume / 10);
+        if (volume < 1) volume = 0;
+        else volume -= 1;
+        player.volume(volume * 10);
+        this.client.settings.setVolume(message.guild.id, volume * 10);
+        return null;
+      },
+      '⏹️': (_, player) => {
+        player.stop();
+        player.destroy();
+      },
+      '🔊': (message, player) => {
+        let volume = Math.floor(message.settings.volume / 10);
+        if (volume > 9) volume = 10;
+        else volume += 1;
+        player.volume(volume * 10);
+        this.client.settings.setVolume(message.guild.id, volume * 10);
+        return null;
+      },
     };
   }
 
