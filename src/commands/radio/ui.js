@@ -96,10 +96,10 @@ class UiCommand extends Command {
       player.playing = playing;
       this.client.lavacordManager.players.set(message.guild.id, player);
     }
-    //lines.push(this.generateLine(message, playing || '', true));
+    lines.push(this.generateLine(message, playing || '', true));
 
     // 3- Blank line
-    lines.push(this.generateLine(message, ''));
+    lines.push(this.generateLine(message));
 
     // 4- Volume
     const level = Array(10).fill(message.emote('char_-', true));
@@ -129,9 +129,9 @@ class UiCommand extends Command {
     const line = Array(this.lineLength).fill(message.emote('off', true));
     let i = 0;
     let j = 0;
-    console.log(message);
-    console.log(str)
+
     if (center) {
+      console.log(typeof str);
       str = str
         .trim()
         .padStart(str.length + Math.floor((this.lineLength - str.length) / 2), ' ')
