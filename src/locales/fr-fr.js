@@ -197,6 +197,11 @@ module.exports = (dot) => ({
       usage: '<prefix|disable>',
       example: '/',
     },
+    quote: {
+      description: 'Quotes a message',
+      usage: '<message id> [channel]',
+      example: '703352314445955082 #staff',
+    },
     radio: {
       description: 'Sets the radio channel',
       usage: '[channel]',
@@ -662,6 +667,15 @@ module.exports = (dot) => ({
     set: (prefix) => `Le préfixe personnalisé est maintenant \`${prefix}\`.`,
     disabled: 'Le préfixe personnalisé a été désactivé.',
     error: 'Une erreur est survenue lors du réglage du préfixe.',
+  },
+
+  // Quote command
+  quote: {
+    title: (author, channel) => `💬 Citation de ${author} dans **#${channel.name}**:`,
+    edit: (id) => `ID:${id} - Édité`,
+    creation: (id) => `ID:${id} - Envoyé`,
+    noContent: 'Ce message ne contient aucun contenu affichable.',
+    unknown: (id, channel) => `Aucun message trouvé avec l'ID \`${id}\` dans **#${channel}**.`,
   },
 
   // Radio command

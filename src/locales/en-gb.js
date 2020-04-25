@@ -197,6 +197,11 @@ module.exports = (dot) => ({
       usage: '<prefix|disable>',
       example: '/',
     },
+    quote: {
+      description: 'Quotes a message',
+      usage: '<message id> [channel]',
+      example: '703352314445955082 #staff',
+    },
     radio: {
       description: 'Sets the radio channel',
       usage: '[channel]',
@@ -662,6 +667,15 @@ module.exports = (dot) => ({
     set: (prefix) => `Custom prefix set to \`${prefix}\`.`,
     disabled: 'Disabled custom prefix.',
     error: 'An error occured while setting custom prefix.',
+  },
+
+  // Quote command
+  quote: {
+    title: (author, channel) => `💬 Quote from ${author} in **#${channel.name}**:`,
+    edit: (id) => `ID:${id} - Edited`,
+    creation: (id) => `ID:${id} - Sent`,
+    noContent: 'This message has no displayable content.',
+    unknown: (id, channel) => `No messages found with ID \`${id}\` in **#${channel}**.`,
   },
 
   // Radio command
