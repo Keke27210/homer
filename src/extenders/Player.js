@@ -36,6 +36,7 @@ class CustomPlayer extends Player {
 
     const embed = await this.generateEmbed();
     const m = await message.send(embed);
+    this.radioMessage = m;
 
     const e = Object.keys(emotes);
     (async function react() {
