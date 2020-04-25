@@ -129,7 +129,8 @@ class UiCommand extends Command {
     const line = Array(this.lineLength).fill(message.emote('off', true));
     let i = 0;
     let j = 0;
-
+    console.log(message);
+    console.log(str)
     if (center) {
       str = str
         .trim()
