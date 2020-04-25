@@ -27,7 +27,7 @@ class QuoteCommand extends Command {
       [channel] = found;
     }
 
-    const msg = channel.messages.fetch(id)
+    const msg = await channel.messages.fetch(id)
       .catch(() => null);
     if (!msg) return message.error(message._('quote.unknown', id, channel.name));
     if (!msg.content) return message.info(message._('quote.noContent'));
