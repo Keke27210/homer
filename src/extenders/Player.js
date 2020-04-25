@@ -109,7 +109,7 @@ class CustomPlayer extends Player {
     lines.push(this.generateLine(` ${this.frequency < 100 ? ' ' : ''}${String(this.frequency)}   ${radio ? radio.ps : 'NOSIGNAL'}`));
 
     // 2- Playing information
-    if (!this.playingInfo.length || (this.refreshes % this.playingInfo.length) === 0) {
+    if (radio && (this.refreshes % (this.playingInfo.length || 5)) === 0) {
       await this.setPlaying(radio.id);
     }
     lines.push(this.generateLine(this.playingInfo[this.refreshes], true));
