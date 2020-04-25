@@ -57,8 +57,8 @@ class CustomPlayer extends Player {
       }
 
       return m.edit(message._('radio.header'), await this.generateEmbed())
-        .catch((e) => {
-          console.error(e)
+        .catch((err) => {
+          this.client.logger.error('Annoying error', err);
           this.destroyRadio();
         });
     }, (6 * 1000));
@@ -66,6 +66,8 @@ class CustomPlayer extends Player {
 
   async setFrequency(frequency) {
     if (typeof frequency === 'string') frequency = Number(frequency) * 10;
+    if (frequency < 875) frequency = 1080;
+    if (frequency > 1080) frequency = 875;
     this.frequency = frequency;
     this.playingInfo = [];
 
