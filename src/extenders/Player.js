@@ -79,7 +79,7 @@ class CustomPlayer extends Player {
       if (r[0].track !== this.currentTrack) {
         this.play(r[0].track, {
           noReplace: false,
-          volume: this.state.volume,
+          volume: this.message.settings.volume,
         });
       }
 
@@ -107,7 +107,7 @@ class CustomPlayer extends Player {
     if (volume < 0) volume = 0;
     else if (volume > 100) volume = 100;
     this.volume(volume);
-    this.client.settings.setVolume(volume);
+    this.client.settings.setVolume(this.message.guild.id, volume);
   }
 
   async generateEmbed(count = true) {
