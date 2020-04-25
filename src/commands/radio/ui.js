@@ -112,7 +112,7 @@ class UiCommand extends Command {
       .format('HH:mm');
     lines.push(this.generateLine(message, hour, true));
 
-    embed.setDescription(lines.push('\n'));
+    embed.setDescription(lines.join('\n'));
     embed.setFooter(message._('radio.footer'));
 
     return embed;
