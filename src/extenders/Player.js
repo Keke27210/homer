@@ -71,7 +71,7 @@ class CustomPlayer extends Player {
     this.frequency = frequency;
     this.playingInfo = [];
 
-    const radio = await this.client.radios.getRadio(String(frequency / 10));
+    const radio = await this.client.radios.getRadio(String(frequency / 10).toFixed(1));
     this.client.lavacordManager.getTracks(radio
       ? radio.stream
       : this.noProgramme).then((r) => {
