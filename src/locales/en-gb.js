@@ -684,6 +684,8 @@ module.exports = (dot) => ({
     unknown: 'No radio channel set. Use `h:radio <channel>` to set one.',
     set: (name) => `Radio channel is set to **${name}**.`,
     error: 'An error occured while setting radio channel.',
+    header: '📻 Homer radio interface',
+    footer: 'Turn radio off by pushing ⏹️, kicking Homer from the voice channel or by deleting this message.',
   },
 
   // Radios command

@@ -31,7 +31,7 @@ class CustomPlayer extends Player {
     await this.setFrequency(frequency);
 
     const embed = await this.generateEmbed();
-    const m = await message.send(embed);
+    const m = await message.send(message._('radio.header'), embed);
     this.radioMessage = m;
 
     const e = Object.keys(emotes);
@@ -51,9 +51,17 @@ class CustomPlayer extends Player {
     });
 
     const interval = this.client.setInterval(async () => {
-      m.edit(await this.generateEmbed())
-        .catch(() => this.client.clearInterval(interval));
-    }, (5 * 1000));
+      if (m.deleted || !message.guild?.voice?.connection) {
+        this.client.clearInterval(interval);
+        this.destroyRadio();
+      }
+
+      m.edit(message._('radio.header'), await this.generateEmbed())
+        .catch(() => {
+          this.client.clearInterval(interval);
+          this.destroyRadio();
+        });
+    }, (4 * 1000));
   }
 
   async setFrequency(frequency) {

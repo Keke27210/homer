@@ -684,6 +684,8 @@ module.exports = (dot) => ({
     unknown: 'Aucun salon de radio. Utilisez `h:radio <salon>` pour le définir.',
     set: (name) => `La radio sera désormais jouée dans **${name}**.`,
     error: 'Une erreur est survenue lors du réglage du salon.',
+    header: '📻 Interface radio d\'Homer',
+    footer: 'Éteignez la radio avec le bouton ⏹️, en kickant Homer du salon vocal ou en supprimant ce message.',
   },
 
   // Radios command
