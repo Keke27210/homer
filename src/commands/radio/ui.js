@@ -42,14 +42,6 @@ class UiCommand extends Command {
     const { voice } = message.member;
     if (!voice || voice.channelID !== channel.id) return message.error(message._('radio.channel', channel.name));
 
-    const embed = await this.generateEmbed(message);
-    const m = await message.send(embed);
-
-    const emotes = Object.keys(this.actions);
-    (async function react() {
-      for (let i = 0; i < emotes.length; i += 1) await m.react(emotes[i]);
-    }());
-
     const existing = this.client.lavacordManager.players.get(message.guild.id);
     if (existing) {
       await existing.destroy();
@@ -69,6 +61,14 @@ class UiCommand extends Command {
 
     const track = await this.client.lavacordManager.getTracks(radio.stream).then((r) => r[0]);
     await player.play(track);
+
+    const embed = await this.generateEmbed(message);
+    const m = await message.send(embed);
+
+    const emotes = Object.keys(this.actions);
+    (async function react() {
+      for (let i = 0; i < emotes.length; i += 1) await m.react(emotes[i]);
+    }());
 
     const collector = m.createReactionCollector(
       (reaction, user) => emotes.includes(reaction.emoji.name) && user.id === message.author.id,
