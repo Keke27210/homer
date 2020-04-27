@@ -686,6 +686,7 @@ module.exports = (dot) => ({
     unset: 'Vous devez définir un salon radio avec `h:radio channel`.',
     notin: (name) => `Vous devez être dans le salon radio (**${name}**).`,
     instance: 'You must turn off current\'s radio before creating a new one.',
+    permissions: (name) => `Le bot doit pouvoir se connecter et parler dans **${name}**.`,
     channel: {
       none: 'Exécutez cette commande en spécifiant le nom d\'un salon vocal ou en étant dans un salon.',
       unknown: 'Aucun salon de radio. Utilisez `h:radio <salon>` pour le définir.',

@@ -2,16 +2,12 @@
 const { Manager } = require('lavacord');
 const fetch = require('node-fetch');
 
-const Player = require('../extenders/Player');
-
 class LavacordManager extends Manager {
   constructor(client, nodes, options = {}) {
     options.send = (packet) => {
       const guild = this.client.guilds.resolve(packet.d.guild_id);
       return client.ws.shards.get(guild.shardID).send(packet);
     };
-
-    options.Player = Player;
 
     super(nodes, options);
 

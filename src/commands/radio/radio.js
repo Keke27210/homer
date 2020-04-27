@@ -83,8 +83,11 @@ class RadioCommand extends Command {
 
     const { voice } = message.member;
     if (!voice || voice.channelID !== channel.id) return message.error(message._('radio.notin', channel.name));
+    if (channel.permissionsFor(this.client.user).missing(['CONNECT', 'SPEAK']).length) return message.error(message._('radio.permissions', channel.name));
 
-    const existing = this.client.lavacordManager.players.get(message.guild.id);
+    const existing = this.client.radios.radios.find(
+      (r) => r.authorMessage.guild.id === message.guild.id,
+    );
     if (existing) return message.warn(message._('radio.instance'));
 
     const player = await this.client.lavacordManager.join({

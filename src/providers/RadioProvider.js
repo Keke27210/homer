@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 
 const Provider = require('./Provider');
+const Radio = require('../structures/Radio');
 
 const TABLE_COLUMNS = [
   ['id', 'SERIAL', 'PRIMARY KEY'],
@@ -21,6 +22,58 @@ const TABLE_COLUMNS = [
 class RadioProvider extends Provider {
   constructor(client) {
     super(client, 'radios', TABLE_COLUMNS);
+
+    /**
+     * Active radio instances
+     * @type {Radio[]}
+     */
+    this.radios = [];
+
+    /**
+     * Playing cache
+     * @type {Playing[]}
+     */
+    this.playing = [];
+
+    /**
+     * Length of a radio UI line
+     * @type {number}
+     */
+    this.lineLength = 17;
+
+    /**
+     * Sweep interval for playing information
+     * @type {number}
+     */
+    this.sweepInterval = 30 * 1000;
+
+    /**
+     * Update interval for radio messages
+     * @type {number}
+     */
+    this.updateInterval = 5 * 1000;
+
+    /**
+     * Actions a user can perform on a radio
+     * @type {object}
+     */
+    this.actions = {
+      '🔉': () => this.setVolume(this.state.volume - 10),
+      '◀️': () => this.setFrequency(this.frequency - 1),
+      '⏹️': () => this.destroyRadio(),
+      '▶️': () => this.setFrequency(this.frequency + 1),
+      '🔊': () => this.setVolume(this.state.volume + 10),
+    };
+
+    /**
+     * Audio stream played when no radio available (white noise)
+     * @type {string}
+     */
+    this.noProgramme = 'https://raw.githubusercontent.com/Keke27210/homer_cdn/master/assets/radios/NO_PROGRAMME.mp3';
+
+    this.client.on('voiceStateUpdate', this.voiceStateUpdate.bind(this));
+    this.client.on('messageReactionAdd', this.messageReactionAdd.bind(this));
+    this.client.setInterval(this.interval.bind(this), this.updateInterval);
   }
 
   /**
@@ -36,11 +89,14 @@ class RadioProvider extends Provider {
   }
 
   /**
-   * Fetches playing information from radio.net
+   * Fetches playing information from radio.net or from cache if not too old
    * @param {number} id Radio ID
-   * @returns {Promise<string>}
+   * @returns {Promise<string[]>}
    */
   async nowPlaying(id) {
+    const cache = this.playing.find((p) => p.radio === id);
+    if (cache && (Date.now() - cache.time) < this.sweepInterval) return cache.text;
+
     const api = await this.client.apis.fetchKey('radionet');
     if (!api) return null;
 
@@ -53,7 +109,88 @@ class RadioProvider extends Provider {
       .catch(() => null);
     if (!req) return null;
 
-    return req[0].streamTitle;
+    const formatted = (req[0].streamTitle || '')
+      .split(' - ')
+      .map((part) => {
+        if (part.length > 17) return part.match(/(.{1,17})(?:\s|$)/g);
+        return part;
+      })
+      .flat();
+
+    if (cache) this.playing.splice(this.playing.indexOf(cache), 1);
+    this.playing.push({
+      radio: id,
+      text: formatted,
+      time: Date.now(),
+    });
+
+    return formatted;
+  }
+
+  /**
+   * Creates a radio instance
+   * @param {Message} message Message that instantied the radio
+   * @param {VoiceChannel} voiceChannel Voice channel to use
+   * @param {?number} frequency Frequency to tune into
+   */
+  async createRadio(message, voiceChannel, frequency) {
+    if (this.radios.find((r) => r.voiceChannel.id === voiceChannel.id)) {
+      throw new Error('existingRadio');
+    }
+
+    const radio = new Radio(this.client, message, voiceChannel, frequency);
+    await radio.init();
+  }
+
+  /**
+   * Destroys a radio instance
+   * @returns {Promise<void>}
+   */
+  // eslint-disable-next-line class-methods-use-this
+  destroyRadio(radio) {
+    return radio.destroyRadio();
+  }
+
+  /**
+   * Handles voice state updates to destroy unused Homer radios
+   * @param {VoiceState} oldState Old voice state
+   * @param {VoiceState} newState New voice state
+   * @returns {void}
+   */
+  voiceStateUpdate(oldState, newState) {
+    for (let i = 0; i < this.radios.length; i += 1) {
+      const radio = this.radios[i];
+      if (oldState.channelID !== radio.voiceChannel.id
+        && newState.channelID !== radio.voiceChannel.id) return;
+
+      if ([this.client.user.id, radio.authorMessage.author.id].includes(newState.id)
+        && oldState.channelID && !newState.channelID) this.destroyRadio(radio);
+    }
+  }
+
+  /**
+   * Handles message reactions to update radio instances
+   * @param {MessageReaction} reaction Reaction that was added
+   * @param {User} user User who reacted
+   * @returns {void}
+   */
+  messageReactionAdd(reaction, user) {
+    if (!Object.keys(this.actions).includes(reaction.emoji.name)) return;
+
+    const radio = this.radios.find((r) => r.message && r.message.id === reaction.message.id);
+    if (!radio || radio.authorMessage.author.id !== user.id) return;
+
+    radio.handleAction(reaction.emoji.name);
+  }
+
+  /**
+   * Updates radio messages every updateInterval ms
+   * @returns {void}
+   */
+  interval() {
+    for (let i = 0; i < this.radios.length; i += 1) {
+      this.radios[i].updateMessage();
+    }
   }
 }
 
