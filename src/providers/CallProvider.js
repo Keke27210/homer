@@ -264,8 +264,8 @@ class CallProvider extends Provider {
     ]);
     for (let i = 0; i < ongoing.length; i += 1) {
       const { caller, called } = ongoing[i];
-      await this.contracts.notify(caller, true, 'telephone.restart');
-      await this.contracts.notify(called, true, 'telephone.restart');
+      await this.contracts.notify(caller, true, 'telephone.notifications.restart');
+      await this.contracts.notify(called, true, 'telephone.notifications.restart');
     }
   }
 
