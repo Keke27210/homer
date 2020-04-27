@@ -165,7 +165,7 @@ class Radio {
     else if (frequency < 875) frequency = 1080;
     this.frequency = frequency;
 
-    const radio = await this.client.radios.getRadio((frequency / 10).toFixed(1))
+    const radio = await this.client.radios.getRadio(frequency)
       || ({ stream: this.noProgramme });
 
     const track = await this.client.lavacordManager.getTracks(radio.stream)
@@ -205,7 +205,7 @@ class Radio {
     const frequency = (this.frequency / 10).toFixed(1);
 
     // Line 1 - Frequency and Program Service
-    const radio = await this.client.radios.getRadio(frequency) || ({ ps: 'NOSIGNAL' });
+    const radio = await this.client.radios.getRadio(this.frequency) || ({ ps: 'NOSIGNAL' });
     lines.push(this.generateLine(` ${frequency.length < 5 ? ' ' : ''}${frequency}   ${radio.ps}`));
 
     // Line 2 - Playing information
