@@ -2,6 +2,7 @@
 /* eslint-disable no-param-reassign */
 const { MessageEmbed } = require('discord.js');
 const moment = require('moment-timezone');
+const wait = require('util').promisify(setTimeout);
 
 class Radio {
   constructor(client, message, voiceChannel, frequency) {
@@ -139,10 +140,11 @@ class Radio {
 
   /**
    * Updates a message with up-to-date information
-   * @param {boolean} action Whether this was caused by an action
+   * @param {?boolean} action Whether this was caused by an action
+   * @param {?string} ps Whether set a custom Program Service
    * @returns {Promise<void>}
    */
-  async updateMessage(action = false) {
+  async updateMessage(action = false, ps) {
     if (!this.player || (this.message && this.message.deleted)) return;
 
     if (action) this.ignoreNext = true;
@@ -151,7 +153,7 @@ class Radio {
       return;
     }
 
-    const embed = await this.generateEmbed(!action);
+    const embed = await this.generateEmbed(!action, ps);
     await this.message.edit(this._('radio.header'), embed);
   }
 
@@ -195,18 +197,33 @@ class Radio {
   }
 
   /**
+   * Seeks forward (unless backward = true)
+   * @param {boolean} backward Whether to seek backward
+   * @returns {Promise<void>}
+   */
+  async seek(backward = false) {
+    await this.updateMessage(true, 'SEEKING');
+    const frequency = await this.client.radios.getRows([
+      ['frequency', backward ? '<' : '>', this.frequency],
+    ]).then((rows) => rows.sort((a, b) => b.frequency - a.frequency)[0].frequency);
+    await wait(2000);
+    await this.setFrequency(frequency);
+  }
+
+  /**
    * Generates a Message embed with up-to-date information
    * @param {?boolean} interval Whether this call was made by setInterval
+   * @param {?string} ps Custom Program Service to set
    * @returns {Promise<MessageEmbed>}
    */
-  async generateEmbed(interval = false) {
+  async generateEmbed(interval = false, ps) {
     const embed = new MessageEmbed();
     const lines = [];
     const frequency = (this.frequency / 10).toFixed(1);
 
     // Line 1 - Frequency and Program Service
     const radio = await this.client.radios.getRadio(this.frequency) || ({ ps: 'NOSIGNAL' });
-    lines.push(this.generateLine(` ${frequency.length < 5 ? ' ' : ''}${frequency}   ${radio.ps}`));
+    lines.push(this.generateLine(` ${frequency.length < 5 ? ' ' : ''}${frequency}   ${ps || radio.ps}`));
 
     // Line 2 - Playing information
     const playing = radio.id ? await this.client.radios.nowPlaying(radio.id) : null;
