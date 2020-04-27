@@ -724,7 +724,7 @@ module.exports = (dot) => ({
   radios: {
     empty: 'There are no available radios at the moment.',
     list: '📻 Radios available on **Homer**:',
-    footer: (p, t) => `Tune into a station by running h:tune <frequency> | Page ${p}/${t}`,
+    footer: (p, t) => `Tune into a station by running h:radio <frequency> | Page ${p}/${t}`,
     pty: {
       // Based on the European PTY codes
       0: 'No programme type',
