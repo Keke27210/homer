@@ -203,10 +203,22 @@ class Radio {
    */
   async seek(backward = false) {
     await this.updateMessage(true, 'SEEKING');
-    const frequency = await this.client.radios.getRows([
-      ['frequency', backward ? '<' : '>', this.frequency],
-    ]).then((rows) => rows.sort((a, b) => b.frequency - a.frequency)[0].frequency);
     await wait(2000);
+
+    const frequencies = await this.client.radios.getRows()
+      .then((rows) => rows.sort((a, b) => a.frequency - b.frequency).map((r) => r.frequency));
+
+    let frequency = this.frequency + (backward ? (-1) : 1);
+    while (frequency !== this.frequency) {
+      if (frequency < 875) frequency = 1080;
+      else if (frequency > 1080) frequency = 875;
+
+      if (frequencies.includes(frequency)) break;
+
+      if (backward) frequency -= 1;
+      else frequency += 1;
+    }
+
     await this.setFrequency(frequency);
   }
 
