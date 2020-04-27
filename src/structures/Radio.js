@@ -273,7 +273,9 @@ class Radio {
     if (this.message && this.message.deletable) this.message.delete();
     await this.client.lavacordManager.leave(this.authorMessage.guild.id);
 
-    const index = this.client.radios.radios.find((r) => r.voiceChannel.id === this.voiceChannel.id);
+    const index = this.client.radios.radios.findIndex(
+      (r) => r.voiceChannel.id === this.voiceChannel.id,
+    );
     if (index >= 0) this.client.radios.radios.splice(index, 1);
   }
 }
