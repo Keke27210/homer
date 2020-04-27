@@ -196,7 +196,7 @@ class Radio {
 
     // Line 2 - Playing information
     const playing = radio.id ? await this.client.radios.nowPlaying(radio.id) : null;
-    lines.push(this.generateLine(playing ? playing[this.refreshes % playing.length] : ''));
+    lines.push(this.generateLine(playing ? playing[this.refreshes % playing.length] : '', true));
 
     // Line 3 - Blank line
     lines.push(this.generateLine());
