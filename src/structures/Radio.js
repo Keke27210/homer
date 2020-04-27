@@ -259,7 +259,7 @@ class Radio {
   async handleAction(action) {
     const fn = this.actions[action];
     if (fn) {
-      await fn.bind(this)();
+      await fn(this);
       await this.updateMessage(true);
     }
   }
