@@ -680,6 +680,7 @@ module.exports = (dot) => ({
 
   // Radio command
   radio: {
+    restart: '📻 Cette shard va procéder à un redémarrage, veuillez rallumer la radio lorsque Homer reviendra en ligne.',
     deprecate: 'Homer\'s radio is now button-based! Run `h:radio [frequency]` to turn it on.',
     header: '📻 Interface radio d\'Homer',
     footer: 'Apprenez à utiliser la radio d\'Homer avec h:radio tutorial.',
@@ -870,6 +871,7 @@ module.exports = (dot) => ({
 
   // Telephone command
   telephone: {
+    restart: '☎️ Cette shard (ou celle de votre correspondant) va procéder à un redémarrage, les messages peuvent être ignorés jusqu\'à ce que Homer redevienne en ligne.',
     welcome: '☎️ Bienvenue sur le téléphone d\'Homer ! Pour commencer, exécutez `h:telephone subscribe`.',
     existing: (id) => `Le contrat n°\`${id}\` est déjà actif sur ce salon.`,
     unknown: '☎️ Aucun contrat présent sur ce salon. Souscrivez avec `h:telephone subscribe`.',

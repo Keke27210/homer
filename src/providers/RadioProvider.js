@@ -206,6 +206,17 @@ class RadioProvider extends Provider {
       this.radios[i].updateMessage();
     }
   }
+
+  /**
+   * Informs radio user that the broadcast is interrupted during the restart
+   */
+  async onShutdown() {
+    for (let i = 0; i < this.radios.length; i += 1) {
+      const radio = this.radios[i];
+      await radio.authorMessage.send(radio._('radio.restart'));
+      await radio.destroyRadio();
+    }
+  }
 }
 
 module.exports = RadioProvider;

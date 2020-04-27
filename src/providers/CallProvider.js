@@ -256,6 +256,20 @@ class CallProvider extends Provider {
   }
 
   /**
+   * Informs users that their ongoing call will be disrupted during bot restart
+   */
+  async onShutdown() {
+    const ongoing = await this.getRows([
+      ['state', '<', this.states.TERMINATED],
+    ]);
+    for (let i = 0; i < ongoing.length; i += 1) {
+      const { caller, called } = ongoing[i];
+      await this.contracts.notify(caller, true, 'telephone.restart');
+      await this.contracts.notify(called, true, 'telephone.restart');
+    }
+  }
+
+  /**
    * Fetches a message from the Discord API
    * @param {string} channel Channel ID
    * @param {string} message Message ID

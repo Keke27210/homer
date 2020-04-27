@@ -216,6 +216,14 @@ class DiscordClient extends Client {
    * @param {?number} code Exit code (default: 0)
    */
   async shutdown(code = 0) {
+    this.logger.log('[telephone] Sending restart notifications to ongoing calls...');
+    await this.telephone.calls.onShutdown();
+    this.logger.log('[telephone] Notifications sent');
+
+    this.logger.log('[radio] Informing users that the broadcast is interrupted');
+    await this.radios.onShutdown();
+    this.logger.log('[radio] Notifications sent');
+
     this.database.ready = false;
 
     this.logger.log('[managers] Unregistering components...');

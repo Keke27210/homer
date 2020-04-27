@@ -691,6 +691,7 @@ module.exports = (dot) => ({
 
   // Radio command
   radio: {
+    restart: '📻 This shard will perform a restart, please tune again once Homer\'s turns back online.',
     deprecate: 'Homer\'s radio is now button-based! Run `h:radio [frequency]` to turn it on.',
     header: '📻 Homer radio interface',
     footer: 'Learn how to use Homer\'s radio using h:radio tutorial.',
@@ -897,6 +898,7 @@ module.exports = (dot) => ({
       noNumber: 'Not assigned',
     },
     notifications: {
+      restart: '☎️ This (or your correspondent) shard will perform a restart, messages may not be transfered until Homer\'s goes back online.',
       activated: (number) => `☎️ Your line has been activated, your number is \`${number}\`.`,
       invalidated: 'Your line has not been activated. Join the support server to find out why.',
       outgoing: (number) => `📞 Dialing \`${number}\`...`,
