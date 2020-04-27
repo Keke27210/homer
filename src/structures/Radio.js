@@ -123,7 +123,9 @@ class Radio {
     const m = this.message = await this.authorMessage.send(this._('radio.header'), embed);
 
     (async function react(e) {
-      for (let i = 0; i < e.length; i += 1) await m.react(e[i]);
+      for (let i = 0; i < e.length; i += 1) {
+        try { await m.react(e[i]); } catch (_) { break; }
+      }
     }(Object.keys(this.actions)));
 
     await this.setFrequency();
