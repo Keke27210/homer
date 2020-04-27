@@ -135,6 +135,8 @@ class Radio {
    * @returns {Promise<void>}
    */
   async updateMessage(action = false) {
+    if (!this.player || this.message.deleted) return;
+
     if (action) this.ignoreNext = true;
     else if (this.ignoreNext) {
       this.ignoreNext = false;
