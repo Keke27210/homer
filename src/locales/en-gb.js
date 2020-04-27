@@ -698,6 +698,7 @@ module.exports = (dot) => ({
     notin: (name) => `You must be in the radio channel (**${name}**).`,
     instance: 'You must turn off current\'s radio before creating a new one.',
     permissions: (name) => `The bot must be able to connect and speak in **${name}**.`,
+    error: 'An error occured while turning radio on. Please retry later.',
     channel: {
       none: 'Run this command while being on a voice channel or specify a voice channel name.',
       unknown: 'No radio channel set. Use `h:radio <channel>` to set one.',

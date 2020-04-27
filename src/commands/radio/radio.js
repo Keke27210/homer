@@ -73,10 +73,10 @@ class RadioCommand extends Command {
   }
 
   async main(message, [frequency]) {
-    frequency = Number(frequency);
-    if (Number.isNaN(frequency)) frequency = 87.5;
-    if (frequency < 87.5 || frequency > 108) frequency = 87.5;
-    frequency = frequency.toFixed(1);
+    frequency = Number(frequency) * 10;
+    if (Number.isNaN(frequency)) frequency = 875;
+    if (frequency > 1080) frequency = 1080;
+    if (frequency < 875) frequency = 875;
 
     const channel = message.guild.channels.resolve(message.settings.radio);
     if (!channel) return message.warn(message._('radio.unset'));
@@ -90,14 +90,15 @@ class RadioCommand extends Command {
     );
     if (existing) return message.warn(message._('radio.instance'));
 
-    const player = await this.client.lavacordManager.join({
-      channel: channel.id,
-      guild: message.guild.id,
-      node: this.client.lavacordManager.idealNodes[0].id,
-    });
+    const ret = await this.client.radios.createRadio(message, channel, frequency)
+      .then(() => 0)
+      .catch((error) => {
+        message.error(message._('radio.error'));
+        this.client.logger.error(`[Radio] Error while spawning radio for channel ${channel.id} / user ${message.author.id}`, error);
+        return 1;
+      });
 
-    player.setup(message, frequency);
-    return 0;
+    return ret;
   }
 }
 
