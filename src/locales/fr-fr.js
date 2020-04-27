@@ -713,7 +713,7 @@ module.exports = (dot) => ({
   radios: {
     empty: 'Il n\'y a aucune radio disponible pour le moment.',
     list: '📻 Radios disponibles sur **Homer**:',
-    footer: (p, t) => `Écoutez une station avec h:tune <fréquence> | Page ${p}/${t}`,
+    footer: (p, t) => `Écoutez une station avec h:radio <fréquence> | Page ${p}/${t}`,
     pty: {
       // Based on the European PTY codes
       0: 'Aucune information',
