@@ -58,11 +58,11 @@ class RadioProvider extends Provider {
      * @type {object}
      */
     this.actions = {
-      '🔉': (radio) => radio.setVolume(this.state.volume - 10),
-      '◀️': (radio) => radio.setFrequency(this.frequency - 1),
+      '🔉': (radio) => radio.setVolume(radio.player.state.volume - 10),
+      '◀️': (radio) => radio.setFrequency(radio.frequency - 1),
       '⏹️': (radio) => radio.destroyRadio(),
-      '▶️': (radio) => radio.setFrequency(this.frequency + 1),
-      '🔊': (radio) => radio.setVolume(this.state.volume + 10),
+      '▶️': (radio) => radio.setFrequency(radio.frequency + 1),
+      '🔊': (radio) => radio.setVolume(radio.player.state.volume + 10),
     };
 
     /**
