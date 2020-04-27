@@ -73,6 +73,7 @@ class RadioProvider extends Provider {
 
     this.client.on('voiceStateUpdate', this.voiceStateUpdate.bind(this));
     this.client.on('messageReactionAdd', this.messageReactionAdd.bind(this));
+    this.client.on('messageDelete', this.messageDelete.bind(this));
     this.client.setInterval(this.interval.bind(this), this.updateInterval);
   }
 
@@ -181,6 +182,16 @@ class RadioProvider extends Provider {
     if (!radio || radio.authorMessage.author.id !== user.id) return;
 
     radio.handleAction(reaction.emoji.name);
+  }
+
+  /**
+   * Handles message deletion to destroy radio if UI was deleted
+   * @param {Message} message Deleted message
+   * @returns {void}
+   */
+  messageDelete(message) {
+    const radio = this.radios.find((r) => r.message && r.message.id === message.id);
+    if (radio) radio.destroyRadio();
   }
 
   /**
