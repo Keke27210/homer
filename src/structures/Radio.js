@@ -170,9 +170,12 @@ class Radio {
     const radio = await this.client.radios.getRadio(frequency)
       || ({ stream: this.noProgramme });
 
-    const track = await this.client.lavacordManager.getTracks(radio.stream)
-      .then((r) => r[0].track);
-
+    let track = await this.client.lavacordManager.getTracks(radio.stream)
+      .then((r) => (r[0] ? r[0].track : null));
+    if (!track) {
+      track = await this.client.lavacordManager.getTracks(this.noProgramme)
+        .then((r) => r[0].track);
+    }
 
     if (track !== this.track) {
       await this.player.play(track, {

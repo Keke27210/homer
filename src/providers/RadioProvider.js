@@ -112,7 +112,7 @@ class RadioProvider extends Provider {
       .catch(() => null);
     if (!req) return null;
 
-    const formatted = (req[0].streamTitle || '')
+    const formatted = (req[0] && req[0].streamTitle ? req[0].streamTitle : '')
       .split(' - ')
       .map((part) => {
         if (part.length > 17) return part.match(/(.{1,17})(?:\s|$)/g);
