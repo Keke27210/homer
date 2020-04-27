@@ -135,7 +135,7 @@ class Radio {
    * @returns {Promise<void>}
    */
   async updateMessage(action = false) {
-    if (!this.player || this.message.deleted) return;
+    if (!this.player || (this.message && this.message.deleted)) return;
 
     if (action) this.ignoreNext = true;
     else if (this.ignoreNext) {
@@ -164,7 +164,7 @@ class Radio {
       .then((r) => r[0].track);
     await this.player.play(track, {
       noReplace: false,
-      volume: this.player.state.volume,
+      volume: this.authorMessage.settings.volume,
     });
   }
 
