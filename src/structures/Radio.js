@@ -262,7 +262,7 @@ class Radio {
     const fn = this.actions[action];
     if (fn) {
       await fn(this);
-      await this.updateMessage(true);
+      if (action !== '⏹️') await this.updateMessage(true);
     }
   }
 
