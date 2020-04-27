@@ -182,6 +182,7 @@ class RadioProvider extends Provider {
     if (!radio || radio.authorMessage.author.id !== user.id) return;
 
     radio.handleAction(reaction.emoji.name);
+    reaction.users.remove(user.id).catch(() => null);
   }
 
   /**
