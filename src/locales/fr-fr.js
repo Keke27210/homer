@@ -699,6 +699,7 @@ module.exports = (dot) => ({
       list: [
         `${dot} Obtenez la liste des radios disponibles sur \`h:radios\`.`,
         `${dot} Branchez-vous directement sur une station avec \`h:radio [fréquence]\`.`,
+        `${dot} Changez directement de station avec les boutons ⏪ et ⏩.`,
         `${dot} Changez de fréquence avec les boutons ◀️ et ▶️.`,
         `${dot} Changez le volume avec les boutons 🔉 et 🔊.`,
         `${dot} Arrêtez la radio à tout moment avec le bouton ⏹️.`,

@@ -710,6 +710,7 @@ module.exports = (dot) => ({
       list: [
         `${dot} Get the list of all available radios on \`h:radios\`.`,
         `${dot} Directly tune into a station using \`h:radio [frequency]\`.`,
+        `${dot} Seek using ⏪ and ⏩ buttons.`,
         `${dot} Change frequency using ◀️ and ▶️ buttons.`,
         `${dot} Change volume using 🔉 and 🔊 buttons.`,
         `${dot} Stop radio at any time using the ⏹️ button.`,
