@@ -51,6 +51,12 @@ class Radio {
      */
     this.ignoreNext = false;
 
+    /**
+     * Current Lavalink playing track
+     * @type {?string}
+     */
+    this.track = null;
+
     client.radios.radios.push(this);
   }
 
@@ -164,10 +170,16 @@ class Radio {
 
     const track = await this.client.lavacordManager.getTracks(radio.stream)
       .then((r) => r[0].track);
-    await this.player.play(track, {
-      noReplace: false,
-      volume: this.authorMessage.settings.volume,
-    });
+
+
+    if (track !== this.track) {
+      await this.player.play(track, {
+        noReplace: false,
+        volume: this.authorMessage.settings.volume,
+      });
+    }
+
+    this.track = track;
   }
 
   /**
