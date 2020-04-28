@@ -426,8 +426,9 @@ class ContractProvider extends Provider {
     ]);
     let j = 0;
     for (let i = 0; i < list.length; i += 1) {
+      // Consider as non-existing only if explicit 10003 code returned by Discord
       const channel = await this.client.api.channels[list[i].channel].get()
-        .catch(() => null);
+        .catch((e) => (e.code === 10003 ? null : true));
       if (!channel) {
         await this.terminateContract(list[i].id, 'INVALIDATED');
         j += 1;
