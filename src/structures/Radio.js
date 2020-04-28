@@ -50,7 +50,7 @@ class Radio {
      * Whether ignore the next interval
      * @type {boolean}
      */
-    this.ignoreNext = false;
+    this.ignoreNext = true;
 
     /**
      * Current Lavalink playing track
