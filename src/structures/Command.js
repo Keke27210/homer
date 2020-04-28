@@ -110,7 +110,9 @@ class Command {
         .permissionsFor(this.client.user)
         .missing(this.botPermissions);
       if (missingBot.length) {
-        message.warn(message._('command.botPermissions', missingBot.map((p) => `\`${p}\``).join(', ')));
+        const msg = message._('command.botPermissions', missingBot.map((p) => `\`${p}\``).join(', '));
+        message.warn(msg)
+          .catch(() => message.author.send(msg).catch(() => null));
         return;
       }
     }
