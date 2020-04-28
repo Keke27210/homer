@@ -98,13 +98,17 @@ class Command {
         return;
       }
 
-      const missingUser = message.member.permissions.missing(this.userPermissions);
+      const missingUser = message.channel
+        .permissionsFor(message.author)
+        .missing(this.userPermissions);
       if (missingUser.length) {
         message.warn(message._('command.userPermissions', missingUser.map((p) => `\`${p}\``).join(', ')));
         return;
       }
 
-      const missingBot = message.guild.me.permissions.missing(this.botPermissions);
+      const missingBot = message.channel
+        .permissionsFor(this.client.user)
+        .missing(this.botPermissions);
       if (missingBot.length) {
         message.warn(message._('command.botPermissions', missingBot.map((p) => `\`${p}\``).join(', ')));
         return;
