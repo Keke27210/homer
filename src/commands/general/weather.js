@@ -25,13 +25,13 @@ class WeatherCommand extends Command {
      */
     this.moons = {
       New: '🌑',
-      WaxingCrescent: '🌒',
+      'Waxing Crescent': '🌒',
       First: '🌓',
-      WaxingGibbous: '🌔',
+      'Waxing Gibbous': '🌔',
       Full: '🌕',
-      WaningGibbous: '🌖',
+      'Waning Gibbous': '🌖',
       Last: '🌗',
-      WaningCrescent: '🌘',
+      'Waning Crescent': '🌘',
     };
   }
 
@@ -96,7 +96,7 @@ class WeatherCommand extends Command {
       `${message.dot} ${message._('weather.temperature')}: ${message._('weather.format.temperature', current.temperature)}`,
       `${message.dot} ${message._('weather.feel')}: ${message._('weather.format.feel', current.feel)}`,
       `${message.dot} ${message._('weather.wind')}: ${message._('weather.format.wind', current.wind, current.gust)}`,
-      `${message.dot} ${message._('weather.uv')}: ${message._('weather.format.uv', current.uv)}`,
+      `${message.dot} ${message._('weather.uv')}: ${message._('weather.format.uv', current.uvindex)}`,
       `${message.dot} ${message._('weather.humidity')}: ${message._('weather.format.humidity', current.humidity)}`,
       `${message.dot} ${message._('weather.pressure')}: ${message._('weather.format.pressure', current.pressure)}`,
       `${message.dot} ${message._('weather.nebulosity')}: ${message._('weather.format.nebulosity', current.nebulosity)}`,
@@ -121,7 +121,7 @@ class WeatherCommand extends Command {
         `${message.dot} ${message._('weather.condition')}: **${day.condition}**`,
         `${message.dot} ${message._('weather.temperature')}: ${message._('weather.format.temperatures', day.temperatures)}`,
         `${message.dot} ${message._('weather.wind')}: ${message._('weather.format.wind', day.wind, day.gust)}`,
-        `${message.dot} ${message._('weather.uv')}: ${message._('weather.format.uv', day.uv)}`,
+        `${message.dot} ${message._('weather.uv')}: ${message._('weather.format.uv', day.uvindex)}`,
         `${message.dot} ${message._('weather.nebulosity')}: ${message._('weather.format.nebulosity', day.nebulosity)}`,
         `${message.dot} ${message._('weather.sunrise')}: **${moment(day.sun[0]).format(message._('weather.format.time'))}** - ${message._('weather.sunset')}: **${moment(day.sun[1]).format(message._('weather.format.time'))}**`,
         `${message.dot} ${message._('weather.moon')}: ${message._('weather.format.moon', this.moons[day.moon], message._(`weather.moons.${day.moon}`))}`,

@@ -1040,7 +1040,15 @@ module.exports = (dot) => ({
       temperatures: ({ max, min }) => `from **${min[0]}**°C (**${min[1]}**°F) to **${max[0]}**°C (**${max[1]}**°F)`,
       feel: ([c, f]) => `**${c}**°C (**${f}**°F)`,
       wind: ({ direction, speed }, gust) => `**${direction}** - **${speed[0]}**kph (**${speed[1]}**mph) - Gusts of **${gust[0]}**kph (**${gust[1]}**mph)`,
-      uv: ({ index, text }) => `**${index}** (**${text}**)`,
+      uv: (index) => {
+        let text;
+        if (index <= 2) text = 'Low';
+        else if (index >= 3 && index <= 5) text = 'Moderate';
+        else if (index >= 6 && index <= 7) text = 'High';
+        else if (index >= 8 && index <= 10) text = 'Very high';
+        else text = 'Extreme';
+        return `**${index}** (**${text}**)`;
+      },
       humidity: (hr) => `**${hr}**%`,
       pressure: (pr) => `**${pr}**mb`,
       nebulosity: (cover) => `**${cover}**%`,
@@ -1048,13 +1056,13 @@ module.exports = (dot) => ({
     },
     moons: {
       New: 'New moon',
-      WaxingCrescent: 'Waxing crescent',
+      'Waxing Crescent': 'Waxing crescent',
       First: 'First quarter',
-      WaxingGibbous: 'Waxing gibbous',
+      'Waxing Gibbous': 'Waxing gibbous',
       Full: 'Full moon',
-      WaningGibbous: 'Waning gibbous',
+      'Waning Gibbous': 'Waning gibbous',
       Last: 'Last quarter',
-      WaningCrescent: 'Waning crescent',
+      'Waning Crescent': 'Waning crescent',
     },
   },
 });

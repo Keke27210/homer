@@ -1029,7 +1029,15 @@ module.exports = (dot) => ({
       temperatures: ({ max, min }) => `de **${min[0]}**°C (**${min[1]}**°F) jusqu'à **${max[0]}**°C (**${max[1]}**°F)`,
       feel: ([c, f]) => `**${c}**°C (**${f}**°F)`,
       wind: ({ direction, speed }, gust) => `**${direction}** - **${speed[0]}**km/h (**${speed[1]}**mph) - Rafales de **${gust[0]}**km/h (**${gust[1]}**mph)`,
-      uv: ({ index, text }) => `**${index}** (**${text}**)`,
+      uv: (index) => {
+        let text;
+        if (index <= 2) text = 'Faible';
+        else if (index >= 3 && index <= 5) text = 'Modéré';
+        else if (index >= 6 && index <= 7) text = 'Élevé';
+        else if (index >= 8 && index <= 10) text = 'Très élevé';
+        else text = 'Extrême';
+        return `**${index}** (**${text}**)`;
+      },
       humidity: (hr) => `**${hr}**%`,
       pressure: (pr) => `**${pr}**hPa`,
       nebulosity: (cover) => `**${cover}**%`,
@@ -1037,13 +1045,13 @@ module.exports = (dot) => ({
     },
     moons: {
       New: 'Nouvelle lune',
-      WaxingCrescent: 'Premier croissant',
+      'Waxing Crescent': 'Premier croissant',
       First: 'Premier quartier',
-      WaxingGibbous: 'Gibbeuse croissante',
+      'Waxing Gibbous': 'Gibbeuse croissante',
       Full: 'Pleine lune',
-      WaningGibbous: 'Gibbeuse décroissante',
+      'Waning Gibbous': 'Gibbeuse décroissante',
       Last: 'Dernier quartier',
-      WaningCrescent: 'Dernier croissant',
+      'Waning Crescent': 'Dernier croissant',
     },
   },
 });

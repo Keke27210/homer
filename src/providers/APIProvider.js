@@ -1,4 +1,6 @@
 const fetch = require('node-fetch');
+const parser = require('fast-xml-parser');
+const moment = require('moment-timezone');
 
 /**
  * Converts a temperature in farhenheit into celsius
@@ -29,6 +31,16 @@ const TABLE_COLUMNS = [
 class APIProvider extends Provider {
   constructor(client) {
     super(client, 'api', TABLE_COLUMNS);
+
+    /**
+     * Options for the XML parser
+     * @type {object}
+     */
+    this.parserOptions = {
+      attributeNamePrefix: '',
+      textNodeName: 'text',
+      ignoreAttributes: false,
+    };
   }
 
   /**
@@ -53,27 +65,28 @@ class APIProvider extends Provider {
    */
   async getLocations(search, locale) {
     const locations = [];
-    const api = await this.fetchKey('weather');
-    if (!api) return locations;
 
-    const res = await fetch(`http://dataservice.accuweather.com/locations/v1/cities/search?apikey=${api.key}&q=${encodeURIComponent(search)}&language=${locale}&details=false&limit=5`)
-      .then((r) => r.json())
+    const res = await fetch(`http://samsungmobile.accu-weather.com/widget/samsungmobile/city-find.asp?location=${encodeURIComponent(search)}&language=${locale}`)
+      .then((r) => r.text())
+      .then((data) => parser.parse(data.adc_database.citylist.location, this.parserOptions))
       .catch((error) => {
         this.client.logger.error(`[apis->getLocation] Cannot get locations for "${search}" (locale: ${locale})`, error);
         throw new Error('FETCH_ERROR');
       });
 
-    if (!res || res.Code) return null;
+    if (!res) return null;
 
     for (let i = 0; i < res.length; i += 1) {
       const data = res[i];
-      if (data.Type !== 'City') continue;
+      const stateInfo = data.state
+        .split('(')
+        .map((item) => item.substring(0, item.length - 1));
 
       locations.push({
-        key: data.Key,
-        city: data.LocalizedName,
-        state: data.AdministrativeArea.LocalizedName,
-        country: data.Country.LocalizedName,
+        key: data.location,
+        city: data.city,
+        state: stateInfo.length > 1 ? stateInfo[1] : stateInfo[0],
+        country: stateInfo.length > 1 ? stateInfo[0] : 'United States',
       });
     }
 
@@ -87,36 +100,31 @@ class APIProvider extends Provider {
    * @returns {Promise<WeatherCurrent>}
    */
   async getCurrentWeather(city, locale) {
-    const api = await this.fetchKey('weather');
-    if (!api) return null;
-
-    const res = await fetch(`http://dataservice.accuweather.com/currentconditions/v1/${city}?apikey=${api.key}&language=${locale}&details=true`)
-      .then((r) => r.json())
+    const res = await fetch(`http://accuwxandroidv3.accu-weather.com/widget/accuwxandroidv3/weather-data.asp?location=${city}&language=${locale}`)
+      .then((r) => r.text())
+      .then((data) => parser.parse(data.adc_database, this.parserOptions))
       .catch((error) => {
         this.client.logger.error(`[apis->getCurrentWeather] Cannot get current conditions for city ${city} (locale: ${locale})`, error);
         throw new Error('FETCH_ERROR');
       });
 
-    if (!res || res.Code) return null;
+    if (!res) return null;
 
-    const data = res[0];
+    const data = res.currentconditions;
     const current = {
-      condition: data.WeatherText,
-      icon: data.WeatherIcon < 10 ? `0${data.WeatherIcon}` : String(data.WeatherIcon),
-      temperature: [data.Temperature.Metric.Value, data.Temperature.Imperial.Value],
-      feel: [data.RealFeelTemperature.Metric.Value, data.RealFeelTemperature.Imperial.Value],
+      condition: data.weathertext,
+      icon: data.weathericon < 10 ? `0${data.weathericon}` : String(data.weathericon),
+      temperature: [toCelcius(data.temperature), data.temperature],
+      feel: [toCelcius(data.realfeel), data.realfeel],
       wind: {
-        direction: data.Wind.Direction.Localized,
-        speed: [data.Wind.Speed.Metric.Value, data.Wind.Speed.Imperial.Value],
+        direction: data.winddirection,
+        speed: [toKph(data.windspeed), data.windspeed],
       },
-      gust: [data.WindGust.Speed.Metric.Value, data.WindGust.Speed.Imperial.Value],
-      uv: {
-        index: data.UVIndex,
-        text: data.UVIndexText,
-      },
-      pressure: data.Pressure.Metric.Value,
-      humidity: data.RelativeHumidity,
-      nebulosity: data.CloudCover,
+      gust: [toKph(data.windgusts), data.windgusts],
+      uvindex: data.uvindex.index,
+      pressure: data.pressure.text,
+      humidity: data.humidity,
+      nebulosity: data.cloudcover,
     };
 
     return current;
@@ -132,39 +140,42 @@ class APIProvider extends Provider {
     const api = await this.fetchKey('weather');
     if (!api) return null;
 
-    const res = await fetch(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${city}?apikey=${api.key}&language=${locale}&details=true`)
-      .then((r) => r.json())
+    const res = await fetch(`http://accuwxandroidv3.accu-weather.com/widget/accuwxandroidv3/weather-data.asp?location=${city}&language=${locale}`)
+      .then((r) => r.text())
+      .then((data) => parser.parse(data, this.parserOptions))
       .catch((error) => {
         this.client.logger.error(`[apis->getForecast] Cannot get current forecast for city ${city} (locale: ${locale})`, error);
         throw new Error('FETCH_ERROR');
       });
 
-    if (!res || res.Code) return null;
+    if (!res) return null;
 
     const forecast = [];
 
-    for (let i = 0; i < res.DailyForecasts.length; i += 1) {
-      const data = res.DailyForecasts[i];
+    for (let i = 0; i < res.forecast.length; i += 1) {
+      const {
+        obsdate,
+        sunrise,
+        sunset,
+        daytime,
+      } = res.forecast[i];
       forecast.push({
-        date: data.EpochDate * 1000,
-        condition: data.Day.ShortPhrase,
-        icon: data.Day.Icon < 10 ? `0${data.Day.Icon}` : String(data.Day.Icon),
+        date: moment(obsdate).unix(),
+        condition: daytime.txtshort,
+        icon: daytime.weathericon < 10 ? `0${daytime.weathericon}` : String(daytime.weathericon),
         temperatures: {
-          max: [toCelcius(data.Temperature.Maximum.Value), data.Temperature.Maximum.Value],
-          min: [toCelcius(data.Temperature.Minimum.Value), data.Temperature.Minimum.Value],
+          max: [toCelcius(daytime.hightemperature), daytime.hightemperature],
+          min: [toCelcius(daytime.lowtemperature), daytime.lowtemperature],
         },
         wind: {
-          direction: data.Day.Wind.Direction.Localized,
-          speed: [toKph(data.Day.Wind.Speed.Value), data.Day.Wind.Speed.Value],
+          direction: daytime.winddirection,
+          speed: [toKph(daytime.windspeed), daytime.windspeed],
         },
-        gust: [toKph(data.Day.WindGust.Speed.Value), data.Day.WindGust.Speed.Value],
-        uv: {
-          index: data.AirAndPollen.find((d) => d.Name === 'UVIndex').CategoryValue,
-          text: data.AirAndPollen.find((d) => d.Name === 'UVIndex').Category,
-        },
-        nebulosity: data.Day.CloudCover,
-        sun: [(data.Sun.EpochRise * 1000), (data.Sun.EpochSet * 1000)],
-        moon: data.Moon.Phase,
+        gust: [toKph(daytime.windgust), daytime.windgust],
+        uvindex: daytime.maxuv,
+        nebulosity: daytime.cloudCover,
+        sun: [moment(`${obsdate} ${sunrise}`).unix(), moment(`${obsdate} ${sunset}`).unix()],
+        moon: res.moon.phase.find((p) => p.date === obsdate).text,
       });
     }
 
