@@ -142,7 +142,7 @@ class APIProvider extends Provider {
 
     const res = await fetch(`http://accuwxandroidv3.accu-weather.com/widget/accuwxandroidv3/weather-data.asp?location=${city}&language=${locale}`)
       .then((r) => r.text())
-      .then((data) => parser.parse(data, this.parserOptions))
+      .then((data) => parser.parse(data, this.parserOptions).adc_database)
       .catch((error) => {
         this.client.logger.error(`[apis->getForecast] Cannot get current forecast for city ${city} (locale: ${locale})`, error);
         throw new Error('FETCH_ERROR');
