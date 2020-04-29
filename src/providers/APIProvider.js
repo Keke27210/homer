@@ -152,13 +152,13 @@ class APIProvider extends Provider {
 
     const forecast = [];
 
-    for (let i = 0; i < res.forecast.length; i += 1) {
+    for (let i = 0; i < res.forecast.day.length; i += 1) {
       const {
         obsdate,
         sunrise,
         sunset,
         daytime,
-      } = res.forecast[i];
+      } = res.forecast.day[i];
       forecast.push({
         date: moment(obsdate).unix(),
         condition: daytime.txtshort,
