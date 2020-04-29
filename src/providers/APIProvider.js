@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
 const parser = require('fast-xml-parser');
-const moment = require('moment-timezone');
 
 /**
  * Converts a temperature in farhenheit into celsius
