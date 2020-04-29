@@ -160,7 +160,7 @@ class APIProvider extends Provider {
         daytime,
       } = res.forecast.day[i];
       forecast.push({
-        date: moment(obsdate).unix(),
+        date: moment(`${obsdate} 00:00 AM`).unix() * 1000,
         condition: daytime.txtshort,
         icon: daytime.weathericon < 10 ? `0${daytime.weathericon}` : String(daytime.weathericon),
         temperatures: {
