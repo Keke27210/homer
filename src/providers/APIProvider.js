@@ -161,7 +161,7 @@ class APIProvider extends Provider {
         daytime,
       } = res.forecast.day[i];
       forecast.push({
-        date: moment(`${obsdate} ${sunrise}`).unix() * 1000,
+        date: new Date(`${obsdate} ${sunrise}`).getTime(),
         condition: daytime.txtshort,
         icon: daytime.weathericon < 10 ? `0${daytime.weathericon}` : String(daytime.weathericon),
         temperatures: {
@@ -175,7 +175,7 @@ class APIProvider extends Provider {
         gust: [toKph(daytime.windgust), daytime.windgust],
         uvindex: daytime.maxuv,
         nebulosity: daytime.cloudCover,
-        sun: [moment(`${obsdate} ${sunrise}`).unix() * 1000, moment(`${obsdate} ${sunset}`).unix() * 1000],
+        sun: [new Date(`${obsdate} ${sunrise}`).getTime(), new Date(`${obsdate} ${sunset}`).getTime()],
         moon: res.moon.phase.find((p) => p.date === obsdate).text,
       });
     }
