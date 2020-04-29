@@ -37,6 +37,7 @@ class APIProvider extends Provider {
      * @type {object}
      */
     this.parserOptions = {
+      arrayMode: 'strict',
       attributeNamePrefix: '',
       textNodeName: 'text',
       ignoreAttributes: false,
