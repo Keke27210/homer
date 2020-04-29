@@ -65,4 +65,4 @@ sharder.on('shardCreate', (shard) => {
 
 sharder.spawn()
   .then(() => sharder.logger.log('[sharder] Spawned shards successfully'))
-  .catch(sharder.logger.error);
+  .catch((error) => sharder.logger.error('AN ERROR OCCURED DURING SHARD SPAWNING', error));
