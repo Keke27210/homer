@@ -80,7 +80,7 @@ class APIProvider extends Provider {
       const data = res[i];
       const stateInfo = data.state
         .split('(')
-        .map((item) => item.substring(0, item.length - 1));
+        .map((item) => item.trim().replace(')', ''));
 
       locations.push({
         key: data.location,
