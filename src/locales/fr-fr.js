@@ -1006,6 +1006,7 @@ module.exports = (dot) => ({
     missing: 'Vous devez fournir une ville à rechercher.',
     none: (search) => `Aucune ville trouvée correspondant à \`${search}\`.`,
     multiple: (search) => `Plusieurs villes trouvées correspondant à \`${search}\`:`,
+    noSelected: 'Vous n\'avez pas choisi de ville.',
     error: 'Une erreur est survenue lors de la récupération des données météo.',
     title: (city, state, country) => `🌥️ Météo pour **${city}** (${state}, ${country}):`,
     footer: 'Les informations sont fournies par Accuweather.',

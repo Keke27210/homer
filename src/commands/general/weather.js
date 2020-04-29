@@ -33,6 +33,12 @@ class WeatherCommand extends Command {
       Last: '🌗',
       'Waning Crescent': '🌘',
     };
+
+    /**
+     * Emotes for location select
+     * @type {string[]}
+     */
+    this.emotes = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣'];
   }
 
   async main(message, args) {
@@ -58,7 +64,8 @@ class WeatherCommand extends Command {
 
     if (locations.length > 1) {
       const found = [];
-      for (let i = 0; i < (locations.length > 5 ? 5 : locations.length); i += 1) {
+      const count = Math.min(locations.length, 5);
+      for (let i = 0; i < count; i += 1) {
         const location = locations[i];
         found.push(`${message.dot} **${location.city}** (${location.state}, ${location.country})`);
       }
@@ -66,7 +73,22 @@ class WeatherCommand extends Command {
         found.push(`${message.emote('placeholder')} ${message._('global.more', locations.length - 10)}`);
       }
       m.editWarn(`${message._('weather.multiple', search)}\n${found.join('\n')}`);
-      return 0;
+
+      (async function react() {
+        for (let i = 0; i < count; i += 1) {
+          try { await m.react(this.emotes[i]); } catch (e) { break; }
+        }
+      }());
+
+      const reaction = await m.awaitReactions(
+        (reac, user) => this.emotes.includes(reac.emoji.name) && user.id === message.author.id,
+        { max: 1, time: (10 * 1000) },
+      )
+        .then((list) => list.first())
+        .catch(() => null);
+      const loc = reaction ? locations[this.emotes.indexOf(reaction.emoji.name)] : null;
+      if (!loc) return m.editWarn(message._('weather.noSelected'));
+      locations[0] = loc;
     }
 
     const {
