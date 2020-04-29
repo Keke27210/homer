@@ -74,11 +74,11 @@ class WeatherCommand extends Command {
       }
       m.editWarn(`${message._('weather.multiple', search)}\n${found.join('\n')}`);
 
-      (async function react() {
+      (async () => {
         for (let i = 0; i < count; i += 1) {
           try { await m.react(this.emotes[i]); } catch (e) { break; }
         }
-      }());
+      })();
 
       const reaction = await m.awaitReactions(
         (reac, user) => this.emotes.includes(reac.emoji.name) && user.id === message.author.id,
