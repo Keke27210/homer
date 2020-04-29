@@ -37,7 +37,6 @@ class APIProvider extends Provider {
      * @type {object}
      */
     this.parserOptions = {
-      arrayMode: 'strict',
       attributeNamePrefix: '',
       textNodeName: 'text',
       ignoreAttributes: false,
@@ -67,7 +66,7 @@ class APIProvider extends Provider {
   async getLocations(search, locale) {
     const locations = [];
 
-    const res = await fetch(`http://samsungmobile.accu-weather.com/widget/samsungmobile/city-find.asp?location=${encodeURIComponent(search)}&language=${locale}`)
+    let res = await fetch(`http://samsungmobile.accu-weather.com/widget/samsungmobile/city-find.asp?location=${encodeURIComponent(search)}&language=${locale}`)
       .then((r) => r.text())
       .then((data) => parser.parse(data, this.parserOptions).adc_database.citylist.location)
       .catch((error) => {
@@ -76,6 +75,7 @@ class APIProvider extends Provider {
       });
 
     if (!res) return null;
+    if (!Array.isArray(res)) res = [res];
 
     for (let i = 0; i < res.length; i += 1) {
       const data = res[i];
