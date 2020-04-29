@@ -68,7 +68,7 @@ class APIProvider extends Provider {
 
     const res = await fetch(`http://samsungmobile.accu-weather.com/widget/samsungmobile/city-find.asp?location=${encodeURIComponent(search)}&language=${locale}`)
       .then((r) => r.text())
-      .then((data) => parser.parse(data.adc_database.citylist.location, this.parserOptions))
+      .then((data) => parser.parse(data, this.parserOptions).adc_database.citylist.location)
       .catch((error) => {
         this.client.logger.error(`[apis->getLocation] Cannot get locations for "${search}" (locale: ${locale})`, error);
         throw new Error('FETCH_ERROR');
