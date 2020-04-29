@@ -82,7 +82,7 @@ class WeatherCommand extends Command {
 
       const reaction = await m.awaitReactions(
         (reac, user) => this.emotes.includes(reac.emoji.name) && user.id === message.author.id,
-        { max: 1, time: (10 * 1000) },
+        { max: 1, time: (15 * 1000) },
       )
         .then((list) => list.first())
         .catch(() => null);
