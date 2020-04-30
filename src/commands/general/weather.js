@@ -53,11 +53,6 @@ class WeatherCommand extends Command {
     // 0- Fetch locations
     const locations = await this.client.apis.getLocations(search, message.locale);
     if (!locations) {
-      m.editError(message._('weather.error'));
-      return 0;
-    }
-
-    if (!locations.length) {
       m.editWarn(message._('weather.none', search));
       return 0;
     }
