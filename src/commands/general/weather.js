@@ -111,7 +111,7 @@ class WeatherCommand extends Command {
     pages.push({
       title: message._('weather.now'),
       thumbnail: icon(current.icon),
-      url: `https://www.accuweather.com/fr/fr/${city.toLowerCase()}/${key.split(':')[1]}/weather-forecast/${key.split(':')[1]}`,
+      url: `https://www.accuweather.com/fr/fr/${encodeURIComponent(city.toLowerCase())}/${key.split(':')[1]}/weather-forecast/${key.split(':')[1]}`,
     });
 
     entries.push([
@@ -138,7 +138,7 @@ class WeatherCommand extends Command {
       pages.push({
         title: i ? moment(day.date).locale(message.locale).format(message._('weather.format.day')) : message._('weather.today'),
         thumbnail: icon(day.icon),
-        url: `https://www.accuweather.com/fr/fr/${city.toLowerCase()}/${key.split(':')[1]}/daily-weather-forecast/${key.split(':')[1]}?day=${i + 1}`,
+        url: `https://www.accuweather.com/fr/fr/${encodeURIComponent(city.toLowerCase())}/${key.split(':')[1]}/daily-weather-forecast/${key.split(':')[1]}?day=${i + 1}`,
       });
 
       entries.push([
