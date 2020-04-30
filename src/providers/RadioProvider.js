@@ -76,6 +76,8 @@ class RadioProvider extends Provider {
     this.client.on('voiceStateUpdate', this.voiceStateUpdate.bind(this));
     this.client.on('messageReactionAdd', this.messageReactionAdd.bind(this));
     this.client.on('messageDelete', this.messageDelete.bind(this));
+    this.client.on('guildDelete', this.guildDelete.bind(this));
+    this.client.on('channelDelete', this.channelDelete.bind(this));
     this.client.setInterval(this.interval.bind(this), this.updateInterval);
   }
 
@@ -194,6 +196,26 @@ class RadioProvider extends Provider {
    */
   messageDelete(message) {
     const radio = this.radios.find((r) => r.message && r.message.id === message.id);
+    if (radio) radio.destroyRadio();
+  }
+
+  /**
+   * Handles channel deletions to remove radio from the list if was deleted
+   * @param {string} guild Channel ID
+   * @returns {void}
+   */
+  channelDelete(channel) {
+    const radio = this.radios.find((r) => r.authorMessage.channel.id === channel.id);
+    if (radio) radio.destroyRadio();
+  }
+
+  /**
+   * Handles guild deletions to remove radio from the list if was deleted
+   * @param {string} guild Guild ID
+   * @returns {void}
+   */
+  guildDelete(guild) {
+    const radio = this.radios.find((r) => r.guildID === guild.id);
     if (radio) radio.destroyRadio();
   }
 

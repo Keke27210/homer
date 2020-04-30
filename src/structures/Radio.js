@@ -29,6 +29,12 @@ class Radio {
     this.message = null;
 
     /**
+     * ID of the guild this radio is running on
+     * @type {string}
+     */
+    this.guildID = this.authorMessage.guild.id;
+
+    /**
      * The voice channel this radio is linked to
      * @type {VoiceChannel}
      */
@@ -317,8 +323,8 @@ class Radio {
    * @returns {Promise<void>}
    */
   async destroyRadio() {
-    if (this.authorMessage.deletable) this.authorMessage.delete();
-    if (this.message && this.message.deletable) this.message.delete();
+    if (this.authorMessage.deletable) this.authorMessage.delete().catch(() => null);
+    if (this.message && this.message.deletable) this.message.delete().catch(() => null);
     await this.client.lavacordManager.leave(this.authorMessage.guild.id);
 
     const index = this.client.radios.radios.findIndex(
