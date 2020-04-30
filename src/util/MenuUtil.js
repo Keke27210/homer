@@ -209,12 +209,25 @@ class MenuUtil extends Util {
    * @returns {MessageEmbed} Embed
    */
   generateEmbed(instance) {
-    const { pages, current, locale } = instance;
+    const {
+      pages,
+      current,
+      locale,
+      options,
+    } = instance;
+    if (!options.footer) {
+      options.footer = this._(locale, 'menu.page', `${current + 1}/${instance.entries.length}`);
+    }
 
     const embed = new MessageEmbed()
       .setTitle(this._(locale, 'menu.page', current + 1))
-      .setDescription(instance.entries[current])
-      .setFooter(instance.options.footer || this._(locale, 'menu.page', `${current + 1}/${instance.entries.length}`));
+      .setDescription(instance.entries[current]);
+
+    if (Array.isArray(options.footer)) {
+      embed.setFooter(options.footer[0], options.footer[1]);
+    } else {
+      embed.setFooter(options.footer);
+    }
 
     if (pages[current]) {
       if (pages[current].title) embed.setTitle(pages[current].title);
