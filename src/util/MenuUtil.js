@@ -218,7 +218,11 @@ class MenuUtil extends Util {
 
     if (pages[current]) {
       if (pages[current].title) embed.setTitle(pages[current].title);
-      if (pages[current].footer) embed.setFooter(pages[current].footer);
+      if (pages[current].footer) {
+        if (Array.isArray(pages[current].footer)) {
+          embed.setFooter(pages[current].footer[0], pages[current].footer[1]);
+        } else embed.setFooter(pages[current].footer);
+      }
       if (pages[current].image) embed.setImage(pages[current].image);
       if (pages[current].thumbnail) embed.setThumbnail(pages[current].thumbnail);
       if (pages[current].color) embed.setColor(pages[current].color);
