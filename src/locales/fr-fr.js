@@ -1003,6 +1003,7 @@ module.exports = (dot) => ({
 
   // Weather command
   weather: {
+    locale: 'fr',
     missing: 'Vous devez fournir une ville à rechercher.',
     none: (search) => `Aucune ville trouvée correspondant à \`${search}\`.`,
     multiple: (search) => `Plusieurs villes trouvées correspondant à \`${search}\`:`,
@@ -1024,8 +1025,8 @@ module.exports = (dot) => ({
     sunset: 'Coucher de Soleil',
     moon: 'Lune',
     format: {
-      day: 'dddd MMMM Do',
-      time: 'HH:mmA',
+      day: 'dddd Do MMMM',
+      time: 'HH:mm',
       temperature: ([c, f]) => `**${c}**°C (**${f}**°F)`,
       temperatures: ({ max, min }) => `de **${min[0]}**°C (**${min[1]}**°F) jusqu'à **${max[0]}**°C (**${max[1]}**°F)`,
       feel: ([c, f]) => `**${c}**°C (**${f}**°F)`,

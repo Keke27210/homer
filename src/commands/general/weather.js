@@ -97,7 +97,7 @@ class WeatherCommand extends Command {
     const entries = [];
 
     // 1- Fetch current weather
-    const current = await this.client.apis.getCurrentWeather(key, message.locale);
+    const current = await this.client.apis.getCurrentWeather(key, message._('weather.locale'));
     if (!current) {
       message.editError(message._('weather.error'));
       return 0;
@@ -121,7 +121,7 @@ class WeatherCommand extends Command {
     ].join('\n'));
 
     // 2- Fetch forecast
-    const forecast = await this.client.apis.getForecast(key, message.locale);
+    const forecast = await this.client.apis.getForecast(key, message._('weather.locale'));
     if (!forecast) {
       message.editError(message._('weather.error'));
       return 0;

@@ -1014,6 +1014,7 @@ module.exports = (dot) => ({
 
   // Weather command
   weather: {
+    locale: 'en',
     missing: 'You must provide a city to look for.',
     none: (search) => `No cities have been found matching \`${search}\`.`,
     multiple: (search) => `Several cities have been found matching \`${search}\`:`,
@@ -1036,7 +1037,7 @@ module.exports = (dot) => ({
     moon: 'Moon',
     format: {
       day: 'dddd MMMM Do',
-      time: 'HH:mmA',
+      time: 'hh:mmA',
       temperature: ([c, f]) => `**${c}**°C (**${f}**°F)`,
       temperatures: ({ max, min }) => `from **${min[0]}**°C (**${min[1]}**°F) to **${max[0]}**°C (**${max[1]}**°F)`,
       feel: ([c, f]) => `**${c}**°C (**${f}**°F)`,
