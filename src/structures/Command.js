@@ -85,6 +85,13 @@ class Command {
       }
     }
 
+    if (!this.client.constants.owners.includes(message.author.id)) {
+      this.client.logUtil.log(
+        'commandLog',
+        `⌨️ ${message.author.tag} (${message.author.id}) has ran command \`${parent.join(' ')}\`${message.guild ? ` on guild **${message.guild.name}** (${message.guild.id})` : ' in **Direct Messages**'}.`,
+      );
+    }
+
     if (this.private && !this.client.constants.owners.includes(message.author.id)) return;
 
     if (!message.guild && !this.dm) {
