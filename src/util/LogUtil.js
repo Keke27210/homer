@@ -59,7 +59,7 @@ class LogUtil extends Util {
   onGuildDelete(guild) {
     this.log(
       'guildLog',
-      `📤 Left guild **${guild.name}** (${guild.id}) \`S${guild.shard.id}\` - **${guild.memberCount}** members - Joined on **${moment(guild.me.joinedTimestamp).format('DD/MM/YYYY HH:mm:ss')}**`,
+      `📤 Left guild **${guild.name}** (${guild.id}) \`S${guild.shard.id}\` - **${guild.memberCount}** members${guild.me ? ` - Joined on **${moment(guild.me.joinedTimestamp).format('DD/MM/YYYY HH:mm:ss')}**` : ''}`,
     );
   }
 }
