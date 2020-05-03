@@ -49,7 +49,7 @@ class ChannelSubCommand extends Command {
 
     const ret = await this.client.settings.setRadio(message.settings.id, channel.id)
       .then(() => {
-        message.success(message._('radio.channel.set', channel.name));
+        message.reply(message._('radio.channel.set', channel.name));
         return 0;
       })
       .catch(() => {

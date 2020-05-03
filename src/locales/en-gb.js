@@ -666,7 +666,10 @@ module.exports = (dot) => ({
     channel: {
       none: 'Run this command while being on a voice channel or specify a voice channel name.',
       unknown: 'No radio channel set. Use `h:radio <channel>` to set one.',
-      set: (name) => `Radio channel is set to **${name}**.`,
+      set: (name) => [
+        `📻 Radio channel is set to **${name}**.`
+        `${dot} Allumez la radio avec \`h:radio [fréquence]\`.`,
+      ].join('\n'),
       error: 'An error occured while setting radio channel.',
     },
     tutorial: {

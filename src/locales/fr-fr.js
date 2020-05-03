@@ -655,7 +655,10 @@ module.exports = (dot) => ({
     channel: {
       none: 'Exécutez cette commande en spécifiant le nom d\'un salon vocal ou en étant dans un salon.',
       unknown: 'Aucun salon de radio. Utilisez `h:radio <salon>` pour le définir.',
-      set: (name) => `La radio sera désormais jouée dans **${name}**.`,
+      set: (name) => [
+        `📻 La radio sera désormais jouée dans **${name}**.`
+        `${dot} Allumez la radio avec \`h:radio [fréquence]\`.`,
+      ].join('\n'),
       error: 'Une erreur est survenue lors du réglage du salon.',
     },
     tutorial: {
