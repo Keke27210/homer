@@ -146,11 +146,6 @@ module.exports = (dot) => ({
       usage: null,
       example: null,
     },
-    leave: {
-      description: 'Leaves voice channel Homer is on',
-      usage: null,
-      example: null,
-    },
     lookup: {
       description: 'Displays information on a Discord entity (user/guild/invite/gift)',
       usage: '<id/invite/gift code>',
@@ -160,11 +155,6 @@ module.exports = (dot) => ({
       description: 'Shows someone\'s previous names',
       usage: '[user]',
       example: '@You',
-    },
-    now: {
-      description: 'Displays information about playing radio',
-      usage: null,
-      example: null,
     },
     ping: {
       description: 'Pong!',
@@ -342,20 +332,10 @@ module.exports = (dot) => ({
         example: null,
       },
     },
-    tune: {
-      description: 'Tunes into a station',
-      usage: '<frequency>',
-      example: '98.8',
-    },
     user: {
       description: 'Displays information about a user',
       usage: '[user]',
       example: '@Homer',
-    },
-    volume: {
-      description: 'Sets radio volume (in percentage)',
-      usage: '<volume>',
-      example: '75',
     },
     weather: {
       description: 'Gets weather for the provided city',
@@ -547,13 +527,6 @@ module.exports = (dot) => ({
     revision: 'Dernière révision',
   },
 
-  // Leave command
-  leave: {
-    none: 'Il n\'y a aucune connexion active.',
-    success: (name) => `**${name}** quitté avec succès.`,
-    error: 'Une erreur est survenue.',
-  },
-
   // Lookup command
   lookup: {
     noSearch: 'Vous devez fournir quelque chose à rechercher.',
@@ -618,16 +591,6 @@ module.exports = (dot) => ({
     until: 'jusqu\'au',
     none: (name) => `Aucun ancien nom trouvé pour ${name}.`,
     footer: 'La fiabilité des données ne peut être garantie.',
-  },
-
-  // Now command
-  now: {
-    title: '📻 Informations sur la radio en cours de diffusion:',
-    playing: 'Diffuse',
-    noInformation: 'Aucune info',
-    begun: 'Débuté',
-    noSession: 'Vous devez écouter une radio.',
-    footer: 'Ce message se rafrîchira toutes les 3 secondes pendant 3 minutes.',
   },
 
   // Phonebook command
@@ -956,17 +919,6 @@ module.exports = (dot) => ({
     },
   },
 
-  // Tune command
-  tune: {
-    error: 'Une erreur est survenue lors de la diffusion.',
-    none: (channel) => `Vous devez être dans le salon radio (**${channel}**).`,
-    missing: 'Vous devez fournir une fréquence à écouter.',
-    invalid: 'La fréquence que vous avez fournie est invalide.',
-    unknown: (freq) => `Aucune radio trouvée sur la fréquence \`${freq}Mhz\`.\n${dot} Retrouvez les radios disponibles sur \`h:radios\`.`,
-    tuning: (freq) => `Recherche du signal sur \`${freq}Mhz\`...`,
-    playing: (radio) => `📻 Vous écoutez **${radio}**`,
-  },
-
   // User command
   user: {
     title: (emote, name) => `${emote} Informations sur ${name}:`,
@@ -990,15 +942,6 @@ module.exports = (dot) => ({
       dnd: 'Ne pas déranger',
       offline: 'Hors-ligne',
     },
-  },
-
-  // Volume command
-  volume: {
-    missing: 'Vous devez définir le nouveau volume.',
-    number: 'Le volume doit être un nombre.',
-    range: 'Le volume doit être compris entre 0 et 100.',
-    set: (volume) => `Le volume est maintenant de \`${volume}%\`.`,
-    error: 'Une erreur est survenue lors du réglage du volume.',
   },
 
   // Weather command
