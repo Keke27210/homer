@@ -17,14 +17,25 @@ class LavacordManager extends Manager {
      */
     this.client = client;
 
+    /**
+     * Whether the manager is ready to work
+     * @type {boolean}
+     */
+    this.ready = false;
+
     // Set user and shard count once client is ready
     this.client.once('ready', async () => {
       this.user = this.client.user.id;
       this.shardCount = this.client.shard.count;
-      this.connect()
-        .then(() => this.client.logger.log(`[lavacord] Connected successfully to ${this.idealNodes[0].host}:${this.idealNodes[0].port}`))
-        .catch((error) => this.client.logger.error('[lavacord] Error while connecting to Lavalink', error));
-      this.client.setInterval(this.clearPlayers.bind(this), (60 * 1000));
+      if (nodes.length) {
+        this.connect()
+          .then(() => this.client.logger.log(`[lavacord] Connected successfully to ${this.idealNodes[0].host}:${this.idealNodes[0].port}`))
+          .catch((error) => this.client.logger.error('[lavacord] Error while connecting to Lavalink', error));
+        this.client.setInterval(this.clearPlayers.bind(this), (60 * 1000));
+        this.ready = true;
+      } else {
+        this.client.logger.warn('[lavacord] No nodes were provided, disabled Lavacord and radio');
+      }
     });
 
     // Handle voice updates

@@ -654,6 +654,7 @@ module.exports = (dot) => ({
 
   // Radio command
   radio: {
+    lavacordDisabled: 'Radio feature is disabled due to a lack of audio manager.',
     restart: '📻 This shard will perform a restart, please tune again once Homer\'s turns back online.',
     deprecate: 'Homer\'s radio is now button-based! Run `h:radio [frequency]` to turn it on.',
     header: '📻 Homer radio interface',

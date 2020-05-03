@@ -73,6 +73,8 @@ class RadioCommand extends Command {
   }
 
   async main(message, [frequency]) {
+    if (!this.client.lavacordManager.ready) return message.error(message._('radio.lavacordDisabled'));
+
     frequency = Number(frequency) * 10;
     if (Number.isNaN(frequency)) frequency = 875;
     if (frequency > 1080) frequency = 1080;
