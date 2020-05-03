@@ -1,15 +1,14 @@
 {
   "token": "",
   "owners": [],
-  "clientOptions": {},
-  "databaseCredentials": {
-    "host": "",
-    "user": "",
-    "password": "",
-    "database": ""
+  "clientOptions": {
+    "presence": {
+      "activity": {}
+    }
   },
+  "databaseCredentials": {},
   "lavalinkCredentials": {
-    "nodes": [],
-    "options": {}
-  }
+    "nodes": []
+  },
+  "sharderOptions": {}
 }
