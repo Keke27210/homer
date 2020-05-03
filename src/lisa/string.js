@@ -26,8 +26,11 @@ module.exports = [
     (env, params) => {
       let input = params.join('|');
       if (Number.isNaN(parseInt(input, 10))) {
-        try { input = JSON.parse(input); }
-        catch { input = ''; }
+        try {
+          input = JSON.parse(input);
+        } catch {
+          input = '';
+        }
       }
       return input.length.toString();
     },
@@ -70,20 +73,10 @@ module.exports = [
     null,
     (env, params) => {
       const string = params.slice(2).join('|');
-      let start;
-      let end;
-
-      try {
-        start = parseInt(params[0]);
-      } catch (e) {
-        start = 0;
-      }
-
-      try {
-        end = parseInt(params[1]);
-      } catch (e) {
-        end = string.length;
-      }
+      let start = Number(params[0]);
+      let end = Number(params[1], 10);
+      if (Number.isNaN(start)) start = 0;
+      if (Number.isNaN(end)) end = string.length;
 
       if (start < 0) start += string.length;
       if (end < 0) end += string.length;
@@ -99,7 +92,7 @@ module.exports = [
   new Method(
     'oneline',
     null,
-    (env, params) => params.join('|').replace(/[\r\n\x0B\x0C\u0085\u2028\u2029]+/g, ' ').trim(),
+    (env, params) => params.join('|').replace(/[\r\n\u0085\u2028\u2029]+/g, ' ').trim(),
   ),
 
   // hash
@@ -117,7 +110,7 @@ module.exports = [
       if (!params[0] || !params[1]) return '';
 
       if (params[1] === 'binary') {
-        const output = params[0].replace(/[\s\S]/g, str => `${zeroPad(str.charCodeAt().toString(2))} `);
+        const output = params[0].replace(/[\s\S]/g, (str) => `${zeroPad(str.charCodeAt().toString(2))} `);
         return output.endsWith(' ') ? output.substring(0, (output.length - 1)) : output;
       }
 

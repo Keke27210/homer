@@ -80,7 +80,7 @@ class LocaleManager extends Manager {
     for (let i = 0; i < tree.length; i += 1) {
       try {
         fn = fn[tree[i]];
-      } catch {
+      } catch (e) {
         break;
       }
     }

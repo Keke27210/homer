@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 const { readdirSync } = require('fs');
 const { resolve } = require('path');
 
@@ -96,15 +97,18 @@ class LisaManager extends Manager {
           const method = this.methods.find((m) => m.name === name);
 
           if (method) {
-            try { result = await method.parseSimple(env); }
-            catch (e) { result = `<invalid ${name} statement>`; }
+            try {
+              result = await method.parseSimple(env);
+            } catch {
+              result = `<invalid ${name} statement>`;
+            }
           }
         } else {
           const name = content.substring(0, split).toLowerCase();
           const method = this.methods.find((m) => m.name === name);
-          const splitter = (method && method.split.length > 0) ?
-            new RegExp(method.split.map((s) => `\\${s}`).join('|')) :
-            '|';
+          const splitter = (method && method.split.length > 0)
+            ? new RegExp(method.split.map((s) => `\\${s}`).join('|'))
+            : '|';
 
           const params = content
             .substring(split + 1)
@@ -117,8 +121,11 @@ class LisaManager extends Manager {
               repeatUsed = true;
             }
 
-            try { result = await method.parseComplex(env, params); }
-            catch (e) { result = `<invalid ${name} statement>`; }
+            try {
+              result = await method.parseComplex(env, params);
+            } catch (e) {
+              result = `<invalid ${name} statement>`;
+            }
           }
         }
 
@@ -141,8 +148,11 @@ class LisaManager extends Manager {
             ? this.defilterAll(content.substring(split + 1))
             : undefined;
 
-          try { env.embed = JSON.parse(value); }
-          catch { env.embed = null; }
+          try {
+            env.embed = JSON.parse(value);
+          } catch {
+            env.embed = null;
+          }
           output = output.substring(0, embedStart) + output.substring(embedEnd + 7);
         }
       }
@@ -187,6 +197,7 @@ class LisaManager extends Manager {
 
 module.exports = LisaManager;
 
+// eslint-disable-next-line no-extend-native
 String.prototype.replaceAll = function replaceAll(search, replacement) {
   return this.split(search).join(replacement);
-}
+};

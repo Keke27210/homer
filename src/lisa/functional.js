@@ -1,5 +1,106 @@
 const Method = require('../structures/Method');
 
+function evaluateMath(statement) {
+  const [operand1, operator, operand2] = statement.split('|');
+
+  const res1 = evaluateMath(operand1);
+  const res2 = evaluateMath(operand2);
+  let res;
+
+  const n1 = parseFloat(operand1);
+  const n2 = parseFloat(operand2);
+
+  if (!Number.isNaN(n1) && !Number.isNaN(n2)) {
+    switch (operator) {
+      case '+':
+        res = n1 + n2;
+        break;
+      case '-':
+        res = n1 - n2;
+        break;
+      case '*':
+        res = n1 * n2;
+        break;
+      case '/':
+        res = n1 / n2;
+        break;
+      case '%':
+        res = n1 % n2;
+        break;
+      case '^':
+        res = n1 ** n2;
+        break;
+      default:
+        res = 0;
+    }
+  } else {
+    switch (operator) {
+      case '+':
+        res = `${res1}|+|${res2}`;
+        break;
+      case '-':
+        res = `${res1}|-|${res2}`;
+        break;
+      case '*':
+        res = `${res1}|*|${res2}`;
+        break;
+      case '/':
+        res = `${res1}|/|${res2}`;
+        break;
+      case '%':
+        res = `${res1}|%|${res2}`;
+        break;
+      case '^':
+        res = `${res1}|^|${res2}`;
+        break;
+      default:
+        res = 0;
+    }
+  }
+
+  return String(res);
+}
+
+function evaluateStatement(statement) {
+  const [operand1, operator, operand2] = statement.split('|');
+
+  const n1 = parseFloat(operand1);
+  const n2 = parseFloat(operand2);
+
+  if (!Number.isNaN(n1) && !Number.isNaN(n2)) {
+    switch (operator) {
+      case '=':
+        return (n1 === n2);
+      case '~':
+        return ((n1 * 100) === (n2 * 100));
+      case '>':
+        return (n1 > n2);
+      case '<':
+        return (n1 < n2);
+      default:
+        return false;
+    }
+  } else {
+    switch (operator) {
+      case '=':
+        return (operand1 === operand2);
+      case '~':
+        // eslint-disable-next-line eqeqeq
+        return (operand1.toLowerCase() == operand2.toLowerCase());
+      case '>':
+        return (operand1.compareTo(operand2) > 0);
+      case '<':
+        return (operand1.compareTo(operand2) < 0);
+      case '?':
+        try { return operand1.match(new RegExp(operand2, 'igm')); } catch (e) { return false; }
+      case '%':
+        return operand1.toLowerCase().includes(operand2.toLowerCase());
+      default:
+        return false;
+    }
+  }
+}
+
 module.exports = [
   // note
   new Method(
@@ -21,8 +122,8 @@ module.exports = [
     null,
     (_, params) => {
       try {
-        const i1 = parseInt(params[0]);
-        const i2 = parseInt(params[1]);
+        let i1 = Number(params[0]);
+        let i2 = Number(params[1]);
         if (i2 < i1) {
           const tmp = i2;
           i2 = i1;
@@ -60,7 +161,7 @@ module.exports = [
   // random
   new Method(
     'random',
-    (_) => Math.random().toString(),
+    () => Math.random().toString(),
     null,
   ),
 
@@ -176,104 +277,3 @@ module.exports = [
     null,
   ),
 ];
-
-function evaluateMath(statement) {
-  const [operand1, operator, operand2] = statement.split('|');
-
-  const res1 = evaluateMath(operand1);
-  const res2 = evaluateMath(operand2);
-  let res;
-
-  const n1 = parseFloat(operand1);
-  const n2 = parseFloat(operand2);
-
-  if (!Number.isNaN(n1) && !Number.isNaN(n2)) {
-    switch (operator) {
-      case '+':
-        res = n1 + n2;
-        break;
-      case '-':
-        res = n1 - n2;
-        break;
-      case '*':
-        res = n1 * n2;
-        break;
-      case '/':
-        res = n1 / n2;
-        break;
-      case '%':
-        res = n1 % n2;
-        break;
-      case '^':
-        res = n1 ** n2;
-        break;
-      default:
-        res = 0;
-    }
-  } else {
-    switch (operator) {
-      case '+':
-        res = `${res1}|+|${res2}`;
-        break;
-      case '-':
-        res = `${res1}|-|${res2}`;
-        break;
-      case '*':
-        res = `${res1}|*|${res2}`;
-        break;
-      case '/':
-        res = `${res1}|/|${res2}`;
-        break;
-      case '%':
-        res = `${res1}|%|${res2}`;
-        break;
-      case '^':
-        res = `${res1}|^|${res2}`;
-        break;
-      default:
-        res = 0;
-    }
-  }
-
-  return String(res);
-}
-
-function evaluateStatement(statement) {
-  const [operand1, operator, operand2] = statement.split('|');
-
-  const n1 = parseFloat(operand1);
-  const n2 = parseFloat(operand2);
-
-  if (!Number.isNaN(n1) && !Number.isNaN(n2)) {
-    switch (operator) {
-      case '=':
-        return (n1 === n2);
-      case '~':
-        return ((n1 * 100) === (n2 * 100));
-      case '>':
-        return (n1 > n2);
-      case '<':
-        return (n1 < n2);
-      default:
-        return false;
-    }
-  } else {
-    switch (operator) {
-      case '=':
-        return (operand1 === operand2);
-      case '~':
-        // eslint-disable-next-line eqeqeq
-        return (operand1.toLowerCase() == operand2.toLowerCase());
-      case '>':
-        return (operand1.compareTo(operand2) > 0);
-      case '<':
-        return (operand1.compareTo(operand2) < 0);
-      case '?':
-        try { return operand1.match(new RegExp(operand2, 'igm')); } catch (e) { return false; }
-      case '%':
-        return operand1.toLowerCase().includes(operand2.toLowerCase());
-      default:
-        return false;
-    }
-  }
-}

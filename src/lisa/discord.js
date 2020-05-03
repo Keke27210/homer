@@ -1,13 +1,13 @@
-const Method = require('../structures/Method');
-const moment = require('moment');
+const moment = require('moment-timezone');
 const { MessageEmbed } = require('discord.js');
 const { deconstruct } = require('../../node_modules/discord.js/src/util/Snowflake');
+const Method = require('../structures/Method');
 
 module.exports = [
   // user
   new Method(
     'user',
-    env => env.user.username,
+    (env) => env.user.username,
   ),
 
   // nick
@@ -85,7 +85,10 @@ module.exports = [
   // servericon
   new Method(
     'servericon',
-    (env) => (env.guild ? (env.guild.icon ? `https://discordapp.com/icons/${env.guild.id}/${env.guild.icon}.png` : 'NO_ICON') : null),
+    (env) => {
+      if (!env.guild) return null;
+      return (env.guild.icon ? `https://discordapp.com/icons/${env.guild.id}/${env.guild.icon}.png` : 'NO_ICON');
+    },
   ),
 
   // channel
@@ -109,7 +112,7 @@ module.exports = [
   // randonline
   new Method(
     'randonline',
-    (env) => (env.guild ? env.guild.members.filter(m => m.user.presence.status === 'online').random().user.username : null),
+    (env) => (env.guild ? env.guild.members.filter((m) => m.user.presence.status === 'online').random().user.username : null),
   ),
 
   // randchannel
@@ -121,10 +124,12 @@ module.exports = [
   // presencecount
   new Method(
     'presencecount',
-    (env) => (env.guild ? env.guild.members.filter(m => m.user.presence.status !== 'offline').size.toString() : ''),
+    (env) => (env.guild ? env.guild.members.filter((m) => m.user.presence.status !== 'offline').size.toString() : ''),
     (env, params) => {
-      if (!env.guild || !params[0]) return;
-      return env.guild.members.filter(m => m.user.presence.status === params[0].toLowerCase()).size.toString();
+      if (!env.guild || !params[0]) return null;
+      return env.guild.members
+        .filter((m) => m.user.presence.status === params[0].toLowerCase())
+        .size.toString();
     },
   ),
 
@@ -151,6 +156,7 @@ module.exports = [
       try {
         JSON.parse(json); // test JSON validity
         return `|||[|||${env.embedCode}:${json}|||]|||`;
+      // eslint-disable-next-line no-empty
       } catch {}
 
       const embed = new MessageEmbed();

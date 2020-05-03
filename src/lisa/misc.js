@@ -1,7 +1,8 @@
-const Method = require('../structures/Method');
+/* eslint-disable no-param-reassign */
 const fetch = require('node-fetch');
+const Method = require('../structures/Method');
 
-const domainExpression = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n\?\=]+)/im;
+const domainExpression = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:/\n?=]+)/im;
 const propertyExpression = /{item.(.*?)}/g;
 
 module.exports = [
@@ -10,7 +11,7 @@ module.exports = [
     'exec',
     null,
     async (env, params) => {
-      if (env.children || !params[0]) return;
+      if (env.children || !params[0]) return null;
 
       const name = params[0];
       const args = params.slice(1);
@@ -45,18 +46,18 @@ module.exports = [
 
       if (params[1]) {
         let contentType;
-        try { params[1] = JSON.parse(params[1]); contentType = 'application/json'; }
-        catch { contentType = 'text/plain'; }
+        try {
+          params[1] = JSON.parse(params[1]); contentType = 'application/json';
+        } catch {
+          contentType = 'text/plain';
+        }
 
         options.headers['Content-Type'] = contentType;
         [, options.body] = params;
       }
 
       const request = await fetch(url, options)
-        .then(async (r) => {
-          if (r.ok) return await r.text();
-          else return `HTTP_ERROR_${r.status}`;
-        })
+        .then((r) => (r.ok ? r.text() : `HTTP_ERROR_${r.status}`))
         .catch(() => 'HTTP_ERROR_UNKNOWN');
 
       return request;
@@ -81,16 +82,22 @@ module.exports = [
       }
 
       let json = null;
-      try { json = JSON.parse(params[0]); }
-      catch (e) { return e.message; }
+      try {
+        json = JSON.parse(params[0]);
+      } catch (e) {
+        return e.message;
+      }
 
       if (!params[1]) return '';
       const path = params.slice(1);
 
       let current = json;
       for (let i = 0; i < path.length; i += 1) {
-        try { current = typeof current[path[i]] === 'number' ? current[path[i]] : (current[path[i]] || 'undefined'); }
-        catch (e) { return 'undefined'; }
+        try {
+          current = typeof current[path[i]] === 'number' ? current[path[i]] : (current[path[i]] || 'undefined');
+        } catch {
+          return 'undefined';
+        }
       }
 
       if (Array.isArray(current) || typeof current === 'object') return JSON.stringify(current);
@@ -107,8 +114,11 @@ module.exports = [
     null,
     (env, params) => {
       let array = null;
-      try { array = JSON.parse(params[0]); }
-      catch (e) { return '<invalid array>'; }
+      try {
+        array = JSON.parse(params[0]);
+      } catch (e) {
+        return '<invalid array>';
+      }
 
       return array
         .map((item, index) => {
