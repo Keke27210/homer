@@ -670,7 +670,7 @@ module.exports = (dot) => ({
       unknown: 'No radio channel set. Use `h:radio <channel>` to set one.',
       set: (name) => [
         `📻 Radio channel is set to **${name}**.`,
-        `${dot} Allumez la radio avec \`h:radio [fréquence]\`.`,
+        `${dot} Turn radio on with \`h:radio [frequency]\`.`,
       ].join('\n'),
       error: 'An error occured while setting radio channel.',
     },
