@@ -24,7 +24,7 @@ class AboutCommand extends Command {
       `${message.dot} ${message._('about.guilds')}: **${this.client.guilds.cache.size}** (${message._('about.shard', message.guild ? (message.guild.shardID + 1) : 1)})`,
       `${message.dot} ${message._('about.memory')}: **${Math.round(process.memoryUsage().rss / 1024 / 1024)}**MB`,
       `${message.dot} ${message._('about.versions')}: ${name} **${version}** / node **${process.version}** / discord.js **${djs}**`,
-      `${message.dot} ${message._('about.links')}: **[GitHub](https://github.com/Keke27210/homer)** / **[Homer - Support server](${this.client.constants.supportInvite})**`,
+      `${message.dot} ${message._('about.links')}: **[GitHub](${this.client.constants.links.github})** / **[Homer - Support server](${this.client.constants.links.support})**`,
     ].join('\n');
 
     const embed = new MessageEmbed()

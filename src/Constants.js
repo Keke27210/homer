@@ -120,4 +120,7 @@ exports.emotes = {
 exports.owners = ['205427654042583040'];
 
 // Support server
-exports.supportInvite = 'https://discord.gg/fYRm29b';
+exports.links = {
+  github: 'https://github.com/Keke27210/homer',
+  support: 'https://discord.gg/fYRm29b',
+};

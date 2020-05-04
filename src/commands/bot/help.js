@@ -39,7 +39,7 @@ class HelpCommand extends Command {
     entries.push([
       `❔ **${message._('help.category.more')}**`,
       '',
-      message._('help.more', this.client.invite),
+      message._('help.more', this.client.constants.links.support),
     ].join('\n'));
     pages.push({ title: ' ', color: 0xFFFF00 });
 
