@@ -31,8 +31,21 @@ class CommandManager extends Manager {
      */
     this.commands = [];
 
+    /**
+     * Cooldown for users
+     * @type {Cooldown[]}
+     */
+    this.cooldown = [];
+
+    /**
+     * Global cooldown time
+     * @type {number}
+     */
+    this.cooldownDuration = (2 * 1000);
+
     // Set listeners
     this.client.on('message', this.handleMessage.bind(this));
+    this.client.setInterval(this.cleanCooldown.bind(this), this.cooldownDuration);
   }
 
   /**
@@ -104,6 +117,7 @@ class CommandManager extends Manager {
     const instance = this.searchCommand(command);
     if (!instance) return;
 
+    if (this.cooldown.find((c) => c.id === message.author.id)) return;
     instance.run(message, args);
   }
 
@@ -115,6 +129,18 @@ class CommandManager extends Manager {
   searchCommand(search) {
     const lowSearch = search.toLowerCase();
     return this.commands.find((c) => c.name === lowSearch || c.aliases.includes(lowSearch));
+  }
+
+  /**
+   * Clean cooldown entries that were put more than this.cooldownDuration ms
+   */
+  cleanCooldown() {
+    for (let i = 0; i < this.cooldown.length; i += 1) {
+      const cooldown = this.cooldown[i];
+      if (Date.now() - this.cooldownDuration > cooldown.time) {
+        this.cooldown.splice(this.cooldown.indexOf(cooldown), 1);
+      }
+    }
   }
 }
 
