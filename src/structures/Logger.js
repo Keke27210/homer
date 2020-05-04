@@ -7,6 +7,7 @@ const {
 const { resolve } = require('path');
 const { format } = require('util');
 const moment = require('moment-timezone');
+const { DiscordAPIError } = require('discord.js');
 require('colors');
 
 class Logger {
@@ -140,20 +141,27 @@ class Logger {
    */
   error(str, error) {
     let errStr = str;
+    if (error instanceof DiscordAPIError) errStr += `\nHTTP ${error.httpStatus} on route ${error.path} (DISCORD CODE ${error.code})`;
     if (typeof error === 'object' && 'stack' in error) {
       errStr += `\n${error.stack}`;
     }
 
-    const self = this;
-    self.genLog(3, errStr);
+    this.genLog(3, errStr);
   }
 
   /**
    * Treats the given information as a warn
    * @param {string} str Message to log
+   * @param {?Error} error Error object
    */
-  warn(str) {
-    this.genLog(2, str);
+  warn(str, error) {
+    let errStr = str;
+    if (error instanceof DiscordAPIError) errStr += `\nHTTP ${error.httpStatus} on route ${error.path} (DISCORD CODE ${error.code})`;
+    if (typeof error === 'object' && 'stack' in error) {
+      errStr += `\n${error.stack}`;
+    }
+
+    this.genLog(2, errStr);
   }
 
   /**
