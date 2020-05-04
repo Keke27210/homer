@@ -544,7 +544,7 @@ module.exports = (dot) => ({
         server: 'Nom',
         creation: 'Date de création',
       },
-      memberDesc: (total, online, emote) => `**${total}** dont ${emote} **${online}**`,
+      memberDesc: (emotes, count) => `${emotes[0]} **${count[0]}** en ligne - ${emotes[1]} **${count[1]}** membres`,
     },
     gift: {
       title: (code) => `🎁 Informations sur le code cadeau **${code}**:`,
@@ -563,6 +563,7 @@ module.exports = (dot) => ({
       title: (name) => `🖥️ Informations sur le serveur **${name}**:`,
       id: 'Discord ID',
       members: 'Membres',
+      memberDesc: (emotes, count) => `${emotes[0]} **${count[0]}** en ligne - ${emotes[1]} **${count[1]}** membres`,
       channels: 'Salons',
       invite: 'Invitation',
       creation: 'Date de création',

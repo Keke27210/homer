@@ -38,7 +38,7 @@ class LookupCommand extends Command {
         const description = [
           `${message.dot} ${message._('lookup.invite.inviter')}: ${invite.inviter ? `${invite.inviter.tag} (${invite.inviter.id})` : message._('global.none')}`,
           `${message.dot} ${message._('lookup.invite.channel')}: **${invite.channel.type === 'text' ? '#' : ''}${invite.channel.name}** (${invite.channel.id})`,
-          `${message.dot} ${message._('lookup.invite.members')}: ${message.emote('online')} **${invite.presenceCount}** - ${message.emote('offline')} **${invite.memberCount}**`,
+          `${message.dot} ${message._('lookup.invite.members')}: ${message._('lookup.invite.memberDesc', [message.emote('online'), message.emote('offline')], [invite.presenceCount, invite.memberCount])}`,
         ].join('\n');
 
         const guildDesc = [];
@@ -170,7 +170,7 @@ class LookupCommand extends Command {
 
         const description = [
           `${message.dot} ${message._('lookup.server.id')}: **${guild.id}**${honours.length ? ` ${honours.join(' ')}` : ''}`,
-          `${message.dot} ${message._('lookup.server.members')}: ${meta ? `${message.emote('online')} **${meta.members[0]}** - ${message.emote('offline')} **${meta.members[1]}**` : message._('global.noInformation')}`,
+          `${message.dot} ${message._('lookup.server.members')}: ${meta ? message._('lookup.server.memberDesc', [message.emote('online'), message.emote('offline')], meta.members) : message._('global.noInformation')}`,
           `${message.dot} ${message._('lookup.server.channels')}: **${guild.channels.length}** ${message._('channel.types.voice')}`,
           `${message.dot} ${message._('lookup.server.invite')}: ${code ? `**[${code}](https://discord.gg/${resolveInviteCode(code)})**` : message._('global.none')}`,
           `${message.dot} ${message._('lookup.server.creation')}: ${message.getMoment(deconstruct(guild.id).timestamp)}`,
