@@ -118,6 +118,7 @@ class CommandManager extends Manager {
     if (!instance) return;
 
     if (this.cooldown.find((c) => c.id === message.author.id)) return;
+    this.cooldown.push({ id: message.author.id, time: Date.now() });
     instance.run(message, args);
   }
 
