@@ -41,11 +41,11 @@ class CommandManager extends Manager {
      * Global cooldown time
      * @type {number}
      */
-    this.cooldownDuration = (2 * 1000);
+    this.cooldownDuration = (0.75 * 1000);
 
     // Set listeners
     this.client.on('message', this.handleMessage.bind(this));
-    this.client.setInterval(this.cleanCooldown.bind(this), this.cooldownDuration);
+    this.client.setInterval(this.cleanCooldown.bind(this), (0.5 * 1000));
   }
 
   /**
