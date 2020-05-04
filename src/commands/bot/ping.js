@@ -8,8 +8,13 @@ class PingCommand extends Command {
     });
   }
 
-  main(message) {
-    message.send(message._('ping.pong', this.client.ws.ping));
+  async main(message) {
+    let rest = Date.now();
+    await this.client.api.gateway.get().then(() => {
+      rest -= Date.now();
+    });
+
+    message.send(message._('ping.pong', this.client.ws.ping, Math.abs(rest)));
   }
 }
 

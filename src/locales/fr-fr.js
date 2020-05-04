@@ -621,7 +621,7 @@ module.exports = (dot) => ({
 
   // Ping command
   ping: {
-    pong: (ws) => `🏓 Pong, **${ws}**ms.`,
+    pong: (ws, rest) => `🏓 Pong! Gateway: **${ws}**ms - API REST: **${rest}**ms`,
   },
 
   // Prefix command
