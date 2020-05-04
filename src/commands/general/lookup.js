@@ -38,7 +38,7 @@ class LookupCommand extends Command {
         const description = [
           `${message.dot} ${message._('lookup.invite.inviter')}: ${invite.inviter ? `${invite.inviter.tag} (${invite.inviter.id})` : message._('global.none')}`,
           `${message.dot} ${message._('lookup.invite.channel')}: **${invite.channel.type === 'text' ? '#' : ''}${invite.channel.name}** (${invite.channel.id})`,
-          `${message.dot} ${message._('lookup.invite.members')}: ${message._('lookup.invite.memberDesc', invite.memberCount, invite.presenceCount, message.emote('online', true))}`,
+          `${message.dot} ${message._('lookup.invite.members')}: ${message.emote('online')} **${invite.presenceCount}** - ${message.emote('offline')} **${invite.memberCount}**`,
         ].join('\n');
 
         const guildDesc = [];
@@ -156,18 +156,11 @@ class LookupCommand extends Command {
         const meta = await this.client.fetchInvite(code)
           .then((invite) => ({
             icon: invite.guild ? invite.guild.iconURL({ size: 256, dynamic: true }) : null,
-            memberCount: invite.memberCount,
+            members: [invite.presenceCount, invite.memberCount],
             partner: invite.guild ? invite.guild.features.includes('PARTNERED') : false,
             verified: invite.guild ? invite.guild.verified : false,
           }))
           .catch(() => null);
-
-        const memberCount = {
-          online: 0, idle: 0, dnd: 0,
-        };
-        for (let i = 0; i < guild.members.length; i += 1) {
-          memberCount[guild.members[i].status] += 1;
-        }
 
         const honours = [];
         if (meta) {
@@ -175,12 +168,9 @@ class LookupCommand extends Command {
           if (meta.partner) honours.push(message.emote('DISCORD_PARTNER'));
         }
 
-        const members = Object.keys(memberCount).map((status) => `${message.emote(status, true)} **${memberCount[status]}**`);
-        if (meta && meta.memberCount) members.push(`${message.emote('offline', true)} **${meta.memberCount - guild.members.length}**`);
-
         const description = [
           `${message.dot} ${message._('lookup.server.id')}: **${guild.id}**${honours.length ? ` ${honours.join(' ')}` : ''}`,
-          `${message.dot} ${message._('lookup.server.members')}: ${members.join(' - ')}`,
+          `${message.dot} ${message._('lookup.server.members')}: ${meta ? `${message.emote('online')} **${meta.members[0]}** - ${message.emote('offline')} **${meta.members[1]}**` : message._('global.noInformation')}`,
           `${message.dot} ${message._('lookup.server.channels')}: **${guild.channels.length}** ${message._('channel.types.voice')}`,
           `${message.dot} ${message._('lookup.server.invite')}: ${code ? `**[${code}](https://discord.gg/${resolveInviteCode(code)})**` : message._('global.none')}`,
           `${message.dot} ${message._('lookup.server.creation')}: ${message.getMoment(deconstruct(guild.id).timestamp)}`,
