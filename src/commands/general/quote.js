@@ -37,7 +37,7 @@ class QuoteCommand extends Command {
       .setTimestamp(new Date(msg.editedTimestamp || msg.createdTimestamp))
       .setColor(msg.flags.serialize().IS_CROSSPOST ? 0x7289DA : msg.member.displayHexColor);
 
-    message.send(message._('quote.title', (msg.flags.serialize().IS_CROSSPOST ? msg.author.username : msg.author.tag), channel.name), embed);
+    message.send(message._('quote.title', (msg.flags.serialize().IS_CROSSPOST ? `**${msg.author.username}**` : msg.author.tag), channel.name), embed);
     return 0;
   }
 }
