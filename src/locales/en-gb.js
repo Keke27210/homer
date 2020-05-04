@@ -733,6 +733,7 @@ module.exports = (dot) => ({
 
   // Role command
   role: {
+    noSearch: 'You must provide a role to search for.',
     title: (name) => `🎭 Information about role **${name}**:`,
     id: 'Discord ID',
     color: 'Color',
