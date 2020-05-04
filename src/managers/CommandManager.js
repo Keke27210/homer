@@ -86,8 +86,8 @@ class CommandManager extends Manager {
     if (message.author.bot || !message.content || !this.client.ready) return;
     await message.fetchSettings();
 
-    const mention = message.mentions.users.get(this.client.user.id);
-    if (mention && message.content === mention.toString()) {
+    const mentionTest = message.content.match(new RegExp(`<@!?${this.client.user.id}>`));
+    if (mentionTest && message.content === mentionTest[0]) {
       message.send(message._('global.prefix', message.emote('homer')));
       return;
     }
