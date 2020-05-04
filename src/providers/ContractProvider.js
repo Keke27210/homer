@@ -385,6 +385,7 @@ class ContractProvider extends Provider {
         data: { content, embed },
       })
       .catch((error) => {
+        if (error.code === 50013) return; // Missing permissions, do nothing
         this.client.logger.warn(`[contracts->notify] Cannot send a message in channel ${contract.channel}`, error);
         throw new Error('SENDING_ERROR');
       });
