@@ -17,6 +17,7 @@ module.exports = (dot) => ({
     loading: 'Loading...',
     more: (num) => `and **${num}** more...`,
     cooldown: 'Calm down!',
+    prefix: (emote) => `${emote} My prefix is \`h:\`. Start using me with \`h:help\`!`,
   },
 
   database: {

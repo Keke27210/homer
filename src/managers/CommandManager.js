@@ -86,6 +86,12 @@ class CommandManager extends Manager {
     if (message.author.bot || !message.content || !this.client.ready) return;
     await message.fetchSettings();
 
+    const mention = message.mentions.users.get(this.client.user.id);
+    if (mention && message.content === mention.toString()) {
+      message.send(message._('global.prefix', message.emote('homer')));
+      return;
+    }
+
     let prefix = this.prefixes;
     if (message.settings.prefix) prefix.push(message.settings.prefix);
     prefix = prefix.find((p) => message.content.toLowerCase().startsWith(p.toLowerCase()));
