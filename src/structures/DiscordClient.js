@@ -40,6 +40,12 @@ class DiscordClient extends Client {
     this.constants = Constants;
 
     /**
+     * Presence overwrite for the bot
+     * @type {PresenceData}
+     */
+    this.presenceOverwrite = null;
+
+    /**
      * Whether the client is ready to proceed commands and events
      * @type {boolean}
      */
@@ -262,7 +268,7 @@ class DiscordClient extends Client {
     if (!this.user) return null;
 
     const shards = this.shard.ids;
-    const presence = {
+    const presence = this.presenceOverwrite || {
       status: this.database.ready ? 'online' : 'idle',
       activity: {
         type: 2,
