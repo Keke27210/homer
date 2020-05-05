@@ -47,6 +47,9 @@ async function handleCommand(message) {
     if (typeof result !== 'string') result = inspect(result);
     if (result.length > 2000) result = 'Output exceeding 2000 characters';
     process.stdout.write(`${result}\n`);
+  } else if (command === 'ping') {
+    const pings = await sharder.fetchClientValues('ws.ping');
+    process.stdout.write(`Pings: ${pings.join(' / ')}`);
   } else {
     process.stdout.write(`Unknown command: ${command}`);
   }
