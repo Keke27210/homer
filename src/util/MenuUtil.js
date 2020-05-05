@@ -228,6 +228,8 @@ class MenuUtil extends Util {
 
     if (Array.isArray(options.footer)) {
       embed.setFooter(options.footer[0], options.footer[1]);
+    } else if (typeof options.footer === 'string') {
+      embed.setFooter(options.footer);
     } else {
       embed.setFooter(this._(locale, 'menu.page', `${current + 1}/${instance.entries.length}`));
     }
