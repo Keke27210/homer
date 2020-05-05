@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 const { Manager } = require('lavacord');
 const fetch = require('node-fetch');
 

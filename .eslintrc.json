@@ -15,10 +15,14 @@
         "ecmaVersion": 2019
     },
     "rules": {
+        "class-methods-use-this": "off",
+        "consistent-return": "off",
         "global-require": "off",
         "import/no-dynamic-require": "off",
         "max-classes-per-file": "off",
         "no-await-in-loop": "off",
-        "no-continue": "off"
+        "no-continue": "off",
+        "no-param-reassign": "off",
+        "no-underscore-dangle": "off"
     }
 }

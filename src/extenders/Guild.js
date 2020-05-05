@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const { Structures } = require('discord.js');
 
 Structures.extend('Guild', (Guild) => {

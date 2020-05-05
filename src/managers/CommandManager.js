@@ -66,9 +66,8 @@ class CommandManager extends Manager {
       const categoryPath = resolve(this.commandDirectory, this.categories[j]);
       const dirContent = readdirSync(categoryPath);
       for (let k = 0; k < dirContent.length; k += 1) {
-        // eslint-disable-next-line max-len
-        const command = new (require(resolve(categoryPath, dirContent[k])))(this.client, this.categories[j]);
-        this.commands.push(command);
+        const Command = require(resolve(categoryPath, dirContent[k]));
+        this.commands.push(new Command(this.client, this.categories[j]));
         i += 1;
       }
     }

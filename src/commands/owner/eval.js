@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 const { inspect } = require('util');
 
 const Command = require('../../structures/Command');

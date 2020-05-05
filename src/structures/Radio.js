@@ -1,5 +1,3 @@
-/* eslint-disable no-multi-assign */
-/* eslint-disable no-param-reassign */
 const { MessageEmbed } = require('discord.js');
 const moment = require('moment-timezone');
 const wait = require('util').promisify(setTimeout);
@@ -133,6 +131,7 @@ class Radio {
     });
 
     const embed = await this.generateEmbed();
+    // eslint-disable-next-line no-multi-assign
     const m = this.message = await this.authorMessage.send(this._('radio.header'), embed);
 
     (async function react(e) {

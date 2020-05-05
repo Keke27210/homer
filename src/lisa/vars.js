@@ -6,7 +6,6 @@ module.exports = [
     'set',
     null,
     (env, params) => {
-      // eslint-disable-next-line no-param-reassign
       env.vars[params[0]] = params.slice(1).join('|');
       return '';
     },

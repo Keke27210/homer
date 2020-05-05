@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 const { exec } = require('child_process');
 const fetch = require('node-fetch');
 
@@ -41,11 +40,7 @@ class ExecCommand extends Command {
           message.send({ files: [{ name: 'output.txt', attachment: Buffer.from(output) }] });
         }
       }
-
-      return 0;
     });
-
-    return 0;
   }
 }
 

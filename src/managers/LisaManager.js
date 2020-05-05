@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 const { readdirSync } = require('fs');
 const { resolve } = require('path');
 

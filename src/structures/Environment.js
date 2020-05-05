@@ -16,11 +16,9 @@ class Environment {
     this.children = children;
     this.settings = message.settings;
 
-    // eslint-disable-next-line no-underscore-dangle
     this._patch(message, type);
   }
 
-  // eslint-disable-next-line no-underscore-dangle
   _patch(message, type) {
     if (type === 'tag') {
       this.guild = message.guild;

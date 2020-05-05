@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 const Util = require('./Util');
 
 const MENTION = /<(@!?|@&|#)(\d{17,20})>/g;

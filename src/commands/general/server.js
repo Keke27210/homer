@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const { MessageEmbed } = require('discord.js');
 
 const Command = require('../../structures/Command');
@@ -41,8 +40,8 @@ class ServerCommand extends Command {
   async main(message) {
     const { guild } = message;
     const {
-      approximate_member_count,
-      approximate_presence_count,
+      approximate_member_count: approximateMemberCount,
+      approximate_presence_count: approximatePresenceCount,
     } = await this.client.api.guilds(guild.id).get({ query: { with_counts: true } });
     await this.client.users.fetch(guild.ownerID);
 
@@ -55,7 +54,7 @@ class ServerCommand extends Command {
       `${message.dot} ${message._('server.owner')}: ${guild.owner.user.tag} (${guild.ownerID})`,
       `${message.dot} ${message._('server.region')}: ${this.region[guild.region]} **${message._(`server.regions.${guild.region}`)}**`,
       `${message.dot} ${message._('server.boost')}: ${guild.premiumTier === 0 ? message._('global.none') : `**${message._('server.boosts.level', guild.premiumTier)}** (${message._('server.boosts.count', guild.premiumSubscriptionCount)})`}`,
-      `${message.dot} ${message._('server.members')}: ${message._('server.memberDesc', [message.emote('online'), message.emote('offline')], [approximate_presence_count, approximate_member_count])}`,
+      `${message.dot} ${message._('server.members')}: ${message._('server.memberDesc', [message.emote('online'), message.emote('offline')], [approximatePresenceCount, approximateMemberCount])}`,
       `${message.dot} ${message._('server.channels')}: ${['category', 'text', 'voice'].map((t) => `**${guild.channels.cache.filter((c) => c.type === t).size}** ${message._(`server.channel.${t}`)}`).join(', ')}`,
       `${message.dot} ${message._('server.creation')}: ${message.getMoment(guild.createdTimestamp)}`,
     ];

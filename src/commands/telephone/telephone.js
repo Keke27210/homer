@@ -230,10 +230,11 @@ class ContractsSubcommand extends Command {
     const description = [];
     for (let i = 0; i < pending.length; i += 1) {
       const contract = pending[i];
-      const guild = (contract.context === contract.subscriber) ? 'None' : this.client.guilds.resolve(contract.context);
+      const guild = (contract.context === contract.subscriber)
+        ? null
+        : (await this.client.api.guilds(contract.context).get().catch(() => null));
       const user = await this.client.users.fetch(contract.subscriber).catch(() => null);
-      // eslint-disable-next-line no-nested-ternary
-      description.push(`${message.dot} Contract n°\`${contract.id}\` - Subscriber: ${user ? `${user.tag} (${user.id})` : 'Unknown'} - Guild: ${guild === 'None' ? 'DM' : (guild ? `**${guild.name}** (${guild.id})` : 'Unknown')}`);
+      description.push(`${message.dot} Contract n°\`${contract.id}\` - Subscriber: ${user ? `${user.tag} (${user.id})` : 'Unknown'} - Guild: ${guild ? `**${guild.name}** (${guild.id})` : 'Direct Messages'}`);
     }
 
     const embed = new MessageEmbed().setDescription(description.join('\n'));

@@ -94,7 +94,6 @@ class FormatsCommand extends Command {
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
   async main(message) {
     const now = moment()
       .tz(message.settings.timezone)

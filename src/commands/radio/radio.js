@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 const { MessageEmbed } = require('discord.js');
 
 const Command = require('../../structures/Command');
@@ -10,7 +9,6 @@ class TutorialSubcommand extends Command {
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
   async main(message) {
     const embed = new MessageEmbed()
       .setDescription(message._('radio.tutorial.list'));

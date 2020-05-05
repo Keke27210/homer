@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 const fetch = require('node-fetch');
 const Method = require('../structures/Method');
 
@@ -75,7 +74,6 @@ module.exports = [
       for (let i = 1; i < params.length; i += 1) {
         const param = params[i];
         if (param.includes('{') || param.includes('}')) {
-          // eslint-disable-next-line no-param-reassign
           params[0] = `${params[0]}|${param}`;
           params.splice(i, 1);
         }

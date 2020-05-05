@@ -151,7 +151,6 @@ class RadioProvider extends Provider {
    * Destroys a radio instance
    * @returns {Promise<void>}
    */
-  // eslint-disable-next-line class-methods-use-this
   destroyRadio(radio) {
     return radio.destroyRadio();
   }
