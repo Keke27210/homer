@@ -215,9 +215,6 @@ class MenuUtil extends Util {
       locale,
       options,
     } = instance;
-    if (!options.footer) {
-      options.footer = this._(locale, 'menu.page', `${current + 1}/${instance.entries.length}`);
-    }
 
     const embed = new MessageEmbed()
       .setTitle(this._(locale, 'menu.page', current + 1))
@@ -226,7 +223,7 @@ class MenuUtil extends Util {
     if (Array.isArray(options.footer)) {
       embed.setFooter(options.footer[0], options.footer[1]);
     } else {
-      embed.setFooter(options.footer);
+      embed.setFooter(this._(locale, 'menu.page', `${current + 1}/${instance.entries.length}`));
     }
 
     if (pages[current]) {
