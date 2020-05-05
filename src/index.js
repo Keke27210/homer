@@ -5,6 +5,7 @@
 
 const { ShardingManager } = require('discord.js');
 const { resolve } = require('path');
+const { inspect } = require('util');
 
 const Logger = require('./structures/Logger');
 
@@ -22,6 +23,39 @@ const sharder = new ShardingManager(
 );
 
 sharder.logger = new Logger(-1);
+
+/**
+ * Handles a command from process.stdin
+ * @param {string|Buffer} message Message coming from stdin
+ */
+async function handleCommand(message) {
+  if (Buffer.isBuffer(message)) message = Buffer.toString();
+  if (!message.startsWith('/')) return process.stdout.write('Unexpected input - Commands must start with / prefix\n');
+  const [command, ...args] = message.substring(1).split(/ +/g);
+  if (!command) return process.stdout.write('Unexpected input - No command provided\n');
+
+  if (command === 'eval') {
+    const code = args.join(' ');
+
+    let result;
+    try {
+      result = await sharder.broadcastEval(code);
+    } catch (e) {
+      result = e;
+    }
+
+    if (typeof result !== 'string') result = inspect(result);
+    if (result.length > 2000) result = 'Output exceeding 2000 characters';
+    process.stdout.write(`${result}\n`);
+  } else {
+    process.stdout.write(`Unknown command: ${command}\n`);
+  }
+}
+
+// Listen to stdin for command handling
+process.stdin
+  .setEncoding('utf8')
+  .on('data', handleCommand);
 
 /**
  * Handles a shard message
