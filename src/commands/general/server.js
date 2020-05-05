@@ -39,6 +39,7 @@ class ServerCommand extends Command {
 
   async main(message) {
     const { guild } = message;
+    await guild.fetch();
     await this.client.users.fetch(guild.ownerID);
 
     const honours = [];
@@ -50,14 +51,7 @@ class ServerCommand extends Command {
       `${message.dot} ${message._('server.owner')}: ${guild.owner.user.tag} (${guild.ownerID})`,
       `${message.dot} ${message._('server.region')}: ${this.region[guild.region]} **${message._(`server.regions.${guild.region}`)}**`,
       `${message.dot} ${message._('server.boost')}: ${guild.premiumTier === 0 ? message._('global.none') : `**${message._('server.boosts.level', guild.premiumTier)}** (${message._('server.boosts.count', guild.premiumSubscriptionCount)})`}`,
-      `${message.dot} ${message._('server.members')}: ${message._(
-        'server.memberDesc',
-        guild.memberCount,
-        guild.members.cache.filter((m) => m.user.presence.status === 'online').size,
-        guild.members.cache.filter((m) => m.user.bot).size,
-        message.emote('online', true),
-        message.emote('bot'),
-      )}`,
+      `${message.dot} ${message._('server.members')}: ${message._('server.memberDesc', [message.emote('online'), message.emote('offline')], [guild.approximatePresenceCount, guild.approximateMemberCount])}`,
       `${message.dot} ${message._('server.channels')}: ${['category', 'text', 'voice'].map((t) => `**${guild.channels.cache.filter((c) => c.type === t).size}** ${message._(`server.channel.${t}`)}`).join(', ')}`,
       `${message.dot} ${message._('server.creation')}: ${message.getMoment(guild.createdTimestamp)}`,
     ];

@@ -760,7 +760,7 @@ module.exports = (dot) => ({
     region: 'Region',
     boost: 'Server boost',
     members: 'Members',
-    memberDesc: (total, online, bots, eOnline, eBot) => `**${total}** including **${online}** ${eOnline} and **${bots}** ${eBot}`,
+    memberDesc: (emotes, count) => `${emotes[0]} **${count[0]}** online - ${emotes[1]} **${count[1]}** members`,
     channels: 'Channels',
     creation: 'Creation date',
     boosts: {
