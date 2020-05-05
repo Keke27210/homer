@@ -30,9 +30,9 @@ sharder.logger = new Logger(-1);
  */
 async function handleCommand(message) {
   if (Buffer.isBuffer(message)) message = Buffer.toString();
-  if (!message.startsWith('/')) return process.stdout.write('Unexpected input - Commands must start with / prefix');
+  if (!message.startsWith('/')) return process.stdout.write('Unexpected input - Commands must start with / prefix\n');
   const [command, ...args] = message.trim().substring(1).split(/ +/g);
-  if (!command) return process.stdout.write('Unexpected input - No command provided');
+  if (!command) return process.stdout.write('Unexpected input - No command provided\n');
 
   if (command === 'eval') {
     const code = args.join(' ');
@@ -49,9 +49,9 @@ async function handleCommand(message) {
     process.stdout.write(`${result}\n`);
   } else if (command === 'ping') {
     const pings = await sharder.fetchClientValues('ws.ping');
-    process.stdout.write(`Pings: ${pings.join(' / ')}`);
+    process.stdout.write(`Pings: ${pings.join(' / ')}\n`);
   } else {
-    process.stdout.write(`Unknown command: ${command}`);
+    process.stdout.write(`Unknown command: ${command}\n`);
   }
 }
 
