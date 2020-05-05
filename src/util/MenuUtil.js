@@ -132,7 +132,13 @@ class MenuUtil extends Util {
     if (instance.entries.length > 1) {
       (async function react() {
         const reactions = Object.keys(emotes);
-        for (let i = 0; i < reactions.length; i += 1) await message.react(reactions[i]);
+        for (let i = 0; i < reactions.length; i += 1) {
+          try {
+            await message.react(reactions[i]);
+          } catch {
+            break;
+          }
+        }
       }());
     }
 
