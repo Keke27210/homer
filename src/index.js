@@ -30,9 +30,9 @@ sharder.logger = new Logger(-1);
  */
 async function handleCommand(message) {
   if (Buffer.isBuffer(message)) message = Buffer.toString();
-  if (!message.startsWith('/')) return process.stdout.write('Unexpected input - Commands must start with / prefix\n');
-  const [command, ...args] = message.substring(1).split(/ +/g);
-  if (!command) return process.stdout.write('Unexpected input - No command provided\n');
+  if (!message.startsWith('/')) return process.stdout.write('Unexpected input - Commands must start with / prefix');
+  const [command, ...args] = message.trim().substring(1).split(/ +/g);
+  if (!command) return process.stdout.write('Unexpected input - No command provided');
 
   if (command === 'eval') {
     const code = args.join(' ');
@@ -48,7 +48,7 @@ async function handleCommand(message) {
     if (result.length > 2000) result = 'Output exceeding 2000 characters';
     process.stdout.write(`${result}\n`);
   } else {
-    process.stdout.write(`Unknown command: ${command}\n`);
+    process.stdout.write(`Unknown command: ${command}`);
   }
 }
 
