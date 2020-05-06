@@ -84,7 +84,7 @@ class RoleCommand extends Command {
     const description = [
       `${message.dot} ${message._('role.id')}: **${role.id}**`,
       `${message.dot} ${message._('role.color')}: **${role.hexColor.toUpperCase()}**`,
-      `${message.dot} ${message._('role.position')}: #**${role.position}**`,
+      `${message.dot} ${message._('role.position')}: #**${message.guild.roles.cache.size - role.rawPosition - 1}**`,
       `${message.dot} ${message._('role.memberCount')}: **${role.members.size}**`,
       `${message.dot} ${message._('role.managed')}: **${role.managed ? message._('global.yes') : message._('global.no')}**`,
       `${message.dot} ${message._('role.mentionable')}: **${role.mentionable ? message._('global.yes') : message._('global.no')}**`,
