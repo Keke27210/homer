@@ -28,7 +28,7 @@ class ChannelCommand extends Command {
     const description = [
       `${message.dot} ${message._('channel.id')}: **${channel.id}**`,
       `${message.dot} ${message._('channel.type')}: **${message._(`channel.types.${channel.type}`)}**`,
-      `${message.dot} ${message._('channel.position')}: #**${channel.position}**`,
+      `${message.dot} ${message._('channel.position')}: #**${channel.rawPosition + 1}**`,
     ];
 
     if (channel.type === 'text') {
