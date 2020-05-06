@@ -50,6 +50,8 @@ exports.emotes = {
   text_nsfw: '702231451722055732',
   voice: '701885312909181049',
   voice_locked: '701885313131479051',
+  category: '707580478021959690',
+  category_locked: '707580478021959690',
 
   // Miscellaneous
   placeholder: '695983847061323797',
