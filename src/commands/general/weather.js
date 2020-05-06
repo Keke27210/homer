@@ -83,7 +83,7 @@ class WeatherCommand extends Command {
         .catch(() => null);
       const loc = reaction ? locations[this.emotes.indexOf(reaction.emoji.name)] : null;
       if (!loc) {
-        if (m.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) m.reactions.removeAll().catch(() => null);
+        if (m.guild && m.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) m.reactions.removeAll().catch(() => null);
         else m.reactions.cache.forEach((r) => r.users.remove(this.client.user));
         return m.editWarn(message._('weather.noSelected'));
       }
