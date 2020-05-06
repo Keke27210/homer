@@ -969,7 +969,7 @@ module.exports = (dot) => ({
     missing: 'You must provide a city to look for.',
     none: (search) => `No cities have been found matching \`${search}\`.`,
     multiple: (search) => `Several cities have been found matching \`${search}\`:`,
-    noSelected: 'You haven\'t chosen any city.',
+    noSelected: 'You haven\'t chosen any cities.',
     error: 'An error occured while fetching data.',
     title: (city, state, country) => `🌥️ Weather for **${city}** (${state}, ${country}):`,
     footer: 'The information is provided by Accuweather.',
