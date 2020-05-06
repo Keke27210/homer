@@ -49,6 +49,12 @@ class ContractProvider extends Provider {
     this.maxActive = 2;
 
     /**
+     * Maximum recent contracts a user can sign (fixed by this.delaySignature)
+     * @type {number}
+     */
+    this.maxRecent = 2;
+
+    /**
      * Time required between two contract signatures
      * Current: 2 weeks
      * @type {number}
@@ -282,7 +288,7 @@ class ContractProvider extends Provider {
     const recent = contracts.filter(
       (c) => (Date.now() - c.created.getTime()) < this.delaySignature,
     );
-    if (recent.length) return false;
+    if (recent.length >= this.maxRecent) return false;
 
     return true;
   }
