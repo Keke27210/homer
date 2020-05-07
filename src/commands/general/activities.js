@@ -55,9 +55,9 @@ class GameCommand extends Command {
             if (activity.timestamps.end) description.push(message._('activities.remaining', message.getDuration(activity.timestamps.end)));
           }
         } else if (activity.type === 'LISTENING') {
-          description.push(`**${activity.details}**`);
-          if (activity.state && activity.assets) {
+          if (activities.details && activity.state && activity.assets) {
             description.push(
+              `**${activity.details}**`,
               message._('activities.listening.artist', activity.state),
               message._('activities.listening.album', activity.assets.largeText),
             );
