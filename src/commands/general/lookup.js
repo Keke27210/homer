@@ -59,8 +59,8 @@ class LookupCommand extends Command {
       }
 
       // 2- Gift code
-      const expr = /(?:https:\/\/)?(?:www.)?discord.gift\/([\s\S]{1,})/.exec(search);
-      const gift = await fetch(GIFT_URL(expr ? expr[1] : search))
+      const giftExpr = /(?:https:\/\/)?(?:www.)?discord.gift\/([\s\S]{1,})/.exec(search);
+      const gift = await fetch(GIFT_URL(giftExpr ? giftExpr[1] : search))
         .then((r) => (r.ok ? r.json() : null))
         .catch(() => null);
       if (gift) {
@@ -86,7 +86,9 @@ class LookupCommand extends Command {
       }
 
       // 5- Template
-      const template = await this.client.api.guilds.templates(search).get()
+      const templateExpr = /https:\/\/(?:www.)?discord(?:app)?.com\/template\/(\w\d\S+)/.exec(search);
+      const template = await this.client.api.guilds
+        .templates(templateExpr ? templateExpr[1] : search).get()
         .catch(() => null);
       if (template) {
         const description = [
