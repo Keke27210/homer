@@ -55,11 +55,13 @@ class GameCommand extends Command {
             if (activity.timestamps.end) description.push(message._('activities.remaining', message.getDuration(activity.timestamps.end)));
           }
         } else if (activity.type === 'LISTENING') {
-          description.push(
-            `**${activity.details}**`,
-            message._('activities.listening.artist', activity.state),
-            message._('activities.listening.album', activity.assets.largeText),
-          );
+          description.push(`**${activity.details}**`);
+          if (activity.state && activity.assets) {
+            description.push(
+              message._('activities.listening.artist', activity.state),
+              message._('activities.listening.album', activity.assets.largeText),
+            );
+          }
         } else if (activity.type === 'STREAMING') {
           description.push(message._('activities.streaming.link', activity.url));
         }
