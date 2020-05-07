@@ -24,7 +24,7 @@ Structures.extend('User', (User) => {
      * @type {number}
      */
     get boostingLevel() {
-      let time;
+      let time = Date.now();
       this.client.guilds.cache.forEach((guild) => {
         const member = guild.member(this.id);
         if (member && member.premiumSinceTimestamp) {
