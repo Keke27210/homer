@@ -79,7 +79,9 @@ class UserCommand extends Command {
           break;
         case 'LISTENING':
           emote = '🎵';
-          detail = message._('user.activities.listening', activity.details, activity.name);
+          detail = activity.details
+            ? message._('user.activities.listening', activity.details, activity.name)
+            : message._('user.activities.listening2', activity.name);
           break;
         case 'WATCHING':
           emote = '📺';

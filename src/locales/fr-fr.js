@@ -954,6 +954,7 @@ module.exports = ({ dot, telephoneLoc: telephone }) => ({
       streaming: (name) => `Diffuse **${name}**`,
       playing: (name) => `Joue à **${name}**`,
       listening: (details, name) => `Écoute **${details}** sur ${name}`,
+      listening2: (name) => `Écoute **${name}**`,
       watching: (name) => `Regarde **${name}**`,
     },
     statusDesc: {
