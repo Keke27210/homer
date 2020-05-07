@@ -25,13 +25,15 @@ Structures.extend('User', (User) => {
      */
     get boostingLevel() {
       let time = Date.now();
+      let booster = false;
       this.client.guilds.cache.forEach((guild) => {
         const member = guild.member(this.id);
         if (member && member.premiumSinceTimestamp) {
+          booster = true;
           if (member.premiumSinceTimestamp < time) time = member.premiumSinceTimestamp;
         }
       });
-      if (!time) return 0;
+      if (!booster) return 0;
 
       const delta = moment().diff(moment(time), 'months', true);
       if (delta < 2) return 1;
