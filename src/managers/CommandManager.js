@@ -95,7 +95,7 @@ class CommandManager extends Manager {
    * @param {Message} message Message that triggered the command
    */
   async handleMessage(message) {
-    if (message.author.bot || !message.content || !this.client.ready) return;
+    if (message.type !== 'DEFAULT' || message.author.bot || !message.content || !this.client.ready) return;
     await message.fetchSettings();
 
     const mentionTest = message.content.match(new RegExp(`<@!?${this.client.user.id}>`));
