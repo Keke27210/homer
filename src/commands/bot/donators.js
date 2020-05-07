@@ -26,7 +26,7 @@ class DonatorsCommand extends Command {
     const embed = new MessageEmbed()
       .setDescription(message._('donators.message'))
       .addField(message._('donators.list'), users.sort((a, b) => a.localeCompare(b)).join('\n') || message._('global.none'), true)
-      .addField(message._('donators.perks'), message._('donators.perkList').map((p) => `${message.dot} ${p}`).join('\n'), true);
+      .addField(message._('donators.perks'), message._('donators.perkList'), true);
     message.send(message._('donators.title'), embed);
   }
 }

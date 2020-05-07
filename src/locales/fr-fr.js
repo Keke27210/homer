@@ -489,7 +489,7 @@ module.exports = (dot) => ({
     perkList: [
       'Égaliseur sonore (bientôt)',
       'Badge cool sur les commandes `user` et `lookup`',
-    ],
+    ].map((item) => `${dot} ${item}`).join('\n'),
   },
 
   // Formats command

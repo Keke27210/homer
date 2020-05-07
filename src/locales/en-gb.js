@@ -489,7 +489,7 @@ module.exports = (dot) => ({
     perkList: [
       'Higher audio quality (from 56 to 128kbps)',
       'Cool badge on user and lookup commands',
-    ],
+    ].map((item) => `${dot} ${item}`).join('\n'),
   },
 
   // Formats command
