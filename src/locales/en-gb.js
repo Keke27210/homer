@@ -1,4 +1,4 @@
-module.exports = (dot) => ({
+module.exports = ({ dot, telephone }) => ({
   /* LOCALE INFORMATION */
   _: {
     code: 'en-gb',
@@ -853,13 +853,13 @@ module.exports = (dot) => ({
 
   // Telephone command
   telephone: {
-    welcome: '☎️ Welcome to Homer\'s telephone! To get started, run `h:telephone subscribe`.',
+    welcome: `${telephone} Welcome to Homer's telephone! To get started, run \`h:telephone subscribe\`.`,
     existing: (id) => `Contract no. \`${id}\` is already active on this channel.`,
-    unknown: '☎️ No contract present on this channel. Subscribe by running `h:telephone subscribe`.',
-    pending: '☎️ Your subscription request is in progress, please wait.',
-    paused: '☎️ You must reactivate your line before you can use it.',
+    unknown: `${telephone} No contract present on this channel. Subscribe by running \`h:telephone subscribe\`.`,
+    pending: `${telephone} Your subscription request is in progress, please wait.`,
+    paused: `${telephone} You must reactivate your line before you can use it.`,
     contract: {
-      title: '☎️ Information about this channel\'s contract:',
+      title: `${telephone} Information about this channel's contract:`,
       id: 'Contract no.',
       number: 'Number',
       subscriber: 'Subscriber',
@@ -869,20 +869,20 @@ module.exports = (dot) => ({
       noNumber: 'Not assigned',
     },
     notifications: {
-      restart: '☎️ This (or your correspondent) shard will perform a restart, messages may not be transfered until Homer\'s goes back online.',
-      activated: (number) => `☎️ Your line has been activated, your number is \`${number}\`.`,
+      restart: `${telephone} This (or your correspondent) shard will perform a restart, messages may not be transfered until Homer's goes back online.`,
+      activated: (number) => `${telephone} Your line has been activated, your number is \`${number}\`.`,
       invalidated: 'Your line has not been activated. Join the support server to find out why.',
-      outgoing: (number) => `📞 Dialing \`${number}\`...`,
-      incoming: (number) => `📞 Incoming call from \`${number}\`. Run \`h:pickup\` to pickup the phone.`,
-      pickedCaller: '📞 Your correspondent picked up.',
-      pickedCalled: '📞 You picked up the phone.',
-      terminated: '📞 The communication has ended.',
-      paused: '☎️ Your line\'s been disabled. You can reactivate it at any time by running `h:telephone toggle`.',
-      resumed: '☎️ Your line\'s been reactivated.',
+      outgoing: (number) => `${telephone} Dialing \`${number}\`...`,
+      incoming: (number) => `${telephone} Incoming call from \`${number}\`. Run \`h:pickup\` to pickup the phone.`,
+      pickedCaller: `${telephone} Your correspondent picked up.`,
+      pickedCalled: `${telephone} You picked up the phone.`,
+      terminated: `${telephone} The communication has ended.`,
+      paused: `${telephone} Your line's been disabled. You can reactivate it at any time by running \`h:telephone toggle\`.`,
+      resumed: `${telephone} Your line's been reactivated.`,
       text: (num) => `📧 Received text message from \`${num}\`:`,
       missed: {
-        caller: (number) => `📞 No answer from \`${number}\`.`,
-        called: (number) => `📞 Missed call from \`${number}\`.`,
+        caller: (number) => `${telephone} No answer from \`${number}\`.`,
+        called: (number) => `${telephone} Missed call from \`${number}\`.`,
       },
     },
     states: {

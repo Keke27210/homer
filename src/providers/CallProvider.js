@@ -173,7 +173,8 @@ class CallProvider extends Provider {
       .map((a) => `${message.dot} ${a.spoiler ? '||' : ''}**${a.name}** (**${Math.ceil(a.size / 1024)}**KB): <${a.url}>${a.spoiler ? '||' : ''}`)
       .join('\n');
 
-    await this.contracts.notify(correspondent.id, false, `📞 ${message.author.tag}: ${content}${attachments ? `\n${attachments}` : ''}`);
+    const final = `${message.emote('telephone')} ${message.author.tag}: ${content}${attachments ? `\n${attachments}` : ''}`;
+    await this.contracts.notify(correspondent.id, false, final.substring(0, 2000));
     await this.updateRow(call.id, { updated: new Date() });
   }
 

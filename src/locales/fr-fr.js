@@ -1,4 +1,4 @@
-module.exports = (dot) => ({
+module.exports = ({ dot, telephone }) => ({
   /* LOCALE INFORMATION */
   _: {
     code: 'fr-fr',
@@ -853,14 +853,13 @@ module.exports = (dot) => ({
 
   // Telephone command
   telephone: {
-    restart: '☎️ Cette shard (ou celle de votre correspondant) va procéder à un redémarrage, les messages peuvent être ignorés jusqu\'à ce que Homer redevienne en ligne.',
-    welcome: '☎️ Bienvenue sur le téléphone d\'Homer ! Pour commencer, exécutez `h:telephone subscribe`.',
+    welcome: `${telephone} Bienvenue sur le téléphone d'Homer ! Pour commencer, exécutez \`h:telephone subscribe\`.`,
     existing: (id) => `Le contrat n°\`${id}\` est déjà actif sur ce salon.`,
-    unknown: '☎️ Aucun contrat présent sur ce salon. Souscrivez avec `h:telephone subscribe`.',
-    pending: '☎️ Votre demande d\'abonnement est en cours de traitement... Veuillez patienter.',
-    paused: '☎️ Vous devez réactiver votre ligne avant de pouvoir l\'utiliser.',
+    unknown: `${telephone} Aucun contrat présent sur ce salon. Souscrivez avec \`h:telephone subscribe\`.`,
+    pending: `${telephone} Votre demande d'abonnement est en cours de traitement... Veuillez patienter.`,
+    paused: `${telephone} Vous devez réactiver votre ligne avant de pouvoir l'utiliser.`,
     contract: {
-      title: '☎️ Informations sur ce contrat:',
+      title: `${telephone} Informations sur ce contrat:`,
       id: 'Numéro de contrat',
       number: 'Numéro de ligne',
       subscriber: 'Souscripteur',
@@ -870,19 +869,20 @@ module.exports = (dot) => ({
       noNumber: 'Non assigné',
     },
     notifications: {
-      activated: (number) => `☎️ Votre ligne a été activée, votre numéro de téléphone: \`${number}\`.`,
+      restart: `${telephone} Cette shard (ou celle de votre correspondant) va procéder à un redémarrage, les messages peuvent être ignorés jusqu'à ce que Homer se reconnecte.`,
+      activated: (number) => `${telephone} Votre ligne a été activée, votre numéro de téléphone: \`${number}\`.`,
       invalidated: 'Votre ligne n\'a pas été activée. Rejoignez le serveur de support pour en connaître les raisons.',
-      outgoing: (number) => `📞 Appel sortant vers \`${number}\`...`,
-      incoming: (number) => `📞 Appel entrant de \`${number}\`. Exécutez \`h:pickup\` pour répondre.`,
-      pickedCaller: '📞 Votre correspondant a décroché le téléphone.',
-      pickedCalled: '📞 Vous avez décroché le téléphone.',
-      terminated: '📞 La communication a pris fin.',
-      paused: '☎️ Votre ligne a été désactivée. Réactivez-la à tout moment avec `h:telephone toggle`.',
-      resumed: '☎️ Votre ligne a été réactivée.',
+      outgoing: (number) => `${telephone} Appel sortant vers \`${number}\`...`,
+      incoming: (number) => `${telephone} Appel entrant de \`${number}\`. Exécutez \`h:pickup\` pour répondre.`,
+      pickedCaller: `${telephone} Votre correspondant a décroché le téléphone.`,
+      pickedCalled: `${telephone} Vous avez décroché le téléphone.`,
+      terminated: `${telephone} La communication a pris fin.`,
+      paused: `${telephone} Votre ligne a été désactivée. Réactivez-la à tout moment avec \`h:telephone toggle\`.`,
+      resumed: `${telephone} Votre ligne a été réactivée.`,
       text: (num) => `📧 SMS reçu de \`${num}\`:`,
       missed: {
-        caller: (number) => `📞 Aucune réponse de \`${number}\`.`,
-        called: (number) => `📞 Appel manqué de \`${number}\`.`,
+        caller: (number) => `${telephone} Aucune réponse de \`${number}\`.`,
+        called: (number) => `${telephone} Appel manqué de \`${number}\`.`,
       },
     },
     states: {
