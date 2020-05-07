@@ -61,7 +61,7 @@ exports.emotes = {
   activities: '698065014321446922',
   template: '702145958959513650',
   human: '707874248806367303',
-  bot: '695746485790310530',
+  bot: '707907814797869087',
   dot: '▫️',
 
   // 14-segment digits and letters
