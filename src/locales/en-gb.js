@@ -1,4 +1,4 @@
-module.exports = ({ dot, telephone }) => ({
+module.exports = ({ dot, telephoneLoc: telephone }) => ({
   /* LOCALE INFORMATION */
   _: {
     code: 'en-gb',

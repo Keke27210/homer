@@ -55,6 +55,7 @@ exports.emotes = {
 
   // Miscellaneous
   telephone: '707875620322934826',
+  telephoneLoc: '<:e:707875620322934826>',
   placeholder: '695983847061323797',
   verified: '697804778910253086',
   activities: '698065014321446922',
