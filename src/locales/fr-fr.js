@@ -946,6 +946,7 @@ module.exports = (dot) => ({
     status: 'Status',
     activity: 'Activité',
     roles: 'Rôles',
+    boosting: 'Server boosting',
     active: 'Dernière activité',
     creation: 'Date de création',
     join: 'Date d\'arrivée',
@@ -961,6 +962,7 @@ module.exports = (dot) => ({
       dnd: 'Ne pas déranger',
       offline: 'Hors-ligne',
     },
+    boostingSince: (date) => `depuis le ${date}`,
   },
 
   // Weather command

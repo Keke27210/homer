@@ -124,6 +124,7 @@ class LookupCommand extends Command {
         if (user.system) honours.push(message.emote('VERIFIED_BOT'));
         for (let i = 0; i < flags.length; i += 1) honours.push(message.emote(flags[i]));
         if (user.avatar && user.avatar.startsWith('a_')) honours.push(message.emote('nitro'));
+        if (user.boostingLevel > 0) honours.push(message.emote(`boosting_${user.boostingLevel}`));
 
         const description = [`${message.dot} ${message._('lookup.user.id')}: **${user.id}**${honours.length ? ` ${honours.join(' ')}` : ''}`];
 

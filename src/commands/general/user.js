@@ -39,6 +39,7 @@ class UserCommand extends Command {
     if (user.system) honours.push(message.emote('VERIFIED_BOT'));
     for (let i = 0; i < flags.length; i += 1) honours.push(message.emote(flags[i]));
     if (user.avatar && user.avatar.startsWith('a_')) honours.push(message.emote('nitro'));
+    if (user.boostingLevel > 0) honours.push(message.emote(`boosting_${user.boostingLevel}`));
 
     const description = [`${message.dot} ${message._('user.id')}: **${user.id}**${honours.length ? ` ${honours.join(' ')}` : ''}`];
 
@@ -97,6 +98,10 @@ class UserCommand extends Command {
         .map((r) => r.toString())
         .join(', ');
       description.push(`${message.dot} ${message._('user.roles')}: ${roles || message._('global.none')}`);
+
+      if (member.premiumSinceTimestamp) {
+        description.push(`${message.dot} ${message._('user.boosting')}: ${message.emote('server_booster')} ${message._('user.boostingSince', message.getMoment(member.premiumSinceTimestamp))}`);
+      }
     }
 
     const active = await this.client.tracking.getActivity(user.id);
