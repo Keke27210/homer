@@ -159,7 +159,7 @@ class Radio {
     }
 
     const embed = await this.generateEmbed(!action, ps);
-    await this.message.edit(this._('radio.header'), embed);
+    await this.message.edit(this._('radio.header'), embed).catch(() => this.destroyRadio());
   }
 
   /**
@@ -319,15 +319,14 @@ class Radio {
 
   /**
    * Destroys gracefully the radio
-   * @param {boolean} guildDelete Was this called by guildDelete
    * @returns {Promise<void>}
    */
-  async destroyRadio(guildDelete = false) {
-    if (!guildDelete) {
-      if (this.authorMessage.deletable) this.authorMessage.delete().catch(() => null);
-      if (this.message && this.message.deletable) this.message.delete().catch(() => null);
+  async destroyRadio() {
+    if (this.authorMessage.deletable) this.authorMessage.delete().catch(() => null);
+    if (this.message && this.message.deletable) this.message.delete().catch(() => null);
+    try {
       await this.client.lavacordManager.leave(this.authorMessage.guild.id);
-    }
+    } catch {} // eslint-disable-line no-empty
 
     const index = this.client.radios.radios.findIndex(
       (r) => r.voiceChannel.id === this.voiceChannel.id,
