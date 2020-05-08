@@ -319,12 +319,15 @@ class Radio {
 
   /**
    * Destroys gracefully the radio
+   * @param {boolean} guildDelete Was this called by guildDelete
    * @returns {Promise<void>}
    */
-  async destroyRadio() {
-    if (this.authorMessage.deletable) this.authorMessage.delete().catch(() => null);
-    if (this.message && this.message.deletable) this.message.delete().catch(() => null);
-    await this.client.lavacordManager.leave(this.authorMessage.guild.id);
+  async destroyRadio(guildDelete = false) {
+    if (!guildDelete) {
+      if (this.authorMessage.deletable) this.authorMessage.delete().catch(() => null);
+      if (this.message && this.message.deletable) this.message.delete().catch(() => null);
+      await this.client.lavacordManager.leave(this.authorMessage.guild.id);
+    }
 
     const index = this.client.radios.radios.findIndex(
       (r) => r.voiceChannel.id === this.voiceChannel.id,
