@@ -44,7 +44,9 @@ class DialCommand extends Command {
       this.client.telephone.calls.findCall(correspondent.id),
     ]);
 
-    if (call[0] || number === contract.number) {
+    if (call[0]
+      || number === contract.number
+      || contract.blacklist.includes(correspondent.number)) {
       message.info(message._('dial.busy'));
       return 0;
     }

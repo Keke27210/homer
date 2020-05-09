@@ -51,6 +51,7 @@ class TextCommand extends Command {
     }
 
     if (!correspondent.textable
+        || contract.blacklist.includes(correspondent.number)
         || correspondent.blacklist.includes(contract.number)
         || number === contract.number) {
       message.warn(message._('text.unable', number));
