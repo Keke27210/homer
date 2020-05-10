@@ -32,7 +32,7 @@ class LookupCommand extends Command {
         const honours = [];
         if (invite.guild) {
           if (invite.guild.verified) honours.push(message.emote('verified'));
-          if (invite.guild.features.includes('PARTNERED')) honours.push(message.emote('DISCORD_PARTNER'));
+          if (invite.guild.features.includes('PARTNERED')) honours.push(message.emote('partnered'));
         }
 
         const description = [

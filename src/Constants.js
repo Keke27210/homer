@@ -58,6 +58,7 @@ exports.emotes = {
   telephoneLoc: '<:e:707875620322934826>',
   placeholder: '695983847061323797',
   verified: '697804778910253086',
+  partnered: '709026111929188373',
   activities: '698065014321446922',
   template: '702145958959513650',
   human: '707874248806367303',
