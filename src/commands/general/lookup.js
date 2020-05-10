@@ -168,7 +168,7 @@ class LookupCommand extends Command {
         const honours = [];
         if (meta) {
           if (meta.verified) honours.push(message.emote('verified'));
-          if (meta.partner) honours.push(message.emote('DISCORD_PARTNER'));
+          if (meta.partner) honours.push(message.emote('partnered'));
         }
 
         const description = [
