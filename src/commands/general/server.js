@@ -48,6 +48,7 @@ class ServerCommand extends Command {
     const honours = [];
     if (guild.verified) honours.push(message.emote('verified'));
     if (guild.features.includes('PARTNERED')) honours.push(message.emote('partnered'));
+    if (guild.premiumTier > 0) honours.push(message.emote(`tier_${guild.premiumTier}`));
 
     const description = [
       `${message.dot} ${message._('server.id')}: **${guild.id}**${honours.length ? ` ${honours.join(' ')}` : ''}`,
