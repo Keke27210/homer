@@ -48,13 +48,12 @@ class ServerCommand extends Command {
     const honours = [];
     if (guild.verified) honours.push(message.emote('verified'));
     if (guild.features.includes('PARTNERED')) honours.push(message.emote('partnered'));
-    if (guild.premiumTier > 0) honours.push(message.emote(`tier_${guild.premiumTier}`));
 
     const description = [
       `${message.dot} ${message._('server.id')}: **${guild.id}**${honours.length ? ` ${honours.join(' ')}` : ''}`,
       `${message.dot} ${message._('server.owner')}: ${guild.owner.user.tag} (${guild.ownerID})`,
       `${message.dot} ${message._('server.region')}: ${this.region[guild.region]} **${message._(`server.regions.${guild.region}`)}**`,
-      `${message.dot} ${message._('server.boost')}: ${guild.premiumTier === 0 ? message._('global.none') : `**${message._('server.boosts.level', guild.premiumTier)}** (${message._('server.boosts.count', guild.premiumSubscriptionCount)})`}`,
+      `${message.dot} ${message._('server.boost')}: ${guild.premiumTier === 0 ? message._('global.none') : `${message.emote(`tier_${guild.premiumTier}`)} **${message._('server.boosts.level', guild.premiumTier)}** (${message._('server.boosts.count', guild.premiumSubscriptionCount)})`}`,
       `${message.dot} ${message._('server.members')}: ${message._('server.memberDesc', [message.emote('online'), message.emote('offline')], [approximatePresenceCount, approximateMemberCount])}`,
       `${message.dot} ${message._('server.channels')}: ${['category', 'text', 'voice'].map((t) => `**${guild.channels.cache.filter((c) => c.type === t).size}** ${message._(`server.channel.${t}`)}`).join(', ')}`,
       `${message.dot} ${message._('server.creation')}: ${message.getMoment(guild.createdTimestamp)}`,
