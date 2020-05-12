@@ -41,7 +41,7 @@ class ChannelSubCommand extends Command {
     }
 
     if (!channel) {
-      message.error(message._('radio.channel.none'));
+      message.warn(message._('radio.channel.none'));
       return 0;
     }
 
@@ -79,7 +79,7 @@ class RadioCommand extends Command {
     if (frequency < 875) frequency = 875;
 
     const channel = message.guild.channels.resolve(message.settings.radio);
-    if (!channel) return message.warn(message._('radio.unset'));
+    if (!channel) return message.info(message._('radio.unset'));
 
     const { voice } = message.member;
     if (!voice || voice.channelID !== channel.id) return message.error(message._('radio.notin', channel.name));

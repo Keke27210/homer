@@ -662,13 +662,13 @@ module.exports = ({ dot, telephoneLoc: telephone }) => ({
     deprecate: 'Homer\'s radio is now button-based! Run `h:radio [frequency]` to turn it on.',
     header: '📻 Interface radio d\'Homer',
     footer: 'Apprenez à utiliser la radio d\'Homer avec h:radio tutorial.',
-    unset: 'Vous devez définir un salon radio avec `h:radio channel`.',
+    unset: 'Bienvenue ! Avant d\'utiliser la radio, dédiez un salon vocal à cela avec `h:radio channel [nom ou ID de salon vocal]`.',
     notin: (name) => `Vous devez être dans le salon radio (**${name}**).`,
     instance: 'You must turn off current\'s radio before creating a new one.',
     permissions: (name) => `Le bot doit pouvoir se connecter et parler dans **${name}**.`,
     error: 'Une erreur est survenue lors de l\'allumage de la radio. Réessayez plus tard.',
     channel: {
-      none: 'Exécutez cette commande en spécifiant le nom d\'un salon vocal ou en étant dans un salon.',
+      none: 'Spécifiez le nom ou l\'ID d\'un salon vocal ou soyez dans un salon vocal.',
       unknown: 'Aucun salon de radio. Utilisez `h:radio <salon>` pour le définir.',
       set: (name) => [
         `📻 La radio sera désormais jouée dans **${name}**.`,
