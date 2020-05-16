@@ -140,15 +140,17 @@ class WeatherCommand extends Command {
         url: `https://www.accuweather.com/fr/fr/${encodeURIComponent(city.toLowerCase())}/${key.split(':')[1]}/daily-weather-forecast/${key.split(':')[1]}?day=${i + 1}`,
       });
 
-      entries.push([
+      const entry = [
         `${message.dot} ${message._('weather.condition')}: **${day.condition}**`,
         `${message.dot} ${message._('weather.temperature')}: ${message._('weather.format.temperatures', day.temperatures)}`,
         `${message.dot} ${message._('weather.wind')}: ${message._('weather.format.wind', day.wind, day.gust)}`,
         `${message.dot} ${message._('weather.uv')}: ${message._('weather.format.uv', day.uvindex)}`,
         `${message.dot} ${message._('weather.nebulosity')}: ${message._('weather.format.nebulosity', day.nebulosity)}`,
         `${message.dot} ${message._('weather.sunrise')}: **${moment(day.sun[0]).format(message._('weather.format.time'))}** - ${message._('weather.sunset')}: **${moment(day.sun[1]).format(message._('weather.format.time'))}**`,
-        `${message.dot} ${message._('weather.moon')}: ${message._('weather.format.moon', this.moons[day.moon], message._(`weather.moons.${day.moon}`))}`,
-      ].join('\n'));
+      ];
+
+      if (day.moon) entry.push(`${message.dot} ${message._('weather.moon')}: ${message._('weather.format.moon', this.moons[day.moon], message._(`weather.moons.${day.moon}`))}`);
+      entries.push(entry.join('\n'));
     }
 
     // 3- Send menu

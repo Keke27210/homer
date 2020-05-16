@@ -175,7 +175,7 @@ class APIProvider extends Provider {
         uvindex: daytime.maxuv,
         nebulosity: daytime.cloudCover,
         sun: [new Date(`${obsdate} ${sunrise}`).getTime(), new Date(`${obsdate} ${sunset}`).getTime()],
-        moon: res.moon.phase.find((p) => p.date === obsdate).text,
+        moon: (res.moon.phase.find((p) => p.date === obsdate) || {}).text,
       });
     }
 
