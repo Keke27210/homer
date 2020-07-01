@@ -34,6 +34,12 @@ class RadioProvider extends Provider {
      * @type {Playing[]}
      */
     this.playing = [];
+    
+    /**
+     * Playing info prefixes
+     * @type {string[][]}
+     */
+    this.playingPrefixes = [];
 
     /**
      * Length of a radio UI line
@@ -114,6 +120,7 @@ class RadioProvider extends Provider {
       .catch(() => null);
     if (!req) return null;
 
+    const prefix = this.playingPrefixes.find(pp => pp.radio === id);
     const formatted = (req[0] && req[0].streamTitle ? req[0].streamTitle : '')
       .split(' - ')
       .map((part) => {
@@ -125,7 +132,7 @@ class RadioProvider extends Provider {
     if (cache) this.playing.splice(this.playing.indexOf(cache), 1);
     this.playing.push({
       radio: id,
-      text: formatted,
+      text: prefix ? prefix.text.concat(formatted) : formatted,
       time: Date.now(),
     });
 
