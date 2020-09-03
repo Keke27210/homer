@@ -5,6 +5,7 @@ class ToggleSubcommand extends Command {
     super(client, category, {
       name: 'toggle',
       aliases: ['switch'],
+      userPermissions: ['MANAGE_GUILD'],
       dm: true,
     });
   }
@@ -41,6 +42,7 @@ class MessageSubcommand extends Command {
     super(client, category, {
       name: 'message',
       aliases: ['set'],
+      userPermissions: ['MANAGE_GUILD'],
       dm: true,
     });
   }
