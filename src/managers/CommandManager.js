@@ -109,7 +109,7 @@ class CommandManager extends Manager {
     prefix = prefix.find((p) => message.content.toLowerCase().startsWith(p.toLowerCase()));
     if (!prefix) return;
 
-    const parse = message.content.substring(prefix.length).trim();
+    const parse = message.content.substring(prefix.length).trim().replace(/\u200B/g, '');
     const args = parse.split(/ +/g);
     const command = args.shift();
 
