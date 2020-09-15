@@ -220,7 +220,7 @@ Structures.extend('Message', (Message) => {
       return this.awaitReactions(
         (reaction, user) => emotes.includes(reaction.emoji.id)
           && user.id === id,
-        { max: 1 },
+        { max: 1, time: 15e3, errors: ['time'] },
       )
         .then((reactions) => {
           if (this.guild && this.channel.permissionsFor(this.client.user).has('MANAGE_MESSAGES')) {
@@ -232,10 +232,7 @@ Structures.extend('Message', (Message) => {
           }
           return false;
         })
-        .catch((error) => {
-          this.client.logger.warn(`[message->${this.id}] Error while asking user approval`, error);
-          return false;
-        });
+        .catch(() => false);
     }
 
     /**
