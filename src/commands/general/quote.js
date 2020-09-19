@@ -13,8 +13,7 @@ class QuoteCommand extends Command {
     const search = ch.join(' ');
     let { channel } = message;
     if (message.guild && search) {
-      const found = this.client.finderUtil.findChannels(message, search)
-        .filter((c) => c.type === 'text');
+      const found = (this.client.finderUtil.findChannels(message, search) || []).filter((c) => c.type === 'text');
       if (!found) {
         message.error(message._('finder.channels.zero', search));
         return 0;
