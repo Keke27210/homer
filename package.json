@@ -16,12 +16,12 @@
   "license": "Apache-2.0",
   "dependencies": {
     "colors": "^1.4.0",
-    "discord.js": "^12.2.0",
+    "discord.js": "^12.4.1",
     "fast-xml-parser": "^3.17.4",
     "lavacord": "^1.1.9",
-    "moment": "^2.27.0",
+    "moment": "^2.29.1",
     "moment-timezone": "^0.5.31",
-    "node-fetch": "^2.6.0",
-    "pg": "^8.3.0"
+    "node-fetch": "^2.6.1",
+    "pg": "^8.4.1"
   }
 }
