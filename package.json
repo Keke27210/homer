@@ -1,27 +1,24 @@
 {
   "name": "homer",
-  "version": "3.5.0",
-  "description": "A true Swiss knife for your Discord server",
+  "version": "3.6.1",
+  "description": "A featureful bot for Discord communities",
   "main": "src/index.js",
-  "scripts": {
-    "start": "node src/index",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "discord",
-    "bot",
-    "homer"
-  ],
+  "repository": "https://github.com/Keke27210/homer",
   "author": "Keke27210",
-  "license": "Apache-2.0",
+  "license": "AGPL-3.0-or-later",
+  "private": true,
   "dependencies": {
+    "bufferutil": "^4.0.1",
     "colors": "^1.4.0",
     "discord.js": "^12.4.1",
+    "erlpack": "discord/erlpack",
     "fast-xml-parser": "^3.17.4",
     "lavacord": "^1.1.9",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.31",
     "node-fetch": "^2.6.1",
-    "pg": "^8.4.1"
+    "pg": "^8.4.1",
+    "utf-8-validate": "^5.0.2",
+    "zlib-sync": "^0.1.7"
   }
 }
