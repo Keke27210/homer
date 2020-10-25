@@ -9,31 +9,6 @@ const TABLE_COLUMNS = [
 class TrackingProvider extends Provider {
   constructor(client) {
     super(client, 'tracking', TABLE_COLUMNS, false);
-
-    /**
-     * Delay after which is considered as "deletable"
-     * a tracking entry with no names recorded
-     * Current: 6 months
-     * @type {number}
-     */
-    this.deletableDelay = (6 * 30 * 24 * 60 * 60 * 1000);
-
-    /**
-     * Sweep interval
-     * Current: 24 hours
-     * @type {number}
-     */
-    this.sweepInterval = (24 * 60 * 60 * 1000);
-
-    // Set listeners
-    this.client.on('message', (message) => this.updateActivity(message.author.id));
-    this.client.on('typingStart', (_, user) => this.updateActivity(user.id));
-    this.client.on('messageReactionAdd', (_, user) => this.updateActivity(user.id));
-    this.client.on('userUpdate', (oldUser, newUser) => {
-      if (oldUser.username !== newUser.username) this.updateNames(newUser.id, oldUser.username);
-      else this.updateActivity(newUser.id);
-    });
-    this.client.setInterval(() => this.deleteEntries(), this.sweepInterval);
   }
 
   /**
@@ -42,10 +17,7 @@ class TrackingProvider extends Provider {
    * @returns {Promise<Track>}
    */
   async createTracking(id) {
-    const existing = await this.getRow(id);
-    if (existing) return existing;
-    const row = await this.insertRow({ id, activity: null, names: [] });
-    return this.getRow(row);
+    return ({ id, activity: null, names: [] });
   }
 
   /**
@@ -54,9 +26,7 @@ class TrackingProvider extends Provider {
    * @returns {Promise<Date>}
    */
   async getActivity(id) {
-    const entry = await this.getRow(id);
-    if (!entry) return null;
-    return entry.activity;
+    return null;
   }
 
   /**
@@ -65,13 +35,7 @@ class TrackingProvider extends Provider {
    * @returns {Promise<NameChange[]>}
    */
   async getNames(id) {
-    const entry = await this.getRow(id);
-    if (!entry || !entry.names) return [];
-    const { names } = entry;
-    for (let i = 0; i < names.length; i += 1) {
-      names[i] = JSON.parse(names[i]);
-    }
-    return names;
+    return [];
   }
 
   /**
@@ -80,10 +44,6 @@ class TrackingProvider extends Provider {
    * @returns {Promise<void>}
    */
   async updateActivity(id) {
-    if (!this.database.ready) throw new Error('UNAVAILABLE_DATABASE');
-    const entry = await this.getRow(id);
-    if (!entry) await this.createTracking(id);
-    await this.updateRow(id, { activity: new Date() });
     return null;
   }
 
@@ -94,12 +54,6 @@ class TrackingProvider extends Provider {
    * @returns {Promise<void>}
    */
   async updateNames(id, name) {
-    if (!this.database.ready) throw new Error('UNAVAILABLE_DATABASE');
-    const entry = await this.getRow(id);
-    if (!entry) await this.createTracking(id);
-    const names = entry && entry.names ? entry.names : [];
-    names.push({ name, time: Date.now() });
-    await this.updateRow(id, { activity: new Date(), names });
     return null;
   }
 
@@ -110,18 +64,6 @@ class TrackingProvider extends Provider {
    * @returns {Promise<void>}
    */
   async deleteEntries() {
-    this.client.logger.log('[tracking] Clearing outdated entries');
-    const entries = await this.getRows([
-      ['names', 'is', 'null'],
-      ['activity', '<', new Date(Date.now() - this.deletableDelay).toISOString(), 'timestamp'],
-    ]);
-    if (!entries.length) return;
-    let i = 0;
-    while (i < entries.length) {
-      await this.deleteRow(entries[i].id);
-      i += 1;
-    }
-    this.client.logger.log(`[tracking] ${i} entries cleared`);
   }
 }
 
