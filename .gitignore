@@ -1,0 +1,13 @@
+# Node and NPM packages
+node_modules/
+yarn.lock
+
+# TypeScript compilation files
+dist/
+tsconfig.tsbuildinfo
+
+# Static configuration files
+config/
+
+# Log files
+log/
