@@ -4,7 +4,7 @@ class AddSubcommand extends Command {
   constructor(client, category) {
     super(client, category, {
       name: 'add',
-      userPermission: ['MANAGE_GUILD'],
+      userPermissions: ['MANAGE_GUILD'],
       dm: true,
     });
   }
@@ -61,7 +61,7 @@ class RemoveSubcommand extends Command {
   constructor(client, category) {
     super(client, category, {
       name: 'remove',
-      userPermission: ['MANAGE_GUILD'],
+      userPermissions: ['MANAGE_GUILD'],
       dm: true,
     });
   }
