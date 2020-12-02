@@ -211,6 +211,14 @@ class Radio {
    */
   async seek(backward = false) {
     await this.updateMessage(true, 'SEEKING');
+    const res = await this.client.lavacordManager.getTracks("https://raw.githubusercontent.com/Keke27210/homer_cdn/fcc38a1c115ef99aaa02b1cc234c8dac3aa92d79/assets/radios/TUNING.mp3");
+      .then((r) => (r[0] ? r[0].track : null));
+    if (res) {
+      await this.player.play(res, {
+        noReplace: false,
+        volume: this.authorMessage.settings.volume,
+      });
+    }
     await wait(2000);
 
     const frequencies = await this.client.radios.getRows()
