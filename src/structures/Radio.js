@@ -132,7 +132,7 @@ class Radio {
 
     const embed = await this.generateEmbed();
     // eslint-disable-next-line no-multi-assign
-    const m = this.message = await this.authorMessage.send(this._('radio.header'), embed);
+    const m = this.message = await this.authorMessage.send(embed);
 
     (async function react(e) {
       for (let i = 0; i < e.length; i += 1) {
@@ -159,7 +159,7 @@ class Radio {
     }
 
     const embed = await this.generateEmbed(!action, ps);
-    await this.message.edit(this._('radio.header'), embed).catch(() => this.destroyRadio());
+    await this.message.edit(embed).catch(() => this.destroyRadio());
   }
 
   /**
@@ -272,6 +272,7 @@ class Radio {
     lines.push(this.generateLine(clock, true));
 
     embed.setDescription(lines.join('\n'));
+    embed.setColor(0x4F545C);
     embed.setFooter(this._('radio.footer'));
 
     if (interval) this.refreshes += 1;
