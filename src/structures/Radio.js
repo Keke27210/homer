@@ -272,7 +272,7 @@ class Radio {
     lines.push(this.generateLine(clock, true));
 
     embed.setDescription(lines.join('\n'));
-    embed.setColor(0x4F545C);
+    embed.setColor("#36393F");
     embed.setFooter(this._('radio.footer'));
 
     if (interval) this.refreshes += 1;
