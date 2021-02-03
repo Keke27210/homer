@@ -39,6 +39,7 @@ class SubscribeSubcommand extends Command {
       )
         .then((id) => {
           m.editSuccess(message._('telephone.subscribe.applied', id));
+          this.client.setTimeout(() => this.client.telephone.contracts.activateContract(id), 3e3);
           return 0;
         })
         .catch(() => {
