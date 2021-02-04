@@ -663,7 +663,7 @@ module.exports = ({ dot, telephoneLoc: telephone }) => ({
     header: '📻 Homer radio interface',
     footer: 'Learn how to use Homer\'s radio using h:radio tutorial.',
     unset: 'Welcome! Before using radio, please dedicate a voice channel to it using `h:radio channel [voice channel name or ID]`.',
-    notin: (name) => `You must be in the radio channel (**${name}**).`,
+    notin: 'You must join a voice channel before running the command.',
     instance: 'You must turn off current\'s radio before creating a new one.',
     permissions: (name) => `The bot must be able to connect and speak in **${name}**.`,
     error: 'An error occured while turning radio on. Please retry later.',
