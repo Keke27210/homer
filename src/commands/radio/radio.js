@@ -78,10 +78,8 @@ class RadioCommand extends Command {
     if (frequency > 1080) frequency = 1080;
     if (frequency < 875) frequency = 875;
 
-    const { voice } = message.member;
-    if (!voice) return message.error(message._('radio.notin'));
-
-    const { channel } = voice;
+    const { channel } = message.member.voice;
+    if (!channel) return message.error(message._('radio.notin'));
     if (channel.permissionsFor(this.client.user).missing(['CONNECT', 'SPEAK']).length) return message.error(message._('radio.permissions', channel.name));
 
     const existing = this.client.radios.radios.find(
