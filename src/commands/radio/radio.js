@@ -78,11 +78,10 @@ class RadioCommand extends Command {
     if (frequency > 1080) frequency = 1080;
     if (frequency < 875) frequency = 875;
 
-    const channel = message.guild.channels.resolve(message.settings.radio);
-    if (!channel) return message.info(message._('radio.unset'));
-
     const { voice } = message.member;
-    if (!voice || voice.channelID !== channel.id) return message.error(message._('radio.notin', channel.name));
+    if (!voice) return message.error(message._('radio.notin'));
+
+    const { channel } = voice;
     if (channel.permissionsFor(this.client.user).missing(['CONNECT', 'SPEAK']).length) return message.error(message._('radio.permissions', channel.name));
 
     const existing = this.client.radios.radios.find(
