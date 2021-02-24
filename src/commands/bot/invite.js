@@ -9,7 +9,7 @@ class InviteCommand extends Command {
   }
 
   async main(message) {
-    const invite = await this.client.generateInvite(3492928);
+    const invite = await this.client.generateInvite({ permissions: 3492928 });
     message.send(message._('invite.invite', message.emote('homer'), invite));
     return 0;
   }
