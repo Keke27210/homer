@@ -265,8 +265,11 @@ class CallProvider extends Provider {
     ]);
     for (let i = 0; i < ongoing.length; i += 1) {
       const { caller, called } = ongoing[i];
-      await this.contracts.notify(caller, true, 'telephone.notifications.restart');
-      await this.contracts.notify(called, true, 'telephone.notifications.restart');
+      await Promise.all([
+        this.contracts.notify(caller, true, 'telephone.notifications.restart'),
+        this.contracts.notify(called, true, 'telephone.notifications.restart'),
+      ])
+        .catch(() => this.endCall(ongoing[i].id, "ERROR"));
     }
   }
 
