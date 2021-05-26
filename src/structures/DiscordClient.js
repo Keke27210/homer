@@ -237,6 +237,8 @@ class DiscordClient extends Client {
     await this.radios.onShutdown();
     this.logger.log('[radio] Notifications sent');
 
+    this.logger.log('[gateway] Logging out Discord gateway...');
+    this.destroy();
     this.database.ready = false;
 
     this.logger.log('[managers] Unregistering components...');
@@ -253,11 +255,8 @@ class DiscordClient extends Client {
         .catch(() => this.logger.error('[database] Unable to end database connection'));
     }
 
-    this.logger.log('[gateway] Logging out Discord gateway...');
-    this.destroy();
-
     this.logger.log(`[process] Exiting process with exit code ${code}`);
-    process.exit(code);
+    setImmediate(() => process.exit(code));
   }
 
   /**
